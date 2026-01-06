@@ -51,13 +51,22 @@
 }
 
 .vision-section .section-content {
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.vision-section .arch-card {
+  flex: 1 0 0;
+  min-width: 150px;
 }
 
 /* Main Sections - 4 Column Grid (Always Side by Side) */
 .main-sections {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 0;
 }
 
@@ -67,7 +76,7 @@
   padding: 1.5rem;
 }
 
-.main-sections .architecture-section:nth-child(4n) {
+.main-sections .architecture-section:nth-child(2n) {
   border-right: none;
 }
 
@@ -86,6 +95,7 @@
 
 /* Card Styling */
 .arch-card {
+  box-sizing: border-box;
   padding: 1rem;
   border-radius: 6px;
   display: flex;
@@ -101,6 +111,7 @@
   min-height: 100px;
   justify-content: center;
 }
+
 
 .arch-card:hover {
   transform: translateY(-2px);
