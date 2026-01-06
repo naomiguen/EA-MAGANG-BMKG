@@ -1,0 +1,167 @@
+#root {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: #f5f5f5;
+}
+
+/* Architecture Container */
+.architecture-container {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Section Styling */
+.architecture-section {
+  border-bottom: 3px solid #333;
+  padding: 1.5rem;
+}
+
+.architecture-section:last-child {
+  border-bottom: none;
+}
+
+.section-title {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: white;
+  background-color: #2c5282;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.section-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+/* Vision Section - Full Width */
+.vision-section {
+  background-color: #b3e5fc;
+  border-bottom: 3px solid #01579b;
+}
+
+.vision-section .section-title {
+  background-color: #01579b;
+}
+
+.vision-section .section-content {
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+/* Main Sections - 4 Column Grid (Always Side by Side) */
+.main-sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 0;
+}
+
+.main-sections .architecture-section {
+  border-bottom: 3px solid #333;
+  border-right: 3px solid #333;
+  padding: 1.5rem;
+}
+
+.main-sections .architecture-section:nth-child(4n) {
+  border-right: none;
+}
+
+/* Implementation Section - Full Width */
+.implementation-section {
+  background-color: #1b5e5f;
+}
+
+.implementation-section .section-title {
+  background-color: #1b5e5f;
+}
+
+.implementation-section .section-content {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+/* Card Styling */
+.arch-card {
+  padding: 1rem;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  font-size: 0.8rem;
+  font-weight: 500;
+  min-height: 100px;
+  justify-content: center;
+}
+
+.arch-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-icon {
+  font-size: 1.5rem;
+}
+
+.card-label {
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* Card Colors */
+.card-green {
+  background-color: #a8d5a0;
+  color: #1b5e20;
+}
+
+.card-blue {
+  background-color: #81d4f4;
+  color: #01579b;
+}
+
+.card-yellow {
+  background-color: #fff9c4;
+  color: #f57f17;
+}
+
+.card-pink {
+  background-color: #f8bbd0;
+  color: #880e4f;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .main-sections {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .main-sections .architecture-section:nth-child(2n) {
+    border-right: none;
+  }
+
+  .main-sections .architecture-section:nth-child(4n) {
+    border-right: 3px solid #333;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-sections {
+    grid-template-columns: 1fr;
+  }
+
+  .main-sections .architecture-section {
+    border-right: none;
+  }
+
+  .section-content {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+}
