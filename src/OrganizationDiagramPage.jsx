@@ -417,9 +417,6 @@ export default function OrganizationDiagramPage() {
       <div className="orgTopBar">
         <div>
           <div className="orgPageTitle">Organization Decomposition Diagram</div>
-          <div className="orgPageSubtitle">
-            Diagram memenuhi halaman. Kelola data melalui pop up.
-          </div>
         </div>
 
         <div className="orgTopActions">
