@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react"
+/* eslint-disable react-hooks/set-state-in-effect */
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import "./OrganizationDiagramPage.css"
 
 const STORAGE_KEY = "orgDiagramV1"
@@ -154,6 +155,123 @@ function UnitNode({ title, members }) {
   )
 }
 
+function getCenterXRelativeTo(el, relativeToEl) {
+  if (!el || !relativeToEl) return null
+  const r = el.getBoundingClientRect()
+  const base = relativeToEl.getBoundingClientRect()
+  return r.left + r.width / 2 - base.left
+}
+
+function useHorizontalConnector({ enabled, containerRef, getPointEls, deps }) {
+  const [style, setStyle] = useState(null)
+
+  const recompute = useCallback(() => {
+    const containerEl = containerRef.current
+    if (!enabled || !containerEl) {
+      setStyle((prev) => (prev === null ? prev : null))
+      return
+    }
+
+    const pointEls = (getPointEls?.() || []).filter(Boolean)
+    if (pointEls.length < 2) {
+      setStyle((prev) => (prev === null ? prev : null))
+      return
+    }
+
+    const centers = pointEls
+      .map((el) => getCenterXRelativeTo(el, containerEl))
+      .filter((x) => typeof x === "number" && !Number.isNaN(x))
+
+    if (centers.length < 2) {
+      setStyle((prev) => (prev === null ? prev : null))
+      return
+    }
+
+    const leftPx = Math.min(...centers)
+    const rightPx = Math.max(...centers)
+    const widthPx = Math.max(0, rightPx - leftPx)
+
+    setStyle((prev) => {
+      if (prev && prev.leftPx === leftPx && prev.widthPx === widthPx) return prev
+      return { leftPx, widthPx }
+    })
+  }, [enabled, containerRef, getPointEls])
+
+  useLayoutEffect(() => {
+    recompute()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [recompute, ...(deps || [])])
+
+  useEffect(() => {
+    window.addEventListener("resize", recompute)
+    return () => window.removeEventListener("resize", recompute)
+  }, [recompute])
+
+  return style
+}
+
+function CoordinatorColumn({ coordinator, showTopConnectorLine }) {
+  const units = useMemo(() => coordinator.units ?? [], [coordinator.units])
+  const hasMultipleUnits = units.length > 1
+
+  const unitLineWrapperRef = useRef(null)
+  const unitPointRefs = useRef(new Map())
+
+  const unitIdsKey = useMemo(() => units.map((u) => u.id).join("|"), [units])
+
+  const getUnitPointEls = useCallback(
+    () => units.map((u) => unitPointRefs.current.get(u.id)).filter(Boolean),
+    [units]
+  )
+
+  const unitLineStyle = useHorizontalConnector({
+    enabled: hasMultipleUnits,
+    containerRef: unitLineWrapperRef,
+    getPointEls: getUnitPointEls,
+    deps: [unitIdsKey]
+  })
+
+  return (
+    <div className="orgCoordinatorColumn">
+      {showTopConnectorLine ? <div className="orgVerticalLineToCoord" /> : null}
+
+      <OrgNode title={coordinator.title} subtitle={coordinator.name} />
+
+      {units.length > 0 ? <div className="orgVerticalLineToUnits" /> : null}
+
+      {hasMultipleUnits ? (
+        <div className="orgHorizontalLineWrapper" ref={unitLineWrapperRef}>
+          <div
+            className="orgHorizontalLine"
+            style={
+              unitLineStyle
+                ? { left: `${unitLineStyle.leftPx}px`, width: `${unitLineStyle.widthPx}px` }
+                : undefined
+            }
+          />
+        </div>
+      ) : null}
+
+      {units.length > 0 ? (
+        <div className="orgUnitsWrapper">
+          {units.map((unit) => (
+            <div key={unit.id} className="orgUnitColumn">
+              <div
+                className="orgVerticalLineToUnit"
+                ref={(el) => {
+                  if (!el) unitPointRefs.current.delete(unit.id)
+                  else unitPointRefs.current.set(unit.id, el)
+                }}
+              />
+              <UnitNode title={unit.title} members={unit.members || []} />
+            </div>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
 function Modal({ open, title, onClose, children }) {
   useEffect(() => {
     if (!open) return
@@ -245,6 +363,14 @@ export default function OrganizationDiagramPage() {
 
   const [isCrudOpen, setIsCrudOpen] = useState(false)
 
+  const [editHeadTitle, setEditHeadTitle] = useState(data.head?.title || "")
+  const [editHeadName, setEditHeadName] = useState(data.head?.name || "")
+
+  useEffect(() => {
+    setEditHeadTitle(data.head?.title || "")
+    setEditHeadName(data.head?.name || "")
+  }, [data.head?.title, data.head?.name])
+
   const [newCoordinatorTitle, setNewCoordinatorTitle] = useState("")
   const [newCoordinatorName, setNewCoordinatorName] = useState("")
 
@@ -274,6 +400,13 @@ export default function OrganizationDiagramPage() {
     }))
   }
 
+  function saveHeadEdits() {
+    const title = editHeadTitle.trim()
+    const name = editHeadName.trim()
+    if (!title || !name) return
+    setData((prev) => ({ ...prev, head: { ...prev.head, title, name } }))
+  }
+
   function addCoordinator() {
     const title = newCoordinatorTitle.trim()
     const name = newCoordinatorName.trim()
@@ -297,8 +430,7 @@ export default function OrganizationDiagramPage() {
 
   function deleteCoordinator() {
     if (!selectedCoordinator) return
-    const memberCount = countMembers(selectedCoordinator)
-    if (memberCount > 0) return
+    if ((selectedCoordinator.units || []).length > 0) return
 
     setData((prev) => ({
       ...prev,
@@ -408,12 +540,31 @@ export default function OrganizationDiagramPage() {
     setIsCrudOpen(false)
   }
 
-  const canDeleteCoordinator = selectedCoordinator ? countMembers(selectedCoordinator) === 0 : false
+  const coordinatorUnitCount = selectedCoordinator ? (selectedCoordinator.units || []).length : 0
+  const canDeleteCoordinator = selectedCoordinator ? coordinatorUnitCount === 0 : false
   const coordinatorMemberCount = selectedCoordinator ? countMembers(selectedCoordinator) : 0
   const canDeleteUnit = selectedUnit ? (selectedUnit.members || []).length === 0 : false
 
-  // Hitung apakah ada koordinator dengan multiple children
   const hasMultipleCoordinators = data.coordinators.length > 1
+
+  const coordinatorLineWrapperRef = useRef(null)
+  const coordinatorPointRefs = useRef(new Map())
+  const coordinatorIdsKey = useMemo(
+    () => data.coordinators.map((c) => c.id).join("|"),
+    [data.coordinators]
+  )
+
+  const getCoordinatorPointEls = useCallback(
+    () => data.coordinators.map((c) => coordinatorPointRefs.current.get(c.id)).filter(Boolean),
+    [data.coordinators]
+  )
+
+  const coordinatorLineStyle = useHorizontalConnector({
+    enabled: hasMultipleCoordinators,
+    containerRef: coordinatorLineWrapperRef,
+    getPointEls: getCoordinatorPointEls,
+    deps: [coordinatorIdsKey]
+  })
 
   return (
     <div className="orgPageWrapper">
@@ -439,63 +590,49 @@ export default function OrganizationDiagramPage() {
 
         <div className="orgDiagramCanvasFull">
           <div className="orgChartFull">
-            {/* KEPALA STASIUN */}
             <div className="orgChartHead">
               <OrgNode title={data.head.title} subtitle={data.head.name} />
               {data.coordinators.length > 0 && <div className="orgLineDownHead" />}
             </div>
 
-            {/* HORIZONTAL LINE UNTUK KOORDINATOR (hanya jika > 1) */}
-            {hasMultipleCoordinators && (
-              <div className="orgHorizontalLineWrapper">
-                <div className="orgHorizontalLine" />
+            {hasMultipleCoordinators ? (
+              <div className="orgHorizontalLineWrapper" ref={coordinatorLineWrapperRef}>
+                <div
+                  className="orgHorizontalLine"
+                  style={
+                    coordinatorLineStyle
+                      ? {
+                          left: `${coordinatorLineStyle.leftPx}px`,
+                          width: `${coordinatorLineStyle.widthPx}px`
+                        }
+                      : undefined
+                  }
+                />
               </div>
-            )}
+            ) : null}
 
-            {/* KOORDINATOR LEVEL */}
             <div className="orgCoordinatorsWrapper">
               {data.coordinators.map((coordinator) => {
-                const units = coordinator.units || []
-                const hasMultipleUnits = units.length > 1
-
                 return (
-                  <div key={coordinator.id} className="orgCoordinatorColumn">
-                    {/* Garis vertikal dari horizontal line ke koordinator */}
-                    {hasMultipleCoordinators && (
-                      <div className="orgVerticalLineToCoord" />
-                    )}
-
-                    {/* Koordinator Node */}
-                    <OrgNode title={coordinator.title} subtitle={coordinator.name} />
-
-                    {/* Garis vertikal ke units */}
-                    {units.length > 0 && (
-                      <div className="orgVerticalLineToUnits" />
-                    )}
-
-                    {/* HORIZONTAL LINE UNTUK UNITS (hanya jika > 1) */}
-                    {hasMultipleUnits && (
-                      <div className="orgHorizontalLineWrapper">
-                        <div className="orgHorizontalLine" />
-                      </div>
-                    )}
-
-                    {/* UNITS LEVEL */}
-                    {units.length > 0 && (
-                      <div className="orgUnitsWrapper">
-                        {units.map((unit) => (
-                          <div key={unit.id} className="orgUnitColumn">
-                            {/* Garis vertikal dari horizontal line ke unit */}
-                            {hasMultipleUnits && (
-                              <div className="orgVerticalLineToUnit" />
-                            )}
-
-                            {/* Unit Node */}
-                            <UnitNode title={unit.title} members={unit.members || []} />
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                  <div
+                    key={coordinator.id}
+                    ref={(el) => {
+                      if (!el) {
+                        coordinatorPointRefs.current.delete(coordinator.id)
+                        return
+                      }
+                      const lineEl = el.querySelector(".orgVerticalLineToCoord")
+                      if (!lineEl) {
+                        coordinatorPointRefs.current.delete(coordinator.id)
+                        return
+                      }
+                      coordinatorPointRefs.current.set(coordinator.id, lineEl)
+                    }}
+                  >
+                    <CoordinatorColumn
+                      coordinator={coordinator}
+                      showTopConnectorLine={data.coordinators.length > 0}
+                    />
                   </div>
                 )
               })}
@@ -507,6 +644,32 @@ export default function OrganizationDiagramPage() {
       <Modal open={isCrudOpen} title="Kelola Struktur Organisasi" onClose={() => setIsCrudOpen(false)}>
         <div className="orgModalGrid">
           <div className="orgSection">
+            <div className="orgSectionTitle">Edit Kepala Stasiun</div>
+
+            <div className="orgField">
+              <label className="orgLabel">Jabatan</label>
+              <input
+                className="orgInput"
+                value={editHeadTitle}
+                onChange={(e) => setEditHeadTitle(e.target.value)}
+              />
+            </div>
+
+            <div className="orgField">
+              <label className="orgLabel">Nama</label>
+              <input
+                className="orgInput"
+                value={editHeadName}
+                onChange={(e) => setEditHeadName(e.target.value)}
+              />
+            </div>
+
+            <button className="orgBtn" onClick={saveHeadEdits} type="button">
+              Simpan Kepala Stasiun
+            </button>
+          </div>
+
+          <div className="orgSection">
             <div className="orgSectionTitle">Pilih Koordinator</div>
 
             <select
@@ -515,8 +678,8 @@ export default function OrganizationDiagramPage() {
               onChange={(e) => {
                 const id = e.target.value || null
                 setSelectedCoordinatorId(id)
-                const coordinator = data.coordinators.find((x) => x.id === id)
-                setSelectedUnitId(coordinator?.units?.[0]?.id || null)
+                const c = data.coordinators.find((x) => x.id === id)
+                setSelectedUnitId(c?.units?.[0]?.id || null)
               }}
             >
               {data.coordinators.map((c) => (
@@ -528,7 +691,9 @@ export default function OrganizationDiagramPage() {
 
             {selectedCoordinator ? (
               <div className="orgMeta">
-                Total anggota di koordinator terpilih: <b>{coordinatorMemberCount}</b>
+                Total unit: <b>{coordinatorUnitCount}</b>
+                <br />
+                Total anggota (akumulasi semua unit): <b>{coordinatorMemberCount}</b>
               </div>
             ) : null}
           </div>
@@ -595,7 +760,7 @@ export default function OrganizationDiagramPage() {
                 title={
                   canDeleteCoordinator
                     ? "Hapus koordinator"
-                    : "Tidak bisa hapus karena masih ada anggota"
+                    : "Tidak bisa hapus karena koordinator masih memiliki unit"
                 }
               >
                 Hapus Koordinator
@@ -604,7 +769,7 @@ export default function OrganizationDiagramPage() {
 
             {!canDeleteCoordinator && selectedCoordinator ? (
               <div className="orgWarning">
-                Hapus koordinator hanya bisa jika total anggota di seluruh unit adalah nol.
+                Tidak bisa menghapus koordinator jika masih memiliki unit. Hapus unit terlebih dahulu.
               </div>
             ) : null}
           </div>
@@ -636,12 +801,7 @@ export default function OrganizationDiagramPage() {
               />
             </div>
 
-            <button
-              className="orgBtn"
-              onClick={addUnit}
-              type="button"
-              disabled={!selectedCoordinator}
-            >
+            <button className="orgBtn" onClick={addUnit} type="button" disabled={!selectedCoordinator}>
               Tambah Unit
             </button>
 
@@ -668,18 +828,14 @@ export default function OrganizationDiagramPage() {
                     onClick={deleteUnit}
                     type="button"
                     disabled={!canDeleteUnit}
-                    title={
-                      canDeleteUnit ? "Hapus unit" : "Tidak bisa hapus karena masih ada anggota"
-                    }
+                    title={canDeleteUnit ? "Hapus unit" : "Tidak bisa hapus karena masih ada anggota"}
                   >
                     Hapus Unit
                   </button>
                 </div>
 
                 {!canDeleteUnit ? (
-                  <div className="orgWarning">
-                    Hapus unit hanya bisa jika unit tidak memiliki anggota.
-                  </div>
+                  <div className="orgWarning">Hapus unit hanya bisa jika unit tidak memiliki anggota.</div>
                 ) : null}
               </>
             ) : (
@@ -729,11 +885,7 @@ export default function OrganizationDiagramPage() {
                               <button className="orgBtn" onClick={saveEditMember} type="button">
                                 Simpan
                               </button>
-                              <button
-                                className="orgBtn orgBtnGhost"
-                                onClick={cancelEditMember}
-                                type="button"
-                              >
+                              <button className="orgBtn orgBtnGhost" onClick={cancelEditMember} type="button">
                                 Batal
                               </button>
                             </div>
@@ -742,18 +894,10 @@ export default function OrganizationDiagramPage() {
                           <>
                             <div className="orgMemberName">{m}</div>
                             <div className="orgRowBtns">
-                              <button
-                                className="orgBtn orgBtnGhost"
-                                onClick={() => startEditMember(idx)}
-                                type="button"
-                              >
+                              <button className="orgBtn orgBtnGhost" onClick={() => startEditMember(idx)} type="button">
                                 Edit
                               </button>
-                              <button
-                                className="orgBtn orgBtnDanger"
-                                onClick={() => deleteMember(idx)}
-                                type="button"
-                              >
+                              <button className="orgBtn orgBtnDanger" onClick={() => deleteMember(idx)} type="button">
                                 Hapus
                               </button>
                             </div>
