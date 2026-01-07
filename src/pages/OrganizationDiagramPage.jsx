@@ -1,23 +1,9 @@
-import { useEffect, useMemo, useState } from "react"
+// src/pages/OrganizationDiagramPage.jsx
+import { useCallback, useEffect, useMemo, useState } from "react"
 import "./css/OrganizationDiagramPage.css"
+import { supabase } from "../lib/supabaseClient"
 
-const STORAGE_KEY = "orgDiagramV1"
-
-function newId() {
-  return `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 9)}`
-}
-
-function loadInitialData() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return null
-    const parsed = JSON.parse(raw)
-    if (!parsed || !Array.isArray(parsed.coordinators)) return null
-    return parsed
-  } catch {
-    return null
-  }
-}
+const DEFAULT_CHART_NAME = "default"
 
 function countMembers(coordinator) {
   return (coordinator.units || []).reduce((acc, unit) => acc + (unit.members || []).length, 0)
@@ -37,93 +23,21 @@ function clampSelected({ coordinators, selectedCoordinatorId, selectedUnitId }) 
   return { coordinatorId, unitId }
 }
 
-const DEFAULT_DATA = {
-  head: { title: "Kepala Stasiun", name: "Kukuh Ribudyanto, M.Si" },
-  coordinators: [
-    {
-      id: "obs",
-      title: "Koordinator Bidang Observasi",
-      name: "Agusto Pramana Putera, S.Tr.",
-      units: [
-        {
-          id: "obs_teknisi",
-          title: "Unit Teknisi",
-          members: [
-            "Kurniawan Raharjo, S.T",
-            "Ahmad Fauzi, S.T",
-            "Nasiti Siwi Risantika, S.Tr.Inst",
-            "Badia Lumbanbatu, S.Tr.Inst",
-            "Mapasena Farid Wijaya, S.Tr.Inst"
-          ]
-        },
-        {
-          id: "obs_observasi",
-          title: "Unit Observasi",
-          members: [
-            "Budayasih Setyorini",
-            "Agustian Nugraha, SP",
-            "Abdul Mutaqobin, A.Md.",
-            "Berty Merens Sipolo, A.Md.",
-            "Nur Fitriyani, S.Tr.",
-            "Hemu Aulia Zuardi, S.Tr.",
-            "Huda Abshor Mukhsinin, S.Tr. Met.",
-            "Fryska Mazayyah J. Abay, S.Tr. Met"
-          ]
-        }
-      ]
-    },
-    {
-      id: "data",
-      title: "Koordinator Bidang Data dan Informasi",
-      name: "Diyan Novida, SST",
-      units: [
-        {
-          id: "data_observasi",
-          title: "Unit Forecaster",
-          members: [
-            "Heni Herlina",
-            "Idham Chalid, A.Md.",
-            "Carolina Meylita Sibarani, S.Tr.",
-            "Ilham Rosihan Fachturoni, S.Tr.",
-            "Iwan Munandar, S.Tr.",
-            "Yudha Satrio Oktavandi, S.Tr."
-          ]
-        }
-      ]
-    },
-    {
-      id: "tu",
-      title: "Kepala Sub Bagian Tata Usaha",
-      name: "Eko Bambang Minarto, S.Si.",
-      units: [
-        {
-          id: "tu_staf",
-          title: "Staf Tata Usaha",
-          members: [
-            "Farida, S.E.",
-            "Ni. Nurul Ahyuni",
-            "Nia Kurniati, A.Md.",
-            "Meirandi Irawan, A.Md.",
-            "Pepi Amdani, A.Md."
-          ]
-        },
-        {
-          id: "tu_ppnpn",
-          title: "PPNPN",
-          members: [
-            "Supardi Boy",
-            "Jamal Adi Wibowo",
-            "Rahman",
-            "Syamsul Alam Nur",
-            "Aditya Wibowo",
-            "Hasbi Hasan Gobel",
-            "Suparman",
-            "Aril Evansyah"
-          ]
-        }
-      ]
-    }
-  ]
+function slugify(value) {
+  const s = String(value || "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+/, "")
+    .replace(/_+$/, "")
+
+  return s || "item"
+}
+
+function makeCode(prefix, label) {
+  return `${prefix}_${slugify(label)}_${Date.now().toString(36)}${Math.random()
+    .toString(36)
+    .slice(2, 6)}`
 }
 
 function OrgNode({ title, subtitle }) {
@@ -196,15 +110,114 @@ function Modal({ open, title, onClose, children }) {
   )
 }
 
-export default function OrganizationDiagramPage() {
-  const [data, setData] = useState(() => loadInitialData() || DEFAULT_DATA)
+function normalizeChartRow(chartRow) {
+  const headRaw = chartRow?.org_head
+  const head = Array.isArray(headRaw) ? headRaw[0] : headRaw
 
-  const [selectedCoordinatorId, setSelectedCoordinatorId] = useState(
-    data.coordinators[0]?.id || null
+  const coordinatorsRaw = [...(chartRow?.org_coordinators || [])].sort(
+    (a, b) => (a?.sort_order ?? 0) - (b?.sort_order ?? 0)
   )
-  const [selectedUnitId, setSelectedUnitId] = useState(
-    data.coordinators[0]?.units?.[0]?.id || null
+
+  const coordinators = coordinatorsRaw.map((c) => {
+    const unitsRaw = [...(c.org_units || [])].sort(
+      (a, b) => (a?.sort_order ?? 0) - (b?.sort_order ?? 0)
+    )
+
+    const units = unitsRaw.map((u) => {
+      const membersRaw = [...(u.org_members || [])].sort(
+        (a, b) => (a?.sort_order ?? 0) - (b?.sort_order ?? 0)
+      )
+      const members = membersRaw.map((m) => m.name)
+      return { id: u.id, title: u.title, members }
+    })
+
+    return {
+      id: c.id,
+      title: c.title,
+      name: c.name,
+      units
+    }
+  })
+
+  return {
+    chartId: chartRow?.id || null,
+    data: {
+      head: {
+        title: head?.title || "Kepala Stasiun",
+        name: head?.name || ""
+      },
+      coordinators
+    }
+  }
+}
+
+export default function OrganizationDiagramPage() {
+  const [chartId, setChartId] = useState(null)
+  const [data, setData] = useState({
+    head: { title: "Kepala Stasiun", name: "" },
+    coordinators: []
+  })
+
+  const [isLoading, setIsLoading] = useState(true)
+  const [isSaving, setIsSaving] = useState(false)
+  const [dbError, setDbError] = useState("")
+
+  const [selectedCoordinatorId, setSelectedCoordinatorId] = useState(null)
+  const [selectedUnitId, setSelectedUnitId] = useState(null)
+
+  const refreshFromDb = useCallback(
+    async ({ nextCoordinatorId, nextUnitId } = {}) => {
+      setDbError("")
+      setIsLoading(true)
+
+      const { data: chartRow, error } = await supabase
+        .from("org_charts")
+        .select(
+          `
+          id,
+          name,
+          org_head ( title, name ),
+          org_coordinators ( id, title, name, sort_order,
+            org_units ( id, title, sort_order,
+              org_members ( id, name, sort_order )
+            )
+          )
+        `
+        )
+        .eq("name", DEFAULT_CHART_NAME)
+        .maybeSingle()
+
+      if (error) {
+        setDbError(error.message || "Gagal mengambil data dari database")
+        setIsLoading(false)
+        return
+      }
+
+      if (!chartRow) {
+        setDbError(
+          `Chart '${DEFAULT_CHART_NAME}' tidak ditemukan di tabel org_charts. Buat 1 baris org_charts name = '${DEFAULT_CHART_NAME}'.`
+        )
+        setChartId(null)
+        setData({ head: { title: "Kepala Stasiun", name: "" }, coordinators: [] })
+        setIsLoading(false)
+        return
+      }
+
+      const normalized = normalizeChartRow(chartRow)
+      setChartId(normalized.chartId)
+      setData(normalized.data)
+
+      if (typeof nextCoordinatorId !== "undefined") setSelectedCoordinatorId(nextCoordinatorId)
+      if (typeof nextUnitId !== "undefined") setSelectedUnitId(nextUnitId)
+
+      setIsLoading(false)
+    },
+    []
   )
+
+  useEffect(() => {
+    refreshFromDb()
+  }, [refreshFromDb])
 
   const selection = useMemo(
     () =>
@@ -225,14 +238,6 @@ export default function OrganizationDiagramPage() {
       setSelectedUnitId(selection.unitId)
     }
   }, [selection.coordinatorId, selection.unitId, selectedCoordinatorId, selectedUnitId])
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
-    } catch {
-      /* ignore */
-    }
-  }, [data])
 
   const selectedCoordinator = useMemo(() => {
     return data.coordinators.find((c) => c.id === selection.coordinatorId) || null
@@ -267,95 +272,176 @@ export default function OrganizationDiagramPage() {
   const [editingMemberIndex, setEditingMemberIndex] = useState(null)
   const [editingMemberName, setEditingMemberName] = useState("")
 
-  function updateCoordinator(updated) {
-    setData((prev) => ({
-      ...prev,
-      coordinators: prev.coordinators.map((c) => (c.id === updated.id ? updated : c))
-    }))
-  }
-
-  function addCoordinator() {
+  async function addCoordinator() {
     const title = newCoordinatorTitle.trim()
     const name = newCoordinatorName.trim()
-    if (!title || !name) return
+    if (!chartId || !title || !name) return
 
-    const coordinator = { id: newId(), title, name, units: [] }
-    setData((prev) => ({ ...prev, coordinators: [...prev.coordinators, coordinator] }))
+    setIsSaving(true)
+    setDbError("")
+
+    const sort_order = (data.coordinators || []).length + 1
+    const code = makeCode("coord", title)
+
+    const { data: inserted, error } = await supabase
+      .from("org_coordinators")
+      .insert({ chart_id: chartId, code, title, name, sort_order })
+      .select("id")
+      .single()
+
+    if (error) {
+      setDbError(error.message || "Gagal menambah koordinator")
+      setIsSaving(false)
+      return
+    }
+
     setNewCoordinatorTitle("")
     setNewCoordinatorName("")
-    setSelectedCoordinatorId(coordinator.id)
-    setSelectedUnitId(null)
+    await refreshFromDb({ nextCoordinatorId: inserted.id, nextUnitId: null })
+    setIsSaving(false)
   }
 
-  function saveCoordinatorEdits() {
+  async function saveCoordinatorEdits() {
     if (!selectedCoordinator) return
     const title = editCoordinatorTitle.trim()
     const name = editCoordinatorName.trim()
     if (!title || !name) return
-    updateCoordinator({ ...selectedCoordinator, title, name })
+
+    setIsSaving(true)
+    setDbError("")
+
+    const { error } = await supabase
+      .from("org_coordinators")
+      .update({ title, name })
+      .eq("id", selectedCoordinator.id)
+
+    if (error) {
+      setDbError(error.message || "Gagal menyimpan koordinator")
+      setIsSaving(false)
+      return
+    }
+
+    await refreshFromDb({ nextCoordinatorId: selectedCoordinator.id })
+    setIsSaving(false)
   }
 
-  function deleteCoordinator() {
+  async function deleteCoordinator() {
     if (!selectedCoordinator) return
-    const memberCount = countMembers(selectedCoordinator)
-    if (memberCount > 0) return
+    if ((selectedCoordinator.units || []).length > 0) return
 
-    setData((prev) => ({
-      ...prev,
-      coordinators: prev.coordinators.filter((c) => c.id !== selectedCoordinator.id)
-    }))
+    setIsSaving(true)
+    setDbError("")
+
+    const { error } = await supabase
+      .from("org_coordinators")
+      .delete()
+      .eq("id", selectedCoordinator.id)
+
+    if (error) {
+      setDbError(error.message || "Gagal menghapus koordinator")
+      setIsSaving(false)
+      return
+    }
+
+    await refreshFromDb({ nextCoordinatorId: null, nextUnitId: null })
+    setIsSaving(false)
   }
 
-  function addUnit() {
+  async function addUnit() {
     if (!selectedCoordinator) return
     const title = newUnitTitle.trim()
     if (!title) return
-    const unit = { id: newId(), title, members: [] }
 
-    updateCoordinator({
-      ...selectedCoordinator,
-      units: [...(selectedCoordinator.units || []), unit]
-    })
+    setIsSaving(true)
+    setDbError("")
+
+    const sort_order = (selectedCoordinator.units || []).length + 1
+    const code = makeCode("unit", title)
+
+    const { data: inserted, error } = await supabase
+      .from("org_units")
+      .insert({
+        coordinator_id: selectedCoordinator.id,
+        code,
+        title,
+        sort_order
+      })
+      .select("id")
+      .single()
+
+    if (error) {
+      setDbError(error.message || "Gagal menambah unit")
+      setIsSaving(false)
+      return
+    }
 
     setNewUnitTitle("")
-    setSelectedUnitId(unit.id)
+    await refreshFromDb({ nextCoordinatorId: selectedCoordinator.id, nextUnitId: inserted.id })
+    setIsSaving(false)
   }
 
-  function saveUnitEdits() {
-    if (!selectedCoordinator || !selectedUnit) return
+  async function saveUnitEdits() {
+    if (!selectedUnit) return
     const title = editUnitTitle.trim()
     if (!title) return
 
-    updateCoordinator({
-      ...selectedCoordinator,
-      units: (selectedCoordinator.units || []).map((u) =>
-        u.id === selectedUnit.id ? { ...u, title } : u
-      )
-    })
+    setIsSaving(true)
+    setDbError("")
+
+    const { error } = await supabase.from("org_units").update({ title }).eq("id", selectedUnit.id)
+
+    if (error) {
+      setDbError(error.message || "Gagal menyimpan unit")
+      setIsSaving(false)
+      return
+    }
+
+    await refreshFromDb({ nextCoordinatorId: selectedCoordinator?.id, nextUnitId: selectedUnit.id })
+    setIsSaving(false)
   }
 
-  function deleteUnit() {
+  async function deleteUnit() {
     if (!selectedCoordinator || !selectedUnit) return
     if ((selectedUnit.members || []).length > 0) return
 
-    updateCoordinator({
-      ...selectedCoordinator,
-      units: (selectedCoordinator.units || []).filter((u) => u.id !== selectedUnit.id)
-    })
+    setIsSaving(true)
+    setDbError("")
+
+    const { error } = await supabase.from("org_units").delete().eq("id", selectedUnit.id)
+
+    if (error) {
+      setDbError(error.message || "Gagal menghapus unit")
+      setIsSaving(false)
+      return
+    }
+
+    await refreshFromDb({ nextCoordinatorId: selectedCoordinator.id, nextUnitId: null })
+    setIsSaving(false)
   }
 
-  function addMember() {
-    if (!selectedCoordinator || !selectedUnit) return
+  async function addMember() {
+    if (!selectedUnit) return
     const name = newMemberName.trim()
     if (!name) return
 
-    const updatedUnits = (selectedCoordinator.units || []).map((u) => {
-      if (u.id !== selectedUnit.id) return u
-      return { ...u, members: [...(u.members || []), name] }
-    })
+    setIsSaving(true)
+    setDbError("")
 
-    updateCoordinator({ ...selectedCoordinator, units: updatedUnits })
+    const sort_order = (selectedUnit.members || []).length + 1
+
+    const { error } = await supabase
+      .from("org_members")
+      .insert({ unit_id: selectedUnit.id, name, sort_order })
+
+    if (error) {
+      setDbError(error.message || "Gagal menambah anggota")
+      setIsSaving(false)
+      return
+    }
+
     setNewMemberName("")
+    await refreshFromDb({ nextCoordinatorId: selectedCoordinator?.id, nextUnitId: selectedUnit.id })
+    setIsSaving(false)
   }
 
   function startEditMember(index) {
@@ -369,50 +455,71 @@ export default function OrganizationDiagramPage() {
     setEditingMemberName("")
   }
 
-  function saveEditMember() {
-    if (!selectedCoordinator || !selectedUnit) return
+  async function saveEditMember() {
+    if (!selectedUnit) return
     if (editingMemberIndex === null) return
-    const name = editingMemberName.trim()
+
+    const newName = editingMemberName.trim()
+    if (!newName) return
+
+    const oldName = selectedUnit.members[editingMemberIndex]
+    if (!oldName) return
+
+    setIsSaving(true)
+    setDbError("")
+
+    const { error } = await supabase
+      .from("org_members")
+      .update({ name: newName })
+      .eq("unit_id", selectedUnit.id)
+      .eq("name", oldName)
+
+    if (error) {
+      setDbError(error.message || "Gagal edit anggota")
+      setIsSaving(false)
+      return
+    }
+
+    cancelEditMember()
+    await refreshFromDb({ nextCoordinatorId: selectedCoordinator?.id, nextUnitId: selectedUnit.id })
+    setIsSaving(false)
+  }
+
+  async function deleteMember(index) {
+    if (!selectedUnit) return
+    const name = selectedUnit.members[index]
     if (!name) return
 
-    const updatedUnits = (selectedCoordinator.units || []).map((u) => {
-      if (u.id !== selectedUnit.id) return u
-      const members = [...(u.members || [])]
-      members[editingMemberIndex] = name
-      return { ...u, members }
-    })
+    setIsSaving(true)
+    setDbError("")
 
-    updateCoordinator({ ...selectedCoordinator, units: updatedUnits })
-    cancelEditMember()
-  }
+    const { error } = await supabase
+      .from("org_members")
+      .delete()
+      .eq("unit_id", selectedUnit.id)
+      .eq("name", name)
 
-  function deleteMember(index) {
-    if (!selectedCoordinator || !selectedUnit) return
+    if (error) {
+      setDbError(error.message || "Gagal menghapus anggota")
+      setIsSaving(false)
+      return
+    }
 
-    const updatedUnits = (selectedCoordinator.units || []).map((u) => {
-      if (u.id !== selectedUnit.id) return u
-      const members = [...(u.members || [])]
-      members.splice(index, 1)
-      return { ...u, members }
-    })
-
-    updateCoordinator({ ...selectedCoordinator, units: updatedUnits })
     if (editingMemberIndex === index) cancelEditMember()
+    await refreshFromDb({ nextCoordinatorId: selectedCoordinator?.id, nextUnitId: selectedUnit.id })
+    setIsSaving(false)
   }
 
-  function resetData() {
-    localStorage.removeItem(STORAGE_KEY)
-    setData(DEFAULT_DATA)
-    setSelectedCoordinatorId(DEFAULT_DATA.coordinators[0]?.id || null)
-    setSelectedUnitId(DEFAULT_DATA.coordinators[0]?.units?.[0]?.id || null)
+  async function resetData() {
+    await refreshFromDb()
     setIsCrudOpen(false)
   }
 
-  const canDeleteCoordinator = selectedCoordinator ? countMembers(selectedCoordinator) === 0 : false
+  const coordinatorUnitCount = selectedCoordinator ? (selectedCoordinator.units || []).length : 0
+  const canDeleteCoordinator = selectedCoordinator ? coordinatorUnitCount === 0 : false
   const coordinatorMemberCount = selectedCoordinator ? countMembers(selectedCoordinator) : 0
   const canDeleteUnit = selectedUnit ? (selectedUnit.members || []).length === 0 : false
 
-  // Hitung apakah ada koordinator dengan multiple children
   const hasMultipleCoordinators = data.coordinators.length > 1
 
   return (
@@ -420,10 +527,21 @@ export default function OrganizationDiagramPage() {
       <div className="orgTopBar">
         <div>
           <div className="orgPageTitle">Diagram Dekomposisi Organisasi</div>
+          {isLoading ? <div className="orgMuted">Memuat data dari database...</div> : null}
+          {dbError ? (
+            <div className="orgWarning" style={{ marginTop: 8 }}>
+              {dbError}
+            </div>
+          ) : null}
         </div>
 
         <div className="orgTopActions">
-          <button className="orgBtn orgBtnGhost" type="button" onClick={() => setIsCrudOpen(true)}>
+          <button
+            className="orgBtn orgBtnGhost"
+            type="button"
+            onClick={() => setIsCrudOpen(true)}
+            disabled={isLoading}
+          >
             Kelola Data
           </button>
         </div>
@@ -432,27 +550,29 @@ export default function OrganizationDiagramPage() {
       <div className="orgDiagramCardFull">
         <div className="orgDiagramHeader">
           <div>Diagram</div>
-          <button className="orgBtn orgBtnGhost" type="button" onClick={() => setIsCrudOpen(true)}>
+          <button
+            className="orgBtn orgBtnGhost"
+            type="button"
+            onClick={() => setIsCrudOpen(true)}
+            disabled={isLoading}
+          >
             Edit
           </button>
         </div>
 
         <div className="orgDiagramCanvasFull">
           <div className="orgChartFull">
-            {/* KEPALA STASIUN */}
             <div className="orgChartHead">
               <OrgNode title={data.head.title} subtitle={data.head.name} />
               {data.coordinators.length > 0 && <div className="orgLineDownHead" />}
             </div>
 
-            {/* HORIZONTAL LINE UNTUK KOORDINATOR (hanya jika > 1) */}
             {hasMultipleCoordinators && (
               <div className="orgHorizontalLineWrapper">
                 <div className="orgHorizontalLine" />
               </div>
             )}
 
-            {/* KOORDINATOR LEVEL */}
             <div className="orgCoordinatorsWrapper">
               {data.coordinators.map((coordinator) => {
                 const units = coordinator.units || []
@@ -460,37 +580,23 @@ export default function OrganizationDiagramPage() {
 
                 return (
                   <div key={coordinator.id} className="orgCoordinatorColumn">
-                    {/* Garis vertikal dari horizontal line ke koordinator */}
-                    {hasMultipleCoordinators && (
-                      <div className="orgVerticalLineToCoord" />
-                    )}
+                    {hasMultipleCoordinators && <div className="orgVerticalLineToCoord" />}
 
-                    {/* Koordinator Node */}
                     <OrgNode title={coordinator.title} subtitle={coordinator.name} />
 
-                    {/* Garis vertikal ke units */}
-                    {units.length > 0 && (
-                      <div className="orgVerticalLineToUnits" />
-                    )}
+                    {units.length > 0 && <div className="orgVerticalLineToUnits" />}
 
-                    {/* HORIZONTAL LINE UNTUK UNITS (hanya jika > 1) */}
                     {hasMultipleUnits && (
                       <div className="orgHorizontalLineWrapper">
                         <div className="orgHorizontalLine" />
                       </div>
                     )}
 
-                    {/* UNITS LEVEL */}
                     {units.length > 0 && (
                       <div className="orgUnitsWrapper">
                         {units.map((unit) => (
                           <div key={unit.id} className="orgUnitColumn">
-                            {/* Garis vertikal dari horizontal line ke unit */}
-                            {hasMultipleUnits && (
-                              <div className="orgVerticalLineToUnit" />
-                            )}
-
-                            {/* Unit Node */}
+                            {hasMultipleUnits && <div className="orgVerticalLineToUnit" />}
                             <UnitNode title={unit.title} members={unit.members || []} />
                           </div>
                         ))}
@@ -518,6 +624,7 @@ export default function OrganizationDiagramPage() {
                 const coordinator = data.coordinators.find((x) => x.id === id)
                 setSelectedUnitId(coordinator?.units?.[0]?.id || null)
               }}
+              disabled={isLoading}
             >
               {data.coordinators.map((c) => (
                 <option key={c.id} value={c.id}>
@@ -528,7 +635,9 @@ export default function OrganizationDiagramPage() {
 
             {selectedCoordinator ? (
               <div className="orgMeta">
-                Total anggota di koordinator terpilih: <b>{coordinatorMemberCount}</b>
+                Total unit: <b>{coordinatorUnitCount}</b>
+                <br />
+                Total anggota (akumulasi semua unit): <b>{coordinatorMemberCount}</b>
               </div>
             ) : null}
           </div>
@@ -543,6 +652,7 @@ export default function OrganizationDiagramPage() {
                 value={newCoordinatorTitle}
                 onChange={(e) => setNewCoordinatorTitle(e.target.value)}
                 placeholder="Contoh: Koordinator Bidang Pengamatan"
+                disabled={isLoading || isSaving}
               />
             </div>
 
@@ -553,10 +663,16 @@ export default function OrganizationDiagramPage() {
                 value={newCoordinatorName}
                 onChange={(e) => setNewCoordinatorName(e.target.value)}
                 placeholder="Contoh: Nama, Gelar"
+                disabled={isLoading || isSaving}
               />
             </div>
 
-            <button className="orgBtn" onClick={addCoordinator} type="button">
+            <button
+              className="orgBtn"
+              onClick={addCoordinator}
+              type="button"
+              disabled={isLoading || isSaving || !chartId}
+            >
               Tambah Koordinator
             </button>
           </div>
@@ -570,6 +686,7 @@ export default function OrganizationDiagramPage() {
                 className="orgInput"
                 value={editCoordinatorTitle}
                 onChange={(e) => setEditCoordinatorTitle(e.target.value)}
+                disabled={!selectedCoordinator || isLoading || isSaving}
               />
             </div>
 
@@ -579,11 +696,17 @@ export default function OrganizationDiagramPage() {
                 className="orgInput"
                 value={editCoordinatorName}
                 onChange={(e) => setEditCoordinatorName(e.target.value)}
+                disabled={!selectedCoordinator || isLoading || isSaving}
               />
             </div>
 
             <div className="orgRowBtns">
-              <button className="orgBtn" onClick={saveCoordinatorEdits} type="button">
+              <button
+                className="orgBtn"
+                onClick={saveCoordinatorEdits}
+                type="button"
+                disabled={!selectedCoordinator || isLoading || isSaving}
+              >
                 Simpan Edit
               </button>
 
@@ -591,11 +714,11 @@ export default function OrganizationDiagramPage() {
                 className="orgBtn orgBtnDanger"
                 onClick={deleteCoordinator}
                 type="button"
-                disabled={!canDeleteCoordinator}
+                disabled={!selectedCoordinator || !canDeleteCoordinator || isLoading || isSaving}
                 title={
                   canDeleteCoordinator
                     ? "Hapus koordinator"
-                    : "Tidak bisa hapus karena masih ada anggota"
+                    : "Tidak bisa hapus karena koordinator masih memiliki unit"
                 }
               >
                 Hapus Koordinator
@@ -604,7 +727,7 @@ export default function OrganizationDiagramPage() {
 
             {!canDeleteCoordinator && selectedCoordinator ? (
               <div className="orgWarning">
-                Hapus koordinator hanya bisa jika total anggota di seluruh unit adalah nol.
+                Tidak bisa menghapus koordinator jika masih memiliki unit. Hapus unit terlebih dahulu.
               </div>
             ) : null}
           </div>
@@ -616,7 +739,9 @@ export default function OrganizationDiagramPage() {
               className="orgSelect"
               value={selection.unitId || ""}
               onChange={(e) => setSelectedUnitId(e.target.value || null)}
-              disabled={!selectedCoordinator || (selectedCoordinator.units || []).length === 0}
+              disabled={
+                !selectedCoordinator || (selectedCoordinator.units || []).length === 0 || isLoading
+              }
             >
               {(selectedCoordinator?.units || []).map((u) => (
                 <option key={u.id} value={u.id}>
@@ -632,7 +757,7 @@ export default function OrganizationDiagramPage() {
                 value={newUnitTitle}
                 onChange={(e) => setNewUnitTitle(e.target.value)}
                 placeholder="Contoh: Unit Pelayanan"
-                disabled={!selectedCoordinator}
+                disabled={!selectedCoordinator || isLoading || isSaving}
               />
             </div>
 
@@ -640,7 +765,7 @@ export default function OrganizationDiagramPage() {
               className="orgBtn"
               onClick={addUnit}
               type="button"
-              disabled={!selectedCoordinator}
+              disabled={!selectedCoordinator || isLoading || isSaving}
             >
               Tambah Unit
             </button>
@@ -655,11 +780,17 @@ export default function OrganizationDiagramPage() {
                     className="orgInput"
                     value={editUnitTitle}
                     onChange={(e) => setEditUnitTitle(e.target.value)}
+                    disabled={isLoading || isSaving}
                   />
                 </div>
 
                 <div className="orgRowBtns">
-                  <button className="orgBtn" onClick={saveUnitEdits} type="button">
+                  <button
+                    className="orgBtn"
+                    onClick={saveUnitEdits}
+                    type="button"
+                    disabled={isLoading || isSaving}
+                  >
                     Simpan Unit
                   </button>
 
@@ -667,10 +798,8 @@ export default function OrganizationDiagramPage() {
                     className="orgBtn orgBtnDanger"
                     onClick={deleteUnit}
                     type="button"
-                    disabled={!canDeleteUnit}
-                    title={
-                      canDeleteUnit ? "Hapus unit" : "Tidak bisa hapus karena masih ada anggota"
-                    }
+                    disabled={!canDeleteUnit || isLoading || isSaving}
+                    title={canDeleteUnit ? "Hapus unit" : "Tidak bisa hapus karena masih ada anggota"}
                   >
                     Hapus Unit
                   </button>
@@ -703,10 +832,16 @@ export default function OrganizationDiagramPage() {
                     value={newMemberName}
                     onChange={(e) => setNewMemberName(e.target.value)}
                     placeholder="Contoh: Nama, Gelar"
+                    disabled={isLoading || isSaving}
                   />
                 </div>
 
-                <button className="orgBtn" onClick={addMember} type="button">
+                <button
+                  className="orgBtn"
+                  onClick={addMember}
+                  type="button"
+                  disabled={isLoading || isSaving}
+                >
                   Tambah Anggota
                 </button>
 
@@ -724,15 +859,22 @@ export default function OrganizationDiagramPage() {
                               className="orgInput"
                               value={editingMemberName}
                               onChange={(e) => setEditingMemberName(e.target.value)}
+                              disabled={isSaving}
                             />
                             <div className="orgRowBtns">
-                              <button className="orgBtn" onClick={saveEditMember} type="button">
+                              <button
+                                className="orgBtn"
+                                onClick={saveEditMember}
+                                type="button"
+                                disabled={isSaving}
+                              >
                                 Simpan
                               </button>
                               <button
                                 className="orgBtn orgBtnGhost"
                                 onClick={cancelEditMember}
                                 type="button"
+                                disabled={isSaving}
                               >
                                 Batal
                               </button>
@@ -746,6 +888,7 @@ export default function OrganizationDiagramPage() {
                                 className="orgBtn orgBtnGhost"
                                 onClick={() => startEditMember(idx)}
                                 type="button"
+                                disabled={isSaving}
                               >
                                 Edit
                               </button>
@@ -753,6 +896,7 @@ export default function OrganizationDiagramPage() {
                                 className="orgBtn orgBtnDanger"
                                 onClick={() => deleteMember(idx)}
                                 type="button"
+                                disabled={isSaving}
                               >
                                 Hapus
                               </button>
@@ -769,8 +913,13 @@ export default function OrganizationDiagramPage() {
 
           <div className="orgSection">
             <div className="orgSectionTitle">Utilitas</div>
-            <button className="orgBtn orgBtnDanger" type="button" onClick={resetData}>
-              Reset ke Data Awal
+            <button
+              className="orgBtn orgBtnDanger"
+              type="button"
+              onClick={resetData}
+              disabled={isLoading || isSaving}
+            >
+              Muat Ulang dari Database
             </button>
           </div>
         </div>
