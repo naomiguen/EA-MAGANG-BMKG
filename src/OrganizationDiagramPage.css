@@ -28,6 +28,11 @@
   color: #1a1a1a;
 }
 
+.orgPageSubtitle {
+  margin-top: 0.35rem;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.95rem;
+}
 
 .orgDiagramCardFull {
   flex: 1;
@@ -56,7 +61,7 @@
   flex: 1;
   background: #fafafa;
   overflow: auto;
-  padding: 2.5rem 1.5rem;
+  padding: 3rem 2rem;
 }
 
 .orgChartFull {
@@ -64,6 +69,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: max-content;
 }
 
 .orgChartHead {
@@ -82,28 +88,26 @@
 
 .orgChartScroll {
   width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 1.5rem 0;
+  overflow-x: visible;
+  overflow-y: visible;
 }
 
 .orgCoordGrid {
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(var(--cols), minmax(380px, 1fr));
-  gap: 60px;
-  align-items: start;
-  padding: 0 60px;
-  width: 100%;
-  min-width: calc(var(--cols) * 440px);
+  display: flex;
+  gap: 80px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 2rem;
+  width: max-content;
   margin: 0 auto;
 }
 
 .orgCoordGrid::before {
   content: "";
   position: absolute;
-  left: 60px;
-  right: 60px;
+  left: 2rem;
+  right: 2rem;
   top: 0;
   height: 3px;
   background: #1a1a1a;
@@ -114,6 +118,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 420px;
 }
 
 .orgDownArrow {
@@ -156,21 +161,20 @@
 
 .orgUnitsGrid {
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(var(--units), 300px);
-  gap: 36px;
-  align-items: start;
-  padding: 0 20px;
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 1rem;
   margin-top: 0;
-  width: max-content;
-  max-width: 100%;
+  width: 100%;
 }
 
 .orgUnitsGridHasAcross::before {
   content: "";
   position: absolute;
-  left: 20px;
-  right: 20px;
+  left: 1rem;
+  right: 1rem;
   top: 0;
   height: 3px;
   background: #1a1a1a;
@@ -182,6 +186,8 @@
   flex-direction: column;
   align-items: center;
   padding-top: 0;
+  flex: 0 0 auto;
+  width: 280px;
 }
 
 .orgNode {
@@ -259,14 +265,6 @@
 
 .orgMemberList li:last-child {
   margin-bottom: 0;
-}
-
-.orgHint {
-  margin-top: 2rem;
-  font-size: 0.9rem;
-  color: rgba(0, 0, 0, 0.5);
-  text-align: center;
-  font-style: italic;
 }
 
 .orgMuted {
@@ -494,20 +492,28 @@
 
   .orgCoordGrid {
     gap: 40px;
-    padding: 0 30px;
-    grid-template-columns: repeat(var(--cols), minmax(340px, 1fr));
-    min-width: calc(var(--cols) * 380px);
+    flex-direction: column;
+    align-items: center;
   }
 
   .orgCoordGrid::before {
-    left: 30px;
-    right: 30px;
+    display: none;
+  }
+
+  .orgCoordCol {
+    width: 100%;
+    max-width: 400px;
   }
 
   .orgUnitsGrid {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    max-width: 340px;
+  }
+
+  .orgUnitCol {
+    width: 100%;
+    max-width: 320px;
   }
 
   .orgUnitsGridHasAcross::before {

@@ -472,11 +472,7 @@ export default function OrganizationDiagramPage() {
                     )
                     })}
                 </div>
-                </div>
-
-                <div className="orgHint">
-                Jika koordinator banyak, area bisa discroll horizontal.
-                </div>
+              </div>
             </div>
         </div>
       </div>
