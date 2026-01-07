@@ -1,78 +1,42 @@
-import { useState } from "react"
-import "./App.css"
-import OrganizationDiagramPage from "./OrganizationDiagramPage"
+import { useState } from "react";
+import "./App.css";
+
+// 1. IMPORT DATA DARI FOLDER DATA
+import { architectureData } from "./data/menuData"; 
+
+// 2. IMPORT HALAMAN DARI FOLDER PAGES
+
+import OrganizationDiagramPage from "./pages/OrganizationDiagramPage";
+import StrategyMapPage from "./pages/StrategyMapPage";
 
 function App() {
-  const [activePage, setActivePage] = useState("architecture")
-
-  const architectureData = {
-    vision: [
-      { id: 1, title: "Architecture Principles", type: "text" },
-      { id: 2, title: "Architecture Goals", type: "text" },
-      { id: 3, title: "Vision, Mission and Corporate Strategy", type: "text" },
-      { id: 4, title: "Value Chain Diagram", type: "diagram" },
-      { id: 5, title: "Business Model Canvas", type: "text" },
-      { id: 6, title: "Organization Decomposition Diagram", type: "diagram" },
-      { id: 7, title: "Solution Concept Diagram", type: "diagram" },
-      { id: 8, title: "Stakeholder Matrix", type: "text" }
-    ],
-    business: [
-      { id: 1, title: "Business Principles", type: "text" },
-      { id: 2, title: "Risk", type: "diagram" },
-      { id: 3, title: "KPI", type: "text" },
-      { id: 4, title: "Organizational Value Catalog", type: "diagram" },
-      { id: 5, title: "Functional Decomposition Diagram", type: "diagram" },
-      { id: 6, title: "Business Interaction Diagram", type: "diagram" },
-      { id: 7, title: "Business Process - Risk Matrix", type: "matrix" },
-      { id: 8, title: "Business Process - Data Matrix", type: "matrix" }
-    ],
-    data: [
-      { id: 1, title: "Data Principles", type: "text" },
-      { id: 2, title: "Data Entity - Business Function Matrix", type: "matrix" },
-      { id: 3, title: "Conceptual Data", type: "diagram" },
-      { id: 4, title: "Logical Data Diagram", type: "diagram" }
-    ],
-    application: [
-      { id: 1, title: "Application Principles", type: "text" },
-      { id: 2, title: "Application Portfolio Catalog", type: "diagram" },
-      { id: 3, title: "Application Use Case Diagram", type: "diagram" },
-      { id: 4, title: "Application - Data Matrix", type: "matrix" },
-      { id: 5, title: "Application - User and Location Diagram", type: "diagram" },
-      { id: 6, title: "Application - Business Process Matrix", type: "matrix" },
-      { id: 7, title: "Application - Communication Diagram", type: "diagram" },
-      { id: 8, title: "Application - Classification Matrix", type: "matrix" },
-      { id: 9, title: "Application - Organization Matrix", type: "matrix" }
-    ],
-    technology: [
-      { id: 1, title: "Technology Principles", type: "text" },
-      { id: 2, title: "Technology Standard Catalog", type: "diagram" },
-      { id: 3, title: "Environment and Location Diagram", type: "diagram" },
-      { id: 4, title: "Network Communication Diagram", type: "diagram" },
-      { id: 5, title: "Technology - Application Matrix", type: "matrix" }
-    ],
-    implementation: [
-      { id: 1, title: "Architecture Implementation Planning", type: "diagram" },
-      { id: 2, title: "Architecture Governance", type: "diagram" }
-    ]
-  }
+  const [activePage, setActivePage] = useState("architecture");
 
   const getCardColor = (type) => {
     const colors = {
       text: "card-green",
       diagram: "card-blue",
       matrix: "card-pink",
-      catalog: "card-yellow"
-    }
-    return colors[type] || "card-blue"
-  }
+      catalog: "card-yellow",
+    };
+    return colors[type] || "card-blue";
+  };
 
   const handleCardClick = (item) => {
+    // Navigasi ke Organisasi
     if (item.title === "Organization Decomposition Diagram") {
-      setActivePage("organization")
-      return
+      setActivePage("organization");
+      return;
     }
-    alert(`You clicked: ${item.title}`)
-  }
+    // Navigasi ke Strategy Map (INI YANG BARU)
+    if (item.title === "Vision, Mission and Corporate Strategy") {
+      setActivePage("strategy");
+      return;
+    }
+    
+    // Default alert kalau belum ada halamannya
+    alert(`You clicked: ${item.title}`);
+  };
 
   const renderSection = (title, items) => (
     <div className="architecture-section" key={title}>
@@ -87,7 +51,7 @@ function App() {
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
-              if (e.key === "Enter") handleCardClick(item)
+              if (e.key === "Enter") handleCardClick(item);
             }}
           >
             <div className="card-icon">📄</div>
@@ -96,8 +60,9 @@ function App() {
         ))}
       </div>
     </div>
-  )
+  );
 
+  // --- HALAMAN 1: ORGANISASI ---
   if (activePage === "organization") {
     return (
       <div style={{ padding: "0.75rem" }}>
@@ -111,20 +76,52 @@ function App() {
             background: "white",
             fontWeight: 700,
             cursor: "pointer",
-            marginBottom: "0.75rem"
+            marginBottom: "0.75rem",
           }}
         >
-          Kembali ke Architecture Vision
+          ⬅ Kembali ke Architecture Vision
         </button>
 
         <OrganizationDiagramPage />
       </div>
-    )
+    );
   }
 
+  // --- HALAMAN 2: STRATEGY MAP (INI BARU) ---
+  if (activePage === "strategy") {
+    return (
+      <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+        <div style={{ padding: "10px 20px", background: "#f8f9fa", borderBottom: "1px solid #ddd" }}>
+          <button
+            type="button"
+            onClick={() => setActivePage("architecture")}
+            style={{
+              padding: "0.55rem 0.8rem",
+              borderRadius: 8,
+              border: "1px solid rgba(0,0,0,0.2)",
+              background: "white",
+              fontWeight: 700,
+              cursor: "pointer",
+            }}
+          >
+            ⬅ Kembali ke Architecture Vision
+          </button>
+        </div>
+        
+        {/* Render Halaman Strategy Map */}
+        <div style={{ flex: 1, overflow: "hidden" }}>
+            <StrategyMapPage />
+        </div>
+      </div>
+    );
+  }
+
+  // --- HALAMAN UTAMA: DASHBOARD MENU ---
   return (
     <div className="architecture-container">
-      <div className="vision-section">{renderSection("Architecture Vision", architectureData.vision)}</div>
+      <div className="vision-section">
+        {renderSection("Architecture Vision", architectureData.vision)}
+      </div>
 
       <div className="main-sections">
         {renderSection("Business Architecture", architectureData.business)}
@@ -134,10 +131,13 @@ function App() {
       </div>
 
       <div className="implementation-section">
-        {renderSection("Architecture Implementation", architectureData.implementation)}
+        {renderSection(
+          "Architecture Implementation",
+          architectureData.implementation
+        )}
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
