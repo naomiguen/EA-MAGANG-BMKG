@@ -1,3 +1,5 @@
+/* src/pages/css/OrganizationDiagramPage.css */
+
 .orgPageWrapper {
   padding: 0;
   min-height: 100vh;
@@ -59,6 +61,10 @@
 }
 
 .orgChartFull {
+  --coord-col-width: 380px;
+  --unit-col-width: 320px;
+  --line-thickness: 3px;
+
   min-height: 100%;
   display: flex;
   flex-direction: column;
@@ -68,7 +74,7 @@
   width: 100%;
 }
 
-/* === KEPALA STASIUN === */
+/* Kepala Stasiun */
 .orgChartHead {
   display: flex;
   flex-direction: column;
@@ -86,33 +92,26 @@
   margin: 0;
 }
 
-/* === HORIZONTAL LINE WRAPPER === */
-.orgHorizontalLineWrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  height: 0;
-}
-
-.orgHorizontalLine {
-  position: absolute;
-  height: 3px;
-  background: #1a1a1a;
-  border-radius: 2px;
-  left: 0;
-  right: 0;
-  top: 0;
-}
-
-/* === KOORDINATORS WRAPPER === */
+/* Coordinators */
 .orgCoordinatorsWrapper {
-  display: flex;
+  display: inline-flex;
   gap: 80px;
   align-items: flex-start;
   justify-content: center;
-  width: 100%;
   position: relative;
+  width: auto;
+  max-width: none;
+}
+/* Garis horizontal level koordinators, pas dari tengah kolom pertama sampai tengah kolom terakhir */
+.orgCoordinatorsWrapper.orgHasHorizontalLine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(var(--coord-col-width) / 2);
+  right: calc(var(--coord-col-width) / 2);
+  height: var(--line-thickness);
+  background: #1a1a1a;
+  border-radius: 2px;
 }
 
 .orgCoordinatorColumn {
@@ -120,10 +119,10 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  min-width: 380px;
+  min-width: var(--coord-col-width);
 }
 
-/* Garis vertikal dari horizontal line ke koordinator */
+/* Garis vertikal dari garis horizontal ke koordinator */
 .orgVerticalLineToCoord {
   width: 3px;
   height: 40px;
@@ -141,25 +140,38 @@
   margin: 0;
 }
 
-/* === UNITS WRAPPER === */
+/* Units */
 .orgUnitsWrapper {
   display: flex;
   gap: 80px;
   align-items: flex-start;
   justify-content: center;
   position: relative;
-  width: 100%;
+  width: fit-content;
+  max-width: 100%;
+}
+
+/* Garis horizontal level units, pas dari tengah unit pertama sampai tengah unit terakhir */
+.orgUnitsWrapper.orgHasHorizontalLine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(var(--unit-col-width) / 2);
+  right: calc(var(--unit-col-width) / 2);
+  height: var(--line-thickness);
+  background: #1a1a1a;
+  border-radius: 2px;
 }
 
 .orgUnitColumn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 320px;
+  width: var(--unit-col-width);
   position: relative;
 }
 
-/* Garis vertikal dari horizontal line ke unit */
+/* Garis vertikal dari garis horizontal ke unit */
 .orgVerticalLineToUnit {
   width: 3px;
   height: 40px;
@@ -168,12 +180,12 @@
   margin: 0;
 }
 
-/* === NODE STYLES === */
+/* Node styles */
 .orgNode {
   background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   border: 3px solid #2c5282;
   border-radius: 12px;
-  width: 380px;
+  width: var(--coord-col-width);
   max-width: 100%;
   box-shadow: 0 4px 16px rgba(44, 82, 130, 0.15);
   padding: 1.25rem 1.5rem;
@@ -259,7 +271,7 @@
   font-style: italic;
 }
 
-/* === BUTTONS === */
+/* Buttons */
 .orgBtn {
   border: none;
   border-radius: 10px;
@@ -312,7 +324,7 @@
   align-items: center;
 }
 
-/* === MODAL === */
+/* Modal */
 .orgModalOverlay {
   position: fixed;
   inset: 0;
@@ -470,7 +482,7 @@
   color: #1a1a1a;
 }
 
-/* === RESPONSIVE === */
+/* Responsive */
 @media (max-width: 900px) {
   .orgDiagramCardFull {
     margin: 1rem;
@@ -500,8 +512,8 @@
     max-width: 320px;
   }
 
-  /* Hide horizontal lines on mobile */
-  .orgHorizontalLine {
+  .orgCoordinatorsWrapper.orgHasHorizontalLine::before,
+  .orgUnitsWrapper.orgHasHorizontalLine::before {
     display: none;
   }
 

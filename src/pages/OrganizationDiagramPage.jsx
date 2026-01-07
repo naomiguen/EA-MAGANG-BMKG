@@ -165,15 +165,14 @@ export default function OrganizationDiagramPage() {
   const [selectedCoordinatorId, setSelectedCoordinatorId] = useState(null)
   const [selectedUnitId, setSelectedUnitId] = useState(null)
 
-  const refreshFromDb = useCallback(
-    async ({ nextCoordinatorId, nextUnitId } = {}) => {
-      setDbError("")
-      setIsLoading(true)
+  const refreshFromDb = useCallback(async ({ nextCoordinatorId, nextUnitId } = {}) => {
+    setDbError("")
+    setIsLoading(true)
 
-      const { data: chartRow, error } = await supabase
-        .from("org_charts")
-        .select(
-          `
+    const { data: chartRow, error } = await supabase
+      .from("org_charts")
+      .select(
+        `
           id,
           name,
           org_head ( title, name ),
@@ -183,37 +182,35 @@ export default function OrganizationDiagramPage() {
             )
           )
         `
-        )
-        .eq("name", DEFAULT_CHART_NAME)
-        .maybeSingle()
+      )
+      .eq("name", DEFAULT_CHART_NAME)
+      .maybeSingle()
 
-      if (error) {
-        setDbError(error.message || "Gagal mengambil data dari database")
-        setIsLoading(false)
-        return
-      }
-
-      if (!chartRow) {
-        setDbError(
-          `Chart '${DEFAULT_CHART_NAME}' tidak ditemukan di tabel org_charts. Buat 1 baris org_charts name = '${DEFAULT_CHART_NAME}'.`
-        )
-        setChartId(null)
-        setData({ head: { title: "Kepala Stasiun", name: "" }, coordinators: [] })
-        setIsLoading(false)
-        return
-      }
-
-      const normalized = normalizeChartRow(chartRow)
-      setChartId(normalized.chartId)
-      setData(normalized.data)
-
-      if (typeof nextCoordinatorId !== "undefined") setSelectedCoordinatorId(nextCoordinatorId)
-      if (typeof nextUnitId !== "undefined") setSelectedUnitId(nextUnitId)
-
+    if (error) {
+      setDbError(error.message || "Gagal mengambil data dari database")
       setIsLoading(false)
-    },
-    []
-  )
+      return
+    }
+
+    if (!chartRow) {
+      setDbError(
+        `Chart '${DEFAULT_CHART_NAME}' tidak ditemukan di tabel org_charts. Buat 1 baris org_charts name = '${DEFAULT_CHART_NAME}'.`
+      )
+      setChartId(null)
+      setData({ head: { title: "Kepala Stasiun", name: "" }, coordinators: [] })
+      setIsLoading(false)
+      return
+    }
+
+    const normalized = normalizeChartRow(chartRow)
+    setChartId(normalized.chartId)
+    setData(normalized.data)
+
+    if (typeof nextCoordinatorId !== "undefined") setSelectedCoordinatorId(nextCoordinatorId)
+    if (typeof nextUnitId !== "undefined") setSelectedUnitId(nextUnitId)
+
+    setIsLoading(false)
+  }, [])
 
   useEffect(() => {
     refreshFromDb()
@@ -230,10 +227,7 @@ export default function OrganizationDiagramPage() {
   )
 
   useEffect(() => {
-    if (
-      selection.coordinatorId !== selectedCoordinatorId ||
-      selection.unitId !== selectedUnitId
-    ) {
+    if (selection.coordinatorId !== selectedCoordinatorId || selection.unitId !== selectedUnitId) {
       setSelectedCoordinatorId(selection.coordinatorId)
       setSelectedUnitId(selection.unitId)
     }
@@ -332,10 +326,7 @@ export default function OrganizationDiagramPage() {
     setIsSaving(true)
     setDbError("")
 
-    const { error } = await supabase
-      .from("org_coordinators")
-      .delete()
-      .eq("id", selectedCoordinator.id)
+    const { error } = await supabase.from("org_coordinators").delete().eq("id", selectedCoordinator.id)
 
     if (error) {
       setDbError(error.message || "Gagal menghapus koordinator")
@@ -429,9 +420,7 @@ export default function OrganizationDiagramPage() {
 
     const sort_order = (selectedUnit.members || []).length + 1
 
-    const { error } = await supabase
-      .from("org_members")
-      .insert({ unit_id: selectedUnit.id, name, sort_order })
+    const { error } = await supabase.from("org_members").insert({ unit_id: selectedUnit.id, name, sort_order })
 
     if (error) {
       setDbError(error.message || "Gagal menambah anggota")
@@ -493,11 +482,7 @@ export default function OrganizationDiagramPage() {
     setIsSaving(true)
     setDbError("")
 
-    const { error } = await supabase
-      .from("org_members")
-      .delete()
-      .eq("unit_id", selectedUnit.id)
-      .eq("name", name)
+    const { error } = await supabase.from("org_members").delete().eq("unit_id", selectedUnit.id).eq("name", name)
 
     if (error) {
       setDbError(error.message || "Gagal menghapus anggota")
@@ -556,13 +541,9 @@ export default function OrganizationDiagramPage() {
               {data.coordinators.length > 0 && <div className="orgLineDownHead" />}
             </div>
 
-            {hasMultipleCoordinators && (
-              <div className="orgHorizontalLineWrapper">
-                <div className="orgHorizontalLine" />
-              </div>
-            )}
-
-            <div className="orgCoordinatorsWrapper">
+            <div
+              className={`orgCoordinatorsWrapper${hasMultipleCoordinators ? " orgHasHorizontalLine" : ""}`}
+            >
               {data.coordinators.map((coordinator) => {
                 const units = coordinator.units || []
                 const hasMultipleUnits = units.length > 1
@@ -575,14 +556,8 @@ export default function OrganizationDiagramPage() {
 
                     {units.length > 0 && <div className="orgVerticalLineToUnits" />}
 
-                    {hasMultipleUnits && (
-                      <div className="orgHorizontalLineWrapper">
-                        <div className="orgHorizontalLine" />
-                      </div>
-                    )}
-
                     {units.length > 0 && (
-                      <div className="orgUnitsWrapper">
+                      <div className={`orgUnitsWrapper${hasMultipleUnits ? " orgHasHorizontalLine" : ""}`}>
                         {units.map((unit) => (
                           <div key={unit.id} className="orgUnitColumn">
                             {hasMultipleUnits && <div className="orgVerticalLineToUnit" />}
@@ -656,12 +631,7 @@ export default function OrganizationDiagramPage() {
               />
             </div>
 
-            <button
-              className="orgBtn"
-              onClick={addCoordinator}
-              type="button"
-              disabled={isLoading || isSaving || !chartId}
-            >
+            <button className="orgBtn" onClick={addCoordinator} type="button" disabled={isLoading || isSaving || !chartId}>
               Tambah Koordinator
             </button>
           </div>
@@ -690,12 +660,7 @@ export default function OrganizationDiagramPage() {
             </div>
 
             <div className="orgRowBtns">
-              <button
-                className="orgBtn"
-                onClick={saveCoordinatorEdits}
-                type="button"
-                disabled={!selectedCoordinator || isLoading || isSaving}
-              >
+              <button className="orgBtn" onClick={saveCoordinatorEdits} type="button" disabled={!selectedCoordinator || isLoading || isSaving}>
                 Simpan Edit
               </button>
 
@@ -728,9 +693,7 @@ export default function OrganizationDiagramPage() {
               className="orgSelect"
               value={selection.unitId || ""}
               onChange={(e) => setSelectedUnitId(e.target.value || null)}
-              disabled={
-                !selectedCoordinator || (selectedCoordinator.units || []).length === 0 || isLoading
-              }
+              disabled={!selectedCoordinator || (selectedCoordinator.units || []).length === 0 || isLoading}
             >
               {(selectedCoordinator?.units || []).map((u) => (
                 <option key={u.id} value={u.id}>
@@ -750,12 +713,7 @@ export default function OrganizationDiagramPage() {
               />
             </div>
 
-            <button
-              className="orgBtn"
-              onClick={addUnit}
-              type="button"
-              disabled={!selectedCoordinator || isLoading || isSaving}
-            >
+            <button className="orgBtn" onClick={addUnit} type="button" disabled={!selectedCoordinator || isLoading || isSaving}>
               Tambah Unit
             </button>
 
@@ -765,21 +723,11 @@ export default function OrganizationDiagramPage() {
 
                 <div className="orgField">
                   <label className="orgLabel">Edit Nama Unit</label>
-                  <input
-                    className="orgInput"
-                    value={editUnitTitle}
-                    onChange={(e) => setEditUnitTitle(e.target.value)}
-                    disabled={isLoading || isSaving}
-                  />
+                  <input className="orgInput" value={editUnitTitle} onChange={(e) => setEditUnitTitle(e.target.value)} disabled={isLoading || isSaving} />
                 </div>
 
                 <div className="orgRowBtns">
-                  <button
-                    className="orgBtn"
-                    onClick={saveUnitEdits}
-                    type="button"
-                    disabled={isLoading || isSaving}
-                  >
+                  <button className="orgBtn" onClick={saveUnitEdits} type="button" disabled={isLoading || isSaving}>
                     Simpan Unit
                   </button>
 
@@ -795,9 +743,7 @@ export default function OrganizationDiagramPage() {
                 </div>
 
                 {!canDeleteUnit ? (
-                  <div className="orgWarning">
-                    Hapus unit hanya bisa jika unit tidak memiliki anggota.
-                  </div>
+                  <div className="orgWarning">Hapus unit hanya bisa jika unit tidak memiliki anggota.</div>
                 ) : null}
               </>
             ) : (
@@ -825,12 +771,7 @@ export default function OrganizationDiagramPage() {
                   />
                 </div>
 
-                <button
-                  className="orgBtn"
-                  onClick={addMember}
-                  type="button"
-                  disabled={isLoading || isSaving}
-                >
+                <button className="orgBtn" onClick={addMember} type="button" disabled={isLoading || isSaving}>
                   Tambah Anggota
                 </button>
 
@@ -844,27 +785,12 @@ export default function OrganizationDiagramPage() {
                       <div className="orgMemberRow" key={`${m}-${idx}`}>
                         {editingMemberIndex === idx ? (
                           <>
-                            <input
-                              className="orgInput"
-                              value={editingMemberName}
-                              onChange={(e) => setEditingMemberName(e.target.value)}
-                              disabled={isSaving}
-                            />
+                            <input className="orgInput" value={editingMemberName} onChange={(e) => setEditingMemberName(e.target.value)} disabled={isSaving} />
                             <div className="orgRowBtns">
-                              <button
-                                className="orgBtn"
-                                onClick={saveEditMember}
-                                type="button"
-                                disabled={isSaving}
-                              >
+                              <button className="orgBtn" onClick={saveEditMember} type="button" disabled={isSaving}>
                                 Simpan
                               </button>
-                              <button
-                                className="orgBtn orgBtnGhost"
-                                onClick={cancelEditMember}
-                                type="button"
-                                disabled={isSaving}
-                              >
+                              <button className="orgBtn orgBtnGhost" onClick={cancelEditMember} type="button" disabled={isSaving}>
                                 Batal
                               </button>
                             </div>
@@ -873,20 +799,10 @@ export default function OrganizationDiagramPage() {
                           <>
                             <div className="orgMemberName">{m}</div>
                             <div className="orgRowBtns">
-                              <button
-                                className="orgBtn orgBtnGhost"
-                                onClick={() => startEditMember(idx)}
-                                type="button"
-                                disabled={isSaving}
-                              >
+                              <button className="orgBtn orgBtnGhost" onClick={() => startEditMember(idx)} type="button" disabled={isSaving}>
                                 Edit
                               </button>
-                              <button
-                                className="orgBtn orgBtnDanger"
-                                onClick={() => deleteMember(idx)}
-                                type="button"
-                                disabled={isSaving}
-                              >
+                              <button className="orgBtn orgBtnDanger" onClick={() => deleteMember(idx)} type="button" disabled={isSaving}>
                                 Hapus
                               </button>
                             </div>
@@ -902,12 +818,7 @@ export default function OrganizationDiagramPage() {
 
           <div className="orgSection">
             <div className="orgSectionTitle">Utilitas</div>
-            <button
-              className="orgBtn orgBtnDanger"
-              type="button"
-              onClick={resetData}
-              disabled={isLoading || isSaving}
-            >
+            <button className="orgBtn orgBtnDanger" type="button" onClick={resetData} disabled={isLoading || isSaving}>
               Muat Ulang dari Database
             </button>
           </div>
