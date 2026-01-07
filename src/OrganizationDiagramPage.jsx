@@ -79,7 +79,7 @@ const DEFAULT_DATA = {
       units: [
         {
           id: "data_observasi",
-          title: "Unit Observasi",
+          title: "Unit Forecaster",
           members: [
             "Heni Herlina",
             "Idham Chalid, A.Md.",
@@ -412,16 +412,19 @@ export default function OrganizationDiagramPage() {
   const coordinatorMemberCount = selectedCoordinator ? countMembers(selectedCoordinator) : 0
   const canDeleteUnit = selectedUnit ? (selectedUnit.members || []).length === 0 : false
 
+  // Hitung apakah ada koordinator dengan multiple children
+  const hasMultipleCoordinators = data.coordinators.length > 1
+
   return (
     <div className="orgPageWrapper">
       <div className="orgTopBar">
         <div>
-          <div className="orgPageTitle">Organization Decomposition Diagram</div>
+          <div className="orgPageTitle">Diagram Dekomposisi Organisasi</div>
         </div>
 
         <div className="orgTopActions">
           <button className="orgBtn orgBtnGhost" type="button" onClick={() => setIsCrudOpen(true)}>
-            Kelola data
+            Kelola Data
           </button>
         </div>
       </div>
@@ -435,52 +438,76 @@ export default function OrganizationDiagramPage() {
         </div>
 
         <div className="orgDiagramCanvasFull">
-            <div className="orgChartFull">
-                <div className="orgChartHead">
-                <OrgNode title={data.head.title} subtitle={data.head.name} />
-                <div className="orgLineDownHead" />
-                </div>
-
-                <div className="orgChartScroll">
-                <div className="orgCoordGrid" style={{ "--cols": data.coordinators.length }}>
-                    {data.coordinators.map((c) => {
-                    const units = c.units || []
-                    const unitsHasAcross = units.length > 1
-
-                    return (
-                        <div key={c.id} className="orgCoordCol">
-                        <div className="orgDownArrow" />
-                        <OrgNode title={c.title} subtitle={c.name} />
-
-                        {units.length > 0 ? (
-                            <div className="orgUnitsBlock">
-                            <div className="orgLineDownToUnits" />
-                            <div
-                                className={`orgUnitsGrid ${unitsHasAcross ? "orgUnitsGridHasAcross" : ""}`}
-                                style={{ "--units": units.length }}
-                            >
-                                {units.map((u) => (
-                                <div key={u.id} className="orgUnitCol">
-                                    <div className="orgDownArrow" />
-                                    <UnitNode title={u.title} members={u.members || []} />
-                                </div>
-                                ))}
-                            </div>
-                            </div>
-                        ) : null}
-                        </div>
-                    )
-                    })}
-                </div>
-              </div>
+          <div className="orgChartFull">
+            {/* KEPALA STASIUN */}
+            <div className="orgChartHead">
+              <OrgNode title={data.head.title} subtitle={data.head.name} />
+              {data.coordinators.length > 0 && <div className="orgLineDownHead" />}
             </div>
+
+            {/* HORIZONTAL LINE UNTUK KOORDINATOR (hanya jika > 1) */}
+            {hasMultipleCoordinators && (
+              <div className="orgHorizontalLineWrapper">
+                <div className="orgHorizontalLine" />
+              </div>
+            )}
+
+            {/* KOORDINATOR LEVEL */}
+            <div className="orgCoordinatorsWrapper">
+              {data.coordinators.map((coordinator) => {
+                const units = coordinator.units || []
+                const hasMultipleUnits = units.length > 1
+
+                return (
+                  <div key={coordinator.id} className="orgCoordinatorColumn">
+                    {/* Garis vertikal dari horizontal line ke koordinator */}
+                    {hasMultipleCoordinators && (
+                      <div className="orgVerticalLineToCoord" />
+                    )}
+
+                    {/* Koordinator Node */}
+                    <OrgNode title={coordinator.title} subtitle={coordinator.name} />
+
+                    {/* Garis vertikal ke units */}
+                    {units.length > 0 && (
+                      <div className="orgVerticalLineToUnits" />
+                    )}
+
+                    {/* HORIZONTAL LINE UNTUK UNITS (hanya jika > 1) */}
+                    {hasMultipleUnits && (
+                      <div className="orgHorizontalLineWrapper">
+                        <div className="orgHorizontalLine" />
+                      </div>
+                    )}
+
+                    {/* UNITS LEVEL */}
+                    {units.length > 0 && (
+                      <div className="orgUnitsWrapper">
+                        {units.map((unit) => (
+                          <div key={unit.id} className="orgUnitColumn">
+                            {/* Garis vertikal dari horizontal line ke unit */}
+                            {hasMultipleUnits && (
+                              <div className="orgVerticalLineToUnit" />
+                            )}
+
+                            {/* Unit Node */}
+                            <UnitNode title={unit.title} members={unit.members || []} />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          </div>
         </div>
       </div>
 
       <Modal open={isCrudOpen} title="Kelola Struktur Organisasi" onClose={() => setIsCrudOpen(false)}>
         <div className="orgModalGrid">
           <div className="orgSection">
-            <div className="orgSectionTitle">Pilih koordinator</div>
+            <div className="orgSectionTitle">Pilih Koordinator</div>
 
             <select
               className="orgSelect"
@@ -507,10 +534,10 @@ export default function OrganizationDiagramPage() {
           </div>
 
           <div className="orgSection">
-            <div className="orgSectionTitle">Tambah koordinator</div>
+            <div className="orgSectionTitle">Tambah Koordinator</div>
 
             <div className="orgField">
-              <label className="orgLabel">Judul koordinator</label>
+              <label className="orgLabel">Judul Koordinator</label>
               <input
                 className="orgInput"
                 value={newCoordinatorTitle}
@@ -520,7 +547,7 @@ export default function OrganizationDiagramPage() {
             </div>
 
             <div className="orgField">
-              <label className="orgLabel">Nama koordinator</label>
+              <label className="orgLabel">Nama Koordinator</label>
               <input
                 className="orgInput"
                 value={newCoordinatorName}
@@ -530,15 +557,15 @@ export default function OrganizationDiagramPage() {
             </div>
 
             <button className="orgBtn" onClick={addCoordinator} type="button">
-              Tambah koordinator
+              Tambah Koordinator
             </button>
           </div>
 
           <div className="orgSection">
-            <div className="orgSectionTitle">Edit koordinator terpilih</div>
+            <div className="orgSectionTitle">Edit Koordinator Terpilih</div>
 
             <div className="orgField">
-              <label className="orgLabel">Judul koordinator</label>
+              <label className="orgLabel">Judul Koordinator</label>
               <input
                 className="orgInput"
                 value={editCoordinatorTitle}
@@ -547,7 +574,7 @@ export default function OrganizationDiagramPage() {
             </div>
 
             <div className="orgField">
-              <label className="orgLabel">Nama koordinator</label>
+              <label className="orgLabel">Nama Koordinator</label>
               <input
                 className="orgInput"
                 value={editCoordinatorName}
@@ -557,7 +584,7 @@ export default function OrganizationDiagramPage() {
 
             <div className="orgRowBtns">
               <button className="orgBtn" onClick={saveCoordinatorEdits} type="button">
-                Simpan edit
+                Simpan Edit
               </button>
 
               <button
@@ -571,7 +598,7 @@ export default function OrganizationDiagramPage() {
                     : "Tidak bisa hapus karena masih ada anggota"
                 }
               >
-                Hapus koordinator
+                Hapus Koordinator
               </button>
             </div>
 
@@ -583,7 +610,7 @@ export default function OrganizationDiagramPage() {
           </div>
 
           <div className="orgSection">
-            <div className="orgSectionTitle">Unit di bawah koordinator</div>
+            <div className="orgSectionTitle">Unit di Bawah Koordinator</div>
 
             <select
               className="orgSelect"
@@ -599,7 +626,7 @@ export default function OrganizationDiagramPage() {
             </select>
 
             <div className="orgField">
-              <label className="orgLabel">Tambah unit</label>
+              <label className="orgLabel">Tambah Unit</label>
               <input
                 className="orgInput"
                 value={newUnitTitle}
@@ -615,7 +642,7 @@ export default function OrganizationDiagramPage() {
               type="button"
               disabled={!selectedCoordinator}
             >
-              Tambah unit
+              Tambah Unit
             </button>
 
             {selectedUnit ? (
@@ -623,7 +650,7 @@ export default function OrganizationDiagramPage() {
                 <div className="orgDivider" />
 
                 <div className="orgField">
-                  <label className="orgLabel">Edit nama unit</label>
+                  <label className="orgLabel">Edit Nama Unit</label>
                   <input
                     className="orgInput"
                     value={editUnitTitle}
@@ -633,7 +660,7 @@ export default function OrganizationDiagramPage() {
 
                 <div className="orgRowBtns">
                   <button className="orgBtn" onClick={saveUnitEdits} type="button">
-                    Simpan unit
+                    Simpan Unit
                   </button>
 
                   <button
@@ -645,7 +672,7 @@ export default function OrganizationDiagramPage() {
                       canDeleteUnit ? "Hapus unit" : "Tidak bisa hapus karena masih ada anggota"
                     }
                   >
-                    Hapus unit
+                    Hapus Unit
                   </button>
                 </div>
 
@@ -663,14 +690,14 @@ export default function OrganizationDiagramPage() {
           </div>
 
           <div className="orgSection">
-            <div className="orgSectionTitle">Anggota pada unit terpilih</div>
+            <div className="orgSectionTitle">Anggota pada Unit Terpilih</div>
 
             {!selectedUnit ? (
               <div className="orgMuted">Belum ada unit yang dipilih.</div>
             ) : (
               <>
                 <div className="orgField">
-                  <label className="orgLabel">Tambah anggota</label>
+                  <label className="orgLabel">Tambah Anggota</label>
                   <input
                     className="orgInput"
                     value={newMemberName}
@@ -680,7 +707,7 @@ export default function OrganizationDiagramPage() {
                 </div>
 
                 <button className="orgBtn" onClick={addMember} type="button">
-                  Tambah anggota
+                  Tambah Anggota
                 </button>
 
                 <div className="orgDivider" />
@@ -743,7 +770,7 @@ export default function OrganizationDiagramPage() {
           <div className="orgSection">
             <div className="orgSectionTitle">Utilitas</div>
             <button className="orgBtn orgBtnDanger" type="button" onClick={resetData}>
-              Reset ke data awal
+              Reset ke Data Awal
             </button>
           </div>
         </div>

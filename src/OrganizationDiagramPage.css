@@ -28,12 +28,6 @@
   color: #1a1a1a;
 }
 
-.orgPageSubtitle {
-  margin-top: 0.35rem;
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 0.95rem;
-}
-
 .orgDiagramCardFull {
   flex: 1;
   display: flex;
@@ -69,14 +63,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: max-content;
+  min-width: fit-content;
+  margin: 0 auto;
+  width: 100%;
 }
 
+/* === KEPALA STASIUN === */
 .orgChartHead {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 0;
+  width: 100%;
+  position: relative;
 }
 
 .orgLineDownHead {
@@ -84,120 +83,103 @@
   height: 40px;
   background: linear-gradient(180deg, #2c5282 0%, #1a1a1a 100%);
   border-radius: 2px;
+  margin: 0;
 }
 
-.orgChartScroll {
+/* === HORIZONTAL LINE WRAPPER === */
+.orgHorizontalLineWrapper {
   width: 100%;
-  overflow-x: visible;
-  overflow-y: visible;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: 0;
 }
 
-.orgCoordGrid {
-  position: relative;
+.orgHorizontalLine {
+  position: absolute;
+  height: 3px;
+  background: #1a1a1a;
+  border-radius: 2px;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+
+/* === KOORDINATORS WRAPPER === */
+.orgCoordinatorsWrapper {
   display: flex;
   gap: 80px;
   align-items: flex-start;
   justify-content: center;
-  padding: 0 2rem;
-  width: max-content;
-  margin: 0 auto;
-}
-
-.orgCoordGrid::before {
-  content: "";
-  position: absolute;
-  left: 2rem;
-  right: 2rem;
-  top: 0;
-  height: 3px;
-  background: #1a1a1a;
-  border-radius: 2px;
-}
-
-.orgCoordCol {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 420px;
-}
-
-.orgDownArrow {
-  width: 3px;
-  height: 32px;
-  background: linear-gradient(180deg, #1a1a1a 0%, #444 100%);
-  position: relative;
-  margin: 0 auto 12px auto;
-  border-radius: 2px;
-}
-
-.orgDownArrow::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: -8px;
-  width: 0;
-  height: 0;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-top: 8px solid #444;
-}
-
-.orgUnitsBlock {
   width: 100%;
+  position: relative;
+}
+
+.orgCoordinatorColumn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 1.5rem;
-}
-
-.orgLineDownToUnits {
-  width: 3px;
-  height: 32px;
-  background: linear-gradient(180deg, #1a1a1a 0%, #444 100%);
-  margin: 0 auto;
-  border-radius: 2px;
-}
-
-.orgUnitsGrid {
   position: relative;
+  min-width: 380px;
+}
+
+/* Garis vertikal dari horizontal line ke koordinator */
+.orgVerticalLineToCoord {
+  width: 3px;
+  height: 40px;
+  background: linear-gradient(180deg, #1a1a1a 0%, #444 100%);
+  border-radius: 2px;
+  margin: 0;
+}
+
+/* Garis vertikal dari koordinator ke units */
+.orgVerticalLineToUnits {
+  width: 3px;
+  height: 40px;
+  background: linear-gradient(180deg, #2c5282 0%, #1a1a1a 100%);
+  border-radius: 2px;
+  margin: 0;
+}
+
+/* === UNITS WRAPPER === */
+.orgUnitsWrapper {
   display: flex;
-  gap: 40px;
+  gap: 80px;
   align-items: flex-start;
   justify-content: center;
-  padding: 0 1rem;
-  margin-top: 0;
+  position: relative;
   width: 100%;
 }
 
-.orgUnitsGridHasAcross::before {
-  content: "";
-  position: absolute;
-  left: 1rem;
-  right: 1rem;
-  top: 0;
-  height: 3px;
-  background: #1a1a1a;
-  border-radius: 2px;
-}
-
-.orgUnitCol {
+.orgUnitColumn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 0;
-  flex: 0 0 auto;
-  width: 280px;
+  width: 320px;
+  position: relative;
 }
 
+/* Garis vertikal dari horizontal line ke unit */
+.orgVerticalLineToUnit {
+  width: 3px;
+  height: 40px;
+  background: linear-gradient(180deg, #1a1a1a 0%, #444 100%);
+  border-radius: 2px;
+  margin: 0;
+}
+
+/* === NODE STYLES === */
 .orgNode {
   background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   border: 3px solid #2c5282;
   border-radius: 12px;
-  width: 100%;
+  width: 380px;
+  max-width: 100%;
   box-shadow: 0 4px 16px rgba(44, 82, 130, 0.15);
   padding: 1.25rem 1.5rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  z-index: 2;
 }
 
 .orgNode:hover {
@@ -213,6 +195,7 @@
   word-break: break-word;
   line-height: 1.4;
   margin-bottom: 0.5rem;
+  text-align: center;
 }
 
 .orgNodeSubtitle {
@@ -222,6 +205,7 @@
   font-size: 0.95rem;
   font-weight: 500;
   line-height: 1.4;
+  text-align: center;
 }
 
 .orgUnitNode {
@@ -232,6 +216,8 @@
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
   padding: 1.15rem 1.35rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  z-index: 2;
 }
 
 .orgUnitNode:hover {
@@ -246,6 +232,7 @@
   color: #1a1a1a;
   padding-bottom: 0.65rem;
   border-bottom: 2px solid #e0e0e0;
+  text-align: center;
 }
 
 .orgUnitMembers {
@@ -272,6 +259,7 @@
   font-style: italic;
 }
 
+/* === BUTTONS === */
 .orgBtn {
   border: none;
   border-radius: 10px;
@@ -324,6 +312,7 @@
   align-items: center;
 }
 
+/* === MODAL === */
 .orgModalOverlay {
   position: fixed;
   inset: 0;
@@ -481,6 +470,7 @@
   color: #1a1a1a;
 }
 
+/* === RESPONSIVE === */
 @media (max-width: 900px) {
   .orgDiagramCardFull {
     margin: 1rem;
@@ -490,33 +480,28 @@
     padding: 1.5rem 1rem;
   }
 
-  .orgCoordGrid {
-    gap: 40px;
+  .orgCoordinatorsWrapper {
     flex-direction: column;
-    align-items: center;
+    gap: 60px;
   }
 
-  .orgCoordGrid::before {
-    display: none;
-  }
-
-  .orgCoordCol {
+  .orgNode {
     width: 100%;
     max-width: 400px;
   }
 
-  .orgUnitsGrid {
+  .orgUnitsWrapper {
     flex-direction: column;
-    align-items: center;
-    width: 100%;
+    gap: 40px;
   }
 
-  .orgUnitCol {
+  .orgUnitColumn {
     width: 100%;
     max-width: 320px;
   }
 
-  .orgUnitsGridHasAcross::before {
+  /* Hide horizontal lines on mobile */
+  .orgHorizontalLine {
     display: none;
   }
 
