@@ -1,6 +1,10 @@
-import './App.css'
+import { useState } from "react"
+import "./App.css"
+import OrganizationDiagramPage from "./OrganizationDiagramPage"
 
 function App() {
+  const [activePage, setActivePage] = useState("architecture")
+
   const architectureData = {
     vision: [
       { id: 1, title: "Architecture Principles", type: "text" },
@@ -62,12 +66,30 @@ function App() {
     return colors[type] || "card-blue"
   }
 
+  const handleCardClick = (item) => {
+    if (item.title === "Organization Decomposition Diagram") {
+      setActivePage("organization")
+      return
+    }
+    alert(`You clicked: ${item.title}`)
+  }
+
   const renderSection = (title, items) => (
     <div className="architecture-section" key={title}>
       <h2 className="section-title">{title}</h2>
       <div className="section-content">
         {items.map((item) => (
-          <div key={item.id} className={`arch-card ${getCardColor(item.type)}`}>
+          <div
+            key={item.id}
+            className={`arch-card ${getCardColor(item.type)}`}
+            onClick={() => handleCardClick(item)}
+            style={{ cursor: "pointer" }}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleCardClick(item)
+            }}
+          >
             <div className="card-icon">📄</div>
             <p className="card-label">{item.title}</p>
           </div>
@@ -76,14 +98,34 @@ function App() {
     </div>
   )
 
+  if (activePage === "organization") {
+    return (
+      <div style={{ padding: "0.75rem" }}>
+        <button
+          type="button"
+          onClick={() => setActivePage("architecture")}
+          style={{
+            padding: "0.55rem 0.8rem",
+            borderRadius: 8,
+            border: "1px solid rgba(0,0,0,0.2)",
+            background: "white",
+            fontWeight: 700,
+            cursor: "pointer",
+            marginBottom: "0.75rem"
+          }}
+        >
+          Kembali ke Architecture Vision
+        </button>
+
+        <OrganizationDiagramPage />
+      </div>
+    )
+  }
+
   return (
     <div className="architecture-container">
-      {/* Vision Section */}
-      <div className="vision-section">
-        {renderSection("Architecture Vision", architectureData.vision)}
-      </div>
+      <div className="vision-section">{renderSection("Architecture Vision", architectureData.vision)}</div>
 
-      {/* Main Architecture Sections */}
       <div className="main-sections">
         {renderSection("Business Architecture", architectureData.business)}
         {renderSection("Data Architecture", architectureData.data)}
@@ -91,7 +133,6 @@ function App() {
         {renderSection("Technology Architecture", architectureData.technology)}
       </div>
 
-      {/* Implementation Section */}
       <div className="implementation-section">
         {renderSection("Architecture Implementation", architectureData.implementation)}
       </div>
@@ -100,4 +141,3 @@ function App() {
 }
 
 export default App
-

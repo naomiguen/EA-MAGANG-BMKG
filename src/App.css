@@ -1,16 +1,16 @@
 #root {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 1rem;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   background-color: #f5f5f5;
+  min-height: 100vh;
 }
 
 /* Architecture Container */
 .architecture-container {
   background: white;
-  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-height: 100vh;
 }
 
 /* Section Styling */
@@ -80,7 +80,7 @@
   border-right: none;
 }
 
-/* Implementation Section - Full Width */
+/* Implementation Section - Full Width with Centered Content */
 .implementation-section {
   background-color: #1b5e5f;
 }
@@ -90,7 +90,15 @@
 }
 
 .implementation-section .section-content {
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.implementation-section .arch-card {
+  flex: 0 1 250px;
 }
 
 /* Card Styling */
@@ -111,7 +119,6 @@
   min-height: 100px;
   justify-content: center;
 }
-
 
 .arch-card:hover {
   transform: translateY(-2px);
@@ -174,5 +181,10 @@
 
   .section-content {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+  
+  .implementation-section .section-content {
+    flex-direction: column;
+    max-width: 100%;
   }
 }
