@@ -534,17 +534,6 @@ export default function OrganizationDiagramPage() {
             </div>
           ) : null}
         </div>
-
-        <div className="orgTopActions">
-          <button
-            className="orgBtn orgBtnGhost"
-            type="button"
-            onClick={() => setIsCrudOpen(true)}
-            disabled={isLoading}
-          >
-            Kelola Data
-          </button>
-        </div>
       </div>
 
       <div className="orgDiagramCardFull">
