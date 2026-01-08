@@ -8,6 +8,7 @@ import { architectureData } from "./data/menuData";
 
 import OrganizationDiagramPage from "./pages/OrganizationDiagramPage";
 import StrategyMapPage from "./pages/StrategyMapPage";
+import ValueChainPage from "./pages/ValueChainPage";
 
 function App() {
   const [activePage, setActivePage] = useState("architecture");
@@ -31,6 +32,11 @@ function App() {
     // Navigasi ke Strategy Map (INI YANG BARU)
     if (item.title === "Vision, Mission and Corporate Strategy") {
       setActivePage("strategy");
+      return;
+    }
+
+    if (item.title === "Value Chain Diagram") {
+      setActivePage("value_chain"); // Set state agar render bagian ValueChainPage
       return;
     }
     
@@ -111,6 +117,36 @@ function App() {
         {/* Render Halaman Strategy Map */}
         <div style={{ flex: 1, overflow: "hidden" }}>
             <StrategyMapPage />
+        </div>
+      </div>
+    );
+  }
+
+  // --- HALAMAN 3: VALUE CHAIN DIAGRAM (TAMBAHAN 3) ---
+  if (activePage === "value_chain") {
+    return (
+      // Menggunakan style full height agar scrolling sidebar berfungsi dengan baik
+      <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+        <div style={{ padding: "10px 20px", background: "#f8f9fa", borderBottom: "1px solid #ddd" }}>
+          <button
+            type="button"
+            onClick={() => setActivePage("architecture")}
+            style={{
+              padding: "0.55rem 0.8rem",
+              borderRadius: 8,
+              border: "1px solid rgba(0,0,0,0.2)",
+              background: "white",
+              fontWeight: 700,
+              cursor: "pointer",
+            }}
+          >
+            ⬅ Kembali ke Architecture Vision
+          </button>
+        </div>
+        
+        {/* Render Halaman Value Chain */}
+        <div style={{ flex: 1, overflow: "hidden" }}>
+            <ValueChainPage />
         </div>
       </div>
     );
