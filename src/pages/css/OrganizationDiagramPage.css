@@ -94,14 +94,16 @@
 
 /* Coordinators */
 .orgCoordinatorsWrapper {
-  display: inline-flex;
+  display: flex;
   gap: 80px;
   align-items: flex-start;
   justify-content: center;
   position: relative;
-  width: auto;
-  max-width: none;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
 }
+
 /* Garis horizontal level koordinators, pas dari tengah kolom pertama sampai tengah kolom terakhir */
 .orgCoordinatorsWrapper.orgHasHorizontalLine::before {
   content: "";
