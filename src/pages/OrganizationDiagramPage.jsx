@@ -602,7 +602,7 @@ export default function OrganizationDiagramPage() {
     <div className="orgPageWrapper">
       <div className="orgTopBar">
         <div>
-          <div className="orgPageTitle">Diagram Dekomposisi Organisasi</div>
+          <div className="orgPageTitle">Organization Decompposition Diagram</div>
           {isLoading ? <div className="orgMuted">Memuat data dari database...</div> : null}
           {dbError ? (
             <div className="orgWarning" style={{ marginTop: 8 }}>
