@@ -34,6 +34,10 @@ const Dashboard = () => {
       navigate('/vision/stakeholder');
       return;
     }
+    if (item.title === "Organizational Actor Catalog") {
+      navigate('/business/organizational');
+      return;
+    }
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 

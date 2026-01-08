@@ -11,6 +11,7 @@ import OrganizationDiagramPage from "./pages/OrganizationDiagramPage";
 import StrategyMapPage from "./pages/StrategyMapPage";
 import ValueChainPage from "./pages/ValueChainPage";
 import StakeholderTable from "./pages/StakeholderPage";
+import OrgStructurePage from "./pages/OrganizationalActorPage";
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
           <Route path="/vision/valuechain" element={<ValueChainPage />} />
           <Route path="/vision/strategy" element={<StrategyMapPage />} />
           <Route path="/vision/stakeholder" element={<StakeholderTable />} />
-          <Route path="/business/organization" element={<OrganizationDiagramPage />} />
+          <Route path="/business/organizational" element={<OrgStructurePage />} />
           
           {/* Placeholder untuk halaman yang belum ada */}
           <Route path="*" element={
