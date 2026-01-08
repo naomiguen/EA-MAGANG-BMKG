@@ -21,7 +21,7 @@ const Navbar = () => {
         { name: 'Strategy Map (Interaktif)', href: '/vision/strategy' },
         { name: 'Visi & Misi', href: '/vision/goals' },
         { name: 'Value Chain', href: '/vision/valuechain' },
-        { name: 'Stakeholder Matrix', href: '/vision/stakeholders' },
+        { name: 'Stakeholder Catalog', href: '/vision/stakeholder' },
         { name: 'Architecture Principles', href: '/vision/principles' },
       ]
     },

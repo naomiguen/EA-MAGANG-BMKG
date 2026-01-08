@@ -7,7 +7,7 @@ export const architectureData = {
       { id: 5, title: "Business Model Canvas", type: "text" },
       { id: 6, title: "Organization Decomposition Diagram", type: "diagram" },
       { id: 7, title: "Solution Concept Diagram", type: "diagram" },
-      { id: 8, title: "Stakeholder Matrix", type: "text" }
+      { id: 8, title: "Stakeholder Catalog", type: "text" }
     ],
     business: [
       { id: 1, title: "Business Principles", type: "text" },
