@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import OrganizationDiagramPage from "./pages/OrganizationDiagramPage";
 import StrategyMapPage from "./pages/StrategyMapPage";
+import ValueChainPage from "./pages/ValueChainPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           
           {/* Halaman Detail (Sesuai Link Navbar & Dashboard) */}
+          <Route path="/vision/valuechain" element={<ValueChainPage />} />
           <Route path="/vision/strategy" element={<StrategyMapPage />} />
           <Route path="/business/organization" element={<OrganizationDiagramPage />} />
           
