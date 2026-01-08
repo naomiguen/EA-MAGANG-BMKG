@@ -29,6 +29,7 @@ function App() {
           {/* Halaman Detail (Sesuai Link Navbar & Dashboard) */}
           <Route path="/vision/valuechain" element={<ValueChainPage />} />
           <Route path="/vision/strategy" element={<StrategyMapPage />} />
+          <Route path="/vision/stakeholder" element={<StakeholderTable />} />
           <Route path="/business/organization" element={<OrganizationDiagramPage />} />
           <Route path="/vision/principles" element={<ArchitecturePrinciplesPage />} />
           <Route path="/vision/goals" element={<ArchitectureGoalsPage />} />
