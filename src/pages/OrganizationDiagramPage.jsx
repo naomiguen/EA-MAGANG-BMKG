@@ -212,8 +212,16 @@ export default function OrganizationDiagramPage() {
     setIsLoading(false)
   }, [])
 
+  // Hindari memanggil refreshFromDb sinkron di body effect
   useEffect(() => {
-    refreshFromDb()
+    let cancelled = false
+    Promise.resolve().then(() => {
+      if (cancelled) return
+      void refreshFromDb()
+    })
+    return () => {
+      cancelled = true
+    }
   }, [refreshFromDb])
 
   const selection = useMemo(
@@ -225,13 +233,6 @@ export default function OrganizationDiagramPage() {
       }),
     [data.coordinators, selectedCoordinatorId, selectedUnitId]
   )
-
-  useEffect(() => {
-    if (selection.coordinatorId !== selectedCoordinatorId || selection.unitId !== selectedUnitId) {
-      setSelectedCoordinatorId(selection.coordinatorId)
-      setSelectedUnitId(selection.unitId)
-    }
-  }, [selection.coordinatorId, selection.unitId, selectedCoordinatorId, selectedUnitId])
 
   const selectedCoordinator = useMemo(() => {
     return data.coordinators.find((c) => c.id === selection.coordinatorId) || null
@@ -250,21 +251,22 @@ export default function OrganizationDiagramPage() {
   const [editCoordinatorTitle, setEditCoordinatorTitle] = useState("")
   const [editCoordinatorName, setEditCoordinatorName] = useState("")
 
-  useEffect(() => {
-    setEditCoordinatorTitle(selectedCoordinator?.title || "")
-    setEditCoordinatorName(selectedCoordinator?.name || "")
-  }, [selectedCoordinator?.id, selectedCoordinator?.name, selectedCoordinator?.title])
-
   const [newUnitTitle, setNewUnitTitle] = useState("")
   const [editUnitTitle, setEditUnitTitle] = useState("")
-
-  useEffect(() => {
-    setEditUnitTitle(selectedUnit?.title || "")
-  }, [selectedUnit?.id, selectedUnit?.title])
 
   const [newMemberName, setNewMemberName] = useState("")
   const [editingMemberIndex, setEditingMemberIndex] = useState(null)
   const [editingMemberName, setEditingMemberName] = useState("")
+
+  function openCrudModal() {
+    const coord = selectedCoordinator
+    const unit = selectedUnit
+
+    setEditCoordinatorTitle(coord?.title || "")
+    setEditCoordinatorName(coord?.name || "")
+    setEditUnitTitle(unit?.title || "")
+    setIsCrudOpen(true)
+  }
 
   async function addCoordinator() {
     const title = newCoordinatorTitle.trim()
@@ -420,9 +422,7 @@ export default function OrganizationDiagramPage() {
 
     const sort_order = (selectedUnit.members || []).length + 1
 
-    const { error } = await supabase
-      .from("org_members")
-      .insert({ unit_id: selectedUnit.id, name, sort_order })
+    const { error } = await supabase.from("org_members").insert({ unit_id: selectedUnit.id, name, sort_order })
 
     if (error) {
       setDbError(error.message || "Gagal menambah anggota")
@@ -484,11 +484,7 @@ export default function OrganizationDiagramPage() {
     setIsSaving(true)
     setDbError("")
 
-    const { error } = await supabase
-      .from("org_members")
-      .delete()
-      .eq("unit_id", selectedUnit.id)
-      .eq("name", name)
+    const { error } = await supabase.from("org_members").delete().eq("unit_id", selectedUnit.id).eq("name", name)
 
     if (error) {
       setDbError(error.message || "Gagal menghapus anggota")
@@ -513,52 +509,94 @@ export default function OrganizationDiagramPage() {
 
   const hasMultipleCoordinators = data.coordinators.length > 1
 
+  // Fit ke layar dan garis horizontal koordinator yang akurat saat diskala
+  const canvasRef = useRef(null)
+  const scaleWrapRef = useRef(null)
+  const chartRef = useRef(null)
+
   const coordWrapperRef = useRef(null)
+  const coordLineRef = useRef(null)
   const coordStemRefs = useRef(new Map())
-  const [coordLine, setCoordLine] = useState({ visible: false, left: 0, width: 0 })
+  const scaleRef = useRef(1)
 
-  const recalcCoordinatorLine = useCallback(() => {
-    const wrapper = coordWrapperRef.current
-    if (!wrapper) return
+  const recalcLayout = useCallback(() => {
+    const canvas = canvasRef.current
+    const scaleWrap = scaleWrapRef.current
+    const chart = chartRef.current
+    if (!canvas || !scaleWrap || !chart) return
 
-    if (!hasMultipleCoordinators) {
-      setCoordLine((p) => (p.visible ? { visible: false, left: 0, width: 0 } : p))
+    const cs = window.getComputedStyle(canvas)
+    const paddingLeft = Number.parseFloat(cs.paddingLeft || "0") || 0
+    const paddingRight = Number.parseFloat(cs.paddingRight || "0") || 0
+    const availableWidth = Math.max(0, canvas.clientWidth - paddingLeft - paddingRight)
+
+    const naturalWidth = chart.scrollWidth
+    const naturalHeight = chart.scrollHeight
+
+    const nextScale = naturalWidth > 0 ? Math.min(1, availableWidth / naturalWidth) : 1
+    scaleRef.current = nextScale
+
+    chart.style.transform = `scale(${nextScale})`
+    chart.style.transformOrigin = "top center"
+    scaleWrap.style.height = `${Math.ceil(naturalHeight * nextScale)}px`
+
+    const coordWrapper = coordWrapperRef.current
+    const coordLine = coordLineRef.current
+    if (!coordWrapper || !coordLine) return
+
+    const flexDir = window.getComputedStyle(coordWrapper).flexDirection
+    if (!hasMultipleCoordinators || flexDir === "column") {
+      coordLine.style.display = "none"
       return
     }
 
-    const orderedStems = data.coordinators
+    const stems = data.coordinators
       .map((c) => coordStemRefs.current.get(c.id))
       .filter(Boolean)
 
-    if (orderedStems.length < 2) {
-      setCoordLine((p) => (p.visible ? { visible: false, left: 0, width: 0 } : p))
+    if (stems.length < 2) {
+      coordLine.style.display = "none"
       return
     }
 
-    const wrapRect = wrapper.getBoundingClientRect()
-    const firstRect = orderedStems[0].getBoundingClientRect()
-    const lastRect = orderedStems[orderedStems.length - 1].getBoundingClientRect()
+    const wrapRect = coordWrapper.getBoundingClientRect()
+    const firstRect = stems[0].getBoundingClientRect()
+    const lastRect = stems[stems.length - 1].getBoundingClientRect()
 
-    const left = Math.round(firstRect.left + firstRect.width / 2 - wrapRect.left)
-    const right = Math.round(lastRect.left + lastRect.width / 2 - wrapRect.left)
+    const s = scaleRef.current || 1
+    const left = (firstRect.left + firstRect.width / 2 - wrapRect.left) / s
+    const right = (lastRect.left + lastRect.width / 2 - wrapRect.left) / s
     const width = Math.max(0, right - left)
 
-    setCoordLine((p) => {
-      if (p.visible && p.left === left && p.width === width) return p
-      return { visible: true, left, width }
-    })
+    coordLine.style.display = "block"
+    coordLine.style.left = `${Math.round(left)}px`
+    coordLine.style.width = `${Math.round(width)}px`
   }, [data.coordinators, hasMultipleCoordinators])
 
   useLayoutEffect(() => {
     if (isLoading) return
-    recalcCoordinatorLine()
-  }, [isLoading, recalcCoordinatorLine])
+    recalcLayout()
+  }, [isLoading, recalcLayout])
 
   useEffect(() => {
-    const onResize = () => recalcCoordinatorLine()
+    const onResize = () => {
+      requestAnimationFrame(() => recalcLayout())
+    }
     window.addEventListener("resize", onResize)
-    return () => window.removeEventListener("resize", onResize)
-  }, [recalcCoordinatorLine])
+
+    let ro = null
+    if (typeof ResizeObserver !== "undefined" && canvasRef.current) {
+      ro = new ResizeObserver(() => {
+        requestAnimationFrame(() => recalcLayout())
+      })
+      ro.observe(canvasRef.current)
+    }
+
+    return () => {
+      window.removeEventListener("resize", onResize)
+      if (ro) ro.disconnect()
+    }
+  }, [recalcLayout])
 
   return (
     <div className="orgPageWrapper">
@@ -580,70 +618,58 @@ export default function OrganizationDiagramPage() {
           <button
             className="orgBtn orgBtnGhost"
             type="button"
-            onClick={() => setIsCrudOpen(true)}
+            onClick={openCrudModal}
             disabled={isLoading}
           >
             Edit
           </button>
         </div>
 
-        <div className="orgDiagramCanvasFull">
-          <div className="orgChartFull">
-            <div className="orgChartHead">
-              <OrgNode title={data.head.title} subtitle={data.head.name} />
-              {data.coordinators.length > 0 && <div className="orgLineDownHead" />}
-            </div>
+        <div className="orgDiagramCanvasFull" ref={canvasRef}>
+          <div className="orgChartScaleWrap" ref={scaleWrapRef}>
+            <div className="orgChartFull" ref={chartRef}>
+              <div className="orgChartHead">
+                <OrgNode title={data.head.title} subtitle={data.head.name} />
+                {data.coordinators.length > 0 && <div className="orgLineDownHead" />}
+              </div>
 
-            <div className="orgCoordinatorsWrapper" ref={coordWrapperRef}>
-              {hasMultipleCoordinators && coordLine.visible ? (
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: coordLine.left,
-                    width: coordLine.width,
-                    height: "var(--line-thickness)",
-                    background: "#1a1a1a",
-                    pointerEvents: "none",
-                    zIndex: 0
-                  }}
-                />
-              ) : null}
+              <div className="orgCoordinatorsWrapper" ref={coordWrapperRef}>
+                <div className="orgCoordHLine" ref={coordLineRef} aria-hidden="true" />
 
-              {data.coordinators.map((coordinator) => {
-                const units = coordinator.units || []
-                const hasMultipleUnits = units.length > 1
+                {data.coordinators.map((coordinator) => {
+                  const units = coordinator.units || []
+                  const hasMultipleUnits = units.length > 1
 
-                return (
-                  <div key={coordinator.id} className="orgCoordinatorColumn" style={{ zIndex: 1 }}>
-                    {hasMultipleCoordinators ? (
-                      <div
-                        className="orgVerticalLineToCoord"
-                        ref={(el) => {
-                          if (el) coordStemRefs.current.set(coordinator.id, el)
-                          else coordStemRefs.current.delete(coordinator.id)
-                        }}
-                      />
-                    ) : null}
+                  return (
+                    <div key={coordinator.id} className="orgCoordinatorColumn">
+                      {hasMultipleCoordinators ? (
+                        <div
+                          className="orgVerticalLineToCoord"
+                          ref={(el) => {
+                            if (el) coordStemRefs.current.set(coordinator.id, el)
+                            else coordStemRefs.current.delete(coordinator.id)
+                          }}
+                        />
+                      ) : null}
 
-                    <OrgNode title={coordinator.title} subtitle={coordinator.name} />
+                      <OrgNode title={coordinator.title} subtitle={coordinator.name} />
 
-                    {units.length > 0 && <div className="orgVerticalLineToUnits" />}
+                      {units.length > 0 && <div className="orgVerticalLineToUnits" />}
 
-                    {units.length > 0 && (
-                      <div className={`orgUnitsWrapper${hasMultipleUnits ? " orgHasHorizontalLine" : ""}`}>
-                        {units.map((unit) => (
-                          <div key={unit.id} className="orgUnitColumn">
-                            {hasMultipleUnits && <div className="orgVerticalLineToUnit" />}
-                            <UnitNode title={unit.title} members={unit.members || []} />
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )
-              })}
+                      {units.length > 0 && (
+                        <div className={`orgUnitsWrapper${hasMultipleUnits ? " orgHasHorizontalLine" : ""}`}>
+                          {units.map((unit) => (
+                            <div key={unit.id} className="orgUnitColumn">
+                              {hasMultipleUnits && <div className="orgVerticalLineToUnit" />}
+                              <UnitNode title={unit.title} members={unit.members || []} />
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -660,8 +686,15 @@ export default function OrganizationDiagramPage() {
               onChange={(e) => {
                 const id = e.target.value || null
                 setSelectedCoordinatorId(id)
-                const coordinator = data.coordinators.find((x) => x.id === id)
-                setSelectedUnitId(coordinator?.units?.[0]?.id || null)
+
+                const coordinator = data.coordinators.find((x) => x.id === id) || null
+                const firstUnit = coordinator?.units?.[0] || null
+
+                setSelectedUnitId(firstUnit?.id || null)
+
+                setEditCoordinatorTitle(coordinator?.title || "")
+                setEditCoordinatorName(coordinator?.name || "")
+                setEditUnitTitle(firstUnit?.title || "")
               }}
               disabled={isLoading}
             >
@@ -706,12 +739,7 @@ export default function OrganizationDiagramPage() {
               />
             </div>
 
-            <button
-              className="orgBtn"
-              onClick={addCoordinator}
-              type="button"
-              disabled={isLoading || isSaving || !chartId}
-            >
+            <button className="orgBtn" onClick={addCoordinator} type="button" disabled={isLoading || isSaving || !chartId}>
               Tambah Koordinator
             </button>
           </div>
@@ -740,12 +768,7 @@ export default function OrganizationDiagramPage() {
             </div>
 
             <div className="orgRowBtns">
-              <button
-                className="orgBtn"
-                onClick={saveCoordinatorEdits}
-                type="button"
-                disabled={!selectedCoordinator || isLoading || isSaving}
-              >
+              <button className="orgBtn" onClick={saveCoordinatorEdits} type="button" disabled={!selectedCoordinator || isLoading || isSaving}>
                 Simpan Edit
               </button>
 
@@ -777,7 +800,13 @@ export default function OrganizationDiagramPage() {
             <select
               className="orgSelect"
               value={selection.unitId || ""}
-              onChange={(e) => setSelectedUnitId(e.target.value || null)}
+              onChange={(e) => {
+                const id = e.target.value || null
+                setSelectedUnitId(id)
+
+                const unit = (selectedCoordinator?.units || []).find((u) => u.id === id) || null
+                setEditUnitTitle(unit?.title || "")
+              }}
               disabled={!selectedCoordinator || (selectedCoordinator.units || []).length === 0 || isLoading}
             >
               {(selectedCoordinator?.units || []).map((u) => (
@@ -798,12 +827,7 @@ export default function OrganizationDiagramPage() {
               />
             </div>
 
-            <button
-              className="orgBtn"
-              onClick={addUnit}
-              type="button"
-              disabled={!selectedCoordinator || isLoading || isSaving}
-            >
+            <button className="orgBtn" onClick={addUnit} type="button" disabled={!selectedCoordinator || isLoading || isSaving}>
               Tambah Unit
             </button>
 
@@ -813,21 +837,11 @@ export default function OrganizationDiagramPage() {
 
                 <div className="orgField">
                   <label className="orgLabel">Edit Nama Unit</label>
-                  <input
-                    className="orgInput"
-                    value={editUnitTitle}
-                    onChange={(e) => setEditUnitTitle(e.target.value)}
-                    disabled={isLoading || isSaving}
-                  />
+                  <input className="orgInput" value={editUnitTitle} onChange={(e) => setEditUnitTitle(e.target.value)} disabled={isLoading || isSaving} />
                 </div>
 
                 <div className="orgRowBtns">
-                  <button
-                    className="orgBtn"
-                    onClick={saveUnitEdits}
-                    type="button"
-                    disabled={isLoading || isSaving}
-                  >
+                  <button className="orgBtn" onClick={saveUnitEdits} type="button" disabled={isLoading || isSaving}>
                     Simpan Unit
                   </button>
 
@@ -871,12 +885,7 @@ export default function OrganizationDiagramPage() {
                   />
                 </div>
 
-                <button
-                  className="orgBtn"
-                  onClick={addMember}
-                  type="button"
-                  disabled={isLoading || isSaving}
-                >
+                <button className="orgBtn" onClick={addMember} type="button" disabled={isLoading || isSaving}>
                   Tambah Anggota
                 </button>
 
@@ -890,27 +899,12 @@ export default function OrganizationDiagramPage() {
                       <div className="orgMemberRow" key={`${m}-${idx}`}>
                         {editingMemberIndex === idx ? (
                           <>
-                            <input
-                              className="orgInput"
-                              value={editingMemberName}
-                              onChange={(e) => setEditingMemberName(e.target.value)}
-                              disabled={isSaving}
-                            />
+                            <input className="orgInput" value={editingMemberName} onChange={(e) => setEditingMemberName(e.target.value)} disabled={isSaving} />
                             <div className="orgRowBtns">
-                              <button
-                                className="orgBtn"
-                                onClick={saveEditMember}
-                                type="button"
-                                disabled={isSaving}
-                              >
+                              <button className="orgBtn" onClick={saveEditMember} type="button" disabled={isSaving}>
                                 Simpan
                               </button>
-                              <button
-                                className="orgBtn orgBtnGhost"
-                                onClick={cancelEditMember}
-                                type="button"
-                                disabled={isSaving}
-                              >
+                              <button className="orgBtn orgBtnGhost" onClick={cancelEditMember} type="button" disabled={isSaving}>
                                 Batal
                               </button>
                             </div>
@@ -919,20 +913,10 @@ export default function OrganizationDiagramPage() {
                           <>
                             <div className="orgMemberName">{m}</div>
                             <div className="orgRowBtns">
-                              <button
-                                className="orgBtn orgBtnGhost"
-                                onClick={() => startEditMember(idx)}
-                                type="button"
-                                disabled={isSaving}
-                              >
+                              <button className="orgBtn orgBtnGhost" onClick={() => startEditMember(idx)} type="button" disabled={isSaving}>
                                 Edit
                               </button>
-                              <button
-                                className="orgBtn orgBtnDanger"
-                                onClick={() => deleteMember(idx)}
-                                type="button"
-                                disabled={isSaving}
-                              >
+                              <button className="orgBtn orgBtnDanger" onClick={() => deleteMember(idx)} type="button" disabled={isSaving}>
                                 Hapus
                               </button>
                             </div>
@@ -948,12 +932,7 @@ export default function OrganizationDiagramPage() {
 
           <div className="orgSection">
             <div className="orgSectionTitle">Utilitas</div>
-            <button
-              className="orgBtn orgBtnDanger"
-              type="button"
-              onClick={resetData}
-              disabled={isLoading || isSaving}
-            >
+            <button className="orgBtn orgBtnDanger" type="button" onClick={resetData} disabled={isLoading || isSaving}>
               Muat Ulang dari Database
             </button>
           </div>

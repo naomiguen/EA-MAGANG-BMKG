@@ -56,22 +56,31 @@
 .orgDiagramCanvasFull {
   flex: 1;
   background: #fafafa;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 3rem 2rem;
 }
 
+/* Wrapper untuk mengatur tinggi hasil scale supaya scroll vertikal tetap pas */
+.orgChartScaleWrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+}
+
+/* Chart utama */
 .orgChartFull {
   --coord-col-width: 380px;
   --unit-col-width: 320px;
   --line-thickness: 3px;
 
-  min-height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: fit-content;
-  margin: 0 auto;
-  width: 100%;
+  width: max-content;
+  max-width: none;
 }
 
 /* Kepala Stasiun */
@@ -100,20 +109,18 @@
   justify-content: center;
   position: relative;
   width: fit-content;
-  max-width: 100%;
   margin: 0 auto;
 }
 
-/* Garis horizontal level koordinators, pas dari tengah kolom pertama sampai tengah kolom terakhir */
-.orgCoordinatorsWrapper.orgHasHorizontalLine::before {
-  content: "";
+.orgCoordHLine {
   position: absolute;
   top: 0;
-  left: calc(var(--coord-col-width) / 2);
-  right: calc(var(--coord-col-width) / 2);
   height: var(--line-thickness);
   background: #1a1a1a;
   border-radius: 2px;
+  pointer-events: none;
+  z-index: 0;
+  display: none;
 }
 
 .orgCoordinatorColumn {
@@ -122,6 +129,7 @@
   align-items: center;
   position: relative;
   min-width: var(--coord-col-width);
+  z-index: 1;
 }
 
 /* Garis vertikal dari garis horizontal ke koordinator */
@@ -499,6 +507,10 @@
     gap: 60px;
   }
 
+  .orgCoordHLine {
+    display: none !important;
+  }
+
   .orgNode {
     width: 100%;
     max-width: 400px;
@@ -514,7 +526,6 @@
     max-width: 320px;
   }
 
-  .orgCoordinatorsWrapper.orgHasHorizontalLine::before,
   .orgUnitsWrapper.orgHasHorizontalLine::before {
     display: none;
   }
