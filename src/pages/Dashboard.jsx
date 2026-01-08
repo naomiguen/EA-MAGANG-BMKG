@@ -30,9 +30,15 @@ const Dashboard = () => {
       navigate('/vision/valuechain');
       return;
     }
-    if (item.title === "Stakeholder Catalog") {
-      navigate('/vision/stakeholder');
+    if (item.title === "Architecture Principles") {
+      navigate('/vision/principles');
       return;
+    }
+
+    // 4. Navigasi ke Architecture Goals (Visi & Misi)
+    if (item.title === "Architecture Goals") {
+      navigate('/vision/goals');
+      return
     }
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
