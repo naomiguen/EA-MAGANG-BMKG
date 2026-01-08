@@ -20,11 +20,8 @@ const Navbar = () => {
       children: [
         { name: 'Strategy Map', href: '/vision/strategy' },
         { name: 'Visi & Misi', href: '/vision/goals' },
-<<<<<<< HEAD
         { name: 'Struktur Organisasi', href: '/business/organization' },
-=======
         { name: 'Value Chain', href: '/vision/valuechain' },
->>>>>>> 5132aca536f62b35fa8c3b1fad97e97a003af72e
         { name: 'Stakeholder Matrix', href: '/vision/stakeholders' },
         { name: 'Architecture Principles', href: '/vision/principles' },
       ]
