@@ -22,7 +22,7 @@ const Navbar = () => {
         { name: 'Visi & Misi', href: '/vision/goals' },
         { name: 'Struktur Organisasi', href: '/business/organization' },
         { name: 'Value Chain', href: '/vision/valuechain' },
-        { name: 'Stakeholder Matrix', href: '/vision/stakeholders' },
+        { name: 'Stakeholder Catalog', href: '/vision/stakeholder' },
         { name: 'Architecture Principles', href: '/vision/principles' },
       ]
     },

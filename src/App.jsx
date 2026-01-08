@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import OrganizationDiagramPage from "./pages/OrganizationDiagramPage";
 import StrategyMapPage from "./pages/StrategyMapPage";
 import ValueChainPage from "./pages/ValueChainPage";
+import StakeholderTable from "./pages/StakeholderPage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           {/* Halaman Detail (Sesuai Link Navbar & Dashboard) */}
           <Route path="/vision/valuechain" element={<ValueChainPage />} />
           <Route path="/vision/strategy" element={<StrategyMapPage />} />
+          <Route path="/vision/stakeholder" element={<StakeholderTable />} />
           <Route path="/business/organization" element={<OrganizationDiagramPage />} />
           
           {/* Placeholder untuk halaman yang belum ada */}
