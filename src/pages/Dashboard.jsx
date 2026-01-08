@@ -40,6 +40,11 @@ const Dashboard = () => {
       navigate('/vision/goals');
       return
     }
+    if (item.title === "Stakeholder Catalog") {
+      navigate('/vision/stakeholder');
+      return
+    }
+
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 
