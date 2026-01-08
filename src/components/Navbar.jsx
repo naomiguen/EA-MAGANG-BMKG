@@ -19,7 +19,7 @@ const Navbar = () => {
       href: '/vision', 
       children: [
         { name: 'Strategy Map', href: '/vision/strategy' },
-        { name: 'Visi & Misi', href: '/vision/goals' },
+        { name: 'Architecture Goals', href: '/vision/goals' },
         { name: 'Struktur Organisasi', href: '/business/organization' },
         { name: 'Value Chain', href: '/vision/valuechain' },
         { name: 'Stakeholder Matrix', href: '/vision/stakeholders' },

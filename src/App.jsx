@@ -10,6 +10,8 @@ import Dashboard from "./pages/Dashboard";
 import OrganizationDiagramPage from "./pages/OrganizationDiagramPage";
 import StrategyMapPage from "./pages/StrategyMapPage";
 import ValueChainPage from "./pages/ValueChainPage";
+import ArchitecturePrinciplesPage from "./pages/ArchitecturePrinciplesPage";
+import ArchitectureGoalsPage from "./pages/ArchitectureGoalsPage";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
           <Route path="/vision/valuechain" element={<ValueChainPage />} />
           <Route path="/vision/strategy" element={<StrategyMapPage />} />
           <Route path="/business/organization" element={<OrganizationDiagramPage />} />
+          <Route path="/vision/principles" element={<ArchitecturePrinciplesPage />} />
+          <Route path="/vision/goals" element={<ArchitectureGoalsPage />} />
           
           {/* Placeholder untuk halaman yang belum ada */}
           <Route path="*" element={
