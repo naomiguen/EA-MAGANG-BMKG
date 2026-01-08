@@ -20,6 +20,7 @@ const Navbar = () => {
       children: [
         { name: 'Strategy Map (Interaktif)', href: '/vision/strategy' },
         { name: 'Visi & Misi', href: '/vision/goals' },
+        { name: 'Value Chain', href: '/vision/valuechain' },
         { name: 'Stakeholder Matrix', href: '/vision/stakeholders' },
         { name: 'Architecture Principles', href: '/vision/principles' },
       ]
@@ -30,7 +31,7 @@ const Navbar = () => {
       children: [
         { name: 'Struktur Organisasi', href: '/business/organization' },
         { name: 'Business Process Map', href: '/business/process' },
-        { name: 'Value Chain', href: '/business/value-chain' },
+       
       ]
     },
     { 

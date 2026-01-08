@@ -26,6 +26,10 @@ const Dashboard = () => {
       navigate('/vision/strategy');
       return;
     }
+    if (item.title === "Value Chain Diagram") {
+      navigate('/vision/valuechain');
+      return;
+    }
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 

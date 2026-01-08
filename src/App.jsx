@@ -25,6 +25,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           
           {/* Halaman Detail (Sesuai Link Navbar & Dashboard) */}
+          <Route path="/vision/valuechain" element={<ValueChainPage />} />
           <Route path="/vision/strategy" element={<StrategyMapPage />} />
           <Route path="/business/organization" element={<OrganizationDiagramPage />} />
           
