@@ -1,10 +1,14 @@
-import * as React from "react"
+import React from "react";
 
-const StrategySvgImage = ({ onDiagramClick }) => {
+
+const StrategySvgImage = ({ onKlikDiagram }) => {
+  
+  // Debugging: Pastikan paket sampai
+  console.log(" Komponen Gambar Render. Props onKlikDiagram:", onKlikDiagram);
     return (
     <svg
       //  TAMBAH KLIK & CURSOR
-      onClick={onDiagramClick}
+      onClick={onKlikDiagram}
       className="w-full h-auto cursor-pointer"
 
      
@@ -22,2390 +26,1504 @@ const StrategySvgImage = ({ onDiagramClick }) => {
     >
       
       <defs>
-        <clipPath id="mx-clip-21-217-782-26-0">
-          <rect x={21} y={217} width={782} height={26} />
+        <clipPath id="a">
+          <path d="M21 222H803V248H21z" />
+        </clipPath>
+        <clipPath id="b">
+          <path d="M21 126H271V213H21z" />
+        </clipPath>
+        <clipPath id="c">
+          <path d="M285 126H535V213H285z" />
+        </clipPath>
+        <clipPath id="d">
+          <path d="M553 126H803V213H553z" />
         </clipPath>
       </defs>
-      <g>
-        <g data-cell-id={0}>
-          <g data-cell-id={1}>
-            <g data-cell-id="card">
-              <g transform="translate(0.5,0.5)">
-                <rect
-                  x={0.26}
-                  y={0}
-                  width={824.74}
-                  height={1070}
-                  fill="#ffffff"
-                  stroke="#000000"
-                  pointerEvents="all"
-                  style={{
-                    fill: "rgb(255, 255, 255)",
-                    stroke: "rgb(0, 0, 0)"
-                  }}
+      <rect
+        fill="light-dark(#fff,var(--ge-dark-color, #121212))"
+        width="100%"
+        height="100%"
+      />
+      <g data-cell-id={0}>
+        <g data-cell-id={1}>
+          <path
+            fill="light-dark(#fff,var(--ge-dark-color, #121212))"
+            stroke="light-dark(#000 ,#fff)"
+            pointerEvents="all"
+            transform="translate(.5 .5)"
+            data-cell-id="card"
+            d="M-0.37 0H824.37V1070H-0.37z"
+          />
+          <path
+            d="M18.51 60.44l393.15-42.39 393.16 42.39z"
+            fill="light-dark(#b1ddf0 ,#173d4d)"
+            stroke="light-dark(#10739e ,#54a9ce)"
+            strokeMiterlimit={10}
+            pointerEvents="all"
+            transform="translate(.5 .5)"
+            data-cell-id="Segitiga atas"
+          />
+          <g data-cell-id="visi">
+            <path
+              fill="light-dark(#4ba6cd ,#173d4d)"
+              stroke="light-dark(#10739e ,#54a9ce)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M21 61.57H803V117.37H21z"
+            />
+            <g
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <text x={412} y={80.46}>
+                {"<<VISION>>"}
+              </text>
+              <text x={412} y={94.46}>
+                {
+                  "Terwujudnya Stasiun Meteorologi Kelas I Sultan Aji Muhammad Sulaiman Sepinggan Balikpapan Sebagai Sentra Pelayanan Informasi"
+                }
+              </text>
+              <text x={412} y={108.46}>
+                {
+                  "Meteorologi Penerbangan yang Handal dan Terpercaya guna mendukung Keselamatan Penerbangan."
+                }
+              </text>
+            </g>
+          </g>
+          <g data-cell-id="MAS">
+            <g transform="translate(.5 .5)" pointerEvents="none">
+              <path
+                fill="light-dark(#479cc1 ,#3881a1)"
+                d="M21 221.98H803V248.14H21z"
+              />
+              <path
+                d="M21 221.98h782v26.16H21v-26.16"
+                fill="none"
+                stroke="light-dark(#000 ,#fff)"
+                strokeLinecap="square"
+                strokeMiterlimit={10}
+              />
+            </g>
+            <g data-cell-id="kdk1sCQruOZLYn1sfR_3-26">
+              <g data-cell-id="kdk1sCQruOZLYn1sfR_3-27">
+                <g transform="translate(.5 .5)" fill="none" pointerEvents="all">
+                  <path d="M21 221.98H803V247.98H21z" />
+                  <path
+                    d="M21 247.98"
+                    stroke="light-dark(#000 ,#fff)"
+                    strokeLinecap="square"
+                    strokeMiterlimit={10}
+                  />
+                </g>
+                <g
+                  fill="light-dark(#000 ,#fff)"
+                  fontFamily="Helvetica"
+                  textAnchor="middle"
+                  fontSize="11.999999999999998px"
+                  clipPath="url(#a)"
+                >
+                  <text x={412} y={239.98}>
+                    {"Maximizing Aviation Safety"}
+                  </text>
+                </g>
+              </g>
+            </g>
+          </g>
+          <g data-cell-id="Public Value">
+            <g transform="translate(.5 .5)" pointerEvents="none">
+              <path
+                fill="light-dark(#fff,var(--ge-dark-color, #121212))"
+                d="M21 256.86H803V335.33000000000004H21z"
+              />
+              <path
+                d="M21 256.86h782v78.46H21v-78.46"
+                fill="none"
+                stroke="light-dark(#000 ,#fff)"
+                strokeLinecap="square"
+                strokeMiterlimit={10}
+              />
+              <path
+                d="M59 256.86v78"
+                fill="none"
+                stroke="light-dark(#000 ,#fff)"
+                strokeMiterlimit={10}
+              />
+            </g>
+            <g data-cell-id="kdk1sCQruOZLYn1sfR_3-29">
+              <g
+                transform="translate(.5 .5)"
+                fill="none"
+                pointerEvents="all"
+                data-cell-id="kdk1sCQruOZLYn1sfR_3-30"
+              >
+                <path d="M21 256.86H59V334.86H21z" />
+                <path
+                  d="M21 334.86"
+                  stroke="light-dark(#000 ,#fff)"
+                  strokeLinecap="square"
+                  strokeMiterlimit={10}
+                />
+              </g>
+              <g
+                transform="translate(.5 .5)"
+                fill="none"
+                pointerEvents="all"
+                data-cell-id="kdk1sCQruOZLYn1sfR_3-31"
+              >
+                <path d="M59 256.86H803V334.86H59z" />
+                <path
+                  d="M59 334.86"
+                  stroke="light-dark(#000 ,#fff)"
+                  strokeLinecap="square"
+                  strokeMiterlimit={10}
                 />
               </g>
             </g>
-            <g data-cell-id="HcmtDr_CGQenQgmzdA9t-5">
-              <g transform="translate(0.5,0.5)" />
-              <g data-cell-id="Segitiga atas">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 390.47 -358.9 L 432.86 34.25 L 390.47 427.41 Z"
-                    fill="#b1ddf0"
-                    stroke="#10739e"
-                    strokeMiterlimit={10}
-                    transform="rotate(-90,411.66,34.25)"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(177, 221, 240)",
-                      stroke: "rgb(16, 115, 158)"
-                    }}
-                  />
-                </g>
+          </g>
+          <g data-cell-id="kdk1sCQruOZLYn1sfR_3-32">
+            <path
+              fill="none"
+              transform="translate(.5 .5) rotate(-90 39.84 296.96)"
+              pointerEvents="all"
+              d="M6.86 283.88H72.81V310.04H6.86z"
+            />
+            <text
+              x={39.84}
+              y={301.96}
+              transform="rotate(-90 39.84 296.96)"
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              {"Public Value"}
+            </text>
+          </g>
+          <g data-cell-id="pv1">
+            <path
+              fill="light-dark(#8acae5 ,#1c536a)"
+              stroke="light-dark(#000 ,#fff)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M126.06 269.94H252.87V322.25H126.06z"
+            />
+            <g
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <text x={189.47} y={287.1}>
+                {"<<PV1>>"}
+              </text>
+              <text x={189.47} y={301.1}>
+                {"Efisiensi Operasional"}
+              </text>
+              <text x={189.47} y={315.1}>
+                {"Penerbangan"}
+              </text>
+            </g>
+          </g>
+          <g data-cell-id="pv3">
+            <path
+              fill="light-dark(#8acae5 ,#1c536a)"
+              stroke="light-dark(#000 ,#fff)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M371.96 269.94H485.02V322.25H371.96z"
+            />
+            <g
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <text x={428.49} y={287.09}>
+                {"<<PV3>>"}
+              </text>
+              <text x={428.49} y={301.09}>
+                {"Keselamatan"}
+              </text>
+              <text x={428.49} y={315.09}>
+                {"Penerbangan"}
+              </text>
+            </g>
+          </g>
+          <g data-cell-id="pv2">
+            <path
+              fill="light-dark(#8acae5 ,#1c536a)"
+              stroke="light-dark(#000 ,#fff)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M614.57 269.94H727.6300000000001V322.25H614.57z"
+            />
+            <g
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <text x={671.1} y={294.09}>
+                {"<<PV2>>"}
+              </text>
+              <text x={671.1} y={308.09}>
+                {"Kepercayaan Publik"}
+              </text>
+            </g>
+          </g>
+          <g
+            transform="translate(.5 .5)"
+            pointerEvents="none"
+            data-cell-id="IPdanCC"
+          >
+            <path
+              fill="light-dark(#fff,var(--ge-dark-color, #121212))"
+              d="M21 387.63H803V867.14H21z"
+            />
+            <path
+              d="M21 387.63h782v479.51H21V387.63"
+              fill="none"
+              stroke="light-dark(#000 ,#fff)"
+              strokeLinecap="square"
+              strokeMiterlimit={10}
+            />
+          </g>
+          <g data-cell-id="IPdanC">
+            <path
+              fill="none"
+              transform="translate(.5 .5) rotate(-90 39.84 458.25)"
+              pointerEvents="all"
+              d="M-26.11 445.17H105.79V471.33000000000004H-26.11z"
+            />
+            <text
+              x={39.84}
+              y={463.25}
+              transform="rotate(-90 39.84 458.25)"
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              {"Customer / Stakeholder"}
+            </text>
+          </g>
+          <g data-cell-id="kdk1sCQruOZLYn1sfR_3-56">
+            <path
+              fill="none"
+              transform="translate(.5 .5) rotate(-90 39.84 617.23)"
+              pointerEvents="all"
+              d="M-21.4 604.16H101.08000000000001V630.3199999999999H-21.4z"
+            />
+            <text
+              x={39.84}
+              y={622.23}
+              transform="rotate(-90 39.84 617.23)"
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              {"Internal Process"}
+            </text>
+          </g>
+          <g data-cell-id="IP1">
+            <path
+              fill="light-dark(#8acae5 ,#1c536a)"
+              stroke="light-dark(#000 ,#fff)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M119.93 570.72H261.26V631.75H119.93z"
+            />
+            <g
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <text x={190.59} y={592.23}>
+                {"<<IP1>>"}
+              </text>
+              <text x={190.59} y={606.23}>
+                {"Standardized Observation"}
+              </text>
+              <text x={190.59} y={620.23}>
+                {"& Analysis Process"}
+              </text>
+            </g>
+          </g>
+          <g data-cell-id="C1">
+            <path
+              fill="light-dark(#8acae5 ,#1c536a)"
+              stroke="light-dark(#000 ,#fff)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M119.93 427.74H261.26V488.77H119.93z"
+            />
+            <g
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <text x={190.59} y={449.25}>
+                {"<<C1>>"}
+              </text>
+              <text x={190.59} y={463.25}>
+                {"High Satisfaction of"}
+              </text>
+              <text x={190.59} y={477.25}>
+                {"Aviation Partners"}
+              </text>
+            </g>
+          </g>
+          <g data-cell-id="C2">
+            <path
+              fill="light-dark(#8acae5 ,#1c536a)"
+              stroke="light-dark(#000 ,#fff)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M359.48 427.74H500.81000000000006V488.77H359.48z"
+            />
+            <g
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <text x={430.14} y={449.25}>
+                {"<<C2>>"}
+              </text>
+              <text x={430.14} y={463.25}>
+                {"Compliance with"}
+              </text>
+              <text x={430.14} y={477.25}>
+                {"Int&apos;l Standards"}
+              </text>
+            </g>
+          </g>
+          <g data-cell-id="C3">
+            <path
+              fill="light-dark(#8acae5 ,#1c536a)"
+              stroke="light-dark(#000 ,#fff)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M595.72 426.87H737.0500000000001V487.9H595.72z"
+            />
+            <g
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <text x={666.39} y={448.38}>
+                {"<<C3>>"}
+              </text>
+              <text x={666.39} y={462.38}>
+                {"Strong Collaborative"}
+              </text>
+              <text x={666.39} y={476.38}>
+                {"Engagement"}
+              </text>
+            </g>
+          </g>
+          <g data-cell-id="IP2">
+            <path
+              fill="light-dark(#8acae5 ,#1c536a)"
+              stroke="light-dark(#000 ,#fff)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M349.71 570.72H510.58V631.75H349.71z"
+            />
+            <g
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <text x={430.14} y={592.23}>
+                {"<<IP2>>"}
+              </text>
+              <text x={430.14} y={606.23}>
+                {"Effective Information"}
+              </text>
+              <text x={430.14} y={620.23}>
+                {"Dissemination & Coordination"}
+              </text>
+            </g>
+          </g>
+          <g data-cell-id="IP3">
+            <path
+              fill="light-dark(#8acae5 ,#1c536a)"
+              stroke="light-dark(#000 ,#fff)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M595.72 570.72H737.0500000000001V631.75H595.72z"
+            />
+            <g
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <text x={666.39} y={592.23}>
+                {"<<IP3>>"}
+              </text>
+              <text x={666.39} y={606.23}>
+                {"Integrated Data"}
+              </text>
+              <text x={666.39} y={620.23}>
+                {"Management System"}
+              </text>
+            </g>
+          </g>
+          <g data-cell-id="LG">
+            <g transform="translate(.5 .5)" pointerEvents="none">
+              <path
+                fill="light-dark(#fff,var(--ge-dark-color, #121212))"
+                d="M21 922.94H803V1045H21z"
+              />
+              <path
+                d="M21 922.94h782V1045H21V922.94"
+                fill="none"
+                stroke="light-dark(#000 ,#fff)"
+                strokeLinecap="square"
+                strokeMiterlimit={10}
+              />
+              <path
+                d="M68 922.94v122"
+                fill="none"
+                stroke="light-dark(#000 ,#fff)"
+                strokeMiterlimit={10}
+              />
+            </g>
+            <g data-cell-id="18trQx8ktChYFQUgksBL-13">
+              <g
+                transform="translate(.5 .5)"
+                fill="none"
+                pointerEvents="all"
+                data-cell-id="18trQx8ktChYFQUgksBL-14"
+              >
+                <path d="M21 922.94H68V1044.94H21z" />
+                <path
+                  d="M21 1044.94"
+                  stroke="light-dark(#000 ,#fff)"
+                  strokeLinecap="square"
+                  strokeMiterlimit={10}
+                />
               </g>
-              <g data-cell-id="visi">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={21}
-                    y={56.57}
-                    width={782}
-                    height={55.8}
-                    fill="#4ba6cd"
-                    stroke="#10739e"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(75, 166, 205)",
-                      stroke: "rgb(16, 115, 158)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={412} y={75.46}>
-                      {"<<VISION>>"}
-                    </text>
-                    <text x={412} y={89.46}>
-                      {
-                        "Terwujudnya Stasiun Meteorologi  Kelas I Sultan Aji Muhammad Sulaiman\xA0Sepinggan Balikpapan Sebagai Sentra Pelayanan Informasi\xA0"
-                      }
-                    </text>
-                    <text x={412} y={103.46}>
-                      {
-                        "Meteorologi\xA0Penerbangan\xA0yang Handal dan Terpercaya guna mendukung Keselamatan Penerbangan.\xA0"
-                      }
-                    </text>
-                  </g>
-                </g>
+              <g
+                transform="translate(.5 .5)"
+                fill="none"
+                pointerEvents="all"
+                data-cell-id="18trQx8ktChYFQUgksBL-15"
+              >
+                <path d="M68 922.94H803V1044.94H68z" />
+                <path
+                  d="M68 1044.94"
+                  stroke="light-dark(#000 ,#fff)"
+                  strokeLinecap="square"
+                  strokeMiterlimit={10}
+                />
               </g>
-              <g data-cell-id="Misi2">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={286.58}
-                    y={121.08}
-                    width={249.68}
-                    height={87.18}
-                    fill="#8acae5"
-                    stroke="none"
-                    pointerEvents="none"
-                    style={{
-                      fill: "rgb(138, 202, 229)"
-                    }}
-                  />
+            </g>
+          </g>
+          <g data-cell-id="wnEzJVQnu9i65wA92bw6-1">
+            <path
+              fill="none"
+              transform="translate(.5 .5) rotate(-90 44.55 985.71)"
+              pointerEvents="all"
+              d="M-11.98 972.64H101.08V998.8H-11.98z"
+            />
+            <text
+              x={44.55}
+              y={990.71}
+              transform="rotate(-90 44.55 985.71)"
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              {"Learning & Growth"}
+            </text>
+          </g>
+          <g data-cell-id="L1">
+            <path
+              fill="light-dark(#8acae5 ,#1c536a)"
+              stroke="light-dark(#000 ,#fff)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M86.95 953.46H237.7V1017.98H86.95z"
+            />
+            <g
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <text x={162.32} y={976.71}>
+                {"<<L1>>"}
+              </text>
+              <text x={162.32} y={990.71}>
+                {"Digital & Technological"}
+              </text>
+              <text x={162.32} y={1004.71}>
+                {"Capability"}
+              </text>
+            </g>
+          </g>
+          <g data-cell-id="L2">
+            <path
+              fill="light-dark(#8acae5 ,#1c536a)"
+              stroke="light-dark(#000 ,#fff)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M261.25 953.46H412V1017.98H261.25z"
+            />
+            <g
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <text x={336.62} y={976.71}>
+                {"<<L2>>"}
+              </text>
+              <text x={336.62} y={990.71}>
+                {"Certified Professional"}
+              </text>
+              <text x={336.62} y={1004.71}>
+                {"Competency"}
+              </text>
+            </g>
+          </g>
+          <g data-cell-id="L3">
+            <path
+              fill="light-dark(#8acae5 ,#1c536a)"
+              stroke="light-dark(#000 ,#fff)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M444.97 951.71H595.72V1016.23H444.97z"
+            />
+            <g
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <text x={520.35} y={981.97}>
+                {"<<L3>>"}
+              </text>
+              <text x={520.35} y={995.97}>
+                {"Safety & Service Culture"}
+              </text>
+            </g>
+          </g>
+          <g data-cell-id="L4">
+            <path
+              fill="light-dark(#8acae5 ,#1c536a)"
+              stroke="light-dark(#000 ,#fff)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M623.99 951.71H774.74V1016.23H623.99z"
+            />
+            <g
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <text x={699.36} y={974.97}>
+                {"<<L4>>"}
+              </text>
+              <text x={699.36} y={988.97}>
+                {"Adaptive Human"}
+              </text>
+              <text x={699.36} y={1002.97}>
+                {"Capital Management"}
+              </text>
+            </g>
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="wnEzJVQnu9i65wA92bw6-6"
+          >
+            <path
+              d="M336.62 953.46l-.59-218.66"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M336.02 729.55l3.51 6.99-3.5-1.74-3.5 1.76z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="wnEzJVQnu9i65wA92bw6-12"
+          >
+            <path
+              d="M72.82 705.85h-4.71v-91.54l43.7 1.84"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M118.81 616.44l-7.14 3.21.29-7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="wnEzJVQnu9i65wA92bw6-13"
+          >
+            <path
+              d="M520.35 951.71v-93.88"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M520.35 850.83l3.5 7h-7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="wnEzJVQnu9i65wA92bw6-14"
+          >
+            <path
+              d="M699.36 951.71V797.67"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M699.36 790.67l3.5 7h-7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="wnEzJVQnu9i65wA92bw6-16"
+          >
+            <path
+              d="M162.32 953.46V666.62h602.99v-49.69l-20.15-.31"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M738.17 616.51l7.05-3.39-.11 7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g data-cell-id="IP4">
+            <path
+              fill="light-dark(#8acae5 ,#1c536a)"
+              stroke="light-dark(#000 ,#fff)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M72.82 684.06H784.1600000000001V727.65H72.82z"
+            />
+            <g
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <text x={428.49} y={703.85}>
+                {"<<IP4>>"}
+              </text>
+              <text x={428.49} y={717.85}>
+                {"Implementasi Sistem Manajemen Mutu"}
+              </text>
+            </g>
+          </g>
+          <g data-cell-id="IP5">
+            <path
+              fill="light-dark(#8acae5 ,#1c536a)"
+              stroke="light-dark(#000 ,#fff)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M73.76 745.09H785.1V788.6800000000001H73.76z"
+            />
+            <g
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <text x={429.43} y={764.88}>
+                {"<<IP5>>"}
+              </text>
+              <text x={429.43} y={778.88}>
+                {"Reformasi Birokrasi & Tata Kelola Pemerintahan"}
+              </text>
+            </g>
+          </g>
+          <g data-cell-id="IP6">
+            <path
+              fill="light-dark(#8acae5 ,#1c536a)"
+              stroke="light-dark(#000 ,#fff)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M72.82 806.12H784.1600000000001V849.71H72.82z"
+            />
+            <g
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <text x={428.49} y={825.91}>
+                {"<<IP6>>"}
+              </text>
+              <text x={428.49} y={839.91}>
+                {"Sistem Manajemen Keselamatan & Kepatuhan K3"}
+              </text>
+            </g>
+          </g>
+          <g data-cell-id="HCTR">
+            <path
+              fill="light-dark(#479cc1 ,#3881a1)"
+              stroke="light-dark(#000 ,#fff)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M21 875.86H803V910.73H21z"
+            />
+            <text
+              x={412}
+              y={898.3}
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              {"HUMAN CAPITAL & TECHNOLOGY READINESS"}
+            </text>
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="wnEzJVQnu9i65wA92bw6-17"
+          >
+            <path
+              d="M428.49 684.06l.4-45.07"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M428.95 631.99l3.44 7.04-7-.07z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="wnEzJVQnu9i65wA92bw6-18"
+          >
+            <path
+              d="M72.82 827.91H62.45V601.23h49.36"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M118.81 601.23l-7 3.5v-7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-4"
+          >
+            <path
+              d="M416.95 570.66l-.24-26.1H190.59v-47.68"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M190.59 489.88l3.5 7h-7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-6"
+          >
+            <path
+              d="M446.23 570.66l-.31-34.81h220.47v-39.84"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M666.39 489.01l3.5 7h-7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-7"
+          >
+            <path
+              d="M190.59 570.72v-17.44h141.32v-95.03h19.45"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M358.36 458.25l-7 3.5v-7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-8"
+          >
+            <path
+              d="M118.79 589.76l-31.84.14V457.38l24.86.66"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M118.81 458.22l-7.09 3.32.18-7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-9"
+          >
+            <path
+              d="M737.05 588.16h28.26v-69.75H303.65v-60.16h-34.28"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M262.37 458.25l7-3.5v7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-10"
+          >
+            <path
+              d="M737.05 601.23h47.11v-91.54H558.04v-35.74l-49.11-.38"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M501.93 473.52l7.02-3.45-.05 7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-11"
+          >
+            <path
+              d="M119.64 475.1l-13.85-.28v107.23l6.02.04"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M118.81 582.13l-7.02 3.46.04-7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-12"
+          >
+            <path
+              d="M261.25 473.51l32.98.44v112.46l47.36-.37"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M348.59 585.99l-6.97 3.55-.05-7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-13"
+          >
+            <path
+              d="M430.14 488.77v73.83"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M430.14 569.6l-3.5-7h7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-14"
+          >
+            <path
+              d="M594.73 466.23l-46.12-.13v120.31l-29.91-.34"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M511.7 585.99l7.04-3.42-.08 7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-15"
+          >
+            <path
+              d="M189.47 269.94l-.3-13.82"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M189.02 249.12l3.65 6.92-7 .15z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-16"
+          >
+            <path
+              d="M671.61 269.86l.01-13.94"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M671.62 248.92l3.5 7h-7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-17"
+          >
+            <path
+              d="M595.72 601.23v13.08h-47.11v34.88H190.59v-9.32"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M190.59 632.87l3.5 7h-7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-18"
+          >
+            <path
+              d="M595.72 601.23H518.7"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M511.7 601.23l7-3.5v7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-19"
+          >
+            <path
+              d="M359.48 443h-90.11"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M262.37 443l7-3.5v7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-20"
+          >
+            <path
+              d="M485.02 296.09h121.43"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M613.45 296.09l-7 3.5v-7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-21"
+          >
+            <path
+              d="M252.87 296.1l110.97-.01"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M370.84 296.09l-7 3.5v-7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-23"
+          >
+            <path
+              d="M190.59 427.74v-22.67h210.1l-.42-74.71"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M400.23 323.36l3.54 6.98-7 .04z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-24"
+          >
+            <path
+              d="M430.14 427.74l-1.53-97.38"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M428.5 323.36l3.61 6.95-7 .11z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-27"
+          >
+            <path
+              d="M500.81 458.25h47.8V309.17h57.84"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M613.45 309.17l-7 3.5v-7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-28"
+          >
+            <path
+              d="M737.05 457.38h28.26V309.17h-29.57"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M728.74 309.17l7-3.5v7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            transform="translate(.5 .5)"
+            pointerEvents="none"
+            data-cell-id="DM"
+          >
+            <path
+              fill="light-dark(#479cc1 ,#3881a1)"
+              d="M553.32 344.04H803V378.91H553.32z"
+            />
+            <path
+              d="M553.32 344.04H803v34.88H553.32v-34.88"
+              fill="none"
+              stroke="light-dark(#000 ,#fff)"
+              strokeLinecap="square"
+              strokeMiterlimit={10}
+            />
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-29"
+          >
+            <path
+              d="M595.72 442.12l-65.95.44V309.17h-36.64"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M486.13 309.17l7-3.5v7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            transform="translate(.5 .5)"
+            pointerEvents="none"
+            data-cell-id="SC"
+          >
+            <path
+              fill="light-dark(#479cc1 ,#3881a1)"
+              d="M286.58 344.04H536.26V378.91H286.58z"
+            />
+            <path
+              d="M286.58 344.04h249.67v34.88H286.58v-34.88"
+              fill="none"
+              stroke="light-dark(#000 ,#fff)"
+              strokeLinecap="square"
+              strokeMiterlimit={10}
+            />
+          </g>
+          <g data-cell-id="Misi1">
+            <g transform="translate(.5 .5)" pointerEvents="none">
+              <path
+                fill="light-dark(#8acae5 ,#173d4d)"
+                d="M21 126.08H270.68V213.26H21z"
+              />
+              <path
+                d="M21 126.08h249.67v87.19H21v-87.19"
+                fill="none"
+                stroke="light-dark(#10739e ,#54a9ce)"
+                strokeLinecap="square"
+                strokeMiterlimit={10}
+              />
+            </g>
+            <g data-cell-id="tECFEMoWoNaPAm7a_ITt-33">
+              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-34">
+                <g transform="translate(.5 .5)" fill="none" pointerEvents="all">
+                  <path d="M21 126.08H271V213.07999999999998H21z" />
                   <path
-                    d="M 286.58 121.08 L 536.25 121.08 L 536.25 208.27 L 286.58 208.27 L 286.58 121.08"
-                    fill="none"
-                    stroke="#000000"
+                    d="M21 213.07999999999998"
+                    stroke="light-dark(#10739e ,#54a9ce)"
                     strokeLinecap="square"
                     strokeMiterlimit={10}
-                    pointerEvents="none"
-                    style={{
-                      stroke: "rgb(0, 0, 0)"
-                    }}
                   />
                 </g>
-                <g data-cell-id="kdk1sCQruOZLYn1sfR_3-10">
-                  <g transform="translate(0.5,0.5)" />
-                  <g data-cell-id="kdk1sCQruOZLYn1sfR_3-11">
-                    <g transform="translate(0.5,0.5)">
-                      <rect
-                        x={286.58}
-                        y={121.08}
-                        width={250}
-                        height={87}
-                        fill="none"
-                        stroke="none"
-                        pointerEvents="all"
-                      />
-                      <path
-                        d="M 286.58 121.08 M 536.58 121.08 M 536.58 208.08 M 286.58 208.08"
-                        fill="none"
-                        stroke="#000000"
-                        strokeLinecap="square"
-                        strokeMiterlimit={10}
-                        pointerEvents="all"
-                        style={{
-                          stroke: "rgb(0, 0, 0)"
-                        }}
-                      />
-                    </g>
-                    <g>
-                      <g>
-                        <switch>
-                          <foreignObject
-                            style={{
-                              overflow: "visible",
-                              textAlign: "left"
-                            }}
-                            pointerEvents="none"
-                            width="100%"
-                            height="100%"
-                            requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
-                          >
-                            <div
-                              xmlns="http://www.w3.org/1999/xhtml"
-                              style={{
-                                display: "flex",
-                                alignItems: "unsafe center",
-                                justifyContent: "unsafe center",
-                                width: 248,
-                                height: 1,
-                                paddingTop: 165,
-                                marginLeft: 288
-                              }}
-                            >
-                              <div
-                                style={{
-                                  boxSizing: "border-box",
-                                  fontSize: 0,
-                                  textAlign: "center",
-                                  maxHeight: 83,
-                                  overflow: "hidden",
-                                  color: "#000000"
-                                }}
-                              >
-                                <div
-                                  style={{
-                                    display: "inline-block",
-                                    fontSize: 12,
-                                    fontFamily: "Helvetica",
-                                    color: "#000000",
-                                    lineHeight: 1.2,
-                                    pointerEvents: "all",
-                                    whiteSpace: "normal",
-                                    wordWrap: "normal"
-                                  }}
-                                >
-                                  {"<<MISSION>>"}
-                                  <br />
-                                  {
-                                    "Mewujudkan peningkatan kualitas dan kuantitas analisis pelayanan informasi meteorologi penerbangan sesuai standar Internasional.\xA0"
-                                  }
-                                </div>
-                              </div>
-                            </div>
-                          </foreignObject>
-                          <text
-                            x={412}
-                            y={168}
-                            fill="light-dark(#000000, #ffffff)"
-                            fontFamily="Helvetica"
-                            fontSize="12px"
-                            textAnchor="middle"
-                          >
-                            {"<<MISSION>>"}
-                          </text>
-                        </switch>
-                      </g>
-                    </g>
-                  </g>
+                <g
+                  fill="light-dark(#000 ,#fff)"
+                  fontFamily="Helvetica"
+                  textAnchor="middle"
+                  fontSize="11.999999999999998px"
+                  clipPath="url(#b)"
+                >
+                  <text x={146} y={146.58}>
+                    {"<<MISSION>>"}
+                  </text>
+                  <text x={146} y={160.58}>
+                    {"Mewujudkan peningkatan kualitas dan"}
+                  </text>
+                  <text x={146} y={174.58}>
+                    {"kuantitas pengamatan, pengumpulan,"}
+                  </text>
+                  <text x={146} y={188.58}>
+                    {"penyebaran data dan informasi meteorologi"}
+                  </text>
+                  <text x={146} y={202.58}>
+                    {"penerbangan sesuai standar Internasional."}
+                  </text>
                 </g>
               </g>
-              <g data-cell-id="Misi3">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={553.32}
-                    y={121.08}
-                    width={249.68}
-                    height={87.18}
-                    fill="#8acae5"
-                    stroke="none"
-                    pointerEvents="none"
-                    style={{
-                      fill: "rgb(138, 202, 229)"
-                    }}
-                  />
+            </g>
+          </g>
+          <g
+            stroke="light-dark(#9a9a9a ,#696969)"
+            strokeMiterlimit={10}
+            data-cell-id="tECFEMoWoNaPAm7a_ITt-22"
+          >
+            <path
+              d="M119.93 444.3l-23.56.44V297.4l20.51-.29"
+              fill="none"
+              pointerEvents="stroke"
+              transform="translate(.5 .5)"
+            />
+            <path
+              d="M123.88 297.02l-6.95 3.59-.1-7z"
+              fill="light-dark(#9a9a9a ,#696969)"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+            />
+          </g>
+          <g
+            transform="translate(.5 .5)"
+            pointerEvents="none"
+            data-cell-id="SE"
+          >
+            <path
+              fill="light-dark(#479cc1 ,#3881a1)"
+              d="M21 344.04H270.68V378.91H21z"
+            />
+            <path
+              d="M21 344.04h249.67v34.88H21v-34.88"
+              fill="none"
+              stroke="light-dark(#000 ,#fff)"
+              strokeLinecap="square"
+              strokeMiterlimit={10}
+            />
+          </g>
+          <g data-cell-id="05RmtZPogVj4Z4eBfIh9-6">
+            <path
+              fill="none"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M70.46 348.4H221.20999999999998V374.56H70.46z"
+            />
+            <text
+              x={145.83}
+              y={366.48}
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              {"SERVICE EXCELLENCE"}
+            </text>
+          </g>
+          <g data-cell-id="HcmtDr_CGQenQgmzdA9t-2">
+            <path
+              fill="none"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M312.08 348.89H509.78V375.05H312.08z"
+            />
+            <text
+              x={410.93}
+              y={366.97}
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              {"STRATEGIC COLLLABORATION"}
+            </text>
+          </g>
+          <g data-cell-id="HcmtDr_CGQenQgmzdA9t-3">
+            <path
+              fill="none"
+              pointerEvents="all"
+              transform="translate(.5 .5)"
+              d="M591.01 348.89H765.31V375.05H591.01z"
+            />
+            <text
+              x={678.16}
+              y={366.97}
+              fill="light-dark(#000 ,#fff)"
+              fontFamily="Helvetica"
+              textAnchor="middle"
+              fontSize="11.999999999999998px"
+            >
+              <tspan>{"DIGITAL MODERNIZATION"}</tspan>
+            </text>
+          </g>
+          <g data-cell-id="Misi2">
+            <g transform="translate(.5 .5)" pointerEvents="none">
+              <path
+                fill="light-dark(#8acae5 ,#173d4d)"
+                d="M285 126.08H534.6800000000001V213.26H285z"
+              />
+              <path
+                d="M285 126.08h249.67v87.19H285v-87.19"
+                fill="none"
+                stroke="light-dark(#10739e ,#54a9ce)"
+                strokeLinecap="square"
+                strokeMiterlimit={10}
+              />
+            </g>
+            <g data-cell-id="qaVLlRl51US2y16quF3I-4">
+              <g data-cell-id="qaVLlRl51US2y16quF3I-5">
+                <g transform="translate(.5 .5)" fill="none" pointerEvents="all">
+                  <path d="M285 126.08H535V213.07999999999998H285z" />
                   <path
-                    d="M 553.32 121.08 L 803 121.08 L 803 208.27 L 553.32 208.27 L 553.32 121.08"
-                    fill="none"
-                    stroke="#000000"
+                    d="M285 213.07999999999998"
+                    stroke="light-dark(#10739e ,#54a9ce)"
                     strokeLinecap="square"
                     strokeMiterlimit={10}
-                    pointerEvents="none"
-                    style={{
-                      stroke: "rgb(0, 0, 0)"
-                    }}
                   />
                 </g>
-                <g data-cell-id="kdk1sCQruOZLYn1sfR_3-20">
-                  <g transform="translate(0.5,0.5)" />
-                  <g data-cell-id="kdk1sCQruOZLYn1sfR_3-21">
-                    <g transform="translate(0.5,0.5)">
-                      <rect
-                        x={553.32}
-                        y={121.08}
-                        width={250}
-                        height={87}
-                        fill="none"
-                        stroke="none"
-                        pointerEvents="all"
-                      />
-                      <path
-                        d="M 553.32 121.08 M 803.32 121.08 M 803.32 208.08 M 553.32 208.08"
-                        fill="none"
-                        stroke="#000000"
-                        strokeLinecap="square"
-                        strokeMiterlimit={10}
-                        pointerEvents="all"
-                        style={{
-                          stroke: "rgb(0, 0, 0)"
-                        }}
-                      />
-                    </g>
-                    <g>
-                      <g>
-                        <switch>
-                          <foreignObject
-                            style={{
-                              overflow: "visible",
-                              textAlign: "left"
-                            }}
-                            pointerEvents="none"
-                            width="100%"
-                            height="100%"
-                            requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
-                          >
-                            <div
-                              xmlns="http://www.w3.org/1999/xhtml"
-                              style={{
-                                display: "flex",
-                                alignItems: "unsafe center",
-                                justifyContent: "unsafe center",
-                                width: 248,
-                                height: 1,
-                                paddingTop: 165,
-                                marginLeft: 554
-                              }}
-                            >
-                              <div
-                                style={{
-                                  boxSizing: "border-box",
-                                  fontSize: 0,
-                                  textAlign: "center",
-                                  maxHeight: 83,
-                                  overflow: "hidden",
-                                  color: "#000000"
-                                }}
-                              >
-                                <div
-                                  style={{
-                                    display: "inline-block",
-                                    fontSize: 12,
-                                    fontFamily: "Helvetica",
-                                    color: "#000000",
-                                    lineHeight: 1.2,
-                                    pointerEvents: "all",
-                                    whiteSpace: "normal",
-                                    wordWrap: "normal"
-                                  }}
-                                >
-                                  {"<<MISSION>>"}
-                                  <br />
-                                  {
-                                    "Mewujudkan koordinasi dengan BBMKG Wilayah III, Pemerintah Daerah / Provinsi dan pengguna Layanan dalam penyelenggaraan kegiatan meteorologi penerbangan.\xA0\xA0"
-                                  }
-                                </div>
-                              </div>
-                            </div>
-                          </foreignObject>
-                          <text
-                            x={678}
-                            y={168}
-                            fill="light-dark(#000000, #ffffff)"
-                            fontFamily="Helvetica"
-                            fontSize="12px"
-                            textAnchor="middle"
-                          >
-                            {"<<MISSION>>"}
-                          </text>
-                        </switch>
-                      </g>
-                    </g>
-                  </g>
+                <g
+                  fill="light-dark(#000 ,#fff)"
+                  fontFamily="Helvetica"
+                  textAnchor="middle"
+                  fontSize="11.999999999999998px"
+                  clipPath="url(#c)"
+                >
+                  <text x={410} y={146.58}>
+                    {"<<MISSION>>"}
+                  </text>
+                  <text x={410} y={160.58}>
+                    {"Mewujudkan peningkatan kualitas dan"}
+                  </text>
+                  <text x={410} y={174.58}>
+                    {"kuantitas analisis pelayanan informasi"}
+                  </text>
+                  <text x={410} y={188.58}>
+                    {"meteorologi penerbangan sesuai standar"}
+                  </text>
+                  <text x={410} y={202.58}>
+                    {"Internasional."}
+                  </text>
                 </g>
               </g>
-              <g data-cell-id="MAS">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={21}
-                    y={216.98}
-                    width={782}
-                    height={26.16}
-                    fill="#479cc1"
-                    stroke="none"
-                    pointerEvents="none"
-                    style={{
-                      fill: "rgb(71, 156, 193)"
-                    }}
-                  />
+            </g>
+          </g>
+          <g data-cell-id="Misi3">
+            <g transform="translate(.5 .5)" pointerEvents="none">
+              <path
+                fill="light-dark(#8acae5 ,#173d4d)"
+                d="M553.33 126.08H803.01V213.26H553.33z"
+              />
+              <path
+                d="M553.33 126.08H803v87.19H553.33v-87.19"
+                fill="none"
+                stroke="light-dark(#10739e ,#54a9ce)"
+                strokeLinecap="square"
+                strokeMiterlimit={10}
+              />
+            </g>
+            <g data-cell-id="qaVLlRl51US2y16quF3I-7">
+              <g data-cell-id="qaVLlRl51US2y16quF3I-8">
+                <g transform="translate(.5 .5)" fill="none" pointerEvents="all">
+                  <path d="M553.33 126.08H803.33V213.07999999999998H553.33z" />
                   <path
-                    d="M 21 216.98 L 803 216.98 L 803 243.14 L 21 243.14 L 21 216.98"
-                    fill="none"
-                    stroke="#000000"
+                    d="M553.33 213.07999999999998"
+                    stroke="light-dark(#10739e ,#54a9ce)"
                     strokeLinecap="square"
                     strokeMiterlimit={10}
-                    pointerEvents="none"
-                    style={{
-                      stroke: "rgb(0, 0, 0)"
-                    }}
                   />
                 </g>
-                <g data-cell-id="kdk1sCQruOZLYn1sfR_3-26">
-                  <g transform="translate(0.5,0.5)" />
-                  <g data-cell-id="kdk1sCQruOZLYn1sfR_3-27">
-                    <g transform="translate(0.5,0.5)">
-                      <rect
-                        x={21}
-                        y={216.98}
-                        width={782}
-                        height={26}
-                        fill="none"
-                        stroke="none"
-                        pointerEvents="all"
-                      />
-                      <path
-                        d="M 21 216.98 M 803 216.98 M 803 242.98 M 21 242.98"
-                        fill="none"
-                        stroke="#000000"
-                        strokeLinecap="square"
-                        strokeMiterlimit={10}
-                        pointerEvents="all"
-                        style={{
-                          stroke: "rgb(0, 0, 0)"
-                        }}
-                      />
-                    </g>
-                    <g>
-                      <g
-                        fill="#000000"
-                        fontFamily="Helvetica"
-                        textAnchor="middle"
-                        fontSize="12px"
-                        clipPath="url(#mx-clip-21-217-782-26-0)"
-                        style={{
-                          fill: "rgb(0, 0, 0)"
-                        }}
-                      >
-                        <text x={412} y={234.98}>
-                          {"Maximizing Aviation Safety"}
-                        </text>
-                      </g>
-                    </g>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="Public Value">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={21}
-                    y={251.86}
-                    width={782}
-                    height={78.47}
-                    fill="#ffffff"
-                    stroke="none"
-                    pointerEvents="none"
-                    style={{
-                      fill: "rgb(255, 255, 255)"
-                    }}
-                  />
-                  <path
-                    d="M 21 251.86 L 803 251.86 L 803 330.32 L 21 330.32 L 21 251.86"
-                    fill="none"
-                    stroke="#000000"
-                    strokeLinecap="square"
-                    strokeMiterlimit={10}
-                    pointerEvents="none"
-                    style={{
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                  <path
-                    d="M 59 251.86 L 59 329.86"
-                    fill="none"
-                    stroke="#000000"
-                    strokeMiterlimit={10}
-                    pointerEvents="none"
-                    style={{
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g data-cell-id="kdk1sCQruOZLYn1sfR_3-29">
-                  <g transform="translate(0.5,0.5)" />
-                  <g data-cell-id="kdk1sCQruOZLYn1sfR_3-30">
-                    <g transform="translate(0.5,0.5)">
-                      <rect
-                        x={21}
-                        y={251.86}
-                        width={38}
-                        height={78}
-                        fill="none"
-                        stroke="none"
-                        pointerEvents="all"
-                      />
-                      <path
-                        d="M 21 251.86 M 59 251.86 M 59 329.86 M 21 329.86"
-                        fill="none"
-                        stroke="#000000"
-                        strokeLinecap="square"
-                        strokeMiterlimit={10}
-                        pointerEvents="all"
-                        style={{
-                          stroke: "rgb(0, 0, 0)"
-                        }}
-                      />
-                    </g>
-                  </g>
-                  <g data-cell-id="kdk1sCQruOZLYn1sfR_3-31">
-                    <g transform="translate(0.5,0.5)">
-                      <rect
-                        x={59}
-                        y={251.86}
-                        width={744}
-                        height={78}
-                        fill="none"
-                        stroke="none"
-                        pointerEvents="all"
-                      />
-                      <path
-                        d="M 59 251.86 M 803 251.86 M 803 329.86 M 59 329.86"
-                        fill="none"
-                        stroke="#000000"
-                        strokeLinecap="square"
-                        strokeMiterlimit={10}
-                        pointerEvents="all"
-                        style={{
-                          stroke: "rgb(0, 0, 0)"
-                        }}
-                      />
-                    </g>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="kdk1sCQruOZLYn1sfR_3-32">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={6.86}
-                    y={278.88}
-                    width={65.95}
-                    height={26.16}
-                    fill="none"
-                    stroke="none"
-                    transform="rotate(-90,39.84,291.96)"
-                    pointerEvents="all"
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    transform="rotate(-90,39.84,291.96)"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={39.84} y={296.96}>
-                      {"Public Value"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="pv1">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={126.06}
-                    y={264.94}
-                    width={126.81}
-                    height={52.31}
-                    fill="#8acae5"
-                    stroke="#000000"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(138, 202, 229)",
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={189.46} y={282.1}>
-                      {"<<PV1>>"}
-                    </text>
-                    <text x={189.46} y={296.1}>
-                      {"Efisiensi Operasional\xA0"}
-                    </text>
-                    <text x={189.46} y={310.1}>
-                      {"Penerbangan"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="pv3">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={371.96}
-                    y={264.94}
-                    width={113.06}
-                    height={52.31}
-                    fill="#8acae5"
-                    stroke="#000000"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(138, 202, 229)",
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={428.49} y={282.09}>
-                      {"<<PV3>>"}
-                    </text>
-                    <text x={428.49} y={296.09}>
-                      {"Keselamatan\xA0"}
-                    </text>
-                    <text x={428.49} y={310.09}>
-                      {"Penerbangan"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="pv2">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={614.57}
-                    y={264.94}
-                    width={113.06}
-                    height={52.31}
-                    fill="#8acae5"
-                    stroke="#000000"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(138, 202, 229)",
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={671.1} y={289.09}>
-                      {"<<PV2>>"}
-                    </text>
-                    <text x={671.1} y={303.09}>
-                      {"Kepercayaan Publik"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="IPdanCC">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={21}
-                    y={382.63}
-                    width={782}
-                    height={479.51}
-                    fill="#ffffff"
-                    stroke="none"
-                    pointerEvents="none"
-                    style={{
-                      fill: "rgb(255, 255, 255)"
-                    }}
-                  />
-                  <path
-                    d="M 21 382.63 L 803 382.63 L 803 862.14 L 21 862.14 L 21 382.63"
-                    fill="none"
-                    stroke="#000000"
-                    strokeLinecap="square"
-                    strokeMiterlimit={10}
-                    pointerEvents="none"
-                    style={{
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="IPdanC">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={-26.11}
-                    y={440.17}
-                    width={131.9}
-                    height={26.16}
-                    fill="none"
-                    stroke="none"
-                    transform="rotate(-90,39.84,453.25)"
-                    pointerEvents="all"
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    transform="rotate(-90,39.84,453.25)"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={39.84} y={458.25}>
-                      {"Customer / Stakeholder"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="kdk1sCQruOZLYn1sfR_3-56">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={-21.4}
-                    y={599.16}
-                    width={122.48}
-                    height={26.16}
-                    fill="none"
-                    stroke="none"
-                    transform="rotate(-90,39.84,612.23)"
-                    pointerEvents="all"
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    transform="rotate(-90,39.84,612.23)"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={39.84} y={617.23}>
-                      {"Internal Process"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="IP1">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={119.93}
-                    y={565.72}
-                    width={141.33}
-                    height={61.03}
-                    fill="#8acae5"
-                    stroke="#000000"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(138, 202, 229)",
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={190.59} y={587.23}>
-                      {"<<IP1>>"}
-                    </text>
-                    <text x={190.59} y={601.23}>
-                      {" Standardized Observation\xA0"}
-                    </text>
-                    <text x={190.59} y={615.23}>
-                      {"& Analysis Process"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="C1">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={119.93}
-                    y={422.74}
-                    width={141.33}
-                    height={61.03}
-                    fill="#8acae5"
-                    stroke="#000000"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(138, 202, 229)",
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={190.59} y={444.25}>
-                      {"<<C1>>\xA0"}
-                    </text>
-                    <text x={190.59} y={458.25}>
-                      {"High Satisfaction of\xA0"}
-                    </text>
-                    <text x={190.59} y={472.25}>
-                      {"Aviation Partners"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="C2">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={359.48}
-                    y={422.74}
-                    width={141.33}
-                    height={61.03}
-                    fill="#8acae5"
-                    stroke="#000000"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(138, 202, 229)",
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={430.14} y={444.25}>
-                      {"<<C2>>\xA0"}
-                    </text>
-                    <text x={430.14} y={458.25}>
-                      {" Compliance with\xA0"}
-                    </text>
-                    <text x={430.14} y={472.25}>
-                      {"Int'l Standards"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="C3">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={595.72}
-                    y={421.87}
-                    width={141.33}
-                    height={61.03}
-                    fill="#8acae5"
-                    stroke="#000000"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(138, 202, 229)",
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={666.39} y={443.38}>
-                      {"<<C3>>\xA0"}
-                    </text>
-                    <text x={666.39} y={457.38}>
-                      {" Strong Collaborative\xA0"}
-                    </text>
-                    <text x={666.39} y={471.38}>
-                      {"Engagement"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="IP2">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={349.71}
-                    y={565.72}
-                    width={160.87}
-                    height={61.03}
-                    fill="#8acae5"
-                    stroke="#000000"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(138, 202, 229)",
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={430.14} y={587.23}>
-                      {"<<IP2>>"}
-                    </text>
-                    <text x={430.14} y={601.23}>
-                      {" Effective Information\xA0"}
-                    </text>
-                    <text x={430.14} y={615.23}>
-                      {"Dissemination & Coordination"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="IP3">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={595.72}
-                    y={565.72}
-                    width={141.33}
-                    height={61.03}
-                    fill="#8acae5"
-                    stroke="#000000"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(138, 202, 229)",
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={666.39} y={587.23}>
-                      {"<<IP3>>"}
-                    </text>
-                    <text x={666.39} y={601.23}>
-                      {"Integrated Data\xA0"}
-                    </text>
-                    <text x={666.39} y={615.23}>
-                      {"Management System\xA0"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="LG">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={21}
-                    y={917.94}
-                    width={782}
-                    height={122.06}
-                    fill="#ffffff"
-                    stroke="none"
-                    pointerEvents="none"
-                    style={{
-                      fill: "rgb(255, 255, 255)"
-                    }}
-                  />
-                  <path
-                    d="M 21 917.94 L 803 917.94 L 803 1040 L 21 1040 L 21 917.94"
-                    fill="none"
-                    stroke="#000000"
-                    strokeLinecap="square"
-                    strokeMiterlimit={10}
-                    pointerEvents="none"
-                    style={{
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                  <path
-                    d="M 68 917.94 L 68 1039.94"
-                    fill="none"
-                    stroke="#000000"
-                    strokeMiterlimit={10}
-                    pointerEvents="none"
-                    style={{
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g data-cell-id="18trQx8ktChYFQUgksBL-13">
-                  <g transform="translate(0.5,0.5)" />
-                  <g data-cell-id="18trQx8ktChYFQUgksBL-14">
-                    <g transform="translate(0.5,0.5)">
-                      <rect
-                        x={21}
-                        y={917.94}
-                        width={47}
-                        height={122}
-                        fill="none"
-                        stroke="none"
-                        pointerEvents="all"
-                      />
-                      <path
-                        d="M 21 917.94 M 68 917.94 M 68 1039.94 M 21 1039.94"
-                        fill="none"
-                        stroke="#000000"
-                        strokeLinecap="square"
-                        strokeMiterlimit={10}
-                        pointerEvents="all"
-                        style={{
-                          stroke: "rgb(0, 0, 0)"
-                        }}
-                      />
-                    </g>
-                  </g>
-                  <g data-cell-id="18trQx8ktChYFQUgksBL-15">
-                    <g transform="translate(0.5,0.5)">
-                      <rect
-                        x={68}
-                        y={917.94}
-                        width={735}
-                        height={122}
-                        fill="none"
-                        stroke="none"
-                        pointerEvents="all"
-                      />
-                      <path
-                        d="M 68 917.94 M 803 917.94 M 803 1039.94 M 68 1039.94"
-                        fill="none"
-                        stroke="#000000"
-                        strokeLinecap="square"
-                        strokeMiterlimit={10}
-                        pointerEvents="all"
-                        style={{
-                          stroke: "rgb(0, 0, 0)"
-                        }}
-                      />
-                    </g>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="wnEzJVQnu9i65wA92bw6-1">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={-11.98}
-                    y={967.64}
-                    width={113.06}
-                    height={26.16}
-                    fill="none"
-                    stroke="none"
-                    transform="rotate(-90,44.55,980.71)"
-                    pointerEvents="all"
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    transform="rotate(-90,44.55,980.71)"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={44.55} y={985.71}>
-                      {"Learning & Growth"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="L1">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={86.95}
-                    y={948.46}
-                    width={150.75}
-                    height={64.52}
-                    fill="#8acae5"
-                    stroke="#000000"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(138, 202, 229)",
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={162.32} y={971.71}>
-                      {"<<L1>>\xA0"}
-                    </text>
-                    <text x={162.32} y={985.71}>
-                      {"Digital & Technological"}
-                    </text>
-                    <text x={162.32} y={999.71}>
-                      {"\xA0Capability"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="L2">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={261.25}
-                    y={948.46}
-                    width={150.75}
-                    height={64.52}
-                    fill="#8acae5"
-                    stroke="#000000"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(138, 202, 229)",
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={336.62} y={971.71}>
-                      {"<<L2>>\xA0"}
-                    </text>
-                    <text x={336.62} y={985.71}>
-                      {"Certified Professional\xA0"}
-                    </text>
-                    <text x={336.62} y={999.71}>
-                      {"Competency"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="L3">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={444.97}
-                    y={946.71}
-                    width={150.75}
-                    height={64.52}
-                    fill="#8acae5"
-                    stroke="#000000"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(138, 202, 229)",
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={520.35} y={976.97}>
-                      {"<<L3>>\xA0"}
-                    </text>
-                    <text x={520.35} y={990.97}>
-                      {"Safety & Service Culture"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="L4">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={623.99}
-                    y={946.71}
-                    width={150.75}
-                    height={64.52}
-                    fill="#8acae5"
-                    stroke="#000000"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(138, 202, 229)",
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={699.36} y={969.97}>
-                      {"<<L4>>\xA0"}
-                    </text>
-                    <text x={699.36} y={983.97}>
-                      {"Adaptive Human\xA0"}
-                    </text>
-                    <text x={699.36} y={997.97}>
-                      {"Capital Management"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="wnEzJVQnu9i65wA92bw6-6">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 336.62 948.46 L 336.03 729.8"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 336.02 724.55 L 339.53 731.54 L 336.03 729.8 L 332.53 731.56 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="wnEzJVQnu9i65wA92bw6-12">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 72.82 700.85 L 68.11 700.85 L 68.11 609.31 L 111.81 611.15"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 118.81 611.44 L 111.67 614.65 L 111.96 607.65 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="wnEzJVQnu9i65wA92bw6-13">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 520.35 946.71 L 520.35 853.43 L 520.35 852.83"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 520.35 845.83 L 523.85 852.83 L 516.85 852.83 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="wnEzJVQnu9i65wA92bw6-14">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 699.36 946.71 L 699.36 792.67"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 699.36 785.67 L 702.86 792.67 L 695.86 792.67 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="wnEzJVQnu9i65wA92bw6-16">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 162.32 948.46 L 162.32 661.62 L 765.31 661.62 L 765.31 611.93 L 745.16 611.62"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 738.17 611.51 L 745.22 608.12 L 745.11 615.12 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="IP4">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={72.82}
-                    y={679.06}
-                    width={711.34}
-                    height={43.59}
-                    fill="#8acae5"
-                    stroke="#000000"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(138, 202, 229)",
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={428.49} y={698.85}>
-                      {"<<IP4>>"}
-                    </text>
-                    <text x={428.49} y={712.85}>
-                      {"Implementasi Sistem Manajemen Mutu"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="IP5">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={73.76}
-                    y={740.09}
-                    width={711.34}
-                    height={43.59}
-                    fill="#8acae5"
-                    stroke="#000000"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(138, 202, 229)",
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={429.43} y={759.88}>
-                      {"<<IP5>>"}
-                    </text>
-                    <text x={429.43} y={773.88}>
-                      {"Reformasi Birokrasi & Tata Kelola Pemerintahan"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="IP6">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={72.82}
-                    y={801.12}
-                    width={711.34}
-                    height={43.59}
-                    fill="#8acae5"
-                    stroke="#000000"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(138, 202, 229)",
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={428.49} y={820.91}>
-                      {"<<IP6>>"}
-                    </text>
-                    <text x={428.49} y={834.91}>
-                      {"Sistem Manajemen Keselamatan & Kepatuhan K3"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="HCTR">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={21}
-                    y={870.86}
-                    width={782}
-                    height={34.87}
-                    fill="#479cc1"
-                    stroke="#000000"
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(71, 156, 193)",
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={412} y={893.3}>
-                      {"HUMAN CAPITAL & TECHNOLOGY READINESS"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="wnEzJVQnu9i65wA92bw6-17">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 428.49 679.06 L 428.89 633.99"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 428.95 626.99 L 432.39 634.03 L 425.39 633.96 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="wnEzJVQnu9i65wA92bw6-18">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 72.82 822.91 L 62.45 822.91 L 62.45 596.23 L 111.81 596.23"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 118.81 596.23 L 111.81 599.73 L 111.81 592.73 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-4">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 416.95 565.66 L 416.71 539.56 L 190.59 539.56 L 190.59 491.88"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 190.59 484.88 L 194.09 491.88 L 187.09 491.88 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-6">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 446.23 565.66 L 445.92 530.85 L 666.39 530.85 L 666.39 491.01"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 666.39 484.01 L 669.89 491.01 L 662.89 491.01 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-7">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 190.59 565.72 L 190.59 548.28 L 331.91 548.28 L 331.91 453.25 L 351.36 453.25"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 358.36 453.25 L 351.36 456.75 L 351.36 449.75 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-8">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 118.79 584.76 L 86.95 584.9 L 86.95 452.38 L 111.81 453.04"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 118.81 453.22 L 111.72 456.54 L 111.9 449.54 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-9">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 737.05 583.16 L 765.31 583.16 L 765.31 513.41 L 303.65 513.41 L 303.65 453.25 L 269.37 453.25"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 262.37 453.25 L 269.37 449.75 L 269.37 456.75 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-10">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 737.05 596.23 L 784.16 596.23 L 784.16 504.69 L 558.04 504.69 L 558.04 468.95 L 508.93 468.57"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 501.93 468.52 L 508.95 465.07 L 508.9 472.07 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-11">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 119.64 470.1 L 105.79 469.82 L 105.79 577.05 L 111.81 577.09"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 118.81 577.13 L 111.79 580.59 L 111.83 573.59 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-12">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 261.25 468.51 L 294.23 468.95 L 294.23 581.41 L 341.59 581.04"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 348.59 580.99 L 341.62 584.54 L 341.57 577.54 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-13">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 430.14 483.77 L 430.14 557.6"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 430.14 564.6 L 426.64 557.6 L 433.64 557.6 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-14">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 594.73 461.23 L 548.61 461.1 L 548.61 581.41 L 518.7 581.07"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 511.7 580.99 L 518.74 577.57 L 518.66 584.57 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-15">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 189.46 264.94 L 189.17 251.12"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 189.02 244.12 L 192.67 251.04 L 185.67 251.19 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-16">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 671.61 264.86 L 671.62 250.92"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 671.62 243.92 L 675.12 250.92 L 668.12 250.92 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-17">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 595.72 596.23 L 595.72 609.31 L 548.61 609.31 L 548.61 644.19 L 190.59 644.19 L 190.59 634.87"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 190.59 627.87 L 194.09 634.87 L 187.09 634.87 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-18">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 595.72 596.23 L 518.7 596.23"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 511.7 596.23 L 518.7 592.73 L 518.7 599.73 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-19">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 359.48 438 L 269.37 438"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 262.37 438 L 269.37 434.5 L 269.37 441.5 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-20">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 485.02 291.09 L 606.45 291.09"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 613.45 291.09 L 606.45 294.59 L 606.45 287.59 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-21">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 252.87 291.1 L 363.84 291.09"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 370.84 291.09 L 363.84 294.59 L 363.84 287.59 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-23">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 190.59 422.74 L 190.59 400.07 L 400.69 400.07 L 400.27 325.36"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 400.23 318.36 L 403.77 325.34 L 396.77 325.38 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-24">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 430.14 422.74 L 428.61 325.36"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 428.5 318.36 L 432.11 325.31 L 425.11 325.42 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-27">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 500.81 453.25 L 548.61 453.25 L 548.61 304.17 L 606.45 304.17"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 613.45 304.17 L 606.45 307.67 L 606.45 300.67 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-28">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 737.05 452.38 L 765.31 452.38 L 765.31 304.17 L 735.74 304.17"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 728.74 304.17 L 735.74 300.67 L 735.74 307.67 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="DM">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={553.32}
-                    y={339.04}
-                    width={249.68}
-                    height={34.87}
-                    fill="#479cc1"
-                    stroke="none"
-                    pointerEvents="none"
-                    style={{
-                      fill: "rgb(71, 156, 193)"
-                    }}
-                  />
-                  <path
-                    d="M 553.32 339.04 L 803 339.04 L 803 373.92 L 553.32 373.92 L 553.32 339.04"
-                    fill="none"
-                    stroke="#000000"
-                    strokeLinecap="square"
-                    strokeMiterlimit={10}
-                    pointerEvents="none"
-                    style={{
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-29">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 595.72 437.12 L 529.77 437.56 L 529.77 304.17 L 493.13 304.17"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 486.13 304.17 L 493.13 300.67 L 493.13 307.67 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="SC">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={286.58}
-                    y={339.04}
-                    width={249.68}
-                    height={34.87}
-                    fill="#479cc1"
-                    stroke="none"
-                    pointerEvents="none"
-                    style={{
-                      fill: "rgb(71, 156, 193)"
-                    }}
-                  />
-                  <path
-                    d="M 286.58 339.04 L 536.25 339.04 L 536.25 373.92 L 286.58 373.92 L 286.58 339.04"
-                    fill="none"
-                    stroke="#000000"
-                    strokeLinecap="square"
-                    strokeMiterlimit={10}
-                    pointerEvents="none"
-                    style={{
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="Misi1">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={21}
-                    y={121.08}
-                    width={249.68}
-                    height={87.18}
-                    fill="#8acae5"
-                    stroke="none"
-                    pointerEvents="none"
-                    style={{
-                      fill: "rgb(138, 202, 229)"
-                    }}
-                  />
-                  <path
-                    d="M 21 121.08 L 270.67 121.08 L 270.67 208.27 L 21 208.27 L 21 121.08"
-                    fill="none"
-                    stroke="#10739e"
-                    strokeLinecap="square"
-                    strokeMiterlimit={10}
-                    pointerEvents="none"
-                    style={{
-                      stroke: "rgb(16, 115, 158)"
-                    }}
-                  />
-                </g>
-                <g data-cell-id="tECFEMoWoNaPAm7a_ITt-33">
-                  <g transform="translate(0.5,0.5)" />
-                  <g data-cell-id="tECFEMoWoNaPAm7a_ITt-34">
-                    <g transform="translate(0.5,0.5)">
-                      <rect
-                        x={21}
-                        y={121.08}
-                        width={250}
-                        height={87}
-                        fill="none"
-                        stroke="none"
-                        pointerEvents="all"
-                      />
-                      <path
-                        d="M 21 121.08 M 271 121.08 M 271 208.08 M 21 208.08"
-                        fill="none"
-                        stroke="#10739e"
-                        strokeLinecap="square"
-                        strokeMiterlimit={10}
-                        pointerEvents="all"
-                        style={{
-                          stroke: "rgb(16, 115, 158)"
-                        }}
-                      />
-                    </g>
-                    <g>
-                      <g>
-                        <switch>
-                          <foreignObject
-                            style={{
-                              overflow: "visible",
-                              textAlign: "left"
-                            }}
-                            pointerEvents="none"
-                            width="100%"
-                            height="100%"
-                            requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
-                          >
-                            <div
-                              xmlns="http://www.w3.org/1999/xhtml"
-                              style={{
-                                display: "flex",
-                                alignItems: "unsafe center",
-                                justifyContent: "unsafe center",
-                                width: 248,
-                                height: 1,
-                                paddingTop: 165,
-                                marginLeft: 22
-                              }}
-                            >
-                              <div
-                                style={{
-                                  boxSizing: "border-box",
-                                  fontSize: 0,
-                                  textAlign: "center",
-                                  maxHeight: 83,
-                                  overflow: "hidden",
-                                  color: "#000000"
-                                }}
-                              >
-                                <div
-                                  style={{
-                                    display: "inline-block",
-                                    fontSize: 12,
-                                    fontFamily: "Helvetica",
-                                    color: "#000000",
-                                    lineHeight: 1.2,
-                                    pointerEvents: "all",
-                                    whiteSpace: "normal",
-                                    wordWrap: "normal"
-                                  }}
-                                >
-                                  {"<<MISSION>>"}
-                                  <br />
-                                  {
-                                    "Mewujudkan peningkatan kualitas dan kuantitas pengamatan,  pengumpulan, penyebaran data dan informasi meteorologi penerbangan sesuai standar Internasional. \xA0"
-                                  }
-                                </div>
-                              </div>
-                            </div>
-                          </foreignObject>
-                          <text
-                            x={146}
-                            y={168}
-                            fill="light-dark(#000000, #ffffff)"
-                            fontFamily="Helvetica"
-                            fontSize="12px"
-                            textAnchor="middle"
-                          >
-                            {"<<MISSION>>"}
-                          </text>
-                        </switch>
-                      </g>
-                    </g>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="tECFEMoWoNaPAm7a_ITt-22">
-                <g transform="translate(0.5,0.5)">
-                  <path
-                    d="M 119.93 439.3 L 96.37 439.74 L 96.37 292.4 L 116.88 292.11"
-                    fill="none"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="stroke"
-                    style={{
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                  <path
-                    d="M 123.88 292.02 L 116.93 295.61 L 116.83 288.61 Z"
-                    fill="#9a9a9a"
-                    stroke="#9a9a9a"
-                    strokeMiterlimit={10}
-                    pointerEvents="all"
-                    style={{
-                      fill: "rgb(154, 154, 154)",
-                      stroke: "rgb(154, 154, 154)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="SE">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={21}
-                    y={339.04}
-                    width={249.68}
-                    height={34.87}
-                    fill="#479cc1"
-                    stroke="none"
-                    pointerEvents="none"
-                    style={{
-                      fill: "rgb(71, 156, 193)"
-                    }}
-                  />
-                  <path
-                    d="M 21 339.04 L 270.67 339.04 L 270.67 373.92 L 21 373.92 L 21 339.04"
-                    fill="none"
-                    stroke="#000000"
-                    strokeLinecap="square"
-                    strokeMiterlimit={10}
-                    pointerEvents="none"
-                    style={{
-                      stroke: "rgb(0, 0, 0)"
-                    }}
-                  />
-                </g>
-              </g>
-              <g data-cell-id="05RmtZPogVj4Z4eBfIh9-6">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={70.46}
-                    y={343.4}
-                    width={150.75}
-                    height={26.16}
-                    fill="none"
-                    stroke="none"
-                    pointerEvents="all"
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={145.83} y={361.48}>
-                      {"SERVICE EXCELLENCE"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="HcmtDr_CGQenQgmzdA9t-2">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={313.08}
-                    y={346.89}
-                    width={197.7}
-                    height={26.16}
-                    fill="none"
-                    stroke="none"
-                    pointerEvents="all"
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={411.93} y={364.97}>
-                      {"STRATEGIC COLLLABORATION"}
-                    </text>
-                  </g>
-                </g>
-              </g>
-              <g data-cell-id="HcmtDr_CGQenQgmzdA9t-3">
-                <g transform="translate(0.5,0.5)">
-                  <rect
-                    x={591.01}
-                    y={346.89}
-                    width={174.3}
-                    height={26.16}
-                    fill="none"
-                    stroke="none"
-                    pointerEvents="all"
-                  />
-                </g>
-                <g>
-                  <g
-                    fill="#000000"
-                    fontFamily="Helvetica"
-                    textAnchor="middle"
-                    fontSize="12px"
-                    style={{
-                      fill: "rgb(0, 0, 0)"
-                    }}
-                  >
-                    <text x={678.16} y={364.97}>
-                      <tspan>{"DIGITAL MODERNIZATION"}</tspan>
-                    </text>
-                  </g>
+                <g
+                  fill="light-dark(#000 ,#fff)"
+                  fontFamily="Helvetica"
+                  textAnchor="middle"
+                  fontSize="11.999999999999998px"
+                  clipPath="url(#d)"
+                >
+                  <text x={678.33} y={146.58}>
+                    {"<<MISSION>>"}
+                  </text>
+                  <text x={678.33} y={160.58}>
+                    {"Mewujudkan koordinasi dengan BBMKG"}
+                  </text>
+                  <text x={678.33} y={174.58}>
+                    {"Wilayah III, Pemerintah Daerah / Provinsi dan"}
+                  </text>
+                  <text x={678.33} y={188.58}>
+                    {"pengguna Layanan dalam penyelenggaraan"}
+                  </text>
+                  <text x={678.33} y={202.58}>
+                    {"kegiatan meteorologi penerbangan."}
+                  </text>
                 </g>
               </g>
             </g>
@@ -2416,4 +1534,8 @@ const StrategySvgImage = ({ onDiagramClick }) => {
   )
 }
 
+
+
 export default StrategySvgImage;
+
+
