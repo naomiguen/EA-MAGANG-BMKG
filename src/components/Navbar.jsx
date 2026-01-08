@@ -18,8 +18,9 @@ const Navbar = () => {
       name: 'Architecture Vision', 
       href: '/vision', 
       children: [
-        { name: 'Strategy Map (Interaktif)', href: '/vision/strategy' },
+        { name: 'Strategy Map', href: '/vision/strategy' },
         { name: 'Visi & Misi', href: '/vision/goals' },
+        { name: 'Struktur Organisasi', href: '/business/organization' },
         { name: 'Value Chain', href: '/vision/valuechain' },
         { name: 'Stakeholder Matrix', href: '/vision/stakeholders' },
         { name: 'Architecture Principles', href: '/vision/principles' },
@@ -29,7 +30,6 @@ const Navbar = () => {
       name: 'Business Arch', 
       href: '/business',
       children: [
-        { name: 'Struktur Organisasi', href: '/business/organization' },
         { name: 'Business Process Map', href: '/business/process' },
        
       ]
