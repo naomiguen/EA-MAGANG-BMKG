@@ -49,6 +49,10 @@ const Dashboard = () => {
       navigate('/business/organizational');
       return;
     }
+    if (item.title === "Functional Decomposition Diagram") {
+      navigate('/business/functional');
+      return;
+    }
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 

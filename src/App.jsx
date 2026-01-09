@@ -15,6 +15,7 @@ import ArchitectureGoalsPage from "./pages/ArchitectureGoalsPage";
 import StakeholderPage from "./pages/StakeholderPage";
 import StakeholderTable from "./pages/StakeholderPage";
 import OrgStructurePage from "./pages/OrganizationalActorPage";
+import FunctionalDecompositionPage from "./pages/FuncDecomposePage";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
           <Route path="/vision/principles" element={<ArchitecturePrinciplesPage />} />
           <Route path="/vision/goals" element={<ArchitectureGoalsPage />} />
           <Route path="/business/organizational" element={<OrgStructurePage />} />
+          <Route path="/business/functional" element={<FunctionalDecompositionPage />} />
 
           
           {/* Placeholder untuk halaman yang belum ada */}
