@@ -16,6 +16,9 @@ import StakeholderPage from "./pages/StakeholderPage";
 import StakeholderTable from "./pages/StakeholderPage";
 import OrgStructurePage from "./pages/OrganizationalActorPage";
 import FunctionalDecompositionPage from "./pages/FuncDecomposePage";
+import DataEntityPage from "./pages/DataEntityComponentPage";
+import LogicalDataDiagram from "./pages/LogicalDataPage";
+import DataFunctionMatrixPage from "./pages/DataFunctionMatrixPage";
 
 
 function App() {
@@ -40,6 +43,9 @@ function App() {
           <Route path="/vision/goals" element={<ArchitectureGoalsPage />} />
           <Route path="/business/organizational" element={<OrgStructurePage />} />
           <Route path="/business/functional" element={<FunctionalDecompositionPage />} />
+          <Route path="/data/component" element={<DataEntityPage />} />
+          <Route path="/data/logical" element={<LogicalDataDiagram />} />
+          <Route path="/data/function_matrix" element={<DataFunctionMatrixPage />} />
 
           
           {/* Placeholder untuk halaman yang belum ada */}

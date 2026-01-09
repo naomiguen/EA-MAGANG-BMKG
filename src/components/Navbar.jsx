@@ -37,12 +37,15 @@ const Navbar = () => {
       ]
     },
     { 
-      name: 'Info Systems', 
-      href: '/is',
+      name: 'Data Arch', 
+      href: '/data',
       children: [
-        { name: 'Data Architecture', href: '/is/data' },
-        { name: 'Application Portfolio', href: '/is/application' },
-        { name: 'Interface Diagram', href: '/is/interface' },
+        { name: 'Data Principle', href: '/data' },
+        { name: 'Data Entity - Data Component Catalog', href: '/data/component' },
+        { name: 'Conceptual Data Diagram', href: '/data' },
+        { name: 'Logical Data Diagram', href: '/data/logical' },
+        { name: 'Data Entity - Business Functional Matrix', href: '/data/function_matrix' },
+        { name: 'Application - Data Matrix', href: '/data' },
       ]
     },
     { 

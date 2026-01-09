@@ -53,6 +53,18 @@ const Dashboard = () => {
       navigate('/business/functional');
       return;
     }
+    if (item.title === "Data Entity / Data Component Catalog") {
+      navigate('/data/component');
+      return;
+    }
+    if (item.title === "Logical Data Diagram") {
+      navigate('/data/logical');
+      return;
+    }
+    if (item.title === "Data Entity - Business Functional Matrix") {
+      navigate('/data/function_matrix');
+      return;
+    }
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 

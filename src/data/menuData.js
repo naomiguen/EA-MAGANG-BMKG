@@ -25,9 +25,10 @@ export const architectureData = {
     ],
     data: [
       { id: 1, title: "Data Principles", type: "text" },
-      { id: 2, title: "Data Entity - Business Function Matrix", type: "matrix" },
-      { id: 3, title: "Conceptual Data", type: "diagram" },
-      { id: 4, title: "Logical Data Diagram", type: "diagram" }
+      { id: 2, title: "Data Entity - Data Component Catalog", type: "diagram" },
+      { id: 3, title: "Data Entity - Business Function Matrix", type: "matrix" },
+      { id: 4, title: "Conceptual Data", type: "diagram" },
+      { id: 5, title: "Logical Data Diagram", type: "diagram" }
     ],
     application: [
       { id: 1, title: "Application Principles", type: "text" },
