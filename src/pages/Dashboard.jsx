@@ -50,6 +50,10 @@ const Dashboard = () => {
       navigate('/business/functional');
       return;
     }
+    if (item.title === "Data Principles") {
+      navigate('/data/dataprinciples');
+      return;
+    }
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 

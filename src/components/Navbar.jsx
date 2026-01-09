@@ -18,8 +18,6 @@ const Navbar = () => {
         { name: 'Struktur Organisasi', href: '/business/organization' },
         { name: 'Value Chain', href: '/vision/valuechain' },
         { name: 'Stakeholder Catalog', href: '/vision/stakeholder' },
-        { name: 'Architecture Principles', href: '/vision/principles' },
-
       ]
     },
     { 
@@ -32,9 +30,10 @@ const Navbar = () => {
       ]
     },
     { 
-      name: 'Info Systems', 
+      name: 'Data Architecture', 
       href: null, 
       children: [
+        { name : 'Data Principles', href: '/data/dataprinciples' },
         { name: 'Data Architecture', href: '/is/data' },
         { name: 'Application Portfolio', href: '/is/application' },
         { name: 'Interface Diagram', href: '/is/interface' },
