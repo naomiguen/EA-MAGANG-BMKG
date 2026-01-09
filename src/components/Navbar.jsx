@@ -18,6 +18,8 @@ const Navbar = () => {
         { name: 'Struktur Organisasi', href: '/business/organization' },
         { name: 'Value Chain', href: '/vision/valuechain' },
         { name: 'Stakeholder Catalog', href: '/vision/stakeholder' },
+        { name: 'Architecture Principles', href: '/vision/principles' },
+
       ]
     },
     { 
@@ -26,6 +28,7 @@ const Navbar = () => {
       children: [
         { name: 'Organizational Actor Catalog', href: '/business/organizational' },
         { name: 'Business Process Map', href: '/business/pr' },
+        { name: 'Functional Decomposition Diagram', href: '/business/functional' },
       ]
     },
     { 

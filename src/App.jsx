@@ -12,6 +12,11 @@ import StrategyMapPage from "./pages/StrategyMapPage";
 import ValueChainPage from "./pages/ValueChainPage";
 import ArchitecturePrinciplesPage from "./pages/ArchitecturePrinciplesPage";
 import ArchitectureGoalsPage from "./pages/ArchitectureGoalsPage";
+import StakeholderPage from "./pages/StakeholderPage";
+import StakeholderTable from "./pages/StakeholderPage";
+import OrgStructurePage from "./pages/OrganizationalActorPage";
+import FunctionalDecompositionPage from "./pages/FuncDecomposePage";
+
 
 function App() {
   return (
@@ -29,9 +34,13 @@ function App() {
           {/* Halaman Detail (Sesuai Link Navbar & Dashboard) */}
           <Route path="/vision/valuechain" element={<ValueChainPage />} />
           <Route path="/vision/strategy" element={<StrategyMapPage />} />
+          <Route path="/vision/stakeholder" element={<StakeholderTable />} />
           <Route path="/business/organization" element={<OrganizationDiagramPage />} />
           <Route path="/vision/principles" element={<ArchitecturePrinciplesPage />} />
           <Route path="/vision/goals" element={<ArchitectureGoalsPage />} />
+          <Route path="/business/organizational" element={<OrgStructurePage />} />
+          <Route path="/business/functional" element={<FunctionalDecompositionPage />} />
+
           
           {/* Placeholder untuk halaman yang belum ada */}
           <Route path="*" element={

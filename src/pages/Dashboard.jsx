@@ -40,6 +40,19 @@ const Dashboard = () => {
       navigate('/vision/goals');
       return
     }
+    if (item.title === "Stakeholder Catalog") {
+      navigate('/vision/stakeholder');
+      return
+    }
+
+    if (item.title === "Organizational Actor Catalog") {
+      navigate('/business/organizational');
+      return;
+    }
+    if (item.title === "Functional Decomposition Diagram") {
+      navigate('/business/functional');
+      return;
+    }
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 
