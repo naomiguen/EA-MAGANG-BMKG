@@ -47,6 +47,11 @@ const Dashboard = () => {
       return;
     }
 
+    if (item.title === "Technology Principles") {
+      navigate("/vision/technologyPrinciples");
+      return;
+    }
+
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 

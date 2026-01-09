@@ -37,7 +37,7 @@ function App() {
           <Route path="/vision/principles" element={<ArchitecturePrinciplesPage />} />
           <Route path="/vision/goals" element={<ArchitectureGoalsPage />} />
           <Route path="/business/RiskMatrix" element={<BusinessProcessRiskMatrix />} />
-          <Route path="/vision/technology-principles" element={<TechnologyPrinciples />} />
+          <Route path="/vision/technologyPrinciples" element={<TechnologyPrinciples />} />
           
           {/* Placeholder untuk halaman yang belum ada */}
           <Route path="*" element={

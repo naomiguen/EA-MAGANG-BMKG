@@ -1,19 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 import "./css/TechnologyPrinciples.css";
 
 export default function TechnologyPrinciples() {
-  const navigate = useNavigate();
-
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errMsg, setErrMsg] = useState("");
-
-  const pageSubtitle = useMemo(
-    () => "Prinsip teknologi yang menjadi acuan kebijakan dan tata kelola.",
-    []
-  );
 
   useEffect(() => {
     let isMounted = true;
@@ -52,20 +44,12 @@ export default function TechnologyPrinciples() {
       <div className="tp-bgGlow" aria-hidden="true" />
 
       <div className="tp-container">
-        <div className="tp-topbar">
-          <button type="button" className="tp-back" onClick={() => navigate("/")}>
-            Kembali ke Dashboard
-          </button>
-        </div>
-
         <header className="tp-header">
           <h1 className="tp-title">Technology Principles</h1>
 
           <div className="tp-logoWrap">
-            <img className="tp-logo" src="/assets/Logo.png" alt="Logo BMKG" />
+            <img className="tp-logo" src="/Logo.png" alt="Logo BMKG" />
           </div>
-
-          <p className="tp-subtitle">{pageSubtitle}</p>
         </header>
 
         <section className="tp-section" aria-label="Daftar prinsip teknologi">
@@ -112,11 +96,6 @@ export default function TechnologyPrinciples() {
 
                   <div className="tp-cardBody">
                     <p className="tp-text">{p.content}</p>
-                  </div>
-
-                  <div className="tp-cardFooter" aria-hidden="true">
-                    <span className="tp-chip">Principle</span>
-                    <span className="tp-chip tp-chipSoft">Technology</span>
                   </div>
                 </article>
               ))}
