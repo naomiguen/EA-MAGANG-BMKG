@@ -13,11 +13,15 @@ export const architectureData = {
       { id: 1, title: "Business Principles", type: "text" },
       { id: 2, title: "Risk", type: "diagram" },
       { id: 3, title: "KPI", type: "text" },
-      { id: 4, title: "Organizational Value Catalog", type: "diagram" },
+      { id: 4, title: "Organizational Actor Catalog", type: "diagram" },
       { id: 5, title: "Functional Decomposition Diagram", type: "diagram" },
-      { id: 6, title: "Business Interaction Diagram", type: "diagram" },
-      { id: 7, title: "Business Process - Risk Matrix", type: "matrix" },
-      { id: 8, title: "Business Process - Data Matrix", type: "matrix" }
+      { id: 6, title: "Business Process", type: "diagram" },
+      { id: 7, title: "Business Interaction Diagram", type: "diagram" },
+      { id: 8, title: "Corporate Governance", type: "diagram" },
+      { id: 9, title: "Business Process - Risk Matrix", type: "matrix" },
+      { id: 10, title: "Business Process - KPI Matrix", type: "matrix" },
+      { id: 11, title: "Business Process - Data Matrix", type: "matrix" },
+      { id: 12, title: "Business Process - Application Matrix", type: "matrix" }
     ],
     data: [
       { id: 1, title: "Data Principles", type: "text" },

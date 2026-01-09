@@ -30,7 +30,8 @@ const Navbar = () => {
       name: 'Business Arch', 
       href: '/business',
       children: [
-        { name: 'Business Process Map', href: '/business/process' },
+        { name: 'Organizational Actor Catalog', href: '/business/organizational' },
+        { name: 'Business Process Map', href: '/business/pr' },
        
       ]
     },
