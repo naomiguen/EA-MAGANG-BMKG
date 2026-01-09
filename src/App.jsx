@@ -13,6 +13,8 @@ import ValueChainPage from "./pages/ValueChainPage";
 import ArchitecturePrinciplesPage from "./pages/ArchitecturePrinciplesPage";
 import ArchitectureGoalsPage from "./pages/ArchitectureGoalsPage";
 import StakeholderPage from "./pages/StakeholderPage";
+import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix";
+import TechnologyPrinciples from "./pages/TechnologyPrinciples";
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
           <Route path="/business/organization" element={<OrganizationDiagramPage />} />
           <Route path="/vision/principles" element={<ArchitecturePrinciplesPage />} />
           <Route path="/vision/goals" element={<ArchitectureGoalsPage />} />
+          <Route path="/business/RiskMatrix" element={<BusinessProcessRiskMatrix />} />
+          <Route path="/vision/technology-principles" element={<TechnologyPrinciples />} />
           
           {/* Placeholder untuk halaman yang belum ada */}
           <Route path="*" element={

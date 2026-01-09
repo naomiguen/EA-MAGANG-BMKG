@@ -1,0 +1,80 @@
+.tp-state {
+  margin-left: 30px;
+  display: grid;
+  gap: 12px;
+}
+
+.tp-empty {
+  color: var(--tp-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.tp-error {
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: rgba(254, 226, 226, 0.55);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: var(--tp-shadowSm);
+}
+
+.tp-errorTitle {
+  font-weight: 800;
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: rgba(127, 29, 29, 0.9);
+}
+
+.tp-errorText {
+  font-size: 13px;
+  color: rgba(127, 29, 29, 0.85);
+  line-height: 1.6;
+}
+
+.tp-retry {
+  margin-top: 10px;
+  appearance: none;
+  border: 1px solid rgba(127, 29, 29, 0.25);
+  background: rgba(255, 255, 255, 0.7);
+  color: rgba(127, 29, 29, 0.9);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.tp-retry:focus-visible {
+  outline: 3px solid rgba(239, 68, 68, 0.25);
+  outline-offset: 2px;
+}
+
+.tp-skeleton {
+  height: 120px;
+  border-radius: 16px;
+  border: 1px solid var(--tp-borderSoft);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.55),
+    rgba(255, 255, 255, 0.85),
+    rgba(255, 255, 255, 0.55)
+  );
+  background-size: 200% 100%;
+  animation: tp-shimmer 1.2s ease-in-out infinite;
+  box-shadow: var(--tp-shadowSm);
+}
+
+@keyframes tp-shimmer {
+  0% {
+    background-position: 180% 0;
+  }
+  100% {
+    background-position: -20% 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .tp-state {
+    margin-left: 22px;
+  }
+}
