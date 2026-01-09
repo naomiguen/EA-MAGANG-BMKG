@@ -31,6 +31,7 @@ const Navbar = () => {
       children: [
         { name: 'Organizational Actor Catalog', href: '/business/organizational' },
         { name: 'Business Process Map', href: '/business/pr' },
+        { name: 'Functional Decomposition Diagram', href: '/business/functional' },
        
       ]
     },
