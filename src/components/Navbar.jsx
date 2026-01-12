@@ -11,14 +11,14 @@ const Navbar = () => {
     { 
       name: 'Architecture Vision', 
       href: null, 
-  children: [
-  { name: 'Strategy Map', href: '/vision/strategy' },
-  { name: 'Architecture Goals', href: '/vision/goals' },
-  { name: 'Architecture Principles', href: '/vision/principles' },
-  { name: 'Struktur Organisasi', href: '/business/organization' },
-  { name: 'Value Chain', href: '/vision/valuechain' },
-  { name: 'Stakeholder Catalog', href: '/vision/stakeholder' },
-]
+      children: [
+        { name: 'Vision, Mission and Corporate Strategy', href: '/vision/strategy' },
+        { name: 'Architecture Goals', href: '/vision/goals' },
+        { name: 'Architecture Principles', href: '/vision/principles' },
+        { name: 'Organization Decomposition Diagram', href: '/vision/organization' },
+        { name: 'Value Chain', href: '/vision/valuechain' },
+        { name: 'Stakeholder Catalog', href: '/vision/stakeholder' },
+      ]
     },
     { 
       name: 'Business Arch', 

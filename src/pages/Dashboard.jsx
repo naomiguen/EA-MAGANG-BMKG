@@ -43,7 +43,6 @@ const Dashboard = () => {
       navigate("/vision/technologyPrinciples");
       return;
     }
-
     // Business Section
     if (item.title === "Organization Decomposition Diagram") {
       navigate("/business/organization");
@@ -54,7 +53,7 @@ const Dashboard = () => {
       return;
     }
     if (item.title === "Functional Decomposition Diagram") {
-      navigate('/business/functional');
+      navigate('/vision/functional');
       return;
     }
     if (item.title === "Business Process - Risk Matrix") {

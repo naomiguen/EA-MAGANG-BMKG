@@ -12,8 +12,6 @@ import StrategyMapPage from "./pages/StrategyMapPage";
 import ValueChainPage from "./pages/ValueChainPage";
 import ArchitecturePrinciplesPage from "./pages/ArchitecturePrinciplesPage";
 import ArchitectureGoalsPage from "./pages/ArchitectureGoalsPage";
-import StakeholderPage from "./pages/StakeholderPage";
-import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix";
 import StakeholderTable from "./pages/StakeholderPage";
 import OrgStructurePage from "./pages/OrganizationalActorPage";
 import FunctionalDecompositionPage from "./pages/FuncDecomposePage";
@@ -26,6 +24,7 @@ import TechnologyEnvironmentDiagram from "./pages/TechnologyEnvironmentDiagram";
 import TechnologyPrinciples from "./pages/TechnologyPrinciples";
 import AppDataMatrixPage from "./pages/AppDataMatrixPage";
 import ConceptualDiagramPage from "./pages/ConceptualPage";
+import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix"
 
 
 function App() {
@@ -44,8 +43,8 @@ function App() {
           {/* Halaman Detail (Sesuai Link Navbar & Dashboard) */}
           <Route path="/vision/valuechain" element={<ValueChainPage />} />
           <Route path="/vision/strategy" element={<StrategyMapPage />} />
-          <Route path="/vision/stakeholder" element={<StakeholderPage />} />
-          <Route path="/business/organization" element={<OrganizationDiagramPage />} />
+          <Route path="/vision/stakeholder" element={<StakeholderTable />} />
+          <Route path="/vision/organization" element={<OrganizationDiagramPage />} />
           <Route path="/vision/principles" element={<ArchitecturePrinciplesPage />} />
           <Route path="/vision/goals" element={<ArchitectureGoalsPage />} />
           <Route path="/vision/technologyPrinciples" element={<TechnologyPrinciples />} />
