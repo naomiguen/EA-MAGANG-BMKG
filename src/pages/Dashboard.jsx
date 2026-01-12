@@ -78,6 +78,10 @@ const Dashboard = () => {
     navigate("/tech/standardsCatalog");
     return;
   }
+  if (item.title === "Environment and Location Diagram") {
+    navigate("/tech/environmentDiagram");
+    return;
+  }
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 

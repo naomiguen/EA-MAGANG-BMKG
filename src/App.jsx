@@ -22,6 +22,7 @@ import DataEntityPage from "./pages/DataEntityComponentPage";
 import LogicalDataDiagram from "./pages/LogicalDataPage";
 import DataFunctionMatrixPage from "./pages/DataFunctionMatrixPage";
 import TechnologyStandarCatalog from "./pages/TechnologyStandarCatalog";
+import TechnologyEnvironmentDiagram from "./pages/TechnologyEnvironmentDiagram";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
           <Route path="/data/logical" element={<LogicalDataDiagram />} />
           <Route path="/data/function_matrix" element={<DataFunctionMatrixPage />} />
           <Route path="/tech/standardsCatalog" element={<TechnologyStandarCatalog />} />
+          <Route path="/tech/environmentDiagram" element={<TechnologyEnvironmentDiagram />} />
           {/* Placeholder untuk halaman yang belum ada */}
           <Route path="*" element={
             <div className="p-10 text-center text-gray-500">

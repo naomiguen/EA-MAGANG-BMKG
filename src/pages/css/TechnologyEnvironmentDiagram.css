@@ -1,0 +1,136 @@
+/* EnvironmentDiagram.css */
+
+:root {
+  --primary-color: #0056b3; /* Biru BMKG */
+  --secondary-color: #f0f4f8;
+  --border-color: #cbd5e0;
+  --text-color: #2d3748;
+  --bg-location: #ffffff;
+  --bg-environment: #e6fffa;
+  --line-color: #a0aec0;
+}
+
+.ea-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem;
+  background-color: #f7fafc;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ea-title {
+  text-align: center;
+  color: var(--text-color);
+  margin-bottom: 2rem;
+}
+
+/* Area Diagram */
+.ea-diagram-area {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+}
+
+/* Level (Row) Styles */
+.ea-level {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  position: relative;
+}
+
+/* Connecting Lines (Visual Only) */
+.ea-level::after {
+  content: '';
+  position: absolute;
+  bottom: -1.5rem;
+  left: 50%;
+  width: 2px;
+  height: 1.5rem;
+  background-color: var(--line-color);
+  z-index: 0;
+}
+
+.ea-level:last-child::after {
+  display: none;
+}
+
+/* Location Box (The main card) */
+.ea-location-card {
+  background: var(--bg-location);
+  border: 2px solid var(--primary-color);
+  border-radius: 8px;
+  padding: 1rem;
+  width: 300px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+.ea-location-header {
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ea-location-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+}
+
+.ea-location-icon {
+  font-size: 1.5rem;
+}
+
+/* Environment Section (Inside Location) */
+.ea-environment {
+  background-color: var(--bg-environment);
+  border: 1px dashed var(--border-color);
+  border-radius: 4px;
+  padding: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.ea-env-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 0.5rem;
+  display: block;
+  font-weight: bold;
+}
+
+/* Node/Asset Items */
+.ea-node-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ea-node-item {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem;
+  margin-bottom: 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ea-node-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #48bb78; /* Green for active */
+}

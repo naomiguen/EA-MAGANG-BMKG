@@ -48,8 +48,9 @@ const Navbar = () => {
       children: [
         { name: 'Infrastructure', href: '/tech/infra' },
         { name: 'Network Diagram', href: '/tech/network' },
-        { name: 'Technology Standard Catalog', href: '/tech/standardsCatalog' },
+        { name: 'Technology Environment Diagram', href: '/tech/environmentDiagram' },
         { name: 'Technology Principles', href: '/vision/technologyPrinciples' },
+        { name: 'Technology Standard Catalog', href: '/tech/standardsCatalog' },
       ]
     },
     { name: 'Migration', href: '/migration' },
