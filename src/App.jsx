@@ -22,6 +22,8 @@ import LogicalDataDiagram from "./pages/LogicalDataPage";
 import DataFunctionMatrixPage from "./pages/DataFunctionMatrixPage";
 import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix";
 import TechnologyPrinciples from "./pages/TechnologyPrinciples";
+import AppDataMatrixPage from "./pages/AppDataMatrixPage";
+import ConceptualDiagramPage from "./pages/ConceptualPage";
 
 function App() {
   return (
@@ -51,6 +53,9 @@ function App() {
           <Route path="/data/function_matrix" element={<DataFunctionMatrixPage />} />
           <Route path="/business/RiskMatrix" element={<BusinessProcessRiskMatrix />} />
           <Route path="/vision/technologyPrinciples" element={<TechnologyPrinciples />} />
+          <Route path="/data/appmatrix" element={<AppDataMatrixPage />} />
+          <Route path="/data/concept" element={<ConceptualDiagramPage />} />
+
           
           {/* Placeholder untuk halaman yang belum ada */}
           <Route path="*" element={

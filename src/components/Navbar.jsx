@@ -31,16 +31,17 @@ const Navbar = () => {
        
       ]
     },
-    { 
+
+    {
       name: 'Data Arch', 
       href: '/data',
       children: [
         { name: 'Data Principles', href: '/data/dataprinciples' },
         { name: 'Data Entity - Data Component Catalog', href: '/data/component' },
-        { name: 'Conceptual Data Diagram', href: '/data' },
         { name: 'Logical Data Diagram', href: '/data/logical' },
+        { name: 'Conceptual Data Diagram', href: '/data/concept' },
         { name: 'Data Entity - Business Functional Matrix', href: '/data/function_matrix' },
-        { name: 'Application - Data Matrix', href: '/data' },
+        { name: 'Application - Data Matrix', href: '/data/appmatrix' },
       ]
     },
     { 
@@ -52,7 +53,29 @@ const Navbar = () => {
         { name: 'Technology Principles', href: '/vision/technologyPrinciples' },
       ]
     },
-    { name: 'Migration', href: '/migration' },
+    { 
+      name: 'Application', 
+      href: null, 
+      children: [
+        { name: 'Application Principles', href: '/app' },
+        { name: 'Application Portfolio Catalog', href: '/app' },
+        { name: 'Application Use Case Diagram', href: '/app' },
+        { name: 'Application - Portofolio Assessment', href: '/app' },
+        { name: 'Application - User and Location Diagram', href: '/app' },
+        { name: 'Application - Communication Diagram', href: '/app' },
+        { name: 'Application - Business Process Matrix', href: '/app' },
+        { name: 'Application - Classification Matrix', href: '/app' },
+        { name: 'Application - Organization Matrix', href: '/app' },
+      ]
+    },
+        { 
+      name: 'Architecture Implementation', 
+      href: null, 
+      children: [
+        { name: 'Architecture Implementation Planning', href: '/implemen' },
+        { name: 'Architecture Governance', href: '/implemen' },
+      ]
+    },
   ];
 
   // Fungsi untuk cek apakah menu sedang aktif

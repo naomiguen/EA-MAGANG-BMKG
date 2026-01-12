@@ -68,26 +68,30 @@ const Dashboard = () => {
       navigate('/data/logical');
       return;
     }
-    if (item.title === "Data Entity - Business Functional Matrix") {
+    if (item.title === "Data Entity - Business Function Matrix") {
       navigate('/data/function_matrix');
       return; // Menambahkan return untuk konsistensi
     }
     if (item.title === "Data Principles") {
       navigate('/data/dataprinciples');
       return; // Menambahkan return
-    } // PERBAIKAN: Menambahkan kurung kurawal penutup yang hilang di sini
-
-    // Tambahan: navigasi ke Business Process Risk Matrix
+    } 
     if (item.title === "Business Process - Risk Matrix") {
       navigate("/business/RiskMatrix");
       return;
     }
-
     if (item.title === "Technology Principles") {
       navigate("/vision/technologyPrinciples");
       return;
     }
-    
+    if (item.title === "Application - Data Matrix") {
+      navigate('/data/appmatrix');
+      return;
+    }
+    if (item.title === "Conceptual Data Diagram") {
+      navigate('/data/concept');
+      return;
+    }
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 

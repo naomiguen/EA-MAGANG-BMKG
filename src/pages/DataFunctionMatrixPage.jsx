@@ -64,7 +64,7 @@ const DataFunctionMatrixPage = () => {
       {/* Header */}
       <div className="text-center mb-10 max-w-4xl">
         <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3">
-          Data Entity / Business Function Matrix
+          Data Entity - Business Function Matrix
         </h1>
         <p className="text-slate-500 text-lg">
           Pemetaan hubungan antara fungsi bisnis (baris) dengan entitas data (kolom) dalam operasional stasiun.
