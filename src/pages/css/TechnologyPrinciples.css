@@ -1,0 +1,294 @@
+/* TechnologyPrinciples.css */
+
+:root {
+  --tp-bg1: #f7fafc;
+  --tp-bg2: #eef2ff;
+
+  --tp-text: #0f172a;
+  --tp-muted: #475569;
+
+  --tp-border: rgba(15, 23, 42, 0.14);
+  --tp-borderSoft: rgba(15, 23, 42, 0.08);
+
+  --tp-white: rgba(255, 255, 255, 0.82);
+  --tp-shadowSm: 0 1px 2px rgba(2, 6, 23, 0.08);
+  --tp-shadowMd: 0 14px 34px rgba(2, 6, 23, 0.12);
+
+  --tp-accent1: rgba(59, 130, 246, 0.14);
+  --tp-accent2: rgba(34, 197, 94, 0.14);
+
+  --tp-ring: rgba(59, 130, 246, 0.35);
+}
+
+.tp-page {
+  min-height: 100%;
+  color: var(--tp-text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
+    Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background:
+    radial-gradient(900px 320px at 50% 0%, rgba(99, 102, 241, 0.12), transparent 55%),
+    radial-gradient(700px 280px at 20% 25%, rgba(34, 197, 94, 0.10), transparent 60%),
+    radial-gradient(700px 280px at 80% 25%, rgba(59, 130, 246, 0.10), transparent 60%),
+    linear-gradient(180deg, var(--tp-bg2), var(--tp-bg1));
+  position: relative;
+  overflow: hidden;
+}
+
+.tp-bgGlow {
+  position: absolute;
+  inset: -120px -120px auto -120px;
+  height: 340px;
+  background:
+    radial-gradient(circle at 30% 40%, var(--tp-accent1), transparent 60%),
+    radial-gradient(circle at 70% 40%, var(--tp-accent2), transparent 60%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.tp-container {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 22px 18px 52px;
+  position: relative;
+}
+
+.tp-back {
+  appearance: none;
+  border: 1px solid var(--tp-border);
+  background: var(--tp-white);
+  backdrop-filter: blur(6px);
+  color: var(--tp-text);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: var(--tp-shadowSm);
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.tp-back:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--tp-shadowMd);
+}
+
+.tp-back:focus-visible {
+  outline: 3px solid var(--tp-ring);
+  outline-offset: 2px;
+}
+
+/* HEADER SPACING: dibuat seragam antar elemen */
+.tp-header {
+  text-align: center;
+  padding: 10px 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.tp-title {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-style: italic;
+}
+
+/* LOGO: dibesarkan sampai sebesar bordernya */
+.tp-logoWrap {
+  margin: 0 auto;
+  width: 150px;
+  height: 150px;
+
+  display: grid;
+  place-items: center;
+
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.tp-logo {
+  width: 150px;
+  height: 150px;
+
+  object-fit: contain;
+  padding: 0;
+
+  transform: none;
+
+  filter: drop-shadow(0 10px 18px rgba(2, 6, 23, 0.18));
+}
+
+.tp-subtitle {
+  margin: 0 auto;
+  max-width: 62ch;
+  font-size: 13px;
+  color: var(--tp-muted);
+  line-height: 1.6;
+}
+
+/* Jarak dari subtitle ke card pertama dibuat sama dengan gap header */
+.tp-section {
+  position: relative;
+  margin-top: 18px;
+  padding-top: 0;
+}
+
+.tp-rail {
+  position: absolute;
+  left: 22px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    rgba(59, 130, 246, 0.35),
+    rgba(34, 197, 94, 0.28)
+  );
+  border-radius: 999px;
+  opacity: 0.65;
+}
+
+.tp-list {
+  display: grid;
+  gap: 14px;
+}
+
+.tp-card {
+  background: var(--tp-white);
+  border: 1px solid var(--tp-borderSoft);
+  border-radius: 16px;
+  box-shadow: var(--tp-shadowSm);
+  padding: 14px 14px 12px;
+  position: relative;
+  margin-left: 30px;
+  overflow: hidden;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.tp-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    520px 200px at 10% 0%,
+    rgba(255, 255, 255, 0.65),
+    transparent 60%
+  );
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.tp-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--tp-shadowMd);
+  border-color: rgba(15, 23, 42, 0.14);
+}
+
+.tp-cardHeader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.tp-index {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(15, 23, 42, 0.85);
+  background: rgba(59, 130, 246, 0.10);
+  border: 1px solid rgba(59, 130, 246, 0.18);
+  box-shadow: 0 10px 22px rgba(59, 130, 246, 0.10);
+}
+
+.tp-tag {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(15, 23, 42, 0.75);
+  letter-spacing: 0.01em;
+}
+
+.tp-cardBody {
+  position: relative;
+}
+
+.tp-text {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(15, 23, 42, 0.82);
+}
+
+.tp-cardFooter {
+  position: relative;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.tp-chip {
+  font-size: 12px;
+  font-weight: 750;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(34, 197, 94, 0.10);
+  border: 1px solid rgba(34, 197, 94, 0.16);
+  color: rgba(15, 23, 42, 0.78);
+}
+
+.tp-chipSoft {
+  background: rgba(59, 130, 246, 0.09);
+  border: 1px solid rgba(59, 130, 246, 0.14);
+}
+
+@media (max-width: 520px) {
+  .tp-rail {
+    left: 14px;
+  }
+
+  .tp-card {
+    margin-left: 22px;
+  }
+
+  .tp-title {
+    font-size: 26px;
+  }
+  
+  .tp-logoWrap {
+    width: 132px;
+    height: 132px;
+  }
+
+  .tp-logo {
+    padding: 6px;
+    transform: scale(1.20);
+  }
+
+  .tp-header {
+    gap: 16px;
+  }
+
+  .tp-section {
+    margin-top: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tp-card,
+  .tp-back {
+    transition: none;
+  }
+}

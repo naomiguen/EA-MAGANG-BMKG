@@ -15,7 +15,7 @@ const Navbar = () => {
         { name: 'Strategy Map', href: '/vision/strategy' },
         { name: 'Architecture Goals', href: '/vision/goals' },
         { name: 'Architecture Principles', href: '/vision/principles' },
-        { name: 'Struktur Organisasi', href: '/business/organization' },
+        { name: 'Organization Decompposition Diagram', href: '/business/organization' },
         { name: 'Value Chain', href: '/vision/valuechain' },
         { name: 'Stakeholder Catalog', href: '/vision/stakeholder' },
       ]
@@ -25,8 +25,10 @@ const Navbar = () => {
       href: null, 
       children: [
         { name: 'Organizational Actor Catalog', href: '/business/organizational' },
-        { name: 'Business Process Map', href: '/business/pr' },
         { name: 'Functional Decomposition Diagram', href: '/business/functional' },
+        { name: 'Business Process Map', href: '/business/process' },
+        { name: 'Business Process - Risk Matrix', href: '/business/RiskMatrix' },
+       
       ]
     },
     { 
@@ -47,6 +49,7 @@ const Navbar = () => {
       children: [
         { name: 'Infrastructure', href: '/tech/infra' },
         { name: 'Network Diagram', href: '/tech/network' },
+        { name: 'Technology Principles', href: '/vision/technologyPrinciples' },
       ]
     },
     { name: 'Migration', href: '/migration' },

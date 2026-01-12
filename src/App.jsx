@@ -20,7 +20,8 @@ import DataPrinciplesPage from "./pages/DataPrinciplesPage";
 import DataEntityPage from "./pages/DataEntityComponentPage";
 import LogicalDataDiagram from "./pages/LogicalDataPage";
 import DataFunctionMatrixPage from "./pages/DataFunctionMatrixPage";
-
+import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix";
+import TechnologyPrinciples from "./pages/TechnologyPrinciples";
 
 function App() {
   return (
@@ -48,7 +49,8 @@ function App() {
           <Route path="/data/component" element={<DataEntityPage />} />
           <Route path="/data/logical" element={<LogicalDataDiagram />} />
           <Route path="/data/function_matrix" element={<DataFunctionMatrixPage />} />
-
+          <Route path="/business/RiskMatrix" element={<BusinessProcessRiskMatrix />} />
+          <Route path="/vision/technologyPrinciples" element={<TechnologyPrinciples />} />
           
           {/* Placeholder untuk halaman yang belum ada */}
           <Route path="*" element={
