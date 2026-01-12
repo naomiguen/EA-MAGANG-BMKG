@@ -59,56 +59,34 @@ export const architectureData = {
 export const valueChainData = {
   // --- 1. KOTAK INBOUND ---
   "B1": { 
-    title: "Inbound Logistics (Akuisisi Data)",
-    description: "Pengamatan Meteorologi Permukaan,  Pengamatan Udara Atas, Pengukuran Parameter Khusus (Hujan, Angin, Jarak Pandang, Penguapan), Monitoring Sistem Otomatis (AWOS), Melakukan persiapan pelepasan balon, pengisian gas hidrogen, dan pemasangan transmitter."
+    title: "Observasi",
+    description: "Aktivitas pengumpulan data mentah cuaca yang menjadi bahan baku utama. Melakukan pengamatan unsur cuaca permukaan (Suhu, Tekanan, Angin) dan udara atas (Pilot Balon/Radiosonde) secara real-time dan terjadwal 24 jam untuk menghasilkan data dasar (SYNOP/METAR)."
   },
 
   // --- 2. KOTAK OPERATIONS ---
   "B2": {
-    title: "Operations (Pengolahan & Analisis)",
-    description: "Pembuatan Sandi Cuaca Penerbangan, Pembuatan Sandi Sinoptik & Climat, Analisis Data Udara Atas, Verifikasi & Quality Control Data, Melakukan pengamatan manual menggunakan theodolite (Pilot Balon), memantau pesan dari sistem receiver (Radio Sonde), serta melakukan penyandian dan pengiriman kode melalui CMSS."
+    title: "Data dan Informasi",
+    description: "Aktivitas pengolahan, analisis, dan pembuatan produk prakiraan. Mengolah data observasi menjadi produk bernilai tambah seperti Prakiraan Cuaca Penerbangan (TAF/Trend), Peringatan Dini Cuaca Ekstrem (Warning), dan Dokumen Penerbangan (Flight Docs) menggunakan sistem pemrosesan data ."
   },
 
   // --- 3. KOTAK OUTBOUND ---
   "B3": {
-    title: "Outbound Logistics (Diseminasi)",
-    description: "Penyebaran Aerodrome Forecast (TAF), Diseminasi Trend Landing Forecast (TTLF), Penyebaran Peringatan Dini Khusus, Distribusi Informasi Cuaca Ekstrem"
-  },
-
-  // --- 4. KOTAK MARKETING ---
-  "B4": {
-    title: "Marketing & Sales (Layanan Publik)",
-    description: "Penyusunan Flight Documentation,  Briefing Cuaca Penerbangan, Penyediaan Dokumen Terjadwal, Nowcasting & Update Informasi"
-  },
-
-  // --- 5. KOTAK TEKNISI (SUPPORT) ---
-  "B5": {
-    title: "Technology Development (Teknisi)",
-    description: "Pembatalan & Pemutakhiran Berita, Investigasi Kecelakaan"
+    title: "Multimedia",
+    description: "Aktivitas pengemasan visual dan diseminasi (penyebaran) informasi kepada publik. Mengelola penyebaran informasi melalui kanal digital (Website, Media Sosial), membuat infografis/videografis cuaca yang mudah dipahami masyarakat, serta pelayanan informasi publik satu pintu"
   },
 
   "A1": { 
-    title: "Pemeliharaan Infrastruktur Daya",
-    description: "Melakukan pemeliharaan rutin dan pemanasan berkala (1x seminggu) pada Genset Kantor untuk memastikan cadangan listrik siap pakai serta Melakukan pemeliharaan khusus pada Genset Radar Cuaca, termasuk pembersihan ruang genset dan pemanasan manual jika sistem auto-warming mengalami gangguan."
+    title: "Infrastruktur",
+    description: "Pengelolaan sarana fisik dan fasilitas"
   },
 
   "A2": { 
-    title: "Perbaikan Sistem Komputer (IT Support)",
-    description: "Melakukan perbaikan komprehensif pada sistem komputer operasional, baik dari sisi hardware maupun software."
+    title: "Sumber Daya Manusia",
+    description: "Pengelolaan tenaga kerja operasional dan administratif."
   },
 
   "A3": { 
-    title: "Dukungan Alat Pengamatan Khusus",
-    description: "Mendukung operasional ARWS (Automatic Rain Water Sampler) melalui pengambilan sampel air hujan setiap hari Senin untuk diserahkan ke bagian TU dan dikirim ke pusat."
-  },
-
-  "A4": { 
-    title: "Pengelolaan Fasilitas Energi",
-    description: "Menjamin ketersediaan pasokan listrik cadangan melalui manajemen bahan bakar (solar) dan pengecekan komponen aki/radiator pada sistem genset."
-  },
-
-  "A5": { 
-    title: "Manajemen Logistik Teknis",
-    description: "Pengambilan dan pengelolaan stok barang teknis seperti balon, tali, transmitter, dan stiker dari bagian Tata Usaha untuk kebutuhan operasional udara atas."
+    title: "Pengembangan Teknologi",
+    description: "Pemeliharaan dan peningkatan kapabilitas sistem peralatan teknis."
   }
 };

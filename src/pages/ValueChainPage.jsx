@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import { valueChainData } from '../data/menuData';
 
 // 2. Import SVG Final
-import ValueChainSVG from '../assets/ValueChain.drawio.svg?react';
+import ValueChainSVG from '../assets/Value-Chain.drawio.svg?react';
 
 const ValueChainPage = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -81,9 +81,6 @@ const ValueChainPage = () => {
                  </div>
               </div>
             )}
-          </div>
-          <div style={{ padding: '16px 24px', backgroundColor: '#f9fafb', borderTop: '1px solid #e5e7eb', textAlign: 'right' }}>
-              <button onClick={closeModal} style={{ padding: '8px 16px', backgroundColor: '#ffffff', border: '1px solid #d1d5db', borderRadius: '6px', color: '#374151', fontSize: '14px', fontWeight: '600', cursor: 'pointer' }}>Tutup</button>
           </div>
         </div>
       </div>,
