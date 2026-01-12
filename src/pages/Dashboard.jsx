@@ -54,6 +54,10 @@ const Dashboard = () => {
       navigate('/data/dataprinciples');
       return;
     }
+    if (item.title === "Business Interaction Diagram") {
+      navigate('/business/Interaction');
+      return;
+    }
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 
