@@ -20,7 +20,7 @@ const ConceptualDiagramPage = () => {
         
         {/* 1. PERSONIL (Atas Tengah) */}
         <div className="absolute top-10 left-1/2 transform -translate-x-1/2 z-20">
-          <EntityBox title="Personil / SDM" />
+          <EntityBox title="Sumber Daya Manusia" />
         </div>
 
         {/* 2. DATA ADMINISTRASI (PINDAH KE SINI: Kanan Tengah - Sejajar Data Observasi) */}
@@ -30,7 +30,7 @@ const ConceptualDiagramPage = () => {
 
         {/* 3. PERALATAN (Kiri Tengah) */}
         <div className="absolute top-1/2 left-10 transform -translate-y-1/2 z-20">
-          <EntityBox title="Peralatan (Aset)" />
+          <EntityBox title="Peralatan" />
         </div>
 
         {/* 4. DATA OBSERVASI (Tengah Pusat) */}
