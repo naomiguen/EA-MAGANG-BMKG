@@ -19,25 +19,35 @@ const Dashboard = () => {
 
   const handleCardClick = (item) => {
     if (item.title === "Organization Decomposition Diagram") {
-      navigate('/business/organization');
+      navigate("/business/organization");
       return;
     }
     if (item.title === "Vision, Mission and Corporate Strategy") {
-      navigate('/vision/strategy');
+      navigate("/vision/strategy");
       return;
     }
     if (item.title === "Value Chain Diagram") {
-      navigate('/vision/valuechain');
+      navigate("/vision/valuechain");
       return;
     }
     if (item.title === "Architecture Principles") {
-      navigate('/vision/principles');
+      navigate("/vision/principles");
       return;
     }
+    if (item.title === "Architecture Goals") {
+      navigate("/vision/goals");
+      return;
+    }
+    if (item.title === "Stakeholder Catalog") {
+      navigate("/vision/stakeholder");
+      return;
+    }
+    // Duplikasi pengecekan Architecture Goals (aman dibiarkan, tapi yang pertama akan dieksekusi)
     if (item.title === "Architecture Goals") {
       navigate('/vision/goals');
       return;
     }
+    // Duplikasi pengecekan Stakeholder Catalog
     if (item.title === "Stakeholder Catalog") {
       navigate('/vision/stakeholder');
       return;
@@ -60,11 +70,24 @@ const Dashboard = () => {
     }
     if (item.title === "Data Entity - Business Functional Matrix") {
       navigate('/data/function_matrix');
+      return; // Menambahkan return untuk konsistensi
     }
     if (item.title === "Data Principles") {
       navigate('/data/dataprinciples');
+      return; // Menambahkan return
+    } // PERBAIKAN: Menambahkan kurung kurawal penutup yang hilang di sini
+
+    // Tambahan: navigasi ke Business Process Risk Matrix
+    if (item.title === "Business Process - Risk Matrix") {
+      navigate("/business/RiskMatrix");
       return;
     }
+
+    if (item.title === "Technology Principles") {
+      navigate("/vision/technologyPrinciples");
+      return;
+    }
+    
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 
