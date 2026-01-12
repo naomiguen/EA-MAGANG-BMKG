@@ -20,6 +20,8 @@ import DataPrinciplesPage from "./pages/DataPrinciplesPage";
 import DataEntityPage from "./pages/DataEntityComponentPage";
 import LogicalDataDiagram from "./pages/LogicalDataPage";
 import DataFunctionMatrixPage from "./pages/DataFunctionMatrixPage";
+import AppDataMatrixPage from "./pages/AppDataMatrixPage";
+import ConceptualDiagramPage from "./pages/ConceptualPage";
 
 
 function App() {
@@ -48,6 +50,8 @@ function App() {
           <Route path="/data/component" element={<DataEntityPage />} />
           <Route path="/data/logical" element={<LogicalDataDiagram />} />
           <Route path="/data/function_matrix" element={<DataFunctionMatrixPage />} />
+          <Route path="/data/appmatrix" element={<AppDataMatrixPage />} />
+          <Route path="/data/concept" element={<ConceptualDiagramPage />} />
 
           
           {/* Placeholder untuk halaman yang belum ada */}

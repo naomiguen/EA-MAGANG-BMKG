@@ -29,8 +29,7 @@ const Navbar = () => {
         { name: 'Functional Decomposition Diagram', href: '/business/functional' },
       ]
     },
-    { 
-<<<<<<< HEAD
+    {
       name: 'Data Arch', 
       href: '/data',
       children: [
@@ -39,16 +38,8 @@ const Navbar = () => {
         { name: 'Conceptual Data Diagram', href: '/data' },
         { name: 'Logical Data Diagram', href: '/data/logical' },
         { name: 'Data Entity - Business Functional Matrix', href: '/data/function_matrix' },
-        { name: 'Application - Data Matrix', href: '/data' },
-=======
-      name: 'Data Architecture', 
-      href: null, 
-      children: [
-        { name : 'Data Principles', href: '/data/dataprinciples' },
-        { name: 'Data Architecture', href: '/is/data' },
-        { name: 'Application Portfolio', href: '/is/application' },
-        { name: 'Interface Diagram', href: '/is/interface' },
->>>>>>> 846e2d91612f76703b75e55e29efe2e3689ca339
+        { name: 'Application - Data Matrix', href: '/data/appmatrix' },
+        { name: 'Conceptual Data Diagram', href: '/data/concept' },
       ]
     },
     { 
@@ -59,7 +50,29 @@ const Navbar = () => {
         { name: 'Network Diagram', href: '/tech/network' },
       ]
     },
-    { name: 'Migration', href: '/migration' },
+    { 
+      name: 'Application', 
+      href: null, 
+      children: [
+        { name: 'Application Principles', href: '/app' },
+        { name: 'Application Portfolio Catalog', href: '/app' },
+        { name: 'Application Use Case Diagram', href: '/app' },
+        { name: 'Application - Portofolio Assessment', href: '/app' },
+        { name: 'Application - User and Location Diagram', href: '/app' },
+        { name: 'Application - Communication Diagram', href: '/app' },
+        { name: 'Application - Business Process Matrix', href: '/app' },
+        { name: 'Application - Classification Matrix', href: '/app' },
+        { name: 'Application - Organization Matrix', href: '/app' },
+      ]
+    },
+        { 
+      name: 'Architecture Implementation', 
+      href: null, 
+      children: [
+        { name: 'Architecture Implementation Planning', href: '/implemen' },
+        { name: 'Architecture Governance', href: '/implemen' },
+      ]
+    },
   ];
 
   // Fungsi untuk cek apakah menu sedang aktif

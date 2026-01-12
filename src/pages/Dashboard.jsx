@@ -65,6 +65,14 @@ const Dashboard = () => {
       navigate('/data/dataprinciples');
       return;
     }
+    if (item.title === "Application - Data Matrix") {
+      navigate('/data/appmatrix');
+      return;
+    }
+    if (item.title === "Conceptual Data Diagram") {
+      navigate('/data/concept');
+      return;
+    }
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 
