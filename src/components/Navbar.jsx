@@ -18,6 +18,7 @@ const Navbar = () => {
         { name: 'Organization Decompposition Diagram', href: '/business/organization' },
         { name: 'Value Chain', href: '/vision/valuechain' },
         { name: 'Stakeholder Catalog', href: '/vision/stakeholder' },
+        { name: 'Solution Concept Diagram', href: '/vision/solution' },
       ]
     },
     { 

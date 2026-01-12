@@ -52,6 +52,10 @@ const Dashboard = () => {
       navigate('/vision/stakeholder');
       return;
     }
+    if (item.title === "Solution Concept Diagram") {
+      navigate('/vision/solution');
+      return;
+    }
     if (item.title === "Organizational Actor Catalog") {
       navigate('/business/organizational');
       return;

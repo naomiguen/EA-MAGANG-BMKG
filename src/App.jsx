@@ -24,6 +24,7 @@ import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix";
 import TechnologyPrinciples from "./pages/TechnologyPrinciples";
 import AppDataMatrixPage from "./pages/AppDataMatrixPage";
 import ConceptualDiagramPage from "./pages/ConceptualPage";
+import SolutionConceptPage from "./pages/SolutionConceptPage";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route path="/business/organization" element={<OrganizationDiagramPage />} />
           <Route path="/vision/principles" element={<ArchitecturePrinciplesPage />} />
           <Route path="/vision/goals" element={<ArchitectureGoalsPage />} />
+          <Route path="/vision/solution" element={<SolutionConceptPage />} />
           <Route path="/business/organizational" element={<OrgStructurePage />} />
           <Route path="/business/functional" element={<FunctionalDecompositionPage />} />
           <Route path="/data/dataprinciples" element={<DataPrinciplesPage />} />
