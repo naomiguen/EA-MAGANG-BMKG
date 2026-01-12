@@ -60,7 +60,7 @@ function App() {
           <Route path="/tech/standardsCatalog" element={<TechnologyStandarCatalog />} />
           <Route path="/tech/environmentDiagram" element={<TechnologyEnvironmentDiagram />} />
           <Route path="/business/RiskMatrix" element={<BusinessProcessRiskMatrix />} />
-          <Route path="/vision/technologyPrinciples" element={<TechnologyPrinciples />} />
+          <Route path="/tech/technologyPrinciples" element={<TechnologyPrinciples />} />
           <Route path="/data/appmatrix" element={<AppDataMatrixPage />} />
           <Route path="/data/concept" element={<ConceptualDiagramPage />} />
 
