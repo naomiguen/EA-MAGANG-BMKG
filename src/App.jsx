@@ -13,10 +13,8 @@ import ValueChainPage from "./pages/ValueChainPage";
 import ArchitecturePrinciplesPage from "./pages/ArchitecturePrinciplesPage";
 import ArchitectureGoalsPage from "./pages/ArchitectureGoalsPage";
 import StakeholderPage from "./pages/StakeholderPage";
-<<<<<<< HEAD
 import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix";
 import TechnologyPrinciples from "./pages/TechnologyPrinciples";
-=======
 import StakeholderTable from "./pages/StakeholderPage";
 import OrgStructurePage from "./pages/OrganizationalActorPage";
 import FunctionalDecompositionPage from "./pages/FuncDecomposePage";
@@ -24,8 +22,6 @@ import DataPrinciplesPage from "./pages/DataPrinciplesPage";
 import DataEntityPage from "./pages/DataEntityComponentPage";
 import LogicalDataDiagram from "./pages/LogicalDataPage";
 import DataFunctionMatrixPage from "./pages/DataFunctionMatrixPage";
-
->>>>>>> bcf9a9b51c7e290351de1a785a7a0024c855a471
 
 function App() {
   return (
@@ -47,19 +43,14 @@ function App() {
           <Route path="/business/organization" element={<OrganizationDiagramPage />} />
           <Route path="/vision/principles" element={<ArchitecturePrinciplesPage />} />
           <Route path="/vision/goals" element={<ArchitectureGoalsPage />} />
-<<<<<<< HEAD
           <Route path="/business/RiskMatrix" element={<BusinessProcessRiskMatrix />} />
           <Route path="/vision/technologyPrinciples" element={<TechnologyPrinciples />} />
-=======
           <Route path="/business/organizational" element={<OrgStructurePage />} />
           <Route path="/business/functional" element={<FunctionalDecompositionPage />} />
           <Route path="/data/dataprinciples" element={<DataPrinciplesPage />} />
           <Route path="/data/component" element={<DataEntityPage />} />
           <Route path="/data/logical" element={<LogicalDataDiagram />} />
           <Route path="/data/function_matrix" element={<DataFunctionMatrixPage />} />
-
->>>>>>> bcf9a9b51c7e290351de1a785a7a0024c855a471
-          
           {/* Placeholder untuk halaman yang belum ada */}
           <Route path="*" element={
             <div className="p-10 text-center text-gray-500">

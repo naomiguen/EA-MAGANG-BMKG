@@ -11,10 +11,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.90.1",
-<<<<<<< HEAD
-=======
     "lucide-react": "^0.562.0",
->>>>>>> bcf9a9b51c7e290351de1a785a7a0024c855a471
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.11.0",
