@@ -38,52 +38,60 @@ const Dashboard = () => {
       navigate("/vision/goals");
       return;
     }
-  if (item.title === "Stakeholder Catalog") {
-    navigate("/vision/stakeholder");
-    return;
-  }
-  if (item.title === "Organizational Actor Catalog") {
-    navigate('/business/organizational');
-    return;
-  }
-  if (item.title === "Functional Decomposition Diagram") {
-    navigate('/business/functional');
-    return;
-  }
-  if (item.title === "Data Entity - Data Component Catalog") {
-    navigate('/data/component');
-    return;
-  }
-  if (item.title === "Logical Data Diagram") {
-    navigate('/data/logical');
-    return;
-  }
-  if (item.title === "Data Entity - Business Functional Matrix") {
-    navigate('/data/function_matrix');
-    return;
-  }
-  if (item.title === "Data Principles") {
-    navigate('/data/dataprinciples');
-    return;
-  }
-  if (item.title === "Business Process - Risk Matrix") {
-    navigate("/business/RiskMatrix");
-    return;
-  }
-  if (item.title === "Technology Principles") {
-    navigate("/vision/technologyPrinciples");
-    return;
-  }
-  if (item.title === 'Technology Standard Catalog') {
-    navigate("/tech/standardsCatalog");
-    return;
-  }
-  if (item.title === "Environment and Location Diagram") {
-    navigate("/tech/environmentDiagram");
-    return;
-  }
-    alert(`Halaman untuk "${item.title}" belum dibuat.`);
-  };
+    if (item.title === "Stakeholder Catalog") {
+      navigate("/vision/stakeholder");
+      return;
+    }
+    if (item.title === "Organizational Actor Catalog") {
+      navigate('/business/organizational');
+      return;
+    }
+    if (item.title === "Functional Decomposition Diagram") {
+      navigate('/business/functional');
+      return;
+    }
+    if (item.title === "Data Entity - Data Component Catalog") {
+      navigate('/data/component');
+      return;
+    }
+    if (item.title === "Logical Data Diagram") {
+      navigate('/data/logical');
+      return;
+    }
+    if (item.title === "Data Entity - Business Functional Matrix") {
+      navigate('/data/function_matrix');
+      return;
+    }
+    if (item.title === "Data Principles") {
+      navigate('/data/dataprinciples');
+      return;
+    }
+    if (item.title === "Business Process - Risk Matrix") {
+      navigate("/business/RiskMatrix");
+      return;
+    }
+    if (item.title === "Technology Principles") {
+      navigate("/vision/technologyPrinciples");
+      return;
+    }
+    if (item.title === 'Technology Standard Catalog') {
+      navigate("/tech/standardsCatalog");
+      return;
+    }
+    if (item.title === "Environment and Location Diagram") {
+      navigate("/tech/environmentDiagram");
+      return;
+    }
+    if (item.title === "Network Communication Diagram") {
+      navigate("/tech/networkCommunicationDiagram");
+      return;
+    }
+    if (item.title === "Technology - Application Matrix") {
+      navigate("/tech/appMatrix");
+      return;
+    }
+      alert(`Halaman untuk "${item.title}" belum dibuat.`);
+    };
 
   const renderCard = (item) => (
     <div

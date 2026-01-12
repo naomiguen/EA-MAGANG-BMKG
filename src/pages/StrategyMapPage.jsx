@@ -1,301 +1,296 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import StrategySvgImage from "../components/StrategySvgImage";
 import { supabase } from "../lib/supabaseClient";
 
-const ArchitecturePrinciplesPage = () => {
-  const [hoveredId, setHoveredId] = useState(null);
-
-  const [principles, setPrinciples] = useState([]);
+const StrategyMapPage = () => {
+  const [activeId, setActiveId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [strategyDetails, setStrategyDetails] = useState({});
   const [loading, setLoading] = useState(true);
-  const [errMsg, setErrMsg] = useState("");
+  const [error, setError] = useState(null);
 
+  // Fetch data dari Supabase saat komponen mount
   useEffect(() => {
-    let mounted = true;
+    const fetchStrategyData = async () => {
+      try {
+        setLoading(true);
+        
+        const { data, error } = await supabase
+          .from('strategy_map')
+          .select('*');
 
-    async function loadPrinciples() {
-      setLoading(true);
-      setErrMsg("");
+        if (error) {
+          throw error;
+        }
 
-      const { data, error } = await supabase
-        .from("architecture_principles")
-        .select("id, principle_code, category, title, statement, rationale, implication, sort_order")
-        .eq("is_active", true)
-        .order("sort_order", { ascending: true });
+        // Konversi array ke object dengan id sebagai key
+        const dataObject = {};
+        data.forEach(item => {
+          dataObject[item.id] = {
+            title: item.title,
+            desc: item.description,
+            category: item.category
+          };
+        });
 
-      if (!mounted) return;
-
-      if (error) {
-        setErrMsg(error.message || "Gagal mengambil data Architecture Principles dari Supabase.");
-        setPrinciples([]);
-      } else {
-        const mapped = (data || []).map((x) => ({
-          id: x.principle_code || x.id,
-          category: x.category,
-          title: x.title,
-          statement: x.statement,
-          rationale: x.rationale,
-          implication: x.implication,
-        }));
-        setPrinciples(mapped);
+        setStrategyDetails(dataObject);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching strategy data:', err);
+        setError(err.message);
+        setLoading(false);
       }
-
-      setLoading(false);
-    }
-
-    loadPrinciples();
-    return () => {
-      mounted = false;
     };
+
+    fetchStrategyData();
   }, []);
 
+  // Click handler passed to the SVG component
+  const handleBoxClick = (e) => {
+    console.log("KLIK DITERIMA DI PARENT! Elemen:", e.target.tagName);
+
+    let current = e.target;
+    let foundId = null;
+
+    while (current && current.tagName !== 'svg') {
+      const id = current.getAttribute ? current.getAttribute('data-cell-id') : null;
+      
+      if (id) {
+        console.log(`Cek ID: ${id}`);
+        if (strategyDetails[id]) {
+          foundId = id;
+          break;
+        }
+      }
+      current = current.parentNode;
+    }
+
+    if (foundId) {
+      console.log("MATCH! Buka Modal untuk:", foundId);
+      setActiveId(foundId);
+      setIsModalOpen(true);
+    } else {
+      console.log("❌ Gagal ketemu ID yang ada di database.");
+    }
+  };
+
+  const activeInfo = activeId ? strategyDetails[activeId] : null;
+
+  // Loading state
+  if (loading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh',
+        fontFamily: 'sans-serif'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ 
+            width: '50px', 
+            height: '50px', 
+            border: '4px solid #e2e8f0',
+            borderTop: '4px solid #1e40af',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto 16px'
+          }}></div>
+          <p style={{ color: '#64748b' }}>Memuat data strategi...</p>
+        </div>
+        <style>
+          {`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}
+        </style>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh',
+        fontFamily: 'sans-serif'
+      }}>
+        <div style={{ 
+          backgroundColor: '#fee2e2', 
+          border: '1px solid #fca5a5',
+          borderRadius: '8px',
+          padding: '20px',
+          maxWidth: '500px',
+          textAlign: 'center'
+        }}>
+          <h3 style={{ color: '#dc2626', margin: '0 0 8px 0' }}>
+            ⚠️ Gagal Memuat Data
+          </h3>
+          <p style={{ color: '#991b1b', margin: 0 }}>
+            {error}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div
-      style={{
-        padding: "16px",
-        backgroundColor: "#f5f5f5",
-        minHeight: "100vh",
-        fontFamily: "system-ui, -apple-system, sans-serif",
-      }}
-    >
-      <div style={{ textAlign: "center", marginBottom: "32px" }}>
-        <h1
-          style={{
-            fontSize: "clamp(24px, 5vw, 32px)",
-            fontWeight: "700",
-            color: "#1e3a8a",
-            margin: "0 0 8px 0",
-          }}
-        >
-          Architecture Principles
+    <div style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      height: '100vh', 
+      padding: '24px', 
+      backgroundColor: '#f8fafc', 
+      fontFamily: 'sans-serif' 
+    }}>
+      
+      {/* HEADER PAGE */}
+      <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+        <h1 style={{ color: '#1e3a8a', fontSize: '28px', fontWeight: '800', margin: '0 0 8px 0' }}>
+          Strategy Map BMKG
         </h1>
-        <p
-          style={{
-            fontSize: "clamp(13px, 3vw, 16px)",
-            color: "#64748b",
-            margin: 0,
-          }}
-        >
-          4 Pilar Prinsip EA Stasiun Meteorologi Sepinggan
+        <p style={{ color: '#64748b', fontSize: '14px', margin: 0 }}>
+          Klik pada kotak strategi untuk melihat detail KPI & Deskripsi
         </p>
       </div>
 
-      <div
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 450px), 1fr))",
-          gap: "20px",
-          padding: "0 8px",
+      {/* CONTAINER GAMBAR */}
+      <div style={{ 
+        flex: 1, 
+        overflow: 'auto', 
+        border: '1px solid #e2e8f0', 
+        borderRadius: '16px', 
+        backgroundColor: 'white',
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '20px'
+      }}>
+        <div style={{ width: '100%', maxWidth: '1200px', minWidth: '800px' }}>
+          {/* KOMPONEN SVG */}
+          <StrategySvgImage onKlikDiagram={handleBoxClick} />
+        </div>
+      </div>
+
+      {/* MODAL POPUP */}
+      {isModalOpen && activeInfo && (
+        <div style={{ 
+          position: 'fixed', 
+          top: 0, left: 0, right: 0, bottom: 0, 
+          backgroundColor: 'rgba(15, 23, 42, 0.6)',
+          backdropFilter: 'blur(4px)',
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          zIndex: 1000
         }}
-      >
-        {loading && (
-          <div
-            style={{
-              gridColumn: "1 / -1",
-              background: "white",
-              border: "1px solid #e5e7eb",
-              borderRadius: "12px",
-              padding: "16px",
-              color: "#64748b",
-              fontWeight: 600,
+        onClick={() => setIsModalOpen(false)}
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            style={{ 
+              backgroundColor: 'white', 
+              borderRadius: '16px', 
+              width: '90%',
+              maxWidth: '550px',
+              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
+              overflow: 'hidden',
+              animation: 'popIn 0.3s ease-out'
             }}
           >
-            Memuat data principles...
-          </div>
-        )}
-
-        {!loading && errMsg && (
-          <div
-            style={{
-              gridColumn: "1 / -1",
-              background: "#fff5f5",
-              border: "1px solid #fed7d7",
-              borderRadius: "12px",
-              padding: "16px",
-              color: "#7f1d1d",
-            }}
-          >
-            <div style={{ fontWeight: 800, marginBottom: 8 }}>Gagal memuat data</div>
-            <div style={{ marginBottom: 12 }}>{errMsg}</div>
-            <button
-              type="button"
-              onClick={() => window.location.reload()}
-              style={{
-                border: "1px solid #feb2b2",
-                background: "white",
-                padding: "8px 10px",
-                borderRadius: "10px",
-                cursor: "pointer",
-                fontWeight: 800,
-              }}
-            >
-              Coba lagi
-            </button>
-          </div>
-        )}
-
-        {!loading && !errMsg && principles.length === 0 && (
-          <div
-            style={{
-              gridColumn: "1 / -1",
-              background: "white",
-              border: "1px solid #e5e7eb",
-              borderRadius: "12px",
-              padding: "16px",
-              color: "#64748b",
-            }}
-          >
-            Tidak ada principle yang aktif di database.
-          </div>
-        )}
-
-        {!loading &&
-          !errMsg &&
-          principles.map((item) => (
-            <div
-              key={item.id}
-              onMouseEnter={() => setHoveredId(item.id)}
-              onMouseLeave={() => setHoveredId(null)}
-              style={{
-                backgroundColor: "white",
-                borderRadius: "12px",
-                border: "1px solid #e5e7eb",
-                overflow: "hidden",
-                transition: "all 0.3s ease",
-                transform: hoveredId === item.id ? "translateY(-4px)" : "translateY(0)",
-                boxShadow:
-                  hoveredId === item.id
-                    ? "0 10px 25px -5px rgba(0, 0, 0, 0.15)"
-                    : "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
-                cursor: "pointer",
-              }}
-            >
-              <div
+            {/* MODAL HEADER */}
+            <div style={{ 
+              backgroundColor: '#1e40af',
+              padding: '20px 24px',
+              borderBottom: '4px solid #1e3a8a',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <h2 style={{ margin: 0, color: 'white', fontSize: '18px', fontWeight: 'bold' }}>
+                {activeInfo.title}
+              </h2>
+              <button 
+                onClick={() => setIsModalOpen(false)}
                 style={{
-                  background: "linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)",
-                  padding: "16px 20px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  flexWrap: "wrap",
-                  gap: "8px",
+                  background: 'rgba(255,255,255,0.2)',
+                  border: 'none',
+                  color: 'white',
+                  width: '32px', 
+                  height: '32px', 
+                  borderRadius: '50%',
+                  fontSize: '20px', 
+                  cursor: 'pointer', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center'
                 }}
               >
-                <h3
-                  style={{
-                    fontSize: "clamp(16px, 4vw, 18px)",
-                    fontWeight: "700",
-                    color: "white",
-                    margin: 0,
-                  }}
-                >
-                  {item.title}
-                </h3>
-                <span
-                  style={{
-                    fontSize: "11px",
-                    fontWeight: "600",
-                    backgroundColor: "rgba(255, 255, 255, 0.25)",
-                    color: "white",
-                    padding: "4px 12px",
-                    borderRadius: "12px",
-                    border: "1px solid rgba(255, 255, 255, 0.3)",
-                  }}
-                >
-                  {item.category}
-                </span>
-              </div>
-
-              <div style={{ padding: "20px" }}>
-                <div style={{ marginBottom: "16px" }}>
-                  <label
-                    style={{
-                      display: "block",
-                      fontSize: "11px",
-                      fontWeight: "700",
-                      color: "#94a3b8",
-                      letterSpacing: "0.5px",
-                      marginBottom: "6px",
-                    }}
-                  >
-                    STATEMENT
-                  </label>
-                  <p
-                    style={{
-                      color: "#1e293b",
-                      fontSize: "clamp(13px, 3vw, 15px)",
-                      fontWeight: "600",
-                      margin: 0,
-                      lineHeight: "1.5",
-                    }}
-                  >
-                    {item.statement}
-                  </p>
-                </div>
-
-                <div style={{ marginBottom: "16px" }}>
-                  <label
-                    style={{
-                      display: "block",
-                      fontSize: "11px",
-                      fontWeight: "700",
-                      color: "#94a3b8",
-                      letterSpacing: "0.5px",
-                      marginBottom: "6px",
-                    }}
-                  >
-                    RATIONALE
-                  </label>
-                  <p
-                    style={{
-                      color: "#475569",
-                      fontSize: "clamp(12px, 2.5vw, 14px)",
-                      margin: 0,
-                      lineHeight: "1.6",
-                    }}
-                  >
-                    {item.rationale}
-                  </p>
-                </div>
-
-                <div
-                  style={{
-                    backgroundColor: "#fef3c7",
-                    padding: "12px",
-                    borderRadius: "8px",
-                    borderLeft: "4px solid #f59e0b",
-                  }}
-                >
-                  <label
-                    style={{
-                      display: "block",
-                      fontSize: "11px",
-                      fontWeight: "700",
-                      color: "#92400e",
-                      letterSpacing: "0.5px",
-                      marginBottom: "6px",
-                    }}
-                  >
-                    IMPLICATION
-                  </label>
-                  <p
-                    style={{
-                      color: "#78350f",
-                      fontSize: "clamp(12px, 2.5vw, 14px)",
-                      fontStyle: "italic",
-                      margin: 0,
-                      lineHeight: "1.6",
-                    }}
-                  >
-                    "{item.implication}"
-                  </p>
-                </div>
-              </div>
+                &times;
+              </button>
             </div>
-          ))}
-      </div>
+
+            {/* MODAL CONTENT */}
+            <div style={{ padding: '24px' }}>
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ 
+                  display: 'block', 
+                  fontSize: '12px', 
+                  fontWeight: 'bold', 
+                  color: '#94a3b8', 
+                  marginBottom: '6px', 
+                  letterSpacing: '1px' 
+                }}>
+                  DESKRIPSI STRATEGI
+                </label>
+                <p style={{ 
+                  margin: 0, 
+                  color: '#334155', 
+                  lineHeight: '1.6', 
+                  fontSize: '15px' 
+                }}>
+                  {activeInfo.desc}
+                </p>
+              </div>
+
+              {/* Badge Kategori */}
+              {activeInfo.category && (
+                <div style={{ marginTop: '16px' }}>
+                  <span style={{
+                    display: 'inline-block',
+                    padding: '4px 12px',
+                    backgroundColor: '#dbeafe',
+                    color: '#1e40af',
+                    borderRadius: '12px',
+                    fontSize: '12px',
+                    fontWeight: '600',
+                    textTransform: 'uppercase'
+                  }}>
+                    {activeInfo.category.replace('_', ' ')}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Animasi PopIn */}
+      <style>
+        {`
+          @keyframes popIn {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+          }
+        `}
+      </style>
     </div>
   );
 };
 
-export default ArchitecturePrinciplesPage;
+export default StrategyMapPage;
