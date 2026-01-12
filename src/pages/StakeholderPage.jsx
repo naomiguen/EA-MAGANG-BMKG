@@ -58,7 +58,7 @@ const StakeholderPage = () => {
 
       <div className="orgDiagramCardFull">
         <div className="orgDiagramHeader">
-          <div>Stakeholder Matrix</div>
+          <div>Stakeholder Catalog</div>
         </div>
 
         <div
