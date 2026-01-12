@@ -12,9 +12,7 @@ import StrategyMapPage from "./pages/StrategyMapPage";
 import ValueChainPage from "./pages/ValueChainPage";
 import ArchitecturePrinciplesPage from "./pages/ArchitecturePrinciplesPage";
 import ArchitectureGoalsPage from "./pages/ArchitectureGoalsPage";
-import StakeholderPage from "./pages/StakeholderPage";
-import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix";
-import TechnologyPrinciples from "./pages/TechnologyPrinciples";
+import StakeholderTable from "./pages/StakeholderPage";
 import OrgStructurePage from "./pages/OrganizationalActorPage";
 import FunctionalDecompositionPage from "./pages/FuncDecomposePage";
 import DataPrinciplesPage from "./pages/DataPrinciplesPage";
@@ -23,6 +21,11 @@ import LogicalDataDiagram from "./pages/LogicalDataPage";
 import DataFunctionMatrixPage from "./pages/DataFunctionMatrixPage";
 import TechnologyStandarCatalog from "./pages/TechnologyStandarCatalog";
 import TechnologyEnvironmentDiagram from "./pages/TechnologyEnvironmentDiagram";
+import TechnologyPrinciples from "./pages/TechnologyPrinciples";
+import AppDataMatrixPage from "./pages/AppDataMatrixPage";
+import ConceptualDiagramPage from "./pages/ConceptualPage";
+import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix"
+
 import TechnologyNetworkDiagram from "./pages/TechnologyNetworkDiagram";
 import TechnologyAppMatrix from "./pages/TechnologyAppMatrix";
 
@@ -42,8 +45,8 @@ function App() {
           {/* Halaman Detail (Sesuai Link Navbar & Dashboard) */}
           <Route path="/vision/valuechain" element={<ValueChainPage />} />
           <Route path="/vision/strategy" element={<StrategyMapPage />} />
-          <Route path="/vision/stakeholder" element={<StakeholderPage />} />
-          <Route path="/business/organization" element={<OrganizationDiagramPage />} />
+          <Route path="/vision/stakeholder" element={<StakeholderTable />} />
+          <Route path="/vision/organization" element={<OrganizationDiagramPage />} />
           <Route path="/vision/principles" element={<ArchitecturePrinciplesPage />} />
           <Route path="/vision/goals" element={<ArchitectureGoalsPage />} />
           <Route path="/vision/technologyPrinciples" element={<TechnologyPrinciples />} />
@@ -56,6 +59,12 @@ function App() {
           <Route path="/data/function_matrix" element={<DataFunctionMatrixPage />} />
           <Route path="/tech/standardsCatalog" element={<TechnologyStandarCatalog />} />
           <Route path="/tech/environmentDiagram" element={<TechnologyEnvironmentDiagram />} />
+          <Route path="/business/RiskMatrix" element={<BusinessProcessRiskMatrix />} />
+          <Route path="/vision/technologyPrinciples" element={<TechnologyPrinciples />} />
+          <Route path="/data/appmatrix" element={<AppDataMatrixPage />} />
+          <Route path="/data/concept" element={<ConceptualDiagramPage />} />
+
+        
           <Route path="/tech/networkCommunicationDiagram" element={<TechnologyNetworkDiagram />} />
           <Route path="/tech/appMatrix" element={<TechnologyAppMatrix />} />
           {/* Placeholder untuk halaman yang belum ada */}

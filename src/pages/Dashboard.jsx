@@ -1,5 +1,5 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Share2 } from 'lucide-react';
 import { architectureData } from "../data/menuData";
 import './css/Dashboard.css';
@@ -18,10 +18,7 @@ const Dashboard = () => {
   };
 
   const handleCardClick = (item) => {
-    if (item.title === "Organization Decomposition Diagram") {
-      navigate("/business/organization");
-      return;
-    }
+    // Vision Section
     if (item.title === "Vision, Mission and Corporate Strategy") {
       navigate("/vision/strategy");
       return;
@@ -38,6 +35,71 @@ const Dashboard = () => {
       navigate("/vision/goals");
       return;
     }
+    if (item.title === "Stakeholder Catalog") {
+      navigate("/vision/stakeholder");
+      return;
+    }
+    if (item.title === "Technology Principles") {
+      navigate("/vision/technologyPrinciples");
+      return;
+    }
+    // Business Section
+    if (item.title === "Organization Decomposition Diagram") {
+      navigate("/business/organization");
+      return;
+    }
+    if (item.title === "Organizational Actor Catalog") {
+      navigate('/business/organizational');
+      return;
+    }
+    if (item.title === "Functional Decomposition Diagram") {
+      navigate('/vision/functional');
+      return;
+    }
+    if (item.title === "Business Process - Risk Matrix") {
+      navigate("/business/RiskMatrix");
+      return;
+    }
+
+    // Data Section
+    if (item.title === "Data Entity - Data Component Catalog") {
+      navigate('/data/component');
+      return;
+    }
+    if (item.title === "Logical Data Diagram") {
+      navigate('/data/logical');
+      return;
+    }
+    if (item.title === "Data Entity - Business Function Matrix") {
+      navigate('/data/function_matrix');
+      return;
+    }
+    if (item.title === "Data Principles") {
+      navigate('/data/dataprinciples');
+      return;
+    }
+    if (item.title === "Application - Data Matrix") {
+      navigate('/data/appmatrix');
+      return;
+    }
+    if (item.title === "Conceptual Data Diagram") {
+      navigate('/data/concept');
+      return;
+    }
+
+    // Technology Section
+    if (item.title === 'Technology Standard Catalog') {
+      navigate("/tech/standardsCatalog");
+      return;
+    }
+    if (item.title === "Environment and Location Diagram") {
+      navigate("/tech/environmentDiagram");
+      return;
+    }
+
+    // Default: halaman belum dibuat
+    alert(`Halaman untuk "${item.title}" belum dibuat.`);
+  };
     if (item.title === "Stakeholder Catalog") {
       navigate("/vision/stakeholder");
       return;
@@ -108,87 +170,87 @@ const Dashboard = () => {
     </div>
   );
 
-return (
-  <div className="architecture-container">
-    <div className="architecture-wrapper">
-      {/* Header Title */}
-      <div className="dashboard-header">
-        <h1 className="dashboard-title">Enterprise Architecture</h1>
-        <h2 className="dashboard-subtitle">BMKG Balikpapan</h2>
-      </div>
-
-      {/* Architecture Vision Section */}
-      <div className="vision-section">
-        <h2 className="section-title">Architecture Vision</h2>
-        <div className="vision-grid">
-          {architectureData.vision.map((item) => renderCard(item))}
+  return (
+    <div className="architecture-container">
+      <div className="architecture-wrapper">
+        {/* Header Title */}
+        <div className="dashboard-header">
+          <h1 className="dashboard-title">Enterprise Architecture</h1>
+          <h2 className="dashboard-subtitle">BMKG Balikpapan</h2>
         </div>
-      </div>
 
-      {/* Main Architecture Sections */}
-      <div className="main-sections-grid">
-        {/* Business Architecture */}
-        <div className="architecture-section">
-          <h2 className="section-title">Business Architecture</h2>
-          <div className="section-grid">
-            {architectureData.business.map((item) => renderCard(item))}
+        {/* Architecture Vision Section */}
+        <div className="vision-section">
+          <h2 className="section-title">Architecture Vision</h2>
+          <div className="vision-grid">
+            {architectureData.vision.map((item) => renderCard(item))}
           </div>
         </div>
 
-        {/* Data Architecture */}
-        <div className="architecture-section">
-          <h2 className="section-title">Data Architecture</h2>
-          <div className="section-grid">
-            {architectureData.data.map((item) => renderCard(item))}
+        {/* Main Architecture Sections */}
+        <div className="main-sections-grid">
+          {/* Business Architecture */}
+          <div className="architecture-section">
+            <h2 className="section-title">Business Architecture</h2>
+            <div className="section-grid">
+              {architectureData.business.map((item) => renderCard(item))}
+            </div>
+          </div>
+
+          {/* Data Architecture */}
+          <div className="architecture-section">
+            <h2 className="section-title">Data Architecture</h2>
+            <div className="section-grid">
+              {architectureData.data.map((item) => renderCard(item))}
+            </div>
+          </div>
+
+          {/* Application Architecture */}
+          <div className="architecture-section">
+            <h2 className="section-title">Application Architecture</h2>
+            <div className="section-grid">
+              {architectureData.application.map((item) => renderCard(item))}
+            </div>
+          </div>
+
+          {/* Technology Architecture */}
+          <div className="architecture-section">
+            <h2 className="section-title">Technology Architecture</h2>
+            <div className="section-grid">
+              {architectureData.technology.map((item) => renderCard(item))}
+            </div>
           </div>
         </div>
 
-        {/* Application Architecture */}
-        <div className="architecture-section">
-          <h2 className="section-title">Application Architecture</h2>
-          <div className="section-grid">
-            {architectureData.application.map((item) => renderCard(item))}
+        {/* Architecture Implementation Section */}
+        <div className="implementation-section">
+          <h2 className="section-title">Architecture Implementation</h2>
+          <div className="implementation-grid">
+            {architectureData.implementation.map((item) => renderCard(item))}
           </div>
         </div>
 
-        {/* Technology Architecture */}
-        <div className="architecture-section">
-          <h2 className="section-title">Technology Architecture</h2>
-          <div className="section-grid">
-            {architectureData.technology.map((item) => renderCard(item))}
+        {/* Legend */}
+        <div className="legend-container">
+          <div className="legend-item">
+            <div className="legend-box card-green"></div>
+            <span>Text</span>
           </div>
-        </div>
-      </div>
-
-      {/* Architecture Implementation Section */}
-      <div className="implementation-section">
-        <h2 className="section-title">Architecture Implementation</h2>
-        <div className="implementation-grid">
-          {architectureData.implementation.map((item) => renderCard(item))}
-        </div>
-      </div>
-
-      {/* Legend */}
-      <div className="legend-container">
-        <div className="legend-item">
-          <div className="legend-box card-green"></div>
-          <span>Text</span>
-        </div>
-        <div className="legend-item">
-          <div className="legend-box card-blue"></div>
-          <span>Diagram</span>
-        </div>
-        <div className="legend-item">
-          <div className="legend-box card-pink"></div>
-          <span>Matrix</span>
-        </div>
-        <div className="legend-item">
-          <div className="legend-box card-yellow"></div>
-          <span>Catalog</span>
+          <div className="legend-item">
+            <div className="legend-box card-blue"></div>
+            <span>Diagram</span>
+          </div>
+          <div className="legend-item">
+            <div className="legend-box card-pink"></div>
+            <span>Matrix</span>
+          </div>
+          <div className="legend-item">
+            <div className="legend-box card-yellow"></div>
+            <span>Catalog</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   );
 };
 

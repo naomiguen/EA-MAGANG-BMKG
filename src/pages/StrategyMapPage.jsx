@@ -153,7 +153,22 @@ const StrategyMapPage = () => {
       <div style={{ textAlign: 'center', marginBottom: '24px' }}>
         <h1 style={{ color: '#1e3a8a', fontSize: '28px', fontWeight: '800', margin: '0 0 8px 0' }}>
           Strategy Map BMKG
+    <div style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      height: '100vh', 
+      padding: '24px', 
+      backgroundColor: '#f8fafc', 
+      fontFamily: 'sans-serif' 
+    }}>
+      
+      {/* HEADER PAGE */}
+      <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+        <h1 style={{ color: '#1e3a8a', fontSize: '28px', fontWeight: '800', margin: '0 0 8px 0' }}>
+          Strategy Map BMKG
         </h1>
+        <p style={{ color: '#64748b', fontSize: '14px', margin: 0 }}>
+          Klik pada kotak strategi untuk melihat detail KPI & Deskripsi
         <p style={{ color: '#64748b', fontSize: '14px', margin: 0 }}>
           Klik pada kotak strategi untuk melihat detail KPI & Deskripsi
         </p>

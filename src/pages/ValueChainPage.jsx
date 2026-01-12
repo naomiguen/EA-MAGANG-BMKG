@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import { valueChainData } from '../data/menuData';
 
 // 2. Import SVG Final
-import ValueChainSVG from '../assets/ValueChain.drawio.svg?react';
+import ValueChainSVG from '../assets/Value-Chain.drawio.svg?react';
 
 // --- KOMPONEN MODAL (DEKLARASI DI LUAR) ---
 const ModalPopup = ({ selectedData, closeModal }) => {
