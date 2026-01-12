@@ -1,11 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Share2 } from 'lucide-react';
-import { architectureData } from "../data/menuData";
+import { fetchArchitectureData } from "../services/architectureDataService";
 import './css/Dashboard.css';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [architectureData, setArchitectureData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch data dari Supabase saat komponen mount
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchArchitectureData();
+        
+        if (isMounted) {
+          setArchitectureData(data);
+          setLoading(false);
+        }
+      } catch (err) {
+        if (isMounted) {
+          console.error('Error loading architecture data:', err);
+          setError(err.message);
+          setLoading(false);
+        }
+      }
+    };
+
+    loadData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const getCardColor = (type) => {
     const colors = {
@@ -43,6 +75,7 @@ const Dashboard = () => {
       navigate("/vision/technologyPrinciples");
       return;
     }
+    
     // Business Section
     if (item.title === "Organization Decomposition Diagram") {
       navigate("/business/organization");
@@ -96,6 +129,14 @@ const Dashboard = () => {
       navigate("/tech/environmentDiagram");
       return;
     }
+    if (item.title === "Network Communication Diagram") {
+      navigate("/tech/networkCommunicationDiagram");
+      return;
+    }
+    if (item.title === "Technology - Application Matrix") {
+      navigate("/tech/appMatrix");
+      return;
+    }
 
     // Default: halaman belum dibuat
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
@@ -116,6 +157,117 @@ const Dashboard = () => {
     </div>
   );
 
+  // Loading State
+  if (loading) {
+    return (
+      <div className="architecture-container" style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{
+            width: '60px',
+            height: '60px',
+            border: '4px solid #e2e8f0',
+            borderTop: '4px solid #1d4ed8',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto 20px'
+          }}></div>
+          <h2 style={{ color: '#64748b', fontSize: '18px', fontWeight: '600' }}>
+            Memuat Enterprise Architecture...
+          </h2>
+        </div>
+        <style>
+          {`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}
+        </style>
+      </div>
+    );
+  }
+
+  // Error State
+  if (error) {
+    return (
+      <div className="architecture-container" style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        padding: '20px'
+      }}>
+        <div style={{
+          backgroundColor: '#fee2e2',
+          border: '2px solid #fca5a5',
+          borderRadius: '12px',
+          padding: '32px',
+          maxWidth: '500px',
+          textAlign: 'center'
+        }}>
+          <h2 style={{ 
+            color: '#dc2626', 
+            margin: '0 0 16px 0', 
+            fontSize: '24px',
+            fontWeight: 'bold' 
+          }}>
+            ⚠️ Gagal Memuat Data
+          </h2>
+          <p style={{ 
+            color: '#991b1b', 
+            margin: '0 0 20px 0', 
+            fontSize: '16px',
+            lineHeight: '1.5'
+          }}>
+            {error}
+          </p>
+          <button
+            onClick={() => {
+              localStorage.clear();
+              window.location.reload();
+            }}
+            style={{
+              backgroundColor: '#dc2626',
+              color: 'white',
+              border: 'none',
+              padding: '12px 24px',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: '600',
+              transition: 'background-color 0.2s'
+            }}
+            onMouseOver={(e) => e.target.style.backgroundColor = '#b91c1c'}
+            onMouseOut={(e) => e.target.style.backgroundColor = '#dc2626'}
+          >
+            Coba Lagi
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Empty State
+  if (!architectureData) {
+    return (
+      <div className="architecture-container" style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh'
+      }}>
+        <p style={{ color: '#94a3b8', fontSize: '18px' }}>
+          Tidak ada data tersedia
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="architecture-container">
       <div className="architecture-wrapper">
@@ -127,9 +279,21 @@ const Dashboard = () => {
 
         {/* Architecture Vision Section */}
         <div className="vision-section">
-          <h2 className="section-title">Architecture Vision</h2>
+          <h2 className="section-title">
+            Architecture Vision 
+            <span style={{ 
+              marginLeft: '10px', 
+              fontSize: '14px', 
+              fontWeight: 'normal', 
+              color: '#64748b' 
+            }}>
+              ({architectureData.vision?.length || 0} items)
+            </span>
+          </h2>
           <div className="vision-grid">
-            {architectureData.vision.map((item) => renderCard(item))}
+            {architectureData.vision?.map((item) => renderCard(item)) || (
+              <p style={{ color: '#94a3b8' }}>Tidak ada data</p>
+            )}
           </div>
         </div>
 
@@ -137,42 +301,102 @@ const Dashboard = () => {
         <div className="main-sections-grid">
           {/* Business Architecture */}
           <div className="architecture-section">
-            <h2 className="section-title">Business Architecture</h2>
+            <h2 className="section-title">
+              Business Architecture
+              <span style={{ 
+                marginLeft: '10px', 
+                fontSize: '14px', 
+                fontWeight: 'normal', 
+                color: '#64748b' 
+              }}>
+                ({architectureData.business?.length || 0})
+              </span>
+            </h2>
             <div className="section-grid">
-              {architectureData.business.map((item) => renderCard(item))}
+              {architectureData.business?.map((item) => renderCard(item)) || (
+                <p style={{ color: '#94a3b8' }}>Tidak ada data</p>
+              )}
             </div>
           </div>
 
           {/* Data Architecture */}
           <div className="architecture-section">
-            <h2 className="section-title">Data Architecture</h2>
+            <h2 className="section-title">
+              Data Architecture
+              <span style={{ 
+                marginLeft: '10px', 
+                fontSize: '14px', 
+                fontWeight: 'normal', 
+                color: '#64748b' 
+              }}>
+                ({architectureData.data?.length || 0})
+              </span>
+            </h2>
             <div className="section-grid">
-              {architectureData.data.map((item) => renderCard(item))}
+              {architectureData.data?.map((item) => renderCard(item)) || (
+                <p style={{ color: '#94a3b8' }}>Tidak ada data</p>
+              )}
             </div>
           </div>
 
           {/* Application Architecture */}
           <div className="architecture-section">
-            <h2 className="section-title">Application Architecture</h2>
+            <h2 className="section-title">
+              Application Architecture
+              <span style={{ 
+                marginLeft: '10px', 
+                fontSize: '14px', 
+                fontWeight: 'normal', 
+                color: '#64748b' 
+              }}>
+                ({architectureData.application?.length || 0})
+              </span>
+            </h2>
             <div className="section-grid">
-              {architectureData.application.map((item) => renderCard(item))}
+              {architectureData.application?.map((item) => renderCard(item)) || (
+                <p style={{ color: '#94a3b8' }}>Tidak ada data</p>
+              )}
             </div>
           </div>
 
           {/* Technology Architecture */}
           <div className="architecture-section">
-            <h2 className="section-title">Technology Architecture</h2>
+            <h2 className="section-title">
+              Technology Architecture
+              <span style={{ 
+                marginLeft: '10px', 
+                fontSize: '14px', 
+                fontWeight: 'normal', 
+                color: '#64748b' 
+              }}>
+                ({architectureData.technology?.length || 0})
+              </span>
+            </h2>
             <div className="section-grid">
-              {architectureData.technology.map((item) => renderCard(item))}
+              {architectureData.technology?.map((item) => renderCard(item)) || (
+                <p style={{ color: '#94a3b8' }}>Tidak ada data</p>
+              )}
             </div>
           </div>
         </div>
 
         {/* Architecture Implementation Section */}
         <div className="implementation-section">
-          <h2 className="section-title">Architecture Implementation</h2>
+          <h2 className="section-title">
+            Architecture Implementation
+            <span style={{ 
+              marginLeft: '10px', 
+              fontSize: '14px', 
+              fontWeight: 'normal', 
+              color: '#64748b' 
+            }}>
+              ({architectureData.implementation?.length || 0})
+            </span>
+          </h2>
           <div className="implementation-grid">
-            {architectureData.implementation.map((item) => renderCard(item))}
+            {architectureData.implementation?.map((item) => renderCard(item)) || (
+              <p style={{ color: '#94a3b8' }}>Tidak ada data</p>
+            )}
           </div>
         </div>
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
+import logo from "../assets/Logo.png";
 import "./css/TechnologyPrinciples.css";
 
 export default function TechnologyPrinciples() {
@@ -48,7 +49,7 @@ export default function TechnologyPrinciples() {
           <h1 className="tp-title">Technology Principles</h1>
 
           <div className="tp-logoWrap">
-            <img className="tp-logo" src="/Logo.png" alt="Logo BMKG" />
+            <img className="tp-logo" src={logo} alt="Logo BMKG" />
           </div>
         </header>
 

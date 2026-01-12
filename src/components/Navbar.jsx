@@ -47,10 +47,11 @@ const Navbar = () => {
       name: 'Technology', 
       href: null, 
       children: [
-        { name: 'Infrastructure', href: '/tech/infra' },
-        { name: 'Network Diagram', href: '/tech/network' },
-        { name: 'Technology Environment Diagram', href: '/tech/environmentDiagram' },
-        { name: 'Technology Principles', href: '/vision/technologyPrinciples' },
+        { name: 'Environment and Location Diagram', href: '/tech/environmentDiagram' },
+        { name: 'Network Communication Diagram', href: '/tech/networkCommunicationDiagram' },
+        { name: 'Technology Components Diagram', href: '/tech/componentsDiagram' },
+        { name: 'Technology - Application Matrix', href: '/tech/appMatrix' },
+        { name: 'Technology Principles', href: '/tech/technologyPrinciples' },
         { name: 'Technology Standard Catalog', href: '/tech/standardsCatalog' },
       ]
     },

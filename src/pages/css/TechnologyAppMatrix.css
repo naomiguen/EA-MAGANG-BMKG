@@ -1,0 +1,125 @@
+/* Container Utama */
+.idea-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 1200px;
+  margin: 20px auto;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Section */
+.idea-header {
+  background-color: #1e3a8a; /* Biru Tua Khas Korporat/BUMN */
+  color: white;
+  padding: 20px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.idea-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.idea-subtitle {
+  margin: 5px 0 0 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  font-weight: 300;
+}
+
+/* Table Wrapper untuk Scroll Horizontal jika data banyak */
+.idea-table-wrapper {
+  overflow-x: auto;
+  padding: 20px;
+}
+
+/* Tabel Utama */
+.idea-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+/* Header Tabel */
+.idea-table th {
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #111827;
+}
+
+.th-tech-header {
+  width: 300px; /* Lebar kolom teknologi */
+  text-align: center !important;
+  background-color: #e5e7eb !important;
+}
+
+.th-app-header {
+  text-align: center !important;
+  min-width: 120px;
+}
+
+/* Body Tabel */
+.idea-table td {
+  border: 1px solid #e5e7eb;
+  padding: 10px;
+}
+
+.td-category {
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: #4b5563;
+  width: 120px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.td-tech-name {
+  font-weight: 500;
+}
+
+/* Cell Interaksi */
+.td-cell {
+  text-align: center;
+  vertical-align: middle;
+  background-color: #fff;
+  transition: background-color 0.2s;
+}
+
+.td-cell:hover {
+  background-color: #f0f9ff; /* Highlight saat hover */
+}
+
+.active-cell {
+  background-color: #eff6ff;
+}
+
+/* Tag/Label di dalam cell */
+.relationship-tag {
+  display: inline-block;
+  background-color: #dbeafe; /* Biru muda */
+  color: #1e40af; /* Text biru tua */
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid #bfdbfe;
+}
+
+/* Footer */
+.idea-footer {
+  padding: 10px 20px;
+  border-top: 1px solid #e5e7eb;
+  text-align: right;
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-style: italic;
+}
