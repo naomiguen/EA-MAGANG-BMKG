@@ -47,17 +47,13 @@ const Dashboard = () => {
       navigate('/vision/goals');
       return;
     }
-    // Duplikasi pengecekan Stakeholder Catalog
-    if (item.title === "Stakeholder Catalog") {
-      navigate('/vision/stakeholder');
-      return;
-    }
+
     if (item.title === "Organizational Actor Catalog") {
       navigate('/business/organizational');
       return;
     }
     if (item.title === "Functional Decomposition Diagram") {
-      navigate('/business/functional');
+      navigate('/vision/functional');
       return;
     }
     if (item.title === "Data Entity - Data Component Catalog") {

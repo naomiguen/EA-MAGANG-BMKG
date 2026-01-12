@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; 
 import { supabase } from "../lib/supabaseClient";
+import { Loader2, AlertCircle, ArrowLeft } from "lucide-react";
 
 const ArchitectureGoalsPage = () => {
   const navigate = useNavigate(); // Hook navigasi

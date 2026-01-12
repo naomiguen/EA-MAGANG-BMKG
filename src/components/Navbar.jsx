@@ -12,10 +12,10 @@ const Navbar = () => {
       name: 'Architecture Vision', 
       href: null, 
       children: [
-        { name: 'Strategy Map', href: '/vision/strategy' },
+        { name: 'Vision, Mission and Corporate Strategy', href: '/vision/strategy' },
         { name: 'Architecture Goals', href: '/vision/goals' },
         { name: 'Architecture Principles', href: '/vision/principles' },
-        { name: 'Organization Decompposition Diagram', href: '/business/organization' },
+        { name: 'Organization Decomposition Diagram', href: '/vision/organization' },
         { name: 'Value Chain', href: '/vision/valuechain' },
         { name: 'Stakeholder Catalog', href: '/vision/stakeholder' },
       ]
