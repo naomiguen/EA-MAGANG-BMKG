@@ -14,7 +14,7 @@ import ArchitecturePrinciplesPage from "./pages/ArchitecturePrinciplesPage";
 import ArchitectureGoalsPage from "./pages/ArchitectureGoalsPage";
 import StakeholderPage from "./pages/StakeholderPage";
 import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix";
-import TechnologyPrinciples from "./pages/TechnologyPrinciples";
+import StakeholderTable from "./pages/StakeholderPage";
 import OrgStructurePage from "./pages/OrganizationalActorPage";
 import FunctionalDecompositionPage from "./pages/FuncDecomposePage";
 import DataPrinciplesPage from "./pages/DataPrinciplesPage";
@@ -23,6 +23,10 @@ import LogicalDataDiagram from "./pages/LogicalDataPage";
 import DataFunctionMatrixPage from "./pages/DataFunctionMatrixPage";
 import TechnologyStandarCatalog from "./pages/TechnologyStandarCatalog";
 import TechnologyEnvironmentDiagram from "./pages/TechnologyEnvironmentDiagram";
+import TechnologyPrinciples from "./pages/TechnologyPrinciples";
+import AppDataMatrixPage from "./pages/AppDataMatrixPage";
+import ConceptualDiagramPage from "./pages/ConceptualPage";
+
 
 function App() {
   return (
@@ -54,6 +58,12 @@ function App() {
           <Route path="/data/function_matrix" element={<DataFunctionMatrixPage />} />
           <Route path="/tech/standardsCatalog" element={<TechnologyStandarCatalog />} />
           <Route path="/tech/environmentDiagram" element={<TechnologyEnvironmentDiagram />} />
+          <Route path="/business/RiskMatrix" element={<BusinessProcessRiskMatrix />} />
+          <Route path="/vision/technologyPrinciples" element={<TechnologyPrinciples />} />
+          <Route path="/data/appmatrix" element={<AppDataMatrixPage />} />
+          <Route path="/data/concept" element={<ConceptualDiagramPage />} />
+
+        
           {/* Placeholder untuk halaman yang belum ada */}
           <Route path="*" element={
             <div className="p-10 text-center text-gray-500">

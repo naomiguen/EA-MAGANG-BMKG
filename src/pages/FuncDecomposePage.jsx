@@ -198,13 +198,6 @@ const FunctionalDecompositionPage = () => {
               {selectedNode.desc}
             </p>
           </div>
-
-          {/* Footer Modal */}
-          <div className="bg-gray-50 px-6 py-4 border-t border-gray-100 flex justify-end">
-            <button onClick={closeModal} className="px-5 py-2.5 bg-white border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50">
-              Tutup
-            </button>
-          </div>
         </div>
       </div>,
       document.body
