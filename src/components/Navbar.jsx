@@ -11,33 +11,24 @@ const Navbar = () => {
     { 
       name: 'Architecture Vision', 
       href: null, 
-      children: [
-        { name: 'Strategy Map', href: '/vision/strategy' },
-        { name: 'Architecture Goals', href: '/vision/goals' },
-<<<<<<< HEAD
-        { name: 'Organization Decompposition Diagram', href: '/business/organization' },
-=======
-        { name: 'Architecture Principles', href: '/vision/principles' },
-        { name: 'Struktur Organisasi', href: '/business/organization' },
->>>>>>> bcf9a9b51c7e290351de1a785a7a0024c855a471
-        { name: 'Value Chain', href: '/vision/valuechain' },
-        { name: 'Stakeholder Catalog', href: '/vision/stakeholder' },
-      ]
+  children: [
+  { name: 'Strategy Map', href: '/vision/strategy' },
+  { name: 'Architecture Goals', href: '/vision/goals' },
+  { name: 'Architecture Principles', href: '/vision/principles' },
+  { name: 'Struktur Organisasi', href: '/business/organization' },
+  { name: 'Value Chain', href: '/vision/valuechain' },
+  { name: 'Stakeholder Catalog', href: '/vision/stakeholder' },
+]
     },
     { 
       name: 'Business Arch', 
       href: null, 
-      children: [
-<<<<<<< HEAD
-        { name: 'Business Process Map', href: '/business/process' },
-        { name: 'Business Process - Risk Matrix', href: '/business/RiskMatrix' },
-       
-=======
-        { name: 'Organizational Actor Catalog', href: '/business/organizational' },
-        { name: 'Business Process Map', href: '/business/pr' },
-        { name: 'Functional Decomposition Diagram', href: '/business/functional' },
->>>>>>> bcf9a9b51c7e290351de1a785a7a0024c855a471
-      ]
+  children: [
+  { name: 'Organizational Actor Catalog', href: '/business/organizational' },
+  { name: 'Business Process Map', href: '/business/process' },
+  { name: 'Business Process - Risk Matrix', href: '/business/RiskMatrix' },
+  { name: 'Functional Decomposition Diagram', href: '/business/functional' },
+]
     },
     { 
       name: 'Data Arch', 
@@ -57,6 +48,7 @@ const Navbar = () => {
       children: [
         { name: 'Infrastructure', href: '/tech/infra' },
         { name: 'Network Diagram', href: '/tech/network' },
+        { name: 'Technology Standard Catalog', href: '/tech/standardsCatalog' },
         { name: 'Technology Principles', href: '/vision/technologyPrinciples' },
       ]
     },

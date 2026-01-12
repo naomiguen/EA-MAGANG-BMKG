@@ -1,65 +1,97 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { supabase } from "../lib/supabaseClient";
 
-// DATA LOGICAL MODEL (ERD STRUCTURE)
-// Disusun berdasarkan hubungan kerja di SK BMKG
-const erdData = [
-  {
-    title: "PEGAWAI (EMPLOYEE)",
-    type: "MASTER DATA",
-    attributes: [
-      { name: "NIP", key: "PK", desc: "Nomor Induk (Unik)" },
-      { name: "Nama_Lengkap", key: "", desc: "Sesuai SK" },
-      { name: "Jabatan", key: "", desc: "Struktural/Fungsional" },
-      { name: "Unit_Kerja", key: "", desc: "TU/Obs/Datin" },
-      { name: "Pangkat_Gol", key: "", desc: "Golongan Ruang" }
-    ]
-  },
-  {
-    title: "ASET_ALAT (EQUIPMENT)",
-    type: "MASTER DATA",
-    attributes: [
-      { name: "Kode_Barang", key: "PK", desc: "Kode Aset BMN" },
-      { name: "NUP", key: "PK", desc: "No. Urut Pendaftaran" },
-      { name: "Nama_Alat", key: "", desc: "Radar/AWOS/Panci" },
-      { name: "Kondisi", key: "", desc: "Baik/Rusak" },
-      { name: "NIP_PenanggungJawab", key: "FK", desc: "Link ke Pegawai (Teknisi)" }
-    ]
-  },
-  {
-    title: "OBSERVASI_SURFACE",
-    type: "TRANSACTION",
-    attributes: [
-      { name: "ID_Obs", key: "PK", desc: "Auto Generated" },
-      { name: "Tanggal_Jam_UTC", key: "", desc: "Waktu Pengamatan" },
-      { name: "Suhu_Udara", key: "", desc: "Dry Bulb" },
-      { name: "Tekanan_QFE_QNH", key: "", desc: "Tekanan Udara" },
-      { name: "Arah_Angin", key: "", desc: "Wind Direction" },
-      { name: "Kecepatan_Angin", key: "", desc: "Wind Speed" },
-      { name: "NIP_Observer", key: "FK", desc: "Link ke Pegawai (Observer)" }
-    ]
-  },
-  {
-    title: "PRODUK_INFORMASI",
-    type: "TRANSACTION",
-    attributes: [
-      { name: "ID_Dokumen", key: "PK", desc: "Nomor Surat/Dok" },
-      { name: "Jenis_Produk", key: "", desc: "TAF/Warning/Cuaca" },
-      { name: "Waktu_Terbit", key: "", desc: "Waktu Release" },
-      { name: "Isi_Berita", key: "", desc: "Konten Prakiraan" },
-      { name: "Target_Audience", key: "", desc: "Penerbangan/Publik" },
-      { name: "NIP_Forecaster", key: "FK", desc: "Link ke Pegawai (Forecaster)" }
-    ]
-  }
-];
 
 const LogicalDataDiagram = () => {
+  const [erdData, setErdData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchERDData();
+  }, []);
+
+  const fetchERDData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Fetch entities dengan attributes-nya
+      const { data: entities, error: entitiesError } = await supabase
+        .from('erd_entities')
+        .select(`
+          id,
+          title,
+          type,
+          display_order,
+          erd_attributes (
+            name,
+            key_type,
+            description,
+            display_order
+          )
+        `)
+        .order('display_order', { ascending: true });
+
+      if (entitiesError) throw entitiesError;
+
+      // Transform data ke format yang sesuai dengan komponen
+      const transformedData = entities.map(entity => ({
+        title: entity.title,
+        type: entity.type,
+        attributes: entity.erd_attributes
+          .sort((a, b) => a.display_order - b.display_order)
+          .map(attr => ({
+            name: attr.name,
+            key: attr.key_type || '',
+            desc: attr.description
+          }))
+      }));
+
+      setErdData(transformedData);
+    } catch (err) {
+      console.error('Error fetching ERD data:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-900 mb-4"></div>
+          <p className="text-slate-600">Memuat data ERD...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-slate-100 flex items-center justify-center">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
+          <h3 className="text-red-800 font-bold mb-2">Error</h3>
+          <p className="text-red-600 text-sm mb-4">{error}</p>
+          <button 
+            onClick={fetchERDData}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+          >
+            Coba Lagi
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col items-center py-12 px-8">
       
       <div className="text-center mb-12">
         <h1 className="text-3xl font-extrabold text-slate-800">Logical Data Model (ERD)</h1>
         <p className="text-slate-500 mt-2">
-          Visualisasi entitas dan relasi data.
+          Visualisasi entitas dan relasi data dari Supabase
         </p>
       </div>
 
@@ -132,16 +164,24 @@ const LogicalDataDiagram = () => {
         <h4 className="font-bold mb-2 text-slate-800">Penjelasan Relasi (Berdasarkan SK):</h4>
         <ul className="list-disc pl-5 space-y-1">
           <li>
-            <b>Pegawai &rarr; Aset Alat (1:N):</b> Satu teknisi (NIP) bertanggung jawab atas pemeliharaan banyak peralatan [cite: 837-838].
+            <b>Pegawai → Aset Alat (1:N):</b> Satu teknisi (NIP) bertanggung jawab atas pemeliharaan banyak peralatan [cite: 837-838].
           </li>
           <li>
-            <b>Pegawai &rarr; Observasi (1:N):</b> Satu observer (NIP) melakukan banyak pengamatan cuaca (setiap jam) [cite: 569-571].
+            <b>Pegawai → Observasi (1:N):</b> Satu observer (NIP) melakukan banyak pengamatan cuaca (setiap jam) [cite: 569-571].
           </li>
           <li>
-            <b>Pegawai &rarr; Produk Info (1:N):</b> Satu forecaster (NIP) menerbitkan banyak dokumen prakiraan/peringatan dini [cite: 285-288].
+            <b>Pegawai → Produk Info (1:N):</b> Satu forecaster (NIP) menerbitkan banyak dokumen prakiraan/peringatan dini [cite: 285-288].
           </li>
         </ul>
       </div>
+
+      {/* Refresh Button */}
+      <button 
+        onClick={fetchERDData}
+        className="mt-6 bg-blue-900 text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition-colors shadow-md"
+      >
+        Refresh Data
+      </button>
 
     </div>
   );

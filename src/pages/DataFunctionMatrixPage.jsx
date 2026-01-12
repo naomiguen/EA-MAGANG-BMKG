@@ -1,54 +1,61 @@
-import React from 'react';
-
-// 1. DEFINISI FUNGSI BISNIS (Baris) - Sesuai FDD
-const businessFunctions = [
-  { id: 'F1', name: "Pengelolaan Tata Usaha" },
-  { id: 'F2', name: "Pengelolaan Observasi" },
-  { id: 'F3', name: "Pengelolaan Data & Info" },
-  { id: 'F4', name: "Pemeliharaan Teknis" }
-];
-
-// 2. DEFINISI ENTITAS DATA (Kolom) - Sesuai Data Catalog
-const dataEntities = [
-  { id: 'D1', name: "Data Kepegawaian" },
-  { id: 'D2', name: "Data Keuangan" },
-  { id: 'D3', name: "Inventaris BMN" },
-  { id: 'D4', name: "Data Observasi (Surface/Upper)" },
-  { id: 'D5', name: "Produk Informasi (Forecast)" },
-  { id: 'D6', name: "Peringatan Dini" },
-  { id: 'D7', name: "Status Peralatan" }
-];
-
-// 3. DEFINISI RELASI (Mapping C/U)
-// Format: { funcId: 'F1', dataId: 'D1', type: 'C' }
-// C = Create (Membuat), U = Use (Menggunakan/Membaca)
-const relationships = [
-  // --- F1: TATA USAHA ---
-  { funcId: 'F1', dataId: 'D1', type: 'C' }, // Membuat data pegawai
-  { funcId: 'F1', dataId: 'D2', type: 'C' }, // Membuat data keuangan
-  { funcId: 'F1', dataId: 'D3', type: 'C' }, // Mengelola/Input BMN
-  
-  // --- F2: OBSERVASI ---
-  { funcId: 'F2', dataId: 'D3', type: 'U' }, // Menggunakan alat (BMN)
-  { funcId: 'F2', dataId: 'D4', type: 'C' }, // Menghasilkan data observasi (ME.48)
-  { funcId: 'F2', dataId: 'D7', type: 'U' }, // Cek status alat saat obs
-  
-  // --- F3: DATA & INFO (FORECASTER) ---
-  { funcId: 'F3', dataId: 'D4', type: 'U' }, // Analisis data observasi
-  { funcId: 'F3', dataId: 'D5', type: 'C' }, // Membuat TAF/Flight Docs
-  { funcId: 'F3', dataId: 'D6', type: 'C' }, // Membuat Warning
-  { funcId: 'F3', dataId: 'D7', type: 'U' }, // Cek radar (status alat)
-  
-  // --- F4: TEKNISI ---
-  { funcId: 'F4', dataId: 'D3', type: 'U' }, // Maintain aset BMN
-  { funcId: 'F4', dataId: 'D7', type: 'C' }, // Membuat laporan status alat
-];
+import React, { useState, useEffect } from 'react';
+import { supabase } from "../lib/supabaseClient";
 
 const DataFunctionMatrixPage = () => {
+  const [businessFunctions, setBusinessFunctions] = useState([]);
+  const [dataEntities, setDataEntities] = useState([]);
+  const [relationships, setRelationships] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchMatrixData();
+  }, []);
+
+  const fetchMatrixData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Fetch semua data secara paralel
+      const [functionsRes, entitiesRes, relationshipsRes] = await Promise.all([
+        supabase
+          .from('business_functions')
+          .select('*')
+          .order('sort_order', { ascending: true }),
+        
+        supabase
+          .from('matrix_data_entities')
+          .select('*')
+          .order('sort_order', { ascending: true }),
+        
+        supabase
+          .from('data_function_relationships')
+          .select('*')
+      ]);
+
+      // Check for errors
+      if (functionsRes.error) throw functionsRes.error;
+      if (entitiesRes.error) throw entitiesRes.error;
+      if (relationshipsRes.error) throw relationshipsRes.error;
+
+      // Set state
+      setBusinessFunctions(functionsRes.data || []);
+      setDataEntities(entitiesRes.data || []);
+      setRelationships(relationshipsRes.data || []);
+
+    } catch (err) {
+      console.error('Error fetching matrix data:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Helper untuk mendapatkan nilai sel
-  const getRelation = (fId, dId) => {
-    const rel = relationships.find(r => r.funcId === fId && r.dataId === dId);
-    return rel ? rel.type : '';
+  const getRelation = (funcId, dataId) => {
+    const rel = relationships.find(r => r.func_id === funcId && r.data_id === dataId);
+    return rel ? rel.relationship_type : '';
   };
 
   // Helper warna sel
@@ -57,6 +64,36 @@ const DataFunctionMatrixPage = () => {
     if (type === 'U') return 'bg-blue-50 text-blue-600';
     return '';
   };
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-teal-700 mb-4"></div>
+          <p className="text-slate-600 text-lg">Memuat data matrix...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
+          <h3 className="text-red-800 font-bold text-lg mb-2">Error Loading Data</h3>
+          <p className="text-red-600 text-sm mb-4">{error}</p>
+          <button 
+            onClick={fetchMatrixData}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors text-sm font-medium"
+          >
+            Coba Lagi
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center py-12 px-4">
@@ -90,24 +127,35 @@ const DataFunctionMatrixPage = () => {
               </tr>
             </thead>
             <tbody>
-              {/* Baris (Business Functions) */}
-              {businessFunctions.map(func => (
-                <tr key={func.id} className="hover:bg-slate-50 transition-colors">
-                  {/* Header Baris */}
-                  <th className="bg-white border-r border-slate-200 p-4 text-left font-medium text-slate-800 border-b">
-                    {func.name}
-                  </th>
-                  {/* Sel Matriks */}
-                  {dataEntities.map(data => {
-                    const relation = getRelation(func.id, data.id);
-                    return (
-                      <td key={data.id} className={`border-b border-slate-100 p-4 text-center border-r last:border-r-0 ${getCellClass(relation)}`}>
-                        {relation}
-                      </td>
-                    );
-                  })}
+              {businessFunctions.length === 0 || dataEntities.length === 0 ? (
+                <tr>
+                  <td colSpan={dataEntities.length + 1} className="px-6 py-8 text-center text-slate-400">
+                    Tidak ada data tersedia
+                  </td>
                 </tr>
-              ))}
+              ) : (
+                /* Baris (Business Functions) */
+                businessFunctions.map(func => (
+                  <tr key={func.id} className="hover:bg-slate-50 transition-colors">
+                    {/* Header Baris */}
+                    <th className="bg-white border-r border-slate-200 p-4 text-left font-medium text-slate-800 border-b">
+                      {func.name}
+                    </th>
+                    {/* Sel Matriks */}
+                    {dataEntities.map(data => {
+                      const relation = getRelation(func.id, data.id);
+                      return (
+                        <td 
+                          key={data.id} 
+                          className={`border-b border-slate-100 p-4 text-center border-r last:border-r-0 ${getCellClass(relation)}`}
+                        >
+                          {relation}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

@@ -1,104 +1,86 @@
-import React from 'react';
-
-// DATA LOGICAL (Berdasarkan PDF SK BMKG)
-const dataCatalog = [
-  {
-    id: 1,
-    entity: "Data Kepegawaian (Personil)",
-    description: "Data induk seluruh pegawai ASN dan PPNPN di lingkungan stasiun.",
-    // Atribut diambil dari tabel Lampiran II (Daftar Personil)
-    logicalAttributes: [
-      "Nama Lengkap",
-      "NIP (Nomor Induk Pegawai)", 
-      "Pangkat / Golongan Ruang",
-      "Jabatan (Struktural/Fungsional)",
-      "Unit Kerja (Tata Usaha/Observasi/Datin)"
-    ]
-  },
-  {
-    id: 2,
-    entity: "Data Pengamatan Permukaan (Surface)",
-    description: "Data hasil observasi cuaca rutin (jam-jaman) dari taman alat.",
-    // Atribut berdasarkan parameter standar SYNOP/METAR 
-    logicalAttributes: [
-      "Tanggal & Jam Pengamatan (UTC)",
-      "Arah Angin (Wind Direction)",
-      "Kecepatan Angin (Wind Speed)",
-      "Jarak Pandang (Visibility)",
-      "Keadaan Cuaca (Present Weather)",
-      "Suhu Udara (Dry Bulb)",
-      "Tekanan Udara (QFE/QNH)"
-    ]
-  },
-  {
-    id: 3,
-    entity: "Data Udara Atas (Upper Air)",
-    description: "Data profil vertikal atmosfer dari pengamatan Pilot Balon/Radiosonde.",
-    // Atribut berdasarkan tugas Pilot Balon & Radiosonde 
-    logicalAttributes: [
-      "Jam Pengamatan (00.00, 06.00, 12.00 UTC)",
-      "Sudut Azimuth Balon",
-      "Sudut Elevasi Balon",
-      "Ketinggian (Altitude)",
-      "Suhu & Kelembaban (Vertikal)"
-    ]
-  },
-  {
-    id: 4,
-    entity: "Data Keuangan (DIPA & PNBP)",
-    description: "Data rencana dan realisasi anggaran serta penerimaan negara.",
-    // Atribut berdasarkan tugas Bendahara 
-    logicalAttributes: [
-      "Kode Akun Anggaran",
-      "Pagu Anggaran (DIPA)",
-      "Realisasi Belanja Pegawai",
-      "Jenis Penerimaan (Jasa Met)",
-      "Nomor Transaksi Penerimaan Negara (NTPN)"
-    ]
-  },
-  {
-    id: 5,
-    entity: "Data Inventaris BMN (Aset)",
-    description: "Data aset barang milik negara yang dikelola stasiun.",
-    // Atribut berdasarkan tugas Pengelola BMN 
-    logicalAttributes: [
-      "Kode Barang",
-      "Nama Barang / Aset",
-      "NUP (Nomor Urut Pendaftaran)",
-      "Kondisi Barang (Baik/Rusak)",
-      "Tahun Perolehan",
-      "Lokasi Penempatan"
-    ]
-  },
-  {
-    id: 6,
-    entity: "Produk Informasi Penerbangan",
-    description: "Dokumen prakiraan cuaca khusus untuk stakeholder penerbangan.",
-    // Atribut berdasarkan tugas Forecaster 
-    logicalAttributes: [
-      "Jenis Dokumen (TAF/Trend/Flight Docs)",
-      "Kode Bandara (ICAO)",
-      "Waktu Validitas (Validity Period)",
-      "Isi Prakiraan (Forecast Content)",
-      "Status (Normal/Amandemen/Koreksi)"
-    ]
-  },
-  {
-    id: 7,
-    entity: "Data Peringatan Dini",
-    description: "Informasi cuaca ekstrem yang mendesak.",
-    // Atribut berdasarkan tugas Warning [cite: 301]
-    logicalAttributes: [
-      "Jenis Peringatan (Aerodrome Warning/Windshear)",
-      "Waktu Kejadian",
-      "Durasi Peringatan",
-      "Fenomena Cuaca Ekstrem",
-      "Area Terdampak"
-    ]
-  }
-];
+import React, { useState, useEffect } from 'react';
+import { supabase } from "../lib/supabaseClient";
 
 const DataEntityPage = () => {
+  const [dataCatalog, setDataCatalog] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchDataEntities();
+  }, []);
+
+  const fetchDataEntities = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Fetch data entities dengan logical attributes (JOIN)
+      const { data, error } = await supabase
+        .from('data_entities')
+        .select(`
+          id,
+          entity,
+          description,
+          logical_attributes (
+            id,
+            attribute_name,
+            sort_order
+          )
+        `)
+        .order('id', { ascending: true });
+
+      if (error) throw error;
+
+      // Transform data agar sesuai format component
+      const transformedData = data.map(item => ({
+        id: item.id,
+        entity: item.entity,
+        description: item.description,
+        logicalAttributes: item.logical_attributes
+          .sort((a, b) => a.sort_order - b.sort_order)
+          .map(attr => attr.attribute_name)
+      }));
+
+      setDataCatalog(transformedData);
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-teal-700 mb-4"></div>
+          <p className="text-slate-600 text-lg">Memuat data catalog...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
+          <h3 className="text-red-800 font-bold text-lg mb-2">Error Loading Data</h3>
+          <p className="text-red-600 text-sm mb-4">{error}</p>
+          <button 
+            onClick={fetchDataEntities}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors text-sm font-medium"
+          >
+            Coba Lagi
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center py-12 px-4">
       
@@ -124,39 +106,47 @@ const DataEntityPage = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {dataCatalog.map((item, index) => (
-                <tr 
-                  key={item.id} 
-                  className={`hover:bg-teal-50/50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}
-                >
-                  {/* Kolom 1: Data Entity */}
-                  <td className="px-6 py-5 align-top border-r border-gray-200">
-                    <div className="font-bold text-teal-900 text-base mb-1">{item.entity}</div>
-                    <div className="text-xs text-teal-500 font-mono bg-teal-50 inline-block px-2 py-1 rounded">
-                      ID: DE-{String(item.id).padStart(2, '0')}
-                    </div>
-                  </td>
-
-                  {/* Kolom 2: Deskripsi */}
-                  <td className="px-6 py-5 align-top text-gray-600 text-sm leading-relaxed border-r border-gray-200">
-                    {item.description}
-                  </td>
-
-                  {/* Kolom 3: Logical Attributes */}
-                  <td className="px-6 py-5 align-top">
-                    <div className="flex flex-wrap gap-2">
-                      {item.logicalAttributes.map((attr, idx) => (
-                        <span 
-                          key={idx} 
-                          className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200"
-                        >
-                          • {attr}
-                        </span>
-                      ))}
-                    </div>
+              {dataCatalog.length === 0 ? (
+                <tr>
+                  <td colSpan="3" className="px-6 py-8 text-center text-slate-400">
+                    Tidak ada data tersedia
                   </td>
                 </tr>
-              ))}
+              ) : (
+                dataCatalog.map((item, index) => (
+                  <tr 
+                    key={item.id} 
+                    className={`hover:bg-teal-50/50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}
+                  >
+                    {/* Kolom 1: Data Entity */}
+                    <td className="px-6 py-5 align-top border-r border-gray-200">
+                      <div className="font-bold text-teal-900 text-base mb-1">{item.entity}</div>
+                      <div className="text-xs text-teal-500 font-mono bg-teal-50 inline-block px-2 py-1 rounded">
+                        ID: DE-{String(item.id).padStart(2, '0')}
+                      </div>
+                    </td>
+
+                    {/* Kolom 2: Deskripsi */}
+                    <td className="px-6 py-5 align-top text-gray-600 text-sm leading-relaxed border-r border-gray-200">
+                      {item.description}
+                    </td>
+
+                    {/* Kolom 3: Logical Attributes */}
+                    <td className="px-6 py-5 align-top">
+                      <div className="flex flex-wrap gap-2">
+                        {item.logicalAttributes.map((attr, idx) => (
+                          <span 
+                            key={idx} 
+                            className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200"
+                          >
+                            • {attr}
+                          </span>
+                        ))}
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

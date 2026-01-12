@@ -1,129 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-
-// --- 1. DATA FUNCTIONAL DECOMPOSITION (BERSIH & SESUAI PDF) ---
-const functionData = {
-  id: 'f_root',
-  title: 'OPERASIONAL STASIUN METEOROLOGI KELAS I',
-  type: 'Level 0',
-  desc: 'Penyelenggaraan kegiatan pengamatan, pengelolaan data, pelayanan informasi, dan pemeliharaan peralatan meteorologi sesuai Tugas Pokok dan Fungsi Stasiun.',
-  children: [
-    // --- CABANG 1: TATA USAHA (Sesuai Lampiran III Bagian B) ---
-    {
-      id: 'f_tu',
-      title: 'PENGELOLAAN TATA USAHA',
-      type: 'Level 1',
-      desc: 'Pelaksanaan urusan administrasi, kepegawaian, keuangan, dan rumah tangga stasiun.',
-      children: [
-        { 
-          id: 'f_tu1', 
-          title: 'Administrasi & Kepegawaian', 
-          type: 'Level 2', 
-          desc: 'Menyiapkan dokumen kepegawaian (UKP, Cuti, Mutasi), rekap absensi, dan pengelolaan persuratan/kearsipan.' 
-        },
-        { 
-          id: 'f_tu2', 
-          title: 'Pengelolaan Keuangan', 
-          type: 'Level 2', 
-          desc: 'Penyusunan rencana anggaran, pembayaran gaji/belanja pegawai, verifikasi keuangan, dan penyetoran PNBP.' 
-        },
-        { 
-          id: 'f_tu3', 
-          title: 'Perlengkapan & Rumah Tangga', 
-          type: 'Level 2', 
-          desc: 'Inventarisasi BMN (Barang Milik Negara), pengadaan barang/jasa, dan pemeliharaan fasilitas kantor.' 
-        },
-        { 
-          id: 'f_tu4', 
-          title: 'Keamanan & Kebersihan', 
-          type: 'Level 2', 
-          desc: 'Menjaga keamanan, ketertiban, dan kebersihan lingkungan kantor, gedung radar, serta taman alat.' 
-        }
-      ]
-    },
-    // --- CABANG 2: DATA & INFORMASI (Sesuai Lampiran III Bagian C) ---
-    {
-      id: 'f_datin',
-      title: 'PENGELOLAAN DATA & INFORMASI',
-      type: 'Level 1',
-      desc: 'Pelaksanaan analisis, prakiraan, dan pelayanan informasi cuaca penerbangan & publik.',
-      children: [
-        { 
-          id: 'f_datin1', 
-          title: 'Analisis & Prakiraan Cuaca', 
-          type: 'Level 2', 
-          desc: 'Menganalisa peta cuaca, membuat TAF, Trend Forecast, dan Flight Documentation untuk penerbangan.' 
-        },
-        { 
-          id: 'f_datin2', 
-          title: 'Peringatan Dini Cuaca', 
-          type: 'Level 2', 
-          desc: 'Membuat dan menyebarkan Aerodrome Warning, Windshear Warning, dan peringatan dini cuaca ekstrem.' 
-        },
-        { 
-          id: 'f_datin3', 
-          title: 'Pelayanan Informasi Publik', 
-          type: 'Level 2', 
-          desc: 'Diseminasi informasi cuaca harian, maritim, dan layanan briefing cuaca kepada stakeholder.' 
-        }
-      ]
-    },
-    // --- CABANG 3: OBSERVASI (Sesuai Lampiran III Bagian D) ---
-    {
-      id: 'f_obs',
-      title: 'PENGELOLAAN PENGAMATAN',
-      type: 'Level 1',
-      desc: 'Pelaksanaan pengamatan meteorologi permukaan dan udara atas secara rutin 24 jam.',
-      children: [
-        { 
-          id: 'f_obs1', 
-          title: 'Pengamatan Meteorologi', 
-          type: 'Level 2', 
-          desc: 'Melakukan pengamatan permukaan (Synop/Metar) dan udara atas (Pilot Balon/Radiosonde) sesuai jadwal.' 
-        },
-        { 
-          id: 'f_obs2', 
-          title: 'Pengumpulan & Pengiriman Data', 
-          type: 'Level 2', 
-          desc: 'Input data ke aplikasi BMKGSoft dan pengiriman berita cuaca melalui sistem CMSS/AFTN.' 
-        },
-        { 
-          id: 'f_obs3', 
-          title: 'Administrasi Data Observasi', 
-          type: 'Level 2', 
-          desc: 'Pengisian Logbook, buku ME.48, ME.45, dan rekapitulasi data cuaca harian.' 
-        }
-      ]
-    },
-    // --- CABANG 4: TEKNIS (Sesuai Lampiran III Bagian D - Teknisi) ---
-    {
-      id: 'f_tech',
-      title: 'PEMELIHARAAN PERALATAN',
-      type: 'Level 1',
-      desc: 'Pelaksanaan pemeliharaan dan perbaikan peralatan operasional meteorologi.',
-      children: [
-        { 
-          id: 'f_tech1', 
-          title: 'Pemeliharaan Berkala', 
-          type: 'Level 2', 
-          desc: 'Pemeriksaan rutin peralatan mekanik/elektronik di taman alat, radar cuaca, dan AWOS.' 
-        },
-        { 
-          id: 'f_tech2', 
-          title: 'Perbaikan Peralatan', 
-          type: 'Level 2', 
-          desc: 'Melakukan perbaikan peralatan yang rusak dan penggantian suku cadang (sparepart/pias).' 
-        },
-        { 
-          id: 'f_tech3', 
-          title: 'Monitoring & Backup Sistem', 
-          type: 'Level 2', 
-          desc: 'Backup data Radar/AWOS dan monitoring operasional jaringan komunikasi data.' 
-        }
-      ]
-    }
-  ]
-};
+import { supabase } from "../lib/supabaseClient";
 
 // --- 2. KOMPONEN NODE (Style Kotak Fungsional) ---
 const FunctionNode = ({ node, onNodeClick }) => {
@@ -218,6 +95,69 @@ const FunctionNode = ({ node, onNodeClick }) => {
 // --- 3. HALAMAN UTAMA ---
 const FunctionalDecompositionPage = () => {
   const [selectedNode, setSelectedNode] = useState(null);
+  const [functionData, setFunctionData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchFunctionData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // Fetch semua functions yang aktif
+        const { data, error } = await supabase
+          .from('functions')
+          .select('*')
+          .eq('is_active', true)
+          .order('level', { ascending: true })
+          .order('sort_order', { ascending: true });
+
+        if (error) throw error;
+
+        // Build hierarchical structure
+        const hierarchy = buildHierarchy(data);
+        setFunctionData(hierarchy);
+      } catch (err) {
+        console.error('Error fetching function data:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFunctionData();
+  }, []);
+
+  // Helper function untuk build hierarki dari flat array
+  const buildHierarchy = (flatData) => {
+    const map = {};
+    const roots = [];
+
+    // Create a map of all nodes
+    flatData.forEach(item => {
+      map[item.id] = {
+        id: item.id,
+        title: item.title,
+        type: item.type,
+        desc: item.description,
+        children: []
+      };
+    });
+
+    // Build the hierarchy
+    flatData.forEach(item => {
+      if (item.parent_id && map[item.parent_id]) {
+        map[item.parent_id].children.push(map[item.id]);
+      } else {
+        roots.push(map[item.id]);
+      }
+    });
+
+    // Return the root node (should be only one)
+    return roots[0] || null;
+  };
+
   const closeModal = () => setSelectedNode(null);
 
   // Modal Popup
@@ -270,6 +210,47 @@ const FunctionalDecompositionPage = () => {
       document.body
     );
   };
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-700 mb-4"></div>
+          <p className="text-slate-600 text-lg">Memuat functional decomposition...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
+          <h3 className="text-red-800 font-bold text-lg mb-2">Error Loading Data</h3>
+          <p className="text-red-600 text-sm mb-4">{error}</p>
+          <button 
+            onClick={() => location.reload()}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors text-sm font-medium"
+          >
+            Coba Lagi
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Empty state
+  if (!functionData) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-lg shadow-lg p-8 text-center max-w-md">
+          <p className="text-slate-400 text-lg">Tidak ada data functional decomposition tersedia</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col relative overflow-hidden">

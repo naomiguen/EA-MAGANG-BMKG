@@ -1,75 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-
-// --- 1. DATA STRUKTUR ORGANISASI (MURNI JABATAN / ROLE) ---
-const orgData = {
-  id: 'root',
-  title: 'KEPALA STASIUN',
-  type: 'Pimpinan',
-  desc: 'Mengkoordinir pelaksanaan tugas operasional, evaluasi pengamatan, dan penanggung jawab anggaran. Bertanggung jawab langsung kepada Kepala Balai Besar MKG Wilayah III.',
-  children: [
-    {
-      id: 'tu',
-      title: 'KASUBAG TATA USAHA',
-      type: 'Manajemen',
-      desc: 'Menyusun anggaran, mengelola kepegawaian, persuratan, dan kerumahtanggaan kantor. Bertanggung jawab atas administrasi umum stasiun.',
-      children: [
-        { 
-          id: 'tu1', 
-          title: 'BENDAHARA', 
-          type: 'Staff', 
-          desc: 'Mengurus gaji, belanja pegawai, laporan keuangan (SAKTI/SAIBA), dan PNBP.' 
-        },
-        { 
-          id: 'tu2', 
-          title: 'ARSIPARIS & UMUM', 
-          type: 'Staff', 
-          desc: 'Mengelola arsip surat masuk/keluar, administrasi umum, dan inventaris barang (BMN).' 
-        },
-        { 
-          id: 'tu3', 
-          title: 'PPNPN (SUPPORT)', 
-          type: 'Support', 
-          desc: 'Menjaga keamanan lingkungan kantor, kebersihan taman alat, dan operasional kendaraan dinas.' 
-        }
-      ]
-    },
-    {
-      id: 'obs',
-      title: 'KOORDINATOR OBSERVASI',
-      type: 'Teknis',
-      desc: 'Mengawasi kelancaran operasional pengamatan meteorologi permukaan/udara atas dan pemeliharaan seluruh peralatan teknis.',
-      children: [
-        { 
-          id: 'obs1', 
-          title: 'OBSERVER (PENGAMAT)', 
-          type: 'Fungsional', 
-          desc: 'Melakukan pengamatan cuaca 24 jam (synop/metar), mengisi logbook, dan mengirim berita cuaca via CMSS/AFTN.' 
-        },
-        { 
-          id: 'obs2', 
-          title: 'TEKNISI PERALATAN', 
-          type: 'Fungsional', 
-          desc: 'Memelihara radar cuaca, AWOS, taman alat, server, dan melakukan perbaikan perangkat IT/jaringan.' 
-        }
-      ]
-    },
-    {
-      id: 'datin',
-      title: 'KOORDINATOR DATA & INFO',
-      type: 'Teknis',
-      desc: 'Mengkoordinir analisis data, pembuatan prakiraan cuaca, peringatan dini cuaca ekstrem, dan pelayanan informasi publik.',
-      children: [
-        { 
-          id: 'datin1', 
-          title: 'FORECASTER (PRAKIRAWAN)', 
-          type: 'Fungsional', 
-          desc: 'Membuat TAF/Trend Forecast, Aerodrome Warning, analisis citra satelit/radar, dan briefing pilot.' 
-        }
-      ]
-    }
-  ]
-};
+import { supabase } from '../lib/supabaseClient';
 
 // --- 2. KOMPONEN CARD POHON (TREE NODE) ---
 const TreeNode = ({ node, onNodeClick }) => {
@@ -167,7 +98,56 @@ const TreeNode = ({ node, onNodeClick }) => {
 
 // --- 3. HALAMAN UTAMA ---
 const OrgStructurePage = () => {
+  const [orgData, setOrgData] = useState(null);
   const [selectedNode, setSelectedNode] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchOrgData();
+  }, []);
+
+  const fetchOrgData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Fetch all positions from Supabase
+      const { data: positions, error: fetchError } = await supabase
+        .from('org_positions')
+        .select('*')
+        .order('display_order', { ascending: true });
+
+      if (fetchError) throw fetchError;
+
+      // Build tree structure from flat data
+      const buildTree = (items, parentId = null) => {
+        return items
+          .filter(item => item.parent_id === parentId)
+          .map(item => ({
+            id: item.id,
+            title: item.title,
+            type: item.type,
+            desc: item.description,
+            children: buildTree(items, item.id)
+          }));
+      };
+
+      const tree = buildTree(positions, null);
+      
+      if (tree.length > 0) {
+        setOrgData(tree[0]); // Root node
+      } else {
+        throw new Error('No organizational data found');
+      }
+
+    } catch (err) {
+      console.error('Error fetching organizational data:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const closeModal = () => setSelectedNode(null);
 
@@ -240,6 +220,47 @@ const OrgStructurePage = () => {
     );
   };
 
+  // Loading State
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+          <p className="text-slate-600">Memuat struktur organisasi...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error State
+  if (error) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
+          <h3 className="text-red-800 font-bold mb-2">Error</h3>
+          <p className="text-red-600 text-sm mb-4">{error}</p>
+          <button 
+            onClick={fetchOrgData}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+          >
+            Coba Lagi
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // No Data State
+  if (!orgData) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-slate-600">Tidak ada data struktur organisasi</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col relative overflow-hidden">
       
@@ -259,46 +280,53 @@ const OrgStructurePage = () => {
       </div>
 
       {/* --- SCROLLABLE CONTAINER DIAGRAM --- */}
-      {/* overflow-x-auto: WAJIB ADA untuk scroll horizontal */}
-      {/* w-full: Agar container mengambil lebar penuh layar */}
       <div className="flex-1 w-full overflow-x-auto overflow-y-hidden z-10 pb-20 px-4 custom-scrollbar">
-        
-        {/* min-w-max: WAJIB ADA agar diagram tidak dipaksa mengecil, tapi memicu scroll */}
         <div className="min-w-max mx-auto pt-4 pb-12 pr-8 pl-8">
            <TreeNode node={orgData} onNodeClick={setSelectedNode} />
         </div>
-        
+      </div>
+
+      {/* Refresh Button */}
+      <div className="fixed bottom-8 right-8 z-20">
+        <button 
+          onClick={fetchOrgData}
+          className="bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+        >
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          Refresh
+        </button>
       </div>
 
       {/* Modal Popup */}
       <ModalPopup />
 
       {/* Style Scrollbar Custom */}
-{/* Style Scrollbar Custom - DIBUAT LEBIH JELAS & TEBAL */}
       <style>{`
         /* 1. Ukuran Scrollbar */
         .custom-scrollbar::-webkit-scrollbar {
-          height: 14px; /* Lebih tinggi agar mudah di-klik */
+          height: 14px;
           width: 14px;
         }
 
         /* 2. Track (Latar Belakang Scrollbar) - Abu-abu Terang */
         .custom-scrollbar::-webkit-scrollbar-track {
-          background-color: #e2e8f0; /* Slate-200 (Abu terang jelas) */
+          background-color: #e2e8f0;
           border-radius: 8px;
-          border: 1px solid #cbd5e1; /* Tambah garis pinggir biar makin jelas */
+          border: 1px solid #cbd5e1;
         }
 
         /* 3. Thumb (Batang Geser) - Abu-abu Gelap */
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background-color: #64748b; /* Slate-500 (Abu gelap solid) */
+          background-color: #64748b;
           border-radius: 8px;
-          border: 3px solid #e2e8f0; /* Memberi jarak sedikit dari track */
+          border: 3px solid #e2e8f0;
         }
 
         /* 4. Saat Hover (Disorot Mouse) - Jadi Lebih Gelap Lagi */
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background-color: #475569; /* Slate-600 */
+          background-color: #475569;
         }
 
         /* Animasi Modal */
