@@ -12,13 +12,13 @@ const Navbar = () => {
       name: 'Architecture Vision', 
       href: null, 
       children: [
-        { name: 'Vision, Mission and Corporate Strategy', href: '/vision/strategy' },
-        { name: 'Architecture Goals', href: '/vision/goals' },
         { name: 'Architecture Principles', href: '/vision/principles' },
+        { name: 'Architecture Goals', href: '/vision/goals' },
         { name: 'Organization Decomposition Diagram', href: '/vision/organization' },
-        { name: 'Value Chain', href: '/vision/valuechain' },
         { name: 'Stakeholder Catalog', href: '/vision/stakeholder' },
         { name: 'Solution Concept Diagram', href: '/vision/solution' },
+        { name: 'Value Chain', href: '/vision/valuechain' },
+        { name: 'Vision, Mission and Corporate Strategy', href: '/vision/strategy' },
       ]
     },
     { 
@@ -37,12 +37,27 @@ const Navbar = () => {
       name: 'Data Arch', 
       href: '/data',
       children: [
-        { name: 'Data Principles', href: '/data/dataprinciples' },
-        { name: 'Data Entity - Data Component Catalog', href: '/data/component' },
-        { name: 'Logical Data Diagram', href: '/data/logical' },
+        { name: 'Application - Data Matrix', href: '/data/appmatrix' },
         { name: 'Conceptual Data Diagram', href: '/data/concept' },
         { name: 'Data Entity - Business Functional Matrix', href: '/data/function_matrix' },
-        { name: 'Application - Data Matrix', href: '/data/appmatrix' },
+        { name: 'Data Entity - Data Component Catalog', href: '/data/component' },
+        { name: 'Data Principles', href: '/data/dataprinciples' },
+        { name: 'Logical Data Diagram', href: '/data/logical' },
+      ]
+    },
+    { 
+      name: 'Application', 
+      href: null, 
+      children: [
+        { name: 'Application Portfolio Catalog', href: '/app' },
+        { name: 'Application Principles', href: '/app' },
+        { name: 'Application Use Case Diagram', href: '/app' },
+        { name: 'Application - Business Process Matrix', href: '/app' },
+        { name: 'Application - Classification Matrix', href: '/app' },
+        { name: 'Application - Communication Diagram', href: '/app' },
+        { name: 'Application - Organization Matrix', href: '/app' },
+        { name: 'Application - Portofolio Assessment', href: '/app'},
+        { name: 'Application - User and Location Diagram', href: '/app' },
       ]
     },
     { 
@@ -71,7 +86,7 @@ const Navbar = () => {
         { name: 'Application - Organization Matrix', href: '/app/org_matrix' },
       ]
     },
-        { 
+    { 
       name: 'Architecture Implementation', 
       href: null, 
       children: [

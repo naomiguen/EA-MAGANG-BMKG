@@ -1,12 +1,10 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Lightbulb } from "lucide-react";
 
 import BusinessProcess from "../assets/business-process-0-1.svg";
 
 const BusinessProcessPage = () => {
-  const navigate = useNavigate();
-  
+
     return (
       <div className="min-h-screen bg-slate-50 py-10 px-4 md:px-8 font-sans text-slate-800">
 

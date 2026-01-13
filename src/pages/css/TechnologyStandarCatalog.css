@@ -1,49 +1,65 @@
-/* Container Utama */
+/* =========================================
+   CONTAINER & LAYOUT
+   ========================================= */
 .catalog-container {
   padding: 2rem;
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color: #1f2937;
 }
 
-/* Header */
+/* =========================================
+   HEADER SECTION
+   ========================================= */
 .catalog-header {
-  border-bottom: 2px solid #e5e7eb;
+  border-bottom: 2px solid #f3f4f6;
   padding-bottom: 1.5rem;
   margin-bottom: 2rem;
   display: flex;
   justify-content: space-between;
-  align-items: start;
+  align-items: flex-start;
+}
+
+.header-content {
+  flex: 1;
 }
 
 .catalog-title {
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-size: 1.875rem;
+  font-weight: 800;
   color: #111827;
-  margin: 0;
+  margin: 0 0 0.5rem 0;
   letter-spacing: -0.025em;
 }
 
 .catalog-subtitle {
-  font-size: 1rem;
-  color: #4b5563;
-  margin-top: 0.5rem;
-  margin-bottom: 0.25rem;
+  font-size: 1.1rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.header-meta {
+  margin-top: 0.75rem;
 }
 
 .header-meta small {
-  color: #0ea5e9; /* Warna biru muda khas tech */
+  background-color: #eff6ff;
+  color: #2563eb;
+  padding: 4px 10px;
+  border-radius: 99px;
   font-weight: 600;
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-/* Controls */
+/* =========================================
+   CONTROLS (SEARCH & FILTER)
+   ========================================= */
 .controls-container {
   display: flex;
   flex-direction: column;
@@ -59,20 +75,24 @@
   }
 }
 
+.search-wrapper {
+  flex: 1;
+  max-width: 400px;
+}
+
 .search-input {
-  padding: 0.625rem 1rem;
+  padding: 0.75rem 1rem;
   border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border-radius: 8px;
   width: 100%;
-  min-width: 300px;
   font-size: 0.95rem;
-  transition: border-color 0.2s;
+  transition: all 0.2s;
 }
 
 .search-input:focus {
   outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 2px rgba(37,99,235,0.1);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
 .filter-actions {
@@ -81,117 +101,151 @@
 }
 
 .filter-select {
-  padding: 0.625rem 2rem 0.625rem 1rem;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
   border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border-radius: 8px;
   background-color: #fff;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   cursor: pointer;
+  color: #374151;
+  font-weight: 500;
 }
 
 .refresh-button {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.625rem 1rem;
-  background-color: #f3f4f6;
+  padding: 0.75rem 1.25rem;
+  background-color: #ffffff;
   border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border-radius: 8px;
   color: #374151;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
+  font-size: 0.9rem;
 }
 
 .refresh-button:hover {
-  background-color: #e5e7eb;
+  background-color: #f9fafb;
+  border-color: #9ca3af;
 }
 
-/* Table */
+/* =========================================
+   TABLE STYLING
+   ========================================= */
 .table-wrapper {
   overflow-x: auto;
   border: 1px solid #e5e7eb;
-  border-radius: 6px;
+  border-radius: 8px;
+  background: white;
 }
 
 .catalog-table {
   width: 100%;
-  border-collapse: collapse;
-  font-size: 0.875rem;
-}
-
-.catalog-table thead {
-  background-color: #f8fafc;
-  border-bottom: 1px solid #e5e7eb;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9rem;
 }
 
 .catalog-table th {
+  background-color: #f8fafc;
   padding: 1rem;
   text-align: left;
   font-weight: 600;
-  color: #4b5563;
+  color: #64748b;
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.05em;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .catalog-table td {
   padding: 1rem;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid #f1f5f9;
   vertical-align: top;
 }
 
 .catalog-table tr:hover {
-  background-color: #f9fafb;
+  background-color: #f8fafc;
 }
 
-/* Typography & Badges inside Table */
+/* Typography inside Table */
 .font-mono {
   font-family: 'Monaco', 'Consolas', monospace;
   color: #6b7280;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .font-bold-row {
   font-weight: 600;
   color: #111827;
+  font-size: 0.95rem;
+}
+
+.tags-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+/* Badge Styles */
+.badge-base {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.domain-tag {
+  background-color: #e0f2fe; 
+  color: #0284c7; 
+  border: 1px solid #bae6fd;
 }
 
 .type-tag {
-  display: inline-block;
-  font-size: 0.7rem;
-  font-weight: normal;
-  color: #6b7280;
+  color: #4b5563;
   background: #f3f4f6;
-  padding: 2px 6px;
-  border-radius: 4px;
-  margin-top: 4px;
+  border: 1px solid #e5e7eb;
 }
 
-.text-category {
-  color: #4b5563;
+.service-area {
+  font-size: 0.75rem; 
+  color: #0ea5e9; 
+  margin-top: 2px; 
   font-weight: 500;
+}
+
+.category-text {
+  font-weight: 500; 
+  color: #374151;
 }
 
 .description-cell {
   color: #6b7280;
-  line-height: 1.5;
+  line-height: 1.6;
+  font-size: 0.875rem;
 }
 
 /* Status Badges */
 .status-badge {
   display: inline-flex;
-  padding: 0.25rem 0.75rem;
+  padding: 4px 10px;
   font-size: 0.75rem;
-  font-weight: 600;
-  border-radius: 9999px;
+  font-weight: 700;
+  border-radius: 99px;
   white-space: nowrap;
+  letter-spacing: 0.02em;
 }
 
-.status-active { background-color: #dcfce7; color: #166534; }
-.status-emerging { background-color: #dbeafe; color: #1e40af; } /* Biru untuk teknologi baru/kajian */
-.status-retired { background-color: #fee2e2; color: #991b1b; }
-.status-phasing-out { background-color: #ffedd5; color: #9a3412; }
+.status-active { background-color: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+.status-emerging { background-color: #dbeafe; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.status-retired { background-color: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+.status-phasing-out { background-color: #ffedd5; color: #c2410c; border: 1px solid #fed7aa; }
 
 /* Loading & Empty States */
 .catalog-loading {
@@ -202,10 +256,10 @@
 
 .spinner {
   border: 3px solid #f3f3f3;
-  border-top: 3px solid #2563eb;
+  border-top: 3px solid #3b82f6;
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   animation: spin 1s linear infinite;
   margin: 0 auto 1rem;
 }
@@ -216,4 +270,5 @@
   text-align: center;
   padding: 3rem;
   color: #9ca3af;
+  background-color: #f9fafb;
 }
