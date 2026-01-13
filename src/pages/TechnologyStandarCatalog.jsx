@@ -80,7 +80,7 @@ const TechnologyStandarCatalog = () => {
         <div className="search-wrapper">
           <input
             type="text"
-            placeholder="Cari (Misal: SIH3, Server, RAA...)"
+            placeholder="Cari (Misal: SIH3, Server, ...)"
             className="search-input"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
