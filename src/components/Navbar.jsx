@@ -44,18 +44,6 @@ const Navbar = () => {
       ]
     },
     { 
-      name: 'Technology', 
-      href: null, 
-      children: [
-        { name: 'Environment and Location Diagram', href: '/tech/environmentDiagram' },
-        { name: 'Network Communication Diagram', href: '/tech/networkCommunicationDiagram' },
-        { name: 'Technology Components Diagram', href: '/tech/componentsDiagram' },
-        { name: 'Technology - Application Matrix', href: '/tech/appMatrix' },
-        { name: 'Technology Principles', href: '/tech/technologyPrinciples' },
-        { name: 'Technology Standard Catalog', href: '/tech/standardsCatalog' },
-      ]
-    },
-    { 
       name: 'Application', 
       href: null, 
       children: [
@@ -70,7 +58,18 @@ const Navbar = () => {
         { name: 'Application - Organization Matrix', href: '/app' },
       ]
     },
-        { 
+    { 
+      name: 'Technology', 
+      href: null, 
+      children: [
+        { name: 'Environment and Location Diagram', href: '/tech/environmentDiagram' },
+        { name: 'Network Communication Diagram', href: '/tech/networkCommunicationDiagram' },
+        { name: 'Technology - Application Matrix', href: '/tech/appMatrix' },
+        { name: 'Technology Principles', href: '/tech/technologyPrinciples' },
+        { name: 'Technology Standard Catalog', href: '/tech/standardsCatalog' },
+      ]
+    },
+    { 
       name: 'Architecture Implementation', 
       href: null, 
       children: [
