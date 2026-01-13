@@ -50,7 +50,6 @@ const Navbar = () => {
       children: [
         { name: 'Environment and Location Diagram', href: '/tech/environmentDiagram' },
         { name: 'Network Communication Diagram', href: '/tech/networkCommunicationDiagram' },
-        { name: 'Technology Components Diagram', href: '/tech/componentsDiagram' },
         { name: 'Technology - Application Matrix', href: '/tech/appMatrix' },
         { name: 'Technology Principles', href: '/tech/technologyPrinciples' },
         { name: 'Technology Standard Catalog', href: '/tech/standardsCatalog' },
@@ -61,14 +60,14 @@ const Navbar = () => {
       href: null, 
       children: [
         { name: 'Application Principles', href: '/app' },
-        { name: 'Application Portfolio Catalog', href: '/app' },
+        { name: 'Application Portfolio Catalog', href: '/app/portfolio' },
         { name: 'Application Use Case Diagram', href: '/app' },
         { name: 'Application - Portofolio Assessment', href: '/app' },
         { name: 'Application - User and Location Diagram', href: '/app' },
         { name: 'Application - Communication Diagram', href: '/app' },
         { name: 'Application - Business Process Matrix', href: '/app' },
         { name: 'Application - Classification Matrix', href: '/app' },
-        { name: 'Application - Organization Matrix', href: '/app' },
+        { name: 'Application - Organization Matrix', href: '/app/org_matrix' },
       ]
     },
         { 

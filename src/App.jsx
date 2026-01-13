@@ -28,6 +28,8 @@ import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix"
 import TechnologyNetworkDiagram from "./pages/TechnologyNetworkDiagram";
 import TechnologyAppMatrix from "./pages/TechnologyAppMatrix";
 import SolutionConceptPage from "./pages/SolutionConceptPage";
+import ApplicationPortfolioPage from "./pages/PortfolioCatalogPage";
+import AppOrgMatrixPage from "./pages/AppOrgMatrix";
 
 
 function App() {
@@ -67,6 +69,8 @@ function App() {
           <Route path="/data/concept" element={<ConceptualDiagramPage />} />
           <Route path="/tech/networkCommunicationDiagram" element={<TechnologyNetworkDiagram />} />
           <Route path="/tech/appMatrix" element={<TechnologyAppMatrix />} />
+          <Route path="/app/portfolio" element={<ApplicationPortfolioPage />} />
+          <Route path="/app/org_matrix" element={<AppOrgMatrixPage />} />
 
           {/* Placeholder untuk halaman yang belum ada */}
           <Route path="*" element={

@@ -141,6 +141,14 @@ const Dashboard = () => {
       navigate("/tech/appMatrix");
       return;
     }
+    if (item.title === "Application Portfolio Catalog") {
+      navigate("/app/portfolio");
+      return;
+    }
+    if (item.title === "Application Organization Matrix") {
+      navigate("/app/org_matrix");
+      return;
+    }
 
     // Default: halaman belum dibuat
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
