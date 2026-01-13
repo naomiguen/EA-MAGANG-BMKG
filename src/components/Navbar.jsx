@@ -46,21 +46,6 @@ const Navbar = () => {
       ]
     },
     { 
-      name: 'Application', 
-      href: null, 
-      children: [
-        { name: 'Application Portfolio Catalog', href: '/app' },
-        { name: 'Application Principles', href: '/app' },
-        { name: 'Application Use Case Diagram', href: '/app' },
-        { name: 'Application - Business Process Matrix', href: '/app' },
-        { name: 'Application - Classification Matrix', href: '/app' },
-        { name: 'Application - Communication Diagram', href: '/app' },
-        { name: 'Application - Organization Matrix', href: '/app' },
-        { name: 'Application - Portofolio Assessment', href: '/app'},
-        { name: 'Application - User and Location Diagram', href: '/app' },
-      ]
-    },
-    { 
       name: 'Technology', 
       href: null, 
       children: [
