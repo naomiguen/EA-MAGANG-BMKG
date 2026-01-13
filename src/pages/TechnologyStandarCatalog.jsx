@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { supabase } from '../lib/supabaseClient'; 
 import './css/TechnologyStandarCatalog.css';
 
 const TechnologyStandarCatalog = () => {
@@ -15,11 +15,10 @@ const TechnologyStandarCatalog = () => {
   const fetchCatalogData = async () => {
     try {
       setLoading(true);
-      // Supabase akan mengambil semua kolom termasuk 'service_area'
       const { data, error: fetchError } = await supabase
-        .from('technology_standards')
+        .from('spbe_architecture_catalog') 
         .select('*')
-        .order('standard_id', { ascending: true });
+        .order('id', { ascending: true });
 
       if (fetchError) throw fetchError;
       setCatalogData(data || []);
@@ -35,11 +34,8 @@ const TechnologyStandarCatalog = () => {
                           item.standard_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           item.category.toLowerCase().includes(searchTerm.toLowerCase());
     
-    // UPDATED: Logic filter lebih fleksibel
-    // Jika filter 'Software', dia akan mengambil 'Software', 'Software (OS)', dan 'Software (DBMS)'
-    const matchesType = filterType === 'All' || item.type.toLowerCase().includes(filterType.toLowerCase());
-    
-    return matchesSearch && matchesType;
+    const matchesDomain = filterType === 'All' || item.domain === filterType;
+    return matchesSearch && matchesDomain;
   });
 
   const renderStatusBadge = (lifecycle) => {
@@ -57,7 +53,12 @@ const TechnologyStandarCatalog = () => {
     );
   };
 
-  if (loading) return <div className="catalog-loading"><div className="spinner"></div><p>Memuat Referensi Arsitektur SPBE...</p></div>;
+  if (loading) return (
+    <div className="catalog-loading">
+      <div className="spinner"></div>
+      <p>Memuat Katalog Arsitektur SPBE...</p>
+    </div>
+  );
 
   return (
     <div className="catalog-container">
@@ -87,24 +88,19 @@ const TechnologyStandarCatalog = () => {
         </div>
         
         <div className="filter-actions">
-          {/* UPDATED: Opsi filter disesuaikan dengan isi Database */}
           <select 
             className="filter-select"
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
           >
-            <option value="All">Semua Tipe Aset</option>
-            <option value="Hardware">Hardware & Server</option>
-            <option value="Software">Software (Apps, OS, DB)</option>
-            <option value="Network">Jaringan & Komunikasi</option>
-            <option value="Data">Data & Informasi</option> 
+            <option value="All">Semua Domain</option>
+            <option value="Aplikasi">Domain Aplikasi</option>
+            <option value="Infrastruktur">Domain Infrastruktur</option>
+            <option value="Data">Domain Data</option>
+            <option value="Keamanan">Domain Keamanan</option>
           </select>
 
-          <button
-            onClick={fetchCatalogData}
-            className="refresh-button"
-            title="Muat Ulang Data"
-          >
+          <button onClick={fetchCatalogData} className="refresh-button">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
               <path fillRule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
               <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
@@ -120,8 +116,8 @@ const TechnologyStandarCatalog = () => {
           <thead>
             <tr>
               <th style={{width: '12%'}}>ID Standar</th>
-              <th style={{width: '25%'}}>Nama Teknologi / Aset</th>
-              <th style={{width: '23%'}}>Area Layanan & Kategori</th> {/* UPDATED Header */}
+              <th style={{width: '28%'}}>Nama Teknologi & Domain</th>
+              <th style={{width: '20%'}}>Kategori & Area Layanan</th>
               <th style={{width: '10%'}}>Status</th>
               <th style={{width: '30%'}}>Deskripsi & Fungsi</th>
             </tr>
@@ -130,24 +126,29 @@ const TechnologyStandarCatalog = () => {
             {filteredData.length > 0 ? (
               filteredData.map((tech) => (
                 <tr key={tech.id}>
-                  {/* Standard ID lebih tebal */}
-                  <td className="font-mono" style={{fontWeight: '600'}}>
+                  <td className="font-mono">
                     {tech.standard_id}
                   </td>
                   
                   <td>
                     <div className="font-bold-row">{tech.name}</div>
-                    {/* Tampilkan Tipe Spesifik (misal: Software (OS)) */}
-                    <span className="type-tag">{tech.type}</span>
+                    <div className="tags-wrapper">
+                      {/* ClassName menggantikan inline style */}
+                      <span className="badge-base domain-tag">
+                        {tech.domain}
+                      </span>
+                      <span className="badge-base type-tag">
+                        {tech.type}
+                      </span>
+                    </div>
                   </td>
 
-                  {/* NEW: Menampilkan Service Area dan Category */}
                   <td>
-                    <div style={{fontWeight: '500', color: '#1f2937'}}>
+                    <div className="category-text">
                         {tech.category}
                     </div>
                     {tech.service_area && (
-                        <div style={{fontSize: '0.75rem', color: '#0ea5e9', marginTop: '2px'}}>
+                        <div className="service-area">
                             {tech.service_area}
                         </div>
                     )}
@@ -155,7 +156,7 @@ const TechnologyStandarCatalog = () => {
 
                   <td>{renderStatusBadge(tech.lifecycle)}</td>
                   
-                  <td className="text-muted description-cell" title={tech.description}>
+                  <td className="description-cell" title={tech.description}>
                     {tech.description}
                   </td>
                 </tr>
@@ -164,7 +165,7 @@ const TechnologyStandarCatalog = () => {
               <tr>
                 <td colSpan="5" className="empty-message">
                   <p>Data tidak ditemukan.</p>
-                  <small>Silakan ubah filter atau kata kunci pencarian.</small>
+                  <small>Coba ubah filter domain atau kata kunci pencarian.</small>
                 </td>
               </tr>
             )}
