@@ -29,6 +29,7 @@ const Navbar = () => {
   { name: 'Business Process Map', href: '/business/process' },
   { name: 'Business Process - Risk Matrix', href: '/business/RiskMatrix' },
   { name: 'Functional Decomposition Diagram', href: '/business/functional' },
+  { name: 'Business Process', href: '/business/' },
 ]
     },
 

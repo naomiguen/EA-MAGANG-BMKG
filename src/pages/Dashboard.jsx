@@ -97,6 +97,10 @@ const Dashboard = () => {
       navigate("/business/RiskMatrix");
       return;
     }
+    if (item.title === "Business Process") {
+      navigate('/business/probis');
+      return;
+    }
 
     // Data Section
     if (item.title === "Data Entity - Data Component Catalog") {

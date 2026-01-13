@@ -58,7 +58,7 @@ function App() {
           <Route path="/vision/solution" element={<SolutionConceptPage />} />
           <Route path="/business/organizational" element={<OrgStructurePage />} />
           <Route path="/business/functional" element={<FunctionalDecompositionPage />} />
-          <Route path="/business/process" element={<BusinessProcessPage />} />
+          <Route path="/business/probis" element={<BusinessProcessPage />} />
           <Route path="/data/dataprinciples" element={<DataPrinciplesPage />} />
           <Route path="/data/component" element={<DataEntityPage />} />
           <Route path="/data/logical" element={<LogicalDataDiagram />} />
