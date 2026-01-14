@@ -1,84 +1,33 @@
-import React from "react";
-import { ArrowLeft, Users, AppWindow } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Users, AppWindow } from "lucide-react";
+// Import client supabase kamu
+import { supabase } from "../lib/supabaseClient";
 
 const AppOrgMatrixPage = () => {
-  const matrixData = [
-    {
-      id: 1,
-      orgUnit: "Unit Observasi",
-      role: "Pengamatan & Pengumpulan Data",
-      applications: [
-        "BMKGSoft (Input Data & Pengiriman)",
-        "CMSS (Communication Meteo Switching System)",
-        "AFTN (Aeronautical Fixed Telecom Network)",
-        "Aplikasi WXREV"
-      ],
-    },
-    {
-      id: 2,
-      orgUnit: "Unit Analisa & Prakiraan",
-      role: "Analisis Cuaca & Peringatan Dini",
-      applications: [
-        "Synergie Workstation",
-        "Weather Radar Application",
-        "CMSS & GTS",
-        "Aplikasi Nowcasting (Gawar Dini)",
-      ],
-    },
-    {
-      id: 3,
-      orgUnit: "Tata Usaha (Keuangan)",
-      role: "Pengelolaan Anggaran & Laporan",
-      applications: [
-        "Aplikasi SAKTI (Sistem Aplikasi Keuangan Tingkat Instansi)",
-        "Aplikasi SAIBA (Sistem Akuntansi Instansi)",
-        "Aplikasi GPP (Gaji)",
-        "SPRINT KPPN"
-      ],
-    },
-    {
-      id: 4,
-      orgUnit: "Tata Usaha (Aset/BMN)",
-      role: "Manajemen Barang Milik Negara",
-      applications: [
-        "SIMAK BMN (Sistem Informasi Manajemen dan Akuntansi BMN)",
-        "SIMAN (Sistem Informasi Manajemen Aset Negara)",
-        "Aplikasi Persediaan",
-        "SIPPB"
-      ],
-    },
-    {
-      id: 5,
-      orgUnit: "Tata Usaha (Kepegawaian)",
-      role: "Manajemen SDM & Administrasi",
-      applications: [
-        "Aplikasi SIMAS (Sistem Informasi Manajemen ASN)",
-        "E-Kinerja & SPRESO (Presensi Online)",
-        "MySAPK BKN",
-        "E-Office BMKG (Surat Menyurat)"
-      ],
-    },
-    {
-      id: 6,
-      orgUnit: "Unit Data & Informasi",
-      role: "Pengelolaan Database & Layanan",
-      applications: [
-        "Database Center System",
-        "Portal Web Layanan",
-        "Aplikasi Pelayanan Jasa (PNBP)"
-      ],
-    },
-    {
-      id: 7,
-      orgUnit: "Unit Teknisi",
-      role: "Pemeliharaan & Metadata",
-      applications: [
-        "Monitoring Tools (Alat & Jaringan)",
-        "Aplikasi Metadata WIGOS",
-        "Aplikasi Maintenance Logbook"
-      ],
-    },
-  ];
+  const [matrixData, setMatrixData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchMatrixData();
+  }, []);
+
+  const fetchMatrixData = async () => {
+    try {
+      setLoading(true);
+      // Supabase otomatis mengonversi kolom array PostgreSQL menjadi array JavaScript
+      const { data, error } = await supabase
+        .from('app_org_matrix')
+        .select('*')
+        .order('id', { ascending: true });
+
+      if (error) throw error;
+      setMatrixData(data);
+    } catch (error) {
+      console.error("Error fetching org matrix:", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 py-10 px-4 md:px-8 font-sans text-slate-800">
@@ -116,27 +65,39 @@ const AppOrgMatrixPage = () => {
               </tr>
             </thead>
             <tbody className="text-slate-700">
-              {matrixData.map((item, index) => (
+              
+              {/* Loading State */}
+              {loading && (
+                <tr>
+                  <td colSpan="2" className="p-8 text-center text-slate-500 italic">
+                    Memuat data matriks organisasi...
+                  </td>
+                </tr>
+              )}
+
+              {/* Data Rows */}
+              {!loading && matrixData.map((item, index) => (
                 <tr 
                   key={item.id} 
                   className={`border-b border-slate-100 transition-colors ${
                     index % 2 === 0 ? "bg-white" : "bg-slate-50"
                   } hover:bg-blue-50`}
                 >
-                  {/* Kolom Organisasi */}
+                  {/* Kolom Organisasi (item.org_unit) */}
                   <td className="p-5 border-r border-slate-200 align-top">
                     <div className="font-bold text-slate-900 text-base mb-1">
-                      {item.orgUnit}
+                      {item.org_unit} 
                     </div>
                     <div className="text-xs text-slate-500 font-medium uppercase tracking-wide">
                       {item.role}
                     </div>
                   </td>
 
-                  {/* Kolom Aplikasi */}
+                  {/* Kolom Aplikasi (item.applications) */}
                   <td className="p-5 align-top">
                     <div className="flex flex-wrap gap-2">
-                      {item.applications.map((app, idx) => (
+                      {/* Pastikan applications ada isinya sebelum di-map */}
+                      {item.applications && item.applications.map((app, idx) => (
                         <span 
                           key={idx} 
                           className="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-white border border-slate-300 text-slate-700 shadow-sm"
@@ -152,8 +113,6 @@ const AppOrgMatrixPage = () => {
           </table>
         </div>
       </div>
-
-
     </div>
   );
 };
