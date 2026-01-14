@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, ArrowRight, Clock, FileText, Users, Activity } from 'lucide-react';
-import interactionSvg from '../assets/interaction.drawio.svg?raw';
+import interactionSvg from '../assets/business-interaction.drawio.svg?raw';
 
 const BusinessInteractionPage = () => {
   const [activeId, setActiveId] = useState(null);
