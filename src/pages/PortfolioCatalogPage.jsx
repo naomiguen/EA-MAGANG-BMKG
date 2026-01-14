@@ -1,11 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Database, Server, CheckCircle2 } from "lucide-react";
 
 const ApplicationPortfolioPage = () => {
-  const navigate = useNavigate();
-
-  // Data Aplikasi (Sesuai SK Uraian Tugas 2023)
   const portfolioData = [
     // --- CORE BUSINESS (UTAMA) ---
     {
@@ -93,13 +89,6 @@ const ApplicationPortfolioPage = () => {
       
       {/* --- 1. HEADER HALAMAN --- */}
       <div className="max-w-7xl mx-auto mb-10 text-center">
-        <button
-          onClick={() => navigate(-1)}
-          className="absolute left-4 top-4 md:left-8 md:top-10 flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors font-medium"
-        >
-          <ArrowLeft size={20} />
-          Kembali
-        </button>
 
         <div>
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900">
