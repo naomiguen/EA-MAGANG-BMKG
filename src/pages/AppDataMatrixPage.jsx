@@ -1,68 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowLeft, Database, FileText, Table as TableIcon } from "lucide-react";
+import { supabase } from "../lib/supabaseClient";
 
 const AppDataMatrixPage = () => {
-  const appDataMatrix = [
-    {
-      id: 1,
-      app: "BMKGSoft",
-      description: "Sistem penginputan dan pengolahan data pengamatan meteorologi permukaan.",
-      dataEntity: "Data Observasi (Surface, Upper Air, ME.48)",
-      dataType: "Transactional Data"
-    },
-    {
-      id: 2,
-      app: "CMSS & AFTN",
-      description: "Sistem pertukaran data meteorologi global dan penerbangan.",
-      dataEntity: "WMO Coded Data (SYNOP, METAR, SPECI)",
-      dataType: "Transactional Data"
-    },
-    {
-      id: 3,
-      app: "Synergie & Radar Weather",
-      description: "Workstation analisis peta cuaca dan citra radar untuk forecaster.",
-      dataEntity: "Produk Informasi (Forecast), Citra Radar, Peringatan Dini",
-      dataType: "Analytical Data"
-    },
-    {
-      id: 4,
-      app: "Aplikasi SAKTI, SAIBA, & GPP",
-      description: "Sistem pengelolaan keuangan, penganggaran, dan penggajian pegawai.",
-      dataEntity: "Data Keuangan, DIPA, Realisasi Anggaran, Gaji",
-      dataType: "Transactional Data"
-    },
-    {
-      id: 5,
-      app: "SIMAK BMN, SIMAN & SIPPB",
-      description: "Sistem informasi manajemen aset dan barang milik negara.",
-      dataEntity: "Inventaris BMN (Aset), Status Barang",
-      dataType: "Master Data"
-    },
-    {
-      id: 6,
-      app: "SIMAS, SPRESO & MySAPK",
-      description: "Sistem manajemen data pegawai, presensi, dan kinerja ASN.",
-      dataEntity: "Data Kepegawaian (Personil), Absensi, SKP",
-      dataType: "Master Data"
-    },
-    {
-      id: 7,
-      app: "E-Office BMKG",
-      description: "Sistem persuratan digital dan disposisi elektronik.",
-      dataEntity: "Dokumen Naskah Dinas, Surat Masuk/Keluar",
-      dataType: "Transactional Data"
-    },
-    {
-      id: 8,
-      app: "Aplikasi Metadata WIGOS",
-      description: "Sistem pengelolaan metadata peralatan pengamatan (OSCAR).",
-      dataEntity: "Metadata Alat (Spesifikasi, Kalibrasi, Riwayat)",
-      dataType: "Master Data"
+  // State untuk menampung data dari Supabase
+  const [appDataMatrix, setAppDataMatrix] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch data saat komponen di-mount
+  useEffect(() => {
+    fetchAppData();
+  }, []);
+
+  const fetchAppData = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('app_data_matrix')
+        .select('*')
+        .order('id', { ascending: true });
+
+      if (error) throw error;
+      setAppDataMatrix(data);
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+      alert("Gagal mengambil data dari database.");
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
   // Helper untuk warna badge tipe data
   const getDataTypeStyle = (type) => {
+    // Validasi agar tidak error jika type undefined saat loading
+    if (!type) return { bg: "#f1f5f9", text: "#64748b", border: "#cbd5e1" };
+
     if (type.includes("Master")) {
       return { bg: "#d1fae5", text: "#065f46", border: "#a7f3d0" }; // Hijau
     } else if (type.includes("Analytical")) {
@@ -157,8 +129,21 @@ const AppDataMatrixPage = () => {
               </tr>
             </thead>
             <tbody style={{ color: '#334155', fontSize: '15px' }}>
-              {appDataMatrix.map((item, index) => {
-                const style = getDataTypeStyle(item.dataType);
+              
+              {/* State Loading */}
+              {loading && (
+                <tr>
+                  <td colSpan="4" style={{ padding: '40px', textAlign: 'center', color: '#64748b' }}>
+                    Sedang memuat data dari database...
+                  </td>
+                </tr>
+              )}
+
+              {/* Data Loop */}
+              {!loading && appDataMatrix.map((item, index) => {
+                // Perhatikan: item.data_type (sesuai nama kolom DB snake_case)
+                const style = getDataTypeStyle(item.data_type); 
+                
                 return (
                   <tr 
                     key={item.id} 
@@ -167,7 +152,7 @@ const AppDataMatrixPage = () => {
                       backgroundColor: index % 2 === 0 ? '#ffffff' : '#f8fafc',
                     }}
                   >
-                    {/* Kolom 1: Aplikasi */}
+                    {/* Kolom 1: Aplikasi (item.app_name) */}
                     <td style={{
                       padding: '20px 24px',
                       verticalAlign: 'top',
@@ -177,11 +162,11 @@ const AppDataMatrixPage = () => {
                     }}>
                       <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                         <Database size={18} color="#94a3b8" style={{ marginTop: '3px' }} />
-                        {item.app}
+                        {item.app_name}
                       </div>
                     </td>
 
-                    {/* Kolom 2: Deskripsi */}
+                    {/* Kolom 2: Deskripsi (item.description) */}
                     <td style={{
                       padding: '20px 24px',
                       verticalAlign: 'top',
@@ -192,7 +177,7 @@ const AppDataMatrixPage = () => {
                       {item.description}
                     </td>
 
-                    {/* Kolom 3: Entitas Data */}
+                    {/* Kolom 3: Entitas Data (item.data_entity) */}
                     <td style={{
                       padding: '20px 24px',
                       verticalAlign: 'top',
@@ -202,11 +187,11 @@ const AppDataMatrixPage = () => {
                     }}>
                       <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                          <FileText size={18} color="#94a3b8" style={{ marginTop: '3px' }} />
-                         {item.dataEntity}
+                         {item.data_entity}
                       </div>
                     </td>
 
-                    {/* Kolom 4: Tipe Data */}
+                    {/* Kolom 4: Tipe Data (item.data_type) */}
                     <td style={{
                       padding: '20px 24px',
                       verticalAlign: 'top',
@@ -223,7 +208,7 @@ const AppDataMatrixPage = () => {
                         border: `1px solid ${style.border}`,
                         whiteSpace: 'nowrap'
                       }}>
-                        {item.dataType}
+                        {item.data_type}
                       </span>
                     </td>
                   </tr>

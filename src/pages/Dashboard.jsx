@@ -149,6 +149,7 @@ const Dashboard = () => {
       navigate("/tech/appMatrix");
       return;
     }
+    // application section
     if (item.title === "Application Portfolio Catalog") {
       navigate("/app/portfolio");
       return;
