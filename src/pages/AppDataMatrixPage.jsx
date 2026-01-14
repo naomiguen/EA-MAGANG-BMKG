@@ -5,9 +5,9 @@ const AppDataMatrixPage = () => {
   const appDataMatrix = [
     {
       id: 1,
-      app: "BMKGSoft",
-      description: "Sistem penginputan dan pengolahan data pengamatan meteorologi permukaan.",
-      dataEntity: "Data Observasi (Surface, Upper Air, ME.48)",
+      app: "BMKGSoft & WXREV",
+      description: "Sistem penginputan, pengolahan, dan pengiriman data pengamatan meteorologi permukaan.",
+      dataEntity: "Data Observasi (Surface, Upper Air, ME.48), Laporan WXREV",
       dataType: "Transactional Data"
     },
     {
@@ -19,44 +19,51 @@ const AppDataMatrixPage = () => {
     },
     {
       id: 3,
-      app: "Synergie & Radar Weather",
-      description: "Workstation analisis peta cuaca dan citra radar untuk forecaster.",
+      app: "Synergie, Radar & Nowcasting",
+      description: "Workstation analisis peta cuaca, citra radar, dan sistem peringatan dini.",
       dataEntity: "Produk Informasi (Forecast), Citra Radar, Peringatan Dini",
       dataType: "Analytical Data"
     },
     {
       id: 4,
-      app: "Aplikasi SAKTI, SAIBA, & GPP",
-      description: "Sistem pengelolaan keuangan, penganggaran, dan penggajian pegawai.",
-      dataEntity: "Data Keuangan, DIPA, Realisasi Anggaran, Gaji",
+      app: "Portal Web, PNBP & Database Center",
+      description: "Sistem pelayanan informasi publik dan penerimaan negara bukan pajak.",
+      dataEntity: "Informasi Cuaca Publik, Data PNBP, Request Data",
       dataType: "Transactional Data"
     },
     {
       id: 5,
-      app: "SIMAK BMN, SIMAN & SIPPB",
-      description: "Sistem informasi manajemen aset dan barang milik negara.",
-      dataEntity: "Inventaris BMN (Aset), Status Barang",
-      dataType: "Master Data"
+      app: "Aplikasi SAKTI, SAIBA, GPP & SPRINT",
+      description: "Sistem terintegrasi pengelolaan keuangan, anggaran, dan penggajian.",
+      dataEntity: "Data Keuangan, DIPA, Realisasi Anggaran, Gaji",
+      dataType: "Transactional Data"
     },
     {
       id: 6,
-      app: "SIMAS, SPRESO & MySAPK",
+      app: "SIMAK, SIMAN, Persediaan & SIPPB",
+      description: "Sistem informasi manajemen aset negara dan persediaan barang.",
+      dataEntity: "Inventaris BMN (Aset), Status Barang, Stok Persediaan",
+      dataType: "Master Data"
+    },
+    {
+      id: 7,
+      app: "SIMAS, SPRESO, MySAPK & E-Kinerja",
       description: "Sistem manajemen data pegawai, presensi, dan kinerja ASN.",
       dataEntity: "Data Kepegawaian (Personil), Absensi, SKP",
       dataType: "Master Data"
     },
     {
-      id: 7,
+      id: 8,
       app: "E-Office BMKG",
       description: "Sistem persuratan digital dan disposisi elektronik.",
       dataEntity: "Dokumen Naskah Dinas, Surat Masuk/Keluar",
       dataType: "Transactional Data"
     },
     {
-      id: 8,
-      app: "Aplikasi Metadata WIGOS",
-      description: "Sistem pengelolaan metadata peralatan pengamatan (OSCAR).",
-      dataEntity: "Metadata Alat (Spesifikasi, Kalibrasi, Riwayat)",
+      id: 9,
+      app: "WIGOS, Monitoring Tools & Logbook",
+      description: "Sistem pengelolaan metadata alat dan pencatatan pemeliharaan teknis.",
+      dataEntity: "Metadata Alat (OSCAR), Log Kerusakan/Perbaikan",
       dataType: "Master Data"
     }
   ];
@@ -105,6 +112,7 @@ const AppDataMatrixPage = () => {
           justifyContent: 'center',
           gap: '12px'
         }}>
+          <TableIcon size={36} color="#2563eb" />
           Application - Data Matrix
         </h1>
         <p style={{

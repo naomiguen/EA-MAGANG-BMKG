@@ -3,10 +3,10 @@ import { ArrowLeft, Database, Server, CheckCircle2 } from "lucide-react";
 
 const ApplicationPortfolioPage = () => {
   const portfolioData = [
-    // --- CORE BUSINESS (UTAMA) ---
+    // --- CORE BUSINESS (UTAMA - OBSERVASI & KOMUNIKASI) ---
     {
       id: 1,
-      physicalName: "BMKGSoft",
+      physicalName: "BMKGSoft & WXREV",
       logicalComp: "Meteorological Data Entry",
       service: "Layanan Pengolahan Data Observasi",
       category: "Core Business",
@@ -20,44 +20,58 @@ const ApplicationPortfolioPage = () => {
       category: "Core Business",
       status: "Active",
     },
+    
+    // --- CORE ANALYSIS (FORECASTER) ---
     {
       id: 3,
-      physicalName: "Synergie & Radar Weather",
+      physicalName: "Synergie, Radar & Nowcasting",
       logicalComp: "Forecaster Workstation",
       service: "Layanan Analisis & Prakiraan Cuaca",
       category: "Core Analysis",
       status: "Active",
     },
-    
-    // --- SUPPORT (KEUANGAN & ASET) ---
+
+    // --- PUBLIC SERVICE (DATIN) - BARU ---
     {
       id: 4,
-      physicalName: "Aplikasi SAKTI, SAIBA, & GPP",
+      physicalName: "Portal Web, PNBP & Database Center",
+      logicalComp: "Public Service System",
+      service: "Layanan Informasi & Jasa Meteorologi",
+      category: "Core Business",
+      status: "Active",
+    },
+    
+    // --- SUPPORT (KEUANGAN - TU) ---
+    {
+      id: 5,
+      physicalName: "SAKTI, SAIBA, GPP & SPRINT",
       logicalComp: "Financial Management System",
       service: "Layanan Perbendaharaan, Gaji & Anggaran",
       category: "Support (Gov)",
       status: "Active",
     },
+
+    // --- SUPPORT (ASET - TU) ---
     {
-      id: 5,
-      physicalName: "SIMAK BMN, SIMAN & SIPPB",
+      id: 6,
+      physicalName: "SIMAK, SIMAN, Persediaan & SIPPB",
       logicalComp: "Asset Management System",
       service: "Layanan Inventarisasi Aset Negara",
       category: "Support (Gov)",
       status: "Active",
     },
 
-    // --- MANAGEMENT (SDM & PERKANTORAN) ---
+    // --- MANAGEMENT (SDM - TU) ---
     {
-      id: 6,
-      physicalName: "SIMAS, SPRESO, & MySAPK",
+      id: 7,
+      physicalName: "SIMAS, SPRESO, MySAPK & E-Kinerja",
       logicalComp: "HR Information System",
       service: "Layanan Manajemen SDM & Absensi",
       category: "Management",
       status: "Active",
     },
     {
-      id: 7,
+      id: 8,
       physicalName: "E-Office BMKG",
       logicalComp: "Office Automation",
       service: "Layanan Persuratan Digital",
@@ -65,33 +79,32 @@ const ApplicationPortfolioPage = () => {
       status: "Active",
     },
 
-    // --- TEKNIS (BARU - DARI SK) ---
+    // --- TEKNIS & PEMELIHARAAN (TEKNISI) ---
     {
-      id: 8,
-      physicalName: "Aplikasi Metadata WIGOS",
-      logicalComp: "Metadata Management",
-      service: "Layanan Standarisasi Data Alat",
+      id: 9,
+      physicalName: "WIGOS, Monitoring Tools & Logbook",
+      logicalComp: "Maintenance & Metadata System",
+      service: "Layanan Standarisasi & Pemeliharaan Alat",
       category: "Core Technical",
       status: "Active",
     },
   ];
 
-  // --- FUNGSI INI HARUS ADA SEBELUM 'return' ---
+  // Helper untuk warna kategori
   const getCategoryColor = (category) => {
     if (category.includes("Core")) return "bg-blue-100 text-blue-700";
     if (category.includes("Support")) return "bg-orange-100 text-orange-700";
     return "bg-purple-100 text-purple-700";
   };
-  // -------------------------------------------
 
   return (
     <div className="min-h-screen bg-slate-50 py-10 px-4 md:px-8 font-sans text-slate-800">
       
       {/* --- 1. HEADER HALAMAN --- */}
-      <div className="max-w-7xl mx-auto mb-10 text-center">
+      <div className="max-w-7xl mx-auto mb-10 text-center relative">
 
         <div>
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900">
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 pt-8 md:pt-0">
             Application Portfolio Catalog
           </h1>
           <p className="text-slate-600 mt-3 text-lg max-w-3xl mx-auto">
@@ -108,7 +121,7 @@ const ApplicationPortfolioPage = () => {
             <thead>
               <tr className="bg-blue-600 text-white text-sm uppercase tracking-wider border-b border-slate-200">
                 <th className="p-4 font-bold border-r border-slate-700 w-16 text-center">No</th>
-                <th className="p-4 font-bold border-r border-slate-700 min-w-[200px]">Physical App Component</th>
+                <th className="p-4 font-bold border-r border-slate-700 min-w-[250px]">Physical App Component</th>
                 <th className="p-4 font-bold border-r border-slate-700 min-w-[200px]">Logical App Component</th>
                 <th className="p-4 font-bold border-r border-slate-700 min-w-[250px]">Info System Service</th>
                 <th className="p-4 font-bold border-r border-slate-700 w-[150px]">Category</th>
@@ -126,13 +139,13 @@ const ApplicationPortfolioPage = () => {
                   </td>
                   <td className="p-4 border-r border-slate-100 font-semibold text-slate-800">
                     <div className="flex items-center gap-2">
-                      <Database size={16} className="text-slate-400" />
+                      <Database size={16} className="text-slate-400 shrink-0" />
                       {item.physicalName}
                     </div>
                   </td>
                   <td className="p-4 border-r border-slate-100">
                     <div className="flex items-center gap-2">
-                      <Server size={16} className="text-slate-400" />
+                      <Server size={16} className="text-slate-400 shrink-0" />
                       {item.logicalComp}
                     </div>
                   </td>
@@ -140,7 +153,6 @@ const ApplicationPortfolioPage = () => {
                     {item.service}
                   </td>
                   <td className="p-4 border-r border-slate-100">
-                    {/* Di sini fungsi dipanggil, jadi fungsinya harus ada */}
                     <span className={`px-2 py-1 rounded text-xs font-bold ${getCategoryColor(item.category)}`}>
                       {item.category}
                     </span>
