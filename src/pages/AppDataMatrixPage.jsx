@@ -1,158 +1,76 @@
-import React, { useState, useEffect } from 'react';
-import { supabase } from "../lib/supabaseClient";
+import React from "react";
+import { ArrowLeft, Database, FileText, Table as TableIcon } from "lucide-react";
 
 const AppDataMatrixPage = () => {
-  const [appDataMatrix, setAppDataMatrix] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const appDataMatrix = [
+    {
+      id: 1,
+      app: "BMKGSoft",
+      description: "Sistem penginputan dan pengolahan data pengamatan meteorologi permukaan.",
+      dataEntity: "Data Observasi (Surface, Upper Air, ME.48)",
+      dataType: "Transactional Data"
+    },
+    {
+      id: 2,
+      app: "CMSS & AFTN",
+      description: "Sistem pertukaran data meteorologi global dan penerbangan.",
+      dataEntity: "WMO Coded Data (SYNOP, METAR, SPECI)",
+      dataType: "Transactional Data"
+    },
+    {
+      id: 3,
+      app: "Synergie & Radar Weather",
+      description: "Workstation analisis peta cuaca dan citra radar untuk forecaster.",
+      dataEntity: "Produk Informasi (Forecast), Citra Radar, Peringatan Dini",
+      dataType: "Analytical Data"
+    },
+    {
+      id: 4,
+      app: "Aplikasi SAKTI, SAIBA, & GPP",
+      description: "Sistem pengelolaan keuangan, penganggaran, dan penggajian pegawai.",
+      dataEntity: "Data Keuangan, DIPA, Realisasi Anggaran, Gaji",
+      dataType: "Transactional Data"
+    },
+    {
+      id: 5,
+      app: "SIMAK BMN, SIMAN & SIPPB",
+      description: "Sistem informasi manajemen aset dan barang milik negara.",
+      dataEntity: "Inventaris BMN (Aset), Status Barang",
+      dataType: "Master Data"
+    },
+    {
+      id: 6,
+      app: "SIMAS, SPRESO & MySAPK",
+      description: "Sistem manajemen data pegawai, presensi, dan kinerja ASN.",
+      dataEntity: "Data Kepegawaian (Personil), Absensi, SKP",
+      dataType: "Master Data"
+    },
+    {
+      id: 7,
+      app: "E-Office BMKG",
+      description: "Sistem persuratan digital dan disposisi elektronik.",
+      dataEntity: "Dokumen Naskah Dinas, Surat Masuk/Keluar",
+      dataType: "Transactional Data"
+    },
+    {
+      id: 8,
+      app: "Aplikasi Metadata WIGOS",
+      description: "Sistem pengelolaan metadata peralatan pengamatan (OSCAR).",
+      dataEntity: "Metadata Alat (Spesifikasi, Kalibrasi, Riwayat)",
+      dataType: "Master Data"
+    }
+  ];
 
-  // Fetch data dari Supabase
-  useEffect(() => {
-    let isMounted = true;
-    let fetchTimeout;
-
-    const fetchAppDataMatrix = async () => {
-      try {
-        // Cek cache dulu
-        const cached = localStorage.getItem('app_data_matrix');
-        const cacheTime = localStorage.getItem('app_data_matrix_cache_time');
-        const now = Date.now();
-        
-        // Jika cache masih fresh (< 5 menit), pakai cache
-        if (cached && cacheTime && (now - parseInt(cacheTime)) < 300000) {
-          setAppDataMatrix(JSON.parse(cached));
-          setLoading(false);
-          return;
-        }
-
-        setLoading(true);
-        
-        // Delay kecil untuk menghindari rate limit
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
-        const { data, error } = await supabase
-          .from('app_data_matrix')
-          .select('*')
-          .order('id', { ascending: true });
-
-        if (error) {
-          throw error;
-        }
-
-        if (!isMounted) return;
-
-        // Transform data untuk match dengan format lama
-        const transformedData = data.map(item => ({
-          id: item.id,
-          app: item.app_name,
-          description: item.description,
-          dataEntity: item.data_entity,
-          dataType: item.data_type
-        }));
-
-        // Simpan ke cache
-        localStorage.setItem('app_data_matrix', JSON.stringify(transformedData));
-        localStorage.setItem('app_data_matrix_cache_time', now.toString());
-
-        setAppDataMatrix(transformedData);
-        setLoading(false);
-      } catch (err) {
-        if (!isMounted) return;
-        console.error('Error fetching app data matrix:', err);
-        setError(err.message);
-        setLoading(false);
-      }
-    };
-
-    // Delay fetch untuk menghindari multiple calls
-    fetchTimeout = setTimeout(() => {
-      fetchAppDataMatrix();
-    }, 200);
-
-    return () => {
-      isMounted = false;
-      clearTimeout(fetchTimeout);
-    };
-  }, []);
-
-  // Loading State
-  if (loading) {
-    return (
-      <div style={{
-        minHeight: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#f8fafc'
-      }}>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{
-            width: '50px',
-            height: '50px',
-            border: '4px solid #e2e8f0',
-            borderTop: '4px solid #003366',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite',
-            margin: '0 auto 16px'
-          }}></div>
-          <p style={{ color: '#64748b', fontSize: '16px' }}>Memuat data aplikasi...</p>
-        </div>
-        <style>
-          {`
-            @keyframes spin {
-              0% { transform: rotate(0deg); }
-              100% { transform: rotate(360deg); }
-            }
-          `}
-        </style>
-      </div>
-    );
-  }
-
-  // Error State
-  if (error) {
-    return (
-      <div style={{
-        minHeight: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#f8fafc',
-        padding: '16px'
-      }}>
-        <div style={{
-          backgroundColor: '#fee2e2',
-          border: '1px solid #fca5a5',
-          borderRadius: '8px',
-          padding: '24px',
-          maxWidth: '500px',
-          textAlign: 'center'
-        }}>
-          <h3 style={{ color: '#dc2626', margin: '0 0 12px 0', fontSize: '20px' }}>
-            ⚠️ Gagal Memuat Data
-          </h3>
-          <p style={{ color: '#991b1b', margin: '0 0 16px 0', fontSize: '14px' }}>
-            {error}
-          </p>
-          <button
-            onClick={() => window.location.reload()}
-            style={{
-              backgroundColor: '#dc2626',
-              color: 'white',
-              border: 'none',
-              padding: '8px 16px',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: '600'
-            }}
-          >
-            Coba Lagi
-          </button>
-        </div>
-      </div>
-    );
-  }
+  // Helper untuk warna badge tipe data
+  const getDataTypeStyle = (type) => {
+    if (type.includes("Master")) {
+      return { bg: "#d1fae5", text: "#065f46", border: "#a7f3d0" }; // Hijau
+    } else if (type.includes("Analytical")) {
+      return { bg: "#f3e8ff", text: "#6b21a8", border: "#e9d5ff" }; // Ungu
+    } else {
+      return { bg: "#dbeafe", text: "#1e40af", border: "#bfdbfe" }; // Biru (Transactional)
+    }
+  };
 
   return (
     <div style={{
@@ -164,20 +82,28 @@ const AppDataMatrixPage = () => {
       paddingTop: '48px',
       paddingBottom: '48px',
       paddingLeft: '16px',
-      paddingRight: '16px'
+      paddingRight: '16px',
+      fontFamily: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
     }}>
       
       {/* Header Halaman */}
       <div style={{
         textAlign: 'center',
         marginBottom: '40px',
-        maxWidth: '56rem'
+        maxWidth: '56rem',
+        position: 'relative',
+        width: '100%'
       }}>
+
         <h1 style={{
           fontSize: '36px',
           fontWeight: '900',
           color: '#0f172a',
-          marginBottom: '12px'
+          marginBottom: '12px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '12px'
         }}>
           Application - Data Matrix
         </h1>
@@ -188,27 +114,17 @@ const AppDataMatrixPage = () => {
         }}>
           Pemetaan hubungan antara komponen aplikasi sistem dengan entitas data yang dikelola.
         </p>
-        <div style={{
-          display: 'inline-block',
-          backgroundColor: '#dbeafe',
-          color: '#1e40af',
-          padding: '6px 12px',
-          borderRadius: '6px',
-          fontSize: '13px',
-          fontWeight: '600'
-        }}>
-          📊 {appDataMatrix.length} Aplikasi Terdaftar
-        </div>
       </div>
 
-      {/* Tabel Matrix (Gaya TOGAF - Header Biru Tua) */}
+      {/* Tabel Matrix */}
       <div style={{
         width: '100%',
         maxWidth: '84rem',
         boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
-        borderTopLeftRadius: '8px',
-        borderTopRightRadius: '8px'
+        borderRadius: '12px',
+        backgroundColor: 'white',
+        border: '1px solid #e2e8f0'
       }}>
         <div style={{ overflowX: 'auto' }}>
           <table style={{
@@ -219,88 +135,58 @@ const AppDataMatrixPage = () => {
           }}>
             <thead>
               <tr style={{
-                backgroundColor: '#003366',
+                backgroundColor: '#1e293b', 
                 color: 'white',
                 fontSize: '14px',
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
-                height: '64px'
+                height: '60px'
               }}>
-                <th style={{
-                  padding: '16px 24px',
-                  fontWeight: '700',
-                  width: '20%',
-                  borderRight: '1px solid rgba(255, 255, 255, 0.2)'
-                }}>
+                <th style={{ padding: '16px 24px', fontWeight: '600', width: '25%' }}>
                   Application (System)
                 </th>
-                <th style={{
-                  padding: '16px 24px',
-                  fontWeight: '700',
-                  width: '40%',
-                  borderRight: '1px solid rgba(255, 255, 255, 0.2)'
-                }}>
+                <th style={{ padding: '16px 24px', fontWeight: '600', width: '35%' }}>
                   Description / Function
                 </th>
-                <th style={{
-                  padding: '16px 24px',
-                  fontWeight: '700',
-                  width: '20%',
-                  borderRight: '1px solid rgba(255, 255, 255, 0.2)'
-                }}>
+                <th style={{ padding: '16px 24px', fontWeight: '600', width: '25%' }}>
                   Data Entity
                 </th>
-                <th style={{
-                  padding: '16px 24px',
-                  fontWeight: '700',
-                  width: '20%'
-                }}>
+                <th style={{ padding: '16px 24px', fontWeight: '600', width: '15%', textAlign: 'center' }}>
                   Data Entity Type
                 </th>
               </tr>
             </thead>
-            <tbody>
-              {appDataMatrix.length === 0 ? (
-                <tr>
-                  <td colSpan="4" style={{
-                    padding: '40px',
-                    textAlign: 'center',
-                    color: '#94a3b8',
-                    fontSize: '16px'
-                  }}>
-                    Tidak ada data aplikasi
-                  </td>
-                </tr>
-              ) : (
-                appDataMatrix.map((item, index) => (
+            <tbody style={{ color: '#334155', fontSize: '15px' }}>
+              {appDataMatrix.map((item, index) => {
+                const style = getDataTypeStyle(item.dataType);
+                return (
                   <tr 
                     key={item.id} 
                     style={{
                       borderBottom: '1px solid #e2e8f0',
                       backgroundColor: index % 2 === 0 ? '#ffffff' : '#f8fafc',
-                      transition: 'background-color 0.2s ease'
                     }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#eff6ff'}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = index % 2 === 0 ? '#ffffff' : '#f8fafc'}
                   >
                     {/* Kolom 1: Aplikasi */}
                     <td style={{
-                      padding: '16px 24px',
+                      padding: '20px 24px',
                       verticalAlign: 'top',
                       fontWeight: '700',
-                      color: '#1e293b',
+                      color: '#0f172a',
                       borderRight: '1px solid #e2e8f0'
                     }}>
-                      {item.app}
+                      <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                        <Database size={18} color="#94a3b8" style={{ marginTop: '3px' }} />
+                        {item.app}
+                      </div>
                     </td>
 
                     {/* Kolom 2: Deskripsi */}
                     <td style={{
-                      padding: '16px 24px',
+                      padding: '20px 24px',
                       verticalAlign: 'top',
                       color: '#475569',
-                      fontSize: '14px',
-                      lineHeight: '1.625',
+                      lineHeight: '1.6',
                       borderRight: '1px solid #e2e8f0'
                     }}>
                       {item.description}
@@ -308,46 +194,41 @@ const AppDataMatrixPage = () => {
 
                     {/* Kolom 3: Entitas Data */}
                     <td style={{
-                      padding: '16px 24px',
+                      padding: '20px 24px',
                       verticalAlign: 'top',
-                      fontWeight: '500',
+                      fontWeight: '600',
                       color: '#334155',
                       borderRight: '1px solid #e2e8f0'
                     }}>
-                      {item.dataEntity}
+                      <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                         <FileText size={18} color="#94a3b8" style={{ marginTop: '3px' }} />
+                         {item.dataEntity}
+                      </div>
                     </td>
 
                     {/* Kolom 4: Tipe Data */}
                     <td style={{
-                      padding: '16px 24px',
-                      verticalAlign: 'top'
+                      padding: '20px 24px',
+                      verticalAlign: 'top',
+                      textAlign: 'center'
                     }}>
                       <span style={{
                         display: 'inline-block',
-                        paddingLeft: '12px',
-                        paddingRight: '12px',
-                        paddingTop: '4px',
-                        paddingBottom: '4px',
-                        borderRadius: '9999px',
+                        padding: '6px 12px',
+                        borderRadius: '20px',
                         fontSize: '12px',
                         fontWeight: '700',
-                        border: '1px solid',
-                        backgroundColor: item.dataType.includes('Master') 
-                          ? '#d1fae5' 
-                          : '#dbeafe',
-                        color: item.dataType.includes('Master') 
-                          ? '#065f46' 
-                          : '#0c4a6e',
-                        borderColor: item.dataType.includes('Master') 
-                          ? '#a7f3d0' 
-                          : '#bfdbfe'
+                        backgroundColor: style.bg,
+                        color: style.text,
+                        border: `1px solid ${style.border}`,
+                        whiteSpace: 'nowrap'
                       }}>
                         {item.dataType}
                       </span>
                     </td>
                   </tr>
-                ))
-              )}
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -362,7 +243,7 @@ const AppDataMatrixPage = () => {
         textAlign: 'center',
         maxWidth: '56rem'
       }}>
-        * Daftar aplikasi diidentifikasi dari Lampiran SK Uraian Tugas (Tugas Observer, Forecaster, & Tata Usaha).
+        * Data dipetakan berdasarkan SK Uraian Tugas & katalog portofolio aplikasi.
       </div>
     </div>
   );

@@ -81,6 +81,10 @@ const Dashboard = () => {
       navigate("/business/organization");
       return;
     }
+    if (item.title === "Solution Concept Diagram") {
+      navigate('/vision/solution');
+      return;
+    }
     if (item.title === "Organizational Actor Catalog") {
       navigate('/business/organizational');
       return;
@@ -91,6 +95,10 @@ const Dashboard = () => {
     }
     if (item.title === "Business Process - Risk Matrix") {
       navigate("/business/RiskMatrix");
+      return;
+    }
+    if (item.title === "Business Process") {
+      navigate('/business/probis');
       return;
     }
 
@@ -135,6 +143,14 @@ const Dashboard = () => {
     }
     if (item.title === "Technology - Application Matrix") {
       navigate("/tech/appMatrix");
+      return;
+    }
+    if (item.title === "Application Portfolio Catalog") {
+      navigate("/app/portfolio");
+      return;
+    }
+    if (item.title === "Application Organization Matrix") {
+      navigate("/app/org_matrix");
       return;
     }
 

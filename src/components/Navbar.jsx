@@ -16,6 +16,7 @@ const Navbar = () => {
         { name: 'Architecture Goals', href: '/vision/goals' },
         { name: 'Organization Decomposition Diagram', href: '/vision/organization' },
         { name: 'Stakeholder Catalog', href: '/vision/stakeholder' },
+        { name: 'Solution Concept Diagram', href: '/vision/solution' },
         { name: 'Value Chain', href: '/vision/valuechain' },
         { name: 'Vision, Mission and Corporate Strategy', href: '/vision/strategy' },
       ]
@@ -28,6 +29,7 @@ const Navbar = () => {
   { name: 'Business Process Map', href: '/business/process' },
   { name: 'Business Process - Risk Matrix', href: '/business/RiskMatrix' },
   { name: 'Functional Decomposition Diagram', href: '/business/functional' },
+  { name: 'Business Process', href: '/business/probis' },
 ]
     },
 
@@ -44,21 +46,6 @@ const Navbar = () => {
       ]
     },
     { 
-      name: 'Application', 
-      href: null, 
-      children: [
-        { name: 'Application Portfolio Catalog', href: '/app' },
-        { name: 'Application Principles', href: '/app' },
-        { name: 'Application Use Case Diagram', href: '/app' },
-        { name: 'Application - Business Process Matrix', href: '/app' },
-        { name: 'Application - Classification Matrix', href: '/app' },
-        { name: 'Application - Communication Diagram', href: '/app' },
-        { name: 'Application - Organization Matrix', href: '/app' },
-        { name: 'Application - Portofolio Assessment', href: '/app'},
-        { name: 'Application - User and Location Diagram', href: '/app' },
-      ]
-    },
-    { 
       name: 'Technology', 
       href: null, 
       children: [
@@ -67,6 +54,21 @@ const Navbar = () => {
         { name: 'Technology - Application Matrix', href: '/tech/appMatrix' },
         { name: 'Technology Principles', href: '/tech/technologyPrinciples' },
         { name: 'Technology Standard Catalog', href: '/tech/standardsCatalog' },
+      ]
+    },
+    { 
+      name: 'Application', 
+      href: null, 
+      children: [
+        { name: 'Application Principles', href: '/app' },
+        { name: 'Application Portfolio Catalog', href: '/app/portfolio' },
+        { name: 'Application Use Case Diagram', href: '/app' },
+        { name: 'Application - Portofolio Assessment', href: '/app' },
+        { name: 'Application - User and Location Diagram', href: '/app' },
+        { name: 'Application - Communication Diagram', href: '/app' },
+        { name: 'Application - Business Process Matrix', href: '/app' },
+        { name: 'Application - Classification Matrix', href: '/app' },
+        { name: 'Application - Organization Matrix', href: '/app/org_matrix' },
       ]
     },
     { 

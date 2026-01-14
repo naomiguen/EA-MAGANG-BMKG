@@ -24,10 +24,14 @@ import TechnologyEnvironmentDiagram from "./pages/TechnologyEnvironmentDiagram";
 import TechnologyPrinciples from "./pages/TechnologyPrinciples";
 import AppDataMatrixPage from "./pages/AppDataMatrixPage";
 import ConceptualDiagramPage from "./pages/ConceptualPage";
-import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix"
-
+import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix";
+import BusinessProcessPage from "./pages/BusinessProcess";
 import TechnologyNetworkDiagram from "./pages/TechnologyNetworkDiagram";
 import TechnologyAppMatrix from "./pages/TechnologyAppMatrix";
+import SolutionConceptPage from "./pages/SolutionConceptPage";
+import ApplicationPortfolioPage from "./pages/PortfolioCatalogPage";
+import AppOrgMatrixPage from "./pages/AppOrgMatrix";
+
 
 function App() {
   return (
@@ -51,8 +55,10 @@ function App() {
           <Route path="/vision/goals" element={<ArchitectureGoalsPage />} />
           <Route path="/vision/technologyPrinciples" element={<TechnologyPrinciples />} />
           <Route path="/business/RiskMatrix" element={<BusinessProcessRiskMatrix />} />
+          <Route path="/vision/solution" element={<SolutionConceptPage />} />
           <Route path="/business/organizational" element={<OrgStructurePage />} />
           <Route path="/business/functional" element={<FunctionalDecompositionPage />} />
+          <Route path="/business/probis" element={<BusinessProcessPage />} />
           <Route path="/data/dataprinciples" element={<DataPrinciplesPage />} />
           <Route path="/data/component" element={<DataEntityPage />} />
           <Route path="/data/logical" element={<LogicalDataDiagram />} />
@@ -63,10 +69,11 @@ function App() {
           <Route path="/tech/technologyPrinciples" element={<TechnologyPrinciples />} />
           <Route path="/data/appmatrix" element={<AppDataMatrixPage />} />
           <Route path="/data/concept" element={<ConceptualDiagramPage />} />
-
-        
           <Route path="/tech/networkCommunicationDiagram" element={<TechnologyNetworkDiagram />} />
           <Route path="/tech/appMatrix" element={<TechnologyAppMatrix />} />
+          <Route path="/app/portfolio" element={<ApplicationPortfolioPage />} />
+          <Route path="/app/org_matrix" element={<AppOrgMatrixPage />} />
+
           {/* Placeholder untuk halaman yang belum ada */}
           <Route path="*" element={
             <div className="p-10 text-center text-gray-500">
