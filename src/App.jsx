@@ -17,7 +17,7 @@ import StakeholderTable from "./pages/StakeholderPage";
 import OrgStructurePage from "./pages/OrganizationalActorPage";
 import FunctionalDecompositionPage from "./pages/FuncDecomposePage";
 import DataPrinciplesPage from "./pages/DataPrinciplesPage";
-import BusinessInteractionDiagram from "./components/BusinessInteractionDiagram";
+import BusinessInteractionDiagram from "./pages/BusinessInteractionDiagram";
 
 
 function App() {
