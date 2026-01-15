@@ -1,86 +1,328 @@
-/* Container Utama */
-.diagram-container {
+/* ArchitectureDiagram.css - Enhanced Version */
+
+/* --- 1. Container Utama --- */
+.diagram-wrapper {
   width: 100%;
-  height: 90vh; /* Mengambil 90% tinggi layar */
-  background-color: #f8f9fa;
-  padding: 20px;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  height: 95vh;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
-.diagram-title {
+/* Glass effect overlay */
+.diagram-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- 2. Legend (Glassmorphism Style) --- */
+.diagram-legend {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px) saturate(180%);
+  padding: 20px 24px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  min-width: 200px;
+  animation: slideInLeft 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.diagram-legend h3 {
+  margin: 0 0 16px 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 500;
+  transition: transform 0.2s ease;
+}
+
+.legend-item:hover {
+  transform: translateX(4px);
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3),
+              0 0 0 2px rgba(255, 255, 255, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.legend-item:hover .dot {
+  transform: scale(1.2);
+}
+
+/* --- 3. Custom Node Styling (Modern Cards) --- */
+.custom-node-body {
+  padding: 16px 24px;
+  border-radius: 12px;
+  min-width: 200px;
   text-align: center;
-  color: #34495e;
-  margin-bottom: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.98);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08),
+              0 2px 4px rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
 }
 
-.react-flow-wrapper {
+/* Shimmer effect on hover */
+.custom-node-body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
   width: 100%;
   height: 100%;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: white;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s ease;
 }
 
-/* --- Kustomisasi Node (Kotak Diagram) --- */
-
-/* Base Style untuk semua node react-flow */
-.react-flow__node {
-  font-size: 12px;
-  font-weight: bold;
-  text-align: center;
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-  width: 150px;
+.custom-node-body:hover::before {
+  left: 100%;
 }
 
-/* 1. Client Node */
-.node-client {
-  background: #ffffff;
-  border: 2px solid #333;
-  color: #333;
-  border-radius: 50px; /* Membuat bentuk oval/bulat */
+.custom-node-body:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15),
+              0 8px 16px rgba(0, 0, 0, 0.1);
+  z-index: 10;
 }
 
-/* 2. Security Node (Firewall) */
+.node-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.sub {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.65;
+  margin-top: 6px;
+  font-style: italic;
+  letter-spacing: 0.3px;
+}
+
+/* --- 4. Warna Layer dengan Gradient --- */
+
+/* User / Client Layer */
+.node-user {
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  border: 2px solid rgba(59, 130, 246, 0.6);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(30, 64, 175, 0.4);
+}
+
+.node-user .sub {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Security Layer */
 .node-security {
-  background: #ff6b6b;
-  border: 2px solid #c0392b;
-  color: white;
-  shape-rendering: crispEdges;
+  background: linear-gradient(135deg, #b91c1c 0%, #ef4444 100%);
+  border: 2px solid rgba(239, 68, 68, 0.6);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(185, 28, 28, 0.4);
 }
 
-/* 3. Server Node (Web Server) */
-.node-server {
-  background: #48dbfb;
-  border: 2px solid #0abde3;
-  color: #000;
+.node-security .sub {
+  color: rgba(255, 255, 255, 0.85);
 }
 
-/* 4. App Node (Backend) */
+/* Network / Gateway Layer */
+.node-network {
+  background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+  border: 2px solid rgba(6, 182, 212, 0.6);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(8, 145, 178, 0.4);
+}
+
+.node-network .sub {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Application Layer */
 .node-app {
-  background: #1dd1a1;
-  border: 2px solid #10ac84;
-  color: white;
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  border: 2px solid rgba(16, 185, 129, 0.6);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(5, 150, 105, 0.4);
 }
 
-/* 5. Database Node */
-.node-db {
-  background: #feca57;
-  border: 2px solid #ff9f43;
-  color: #333;
-  /* Membuat efek tabung sederhana dengan border radius */
-  border-radius: 0 0 15px 15px; 
-  border-top: 4px solid #ff9f43;
+.node-app .sub {
+  color: rgba(255, 255, 255, 0.85);
 }
 
-/* --- Kustomisasi Label Garis (Edge Label) --- */
+/* Data Layer */
+.node-data {
+  background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+  border: 2px solid rgba(245, 158, 11, 0.6);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(217, 119, 6, 0.4);
+}
+
+.node-data .sub {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* IoT / Edge Layer */
+.node-iot {
+  background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+  border: 2px solid rgba(167, 139, 250, 0.6);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+}
+
+.node-iot .sub {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* --- 5. Handles (Invisible but functional) --- */
+.handle-dot {
+  width: 1px !important;
+  height: 1px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  opacity: 0;
+}
+
+/* --- 6. Edges (Enhanced Lines) --- */
+.react-flow__edge-path {
+  stroke: rgba(255, 255, 255, 0.6);
+  stroke-width: 2px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  transition: all 0.3s ease;
+}
+
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke: rgba(255, 255, 255, 0.95);
+  stroke-width: 3px;
+}
+
+.react-flow__edge-textbg {
+  fill: rgba(0, 0, 0, 0.7);
+  rx: 6px;
+  backdrop-filter: blur(10px);
+}
+
 .react-flow__edge-text {
-  fill: #555;
-  font-size: 10px;
-  background-color: white; 
-  padding: 4px;
-  border-radius: 4px;
+  fill: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: #ffffff;
+  stroke-width: 3px;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+}
+
+/* --- 7. React Flow Controls (Modern Glass Buttons) --- */
+.react-flow__controls {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  margin-bottom: 24px;
+  margin-right: 24px;
+  overflow: hidden;
+}
+
+.react-flow__controls-button {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+.react-flow__controls-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.react-flow__controls-button:last-child {
+  border-bottom: none;
+}
+
+/* --- 8. Background Pattern --- */
+.react-flow__background {
+  background-color: transparent !important;
+}
+
+/* --- 9. Animation for nodes --- */
+.custom-node-body {
+  animation: fadeInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger animation delays */
+.custom-node-body:nth-child(1) { animation-delay: 0.1s; }
+.custom-node-body:nth-child(2) { animation-delay: 0.2s; }
+.custom-node-body:nth-child(3) { animation-delay: 0.3s; }
+.custom-node-body:nth-child(4) { animation-delay: 0.4s; }
+.custom-node-body:nth-child(5) { animation-delay: 0.5s; }
+.custom-node-body:nth-child(6) { animation-delay: 0.6s; }
+.custom-node-body:nth-child(7) { animation-delay: 0.7s; }
+.custom-node-body:nth-child(8) { animation-delay: 0.8s; }
