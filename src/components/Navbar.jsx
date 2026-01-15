@@ -31,6 +31,7 @@ const Navbar = () => {
   { name: 'Functional Decomposition Diagram', href: '/business/functional' },
   { name: 'Business Process', href: '/business/probis' },
   { name: 'Business Interaction', href: '/business/Interaction' },
+  { name: 'Corporate Governance', href: '/business/corporate_governance' },
 
 ]
     },

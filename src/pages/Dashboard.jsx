@@ -75,12 +75,13 @@ const Dashboard = () => {
       navigate("/vision/technologyPrinciples");
       return;
     }
-    
-    // Business Section
     if (item.title === "Organization Decomposition Diagram") {
-      navigate("/business/organization");
+      navigate("/vision/organization");
       return;
     }
+    
+    
+    // Business Section
     if (item.title === "Solution Concept Diagram") {
       navigate('/vision/solution');
       return;
@@ -105,6 +106,11 @@ const Dashboard = () => {
       navigate('/business/Interaction');
       return;
     }
+    if (item.title === "Corporate Governance") {
+      navigate('/business/corporate_governance');
+      return;
+    }
+
 
     // Data Section
     if (item.title === "Data Entity - Data Component Catalog") {

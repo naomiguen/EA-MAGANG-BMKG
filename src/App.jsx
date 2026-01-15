@@ -7,7 +7,6 @@ import Navbar from "./components/Navbar";
 
 // IMPORT HALAMAN
 import Dashboard from "./pages/Dashboard";
-import OrganizationDiagramPage from "./pages/OrganizationDiagramPage";
 import StrategyMapPage from "./pages/StrategyMapPage";
 import ValueChainPage from "./pages/ValueChainPage";
 import ArchitecturePrinciplesPage from "./pages/ArchitecturePrinciplesPage";
@@ -32,6 +31,11 @@ import SolutionConceptPage from "./pages/SolutionConceptPage";
 import ApplicationPortfolioPage from "./pages/PortfolioCatalogPage";
 import AppOrgMatrixPage from "./pages/AppOrgMatrix";
 import BusinessInteractionDiagram from "./pages/BusinessInteractionDiagram";
+import CorporateGovernancePage from "./pages/CorporateGovernancePage";
+import OrganizationDiagramPage from "./pages/OrganizationDiagramPage";
+import PetaKonsepPage from "./pages/PetaKonsepPage";
+import PetaKonsepLevel0Page from "./pages/PetaKonsepLevel0Page";
+import PetaKonsepLevel01Page from "./pages/PetaKonsepLevel01Page";
 
 
 
@@ -76,6 +80,10 @@ function App() {
           <Route path="/app/portfolio" element={<ApplicationPortfolioPage />} />
           <Route path="/app/org_matrix" element={<AppOrgMatrixPage />} />
           <Route path="/business/interaction" element={<BusinessInteractionDiagram />} />
+          <Route path="/business/corporate_governance" element={<CorporateGovernancePage />} />
+          <Route path="/business-process/peta-konsep" element={<PetaKonsepPage />} />
+          <Route path="/business-process/level-0" element={<PetaKonsepLevel0Page />} />
+          <Route path="/business-process/level-01" element={<PetaKonsepLevel01Page />} />
 
 
           {/* Placeholder untuk halaman yang belum ada */}
