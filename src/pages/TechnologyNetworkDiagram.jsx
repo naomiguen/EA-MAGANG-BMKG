@@ -149,9 +149,18 @@ export default function ArchitectureDiagram() {
     <div className="diagram-wrapper">
       <div className="diagram-legend">
         <h3>EA Design (Fixed Wiring)</h3>
-        <div className="legend-item"><div className="dot" style={{background: '#fff', border: '2px solid #333'}}></div> User</div>
-        <div className="legend-item"><div className="dot" style={{background: '#fff3cd', border: '2px solid #ffc107'}}></div> Security</div>
-        <div className="legend-item"><div className="dot" style={{background: '#cce5ff', border: '2px solid #007bff'}}></div> Application</div>
+        <div className="legend-item" style={{color: '#ffffff'}}>
+          <div className="dot" style={{background: '#fff', border: '2px solid #333'}}></div> 
+          User
+        </div>
+        <div className="legend-item" style={{color: '#ffffff'}}>
+          <div className="dot" style={{background: '#fff3cd', border: '2px solid #ffc107'}}></div> 
+          Security
+        </div>
+        <div className="legend-item" style={{color: '#ffffff'}}>
+          <div className="dot" style={{background: '#cce5ff', border: '2px solid #007bff'}}></div> 
+          Application
+        </div>
       </div>
 
       <ReactFlow
