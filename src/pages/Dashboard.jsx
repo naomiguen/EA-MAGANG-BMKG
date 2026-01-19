@@ -164,6 +164,14 @@ const Dashboard = () => {
       navigate("/app/org_matrix");
       return;
     }
+    if (item.title === "Application - Communication Diagram") {
+      navigate("/app/communicationDiagram");
+      return;
+    }
+    if (item.title === "Application - Portofolio Assessment") {
+      navigate("/app/porto-assesment");
+      return;
+    }
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 

@@ -36,7 +36,8 @@ import OrganizationDiagramPage from "./pages/OrganizationDiagramPage";
 import PetaKonsepPage from "./pages/PetaKonsepPage";
 import PetaKonsepLevel0Page from "./pages/PetaKonsepLevel0Page";
 import PetaKonsepLevel01Page from "./pages/PetaKonsepLevel01Page";
-import CommunicationDiagramPage from "./pages/CommunicationDiagramPage"
+import CommunicationDiagramPage from "./pages/CommunicationDiagramPage";
+import PortofolioAssesmentPage from "./pages/PortofolioAssesmentPage"
 
 
 
@@ -86,6 +87,7 @@ function App() {
           <Route path="/business-process/level-0" element={<PetaKonsepLevel0Page />} />
           <Route path="/business-process/level-01" element={<PetaKonsepLevel01Page />} />
           <Route path="/app/communicationDiagram" element={<CommunicationDiagramPage />} /> 
+          <Route path="/app/porto-assesment" element={<PortofolioAssesmentPage />} /> 
 
 
           {/* Placeholder untuk halaman yang belum ada */}
