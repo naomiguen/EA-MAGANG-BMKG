@@ -75,11 +75,13 @@ const Dashboard = () => {
       navigate("/vision/technologyPrinciples");
       return;
     }
-    // Business Section
     if (item.title === "Organization Decomposition Diagram") {
       navigate("/vision/organization");
       return;
     }
+    
+    
+    // Business Section
     if (item.title === "Solution Concept Diagram") {
       navigate('/vision/solution');
       return;
@@ -100,6 +102,15 @@ const Dashboard = () => {
       navigate('/business/probis');
       return;
     }
+    if (item.title === "Business Interaction Diagram") {
+      navigate('/business/Interaction');
+      return;
+    }
+    if (item.title === "Corporate Governance") {
+      navigate('/business/corporate_governance');
+      return;
+    }
+
 
     // Data Section
     if (item.title === "Data Entity - Data Component Catalog") {
@@ -161,8 +172,14 @@ const Dashboard = () => {
       navigate("/app/classification");
       return;
     }
-
-    // Default: halaman belum dibuat
+    if (item.title === "Application - Communication Diagram") {
+      navigate("/app/communicationDiagram");
+      return;
+    }
+    if (item.title === "Application - Portofolio Assessment") {
+      navigate("/app/porto-assesment");
+      return;
+    }
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 
