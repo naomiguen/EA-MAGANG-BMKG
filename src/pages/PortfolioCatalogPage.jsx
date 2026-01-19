@@ -6,7 +6,7 @@ const ApplicationPortfolioPage = () => {
     // --- CORE BUSINESS (UTAMA - OBSERVASI & KOMUNIKASI) ---
     {
       id: 1,
-      physicalName: "BMKGSoft & WXREV",
+      physicalName: "BMKGSoft",
       logicalComp: "Meteorological Data Entry",
       service: "Layanan Pengolahan Data Observasi",
       category: "Core Business",
@@ -14,7 +14,7 @@ const ApplicationPortfolioPage = () => {
     },
     {
       id: 2,
-      physicalName: "CMSS & AFTN",
+      physicalName: "CMSS",
       logicalComp: "Data Communication System",
       service: "Layanan Pertukaran Data Global (GTS)",
       category: "Core Business",
@@ -31,15 +31,15 @@ const ApplicationPortfolioPage = () => {
       status: "Active",
     },
 
-    // --- PUBLIC SERVICE (DATIN) - BARU ---
-    {
-      id: 4,
-      physicalName: "Portal Web, PNBP & Database Center",
-      logicalComp: "Public Service System",
-      service: "Layanan Informasi & Jasa Meteorologi",
-      category: "Core Business",
-      status: "Active",
-    },
+    // // --- PUBLIC SERVICE (DATIN) - BARU ---
+    // {
+    //   id: 4,
+    //   physicalName: "Portal Web, PNBP & Database Center",
+    //   logicalComp: "Public Service System",
+    //   service: "Layanan Informasi & Jasa Meteorologi",
+    //   category: "Core Business",
+    //   status: "Active",
+    // },
     
     // --- SUPPORT (KEUANGAN - TU) ---
     {
@@ -54,7 +54,7 @@ const ApplicationPortfolioPage = () => {
     // --- SUPPORT (ASET - TU) ---
     {
       id: 6,
-      physicalName: "SIMAK, SIMAN, Persediaan & SIPPB",
+      physicalName: "SIMAK, SIMAN, SAKTI & SIPPB",
       logicalComp: "Asset Management System",
       service: "Layanan Inventarisasi Aset Negara",
       category: "Support (Gov)",

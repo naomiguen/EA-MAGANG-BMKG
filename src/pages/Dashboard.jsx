@@ -153,6 +153,10 @@ const Dashboard = () => {
       navigate("/app/org_matrix");
       return;
     }
+    if (item.title === "Application Use Case Diagram") {
+      navigate("/app/usecase");
+      return;
+    }
 
     // Default: halaman belum dibuat
     alert(`Halaman untuk "${item.title}" belum dibuat.`);

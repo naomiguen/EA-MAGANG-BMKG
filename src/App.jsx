@@ -31,6 +31,8 @@ import TechnologyAppMatrix from "./pages/TechnologyAppMatrix";
 import SolutionConceptPage from "./pages/SolutionConceptPage";
 import ApplicationPortfolioPage from "./pages/PortfolioCatalogPage";
 import AppOrgMatrixPage from "./pages/AppOrgMatrix";
+import UseCaseGallery from "./pages/AppUseCasePage";
+import DetailPage from "./pages/DetailUsecasePage";
 
 
 function App() {
@@ -73,6 +75,8 @@ function App() {
           <Route path="/tech/appMatrix" element={<TechnologyAppMatrix />} />
           <Route path="/app/portfolio" element={<ApplicationPortfolioPage />} />
           <Route path="/app/org_matrix" element={<AppOrgMatrixPage />} />
+          <Route path="/app/usecase" element={<UseCaseGallery />} />
+          <Route path="/detail/:id" element={<DetailPage />} />
 
           {/* Placeholder untuk halaman yang belum ada */}
           <Route path="*" element={

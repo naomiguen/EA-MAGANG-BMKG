@@ -9,9 +9,7 @@ const AppOrgMatrixPage = () => {
       role: "Pengamatan & Pengumpulan Data",
       applications: [
         "BMKGSoft (Input Data & Pengiriman)",
-        "CMSS (Communication Meteo Switching System)",
-        "AFTN (Aeronautical Fixed Telecom Network)",
-        "Aplikasi WXREV"
+        "CMSS (Communication Meteo Switching System)"
       ],
     },
     {
@@ -21,8 +19,8 @@ const AppOrgMatrixPage = () => {
       applications: [
         "Synergie Workstation",
         "Weather Radar Application",
-        "CMSS & GTS",
-        "Aplikasi Nowcasting (Gawar Dini)",
+        "CMSS",
+        "Aplikasi Nowcasting",
       ],
     },
     {
@@ -33,7 +31,7 @@ const AppOrgMatrixPage = () => {
         "Aplikasi SAKTI (Sistem Aplikasi Keuangan Tingkat Instansi)",
         "Aplikasi SAIBA (Sistem Akuntansi Instansi)",
         "Aplikasi GPP (Gaji)",
-        "SPRINT KPPN"
+        "SPRINT"
       ],
     },
     {
@@ -43,7 +41,6 @@ const AppOrgMatrixPage = () => {
       applications: [
         "SIMAK BMN (Sistem Informasi Manajemen dan Akuntansi BMN)",
         "SIMAN (Sistem Informasi Manajemen Aset Negara)",
-        "Aplikasi Persediaan",
         "SIPPB"
       ],
     },
@@ -60,16 +57,6 @@ const AppOrgMatrixPage = () => {
     },
     {
       id: 6,
-      orgUnit: "Unit Data & Informasi",
-      role: "Pengelolaan Database & Layanan",
-      applications: [
-        "Database Center System",
-        "Portal Web Layanan",
-        "Aplikasi Pelayanan Jasa (PNBP)"
-      ],
-    },
-    {
-      id: 7,
       orgUnit: "Unit Teknisi",
       role: "Pemeliharaan & Metadata",
       applications: [

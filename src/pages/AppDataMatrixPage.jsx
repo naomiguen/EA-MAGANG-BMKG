@@ -5,14 +5,14 @@ const AppDataMatrixPage = () => {
   const appDataMatrix = [
     {
       id: 1,
-      app: "BMKGSoft & WXREV",
+      app: "BMKGSoft",
       description: "Sistem penginputan, pengolahan, dan pengiriman data pengamatan meteorologi permukaan.",
-      dataEntity: "Data Observasi (Surface, Upper Air, ME.48), Laporan WXREV",
+      dataEntity: "Data Observasi (Surface, Upper Air, ME.48)",
       dataType: "Transactional Data"
     },
     {
       id: 2,
-      app: "CMSS & AFTN",
+      app: "CMSS",
       description: "Sistem pertukaran data meteorologi global dan penerbangan.",
       dataEntity: "WMO Coded Data (SYNOP, METAR, SPECI)",
       dataType: "Transactional Data"
@@ -26,41 +26,34 @@ const AppDataMatrixPage = () => {
     },
     {
       id: 4,
-      app: "Portal Web, PNBP & Database Center",
-      description: "Sistem pelayanan informasi publik dan penerimaan negara bukan pajak.",
-      dataEntity: "Informasi Cuaca Publik, Data PNBP, Request Data",
-      dataType: "Transactional Data"
-    },
-    {
-      id: 5,
       app: "Aplikasi SAKTI, SAIBA, GPP & SPRINT",
       description: "Sistem terintegrasi pengelolaan keuangan, anggaran, dan penggajian.",
       dataEntity: "Data Keuangan, DIPA, Realisasi Anggaran, Gaji",
       dataType: "Transactional Data"
     },
     {
-      id: 6,
+      id: 5,
       app: "SIMAK, SIMAN, Persediaan & SIPPB",
       description: "Sistem informasi manajemen aset negara dan persediaan barang.",
       dataEntity: "Inventaris BMN (Aset), Status Barang, Stok Persediaan",
       dataType: "Master Data"
     },
     {
-      id: 7,
+      id: 6,
       app: "SIMAS, SPRESO, MySAPK & E-Kinerja",
       description: "Sistem manajemen data pegawai, presensi, dan kinerja ASN.",
       dataEntity: "Data Kepegawaian (Personil), Absensi, SKP",
       dataType: "Master Data"
     },
     {
-      id: 8,
+      id: 7,
       app: "E-Office BMKG",
       description: "Sistem persuratan digital dan disposisi elektronik.",
       dataEntity: "Dokumen Naskah Dinas, Surat Masuk/Keluar",
       dataType: "Transactional Data"
     },
     {
-      id: 9,
+      id: 8,
       app: "WIGOS, Monitoring Tools & Logbook",
       description: "Sistem pengelolaan metadata alat dan pencatatan pemeliharaan teknis.",
       dataEntity: "Metadata Alat (OSCAR), Log Kerusakan/Perbaikan",
