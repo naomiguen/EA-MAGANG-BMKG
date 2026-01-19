@@ -7,7 +7,7 @@ const CorporateGovernancePage = () => {
   const [showBPMOptions, setShowBPMOptions] = useState(false);
   const navigate = useNavigate();
 
-  // --- DATA STATIC (Regulasi, ISO, SOP) ---
+ 
   const governanceData = [
     {
       id: "REG-01",
@@ -22,21 +22,21 @@ const CorporateGovernancePage = () => {
           type: "Undang-Undang", 
           desc: "Tentang MKG", 
           ref: "RI",
-          link: "https://example.com/uu-31-2009.pdf" // Ganti dengan link asli
+          link: "https://example.com/uu-31-2009.pdf" 
         },
         { 
           name: "Perpres No. 39 Tahun 2019", 
           type: "Perpres", 
           desc: "Satu Data Indonesia", 
           ref: "RI",
-          link: "https://example.com/perpres-39-2019.pdf" // Ganti dengan link asli
+          link: "https://example.com/perpres-39-2019.pdf" 
         },
         { 
           name: "PP No. 11 Tahun 2016", 
           type: "PP", 
           desc: "Tarif PNBP", 
           ref: "RI",
-          link: "https://example.com/pp-11-2016.pdf" // Ganti dengan link asli
+          link: "https://example.com/pp-11-2016.pdf" 
         }
       ]
     },
@@ -53,21 +53,21 @@ const CorporateGovernancePage = () => {
           type: "Quality", 
           desc: "Sistem Manajemen Mutu", 
           ref: "ISO",
-          link: "https://example.com/iso-9001-2015.pdf" // Ganti dengan link asli
+          link: "https://example.com/iso-9001-2015.pdf" 
         },
         { 
           name: "ICAO Annex 3", 
           type: "Aviation", 
           desc: "Meteorological Service", 
           ref: "ICAO",
-          link: "https://example.com/icao-annex3.pdf" // Ganti dengan link asli
+          link: "https://example.com/icao-annex3.pdf" 
         },
         { 
           name: "Kebijakan Mutu", 
           type: "Internal", 
           desc: "KM-WMM-03", 
           ref: "BMKG",
-          link: "https://example.com/kebijakan-mutu.pdf" // Ganti dengan link asli
+          link: "https://example.com/kebijakan-mutu.pdf" 
         }
       ]
     },

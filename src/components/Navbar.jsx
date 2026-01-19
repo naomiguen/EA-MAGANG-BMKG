@@ -46,6 +46,7 @@ const Navbar = () => {
         { name: 'Data Entity - Data Component Catalog', href: '/data/component' },
         { name: 'Data Principles', href: '/data/dataprinciples' },
         { name: 'Logical Data Diagram', href: '/data/logical' },
+        { name: 'Logical Data Diagram', href: '/data/logical' },
       ]
     },
     { 
@@ -57,7 +58,7 @@ const Navbar = () => {
         { name: 'Application Use Case Diagram', href: '/app' },
         { name: 'Application - Portofolio Assessment', href: '/app' },
         { name: 'Application - User and Location Diagram', href: '/app' },
-        { name: 'Application - Communication Diagram', href: '/app' },
+        { name: 'Application - Communication Diagram', href: '/app/communicationDiagram' },
         { name: 'Application - Business Process Matrix', href: '/app' },
         { name: 'Application - Classification Matrix', href: '/app' },
         { name: 'Application - Organization Matrix', href: '/app/org_matrix' },
