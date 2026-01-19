@@ -1,209 +1,286 @@
-import React, { useState } from 'react';
-import './css/ApplicationClassificationMatrix.css';
+import React, { useState, useEffect } from 'react';
+import { supabase } from "../lib/supabaseClient";
 
 const ApplicationClassificationMatrix = () => {
-  // Data diambil dari Lampiran Peraturan BMKG No 9 Tahun 2023 (Tabel 3. Metadata Domain Aplikasi)
-  // Mencakup DAA (Domain Arsitektur Aplikasi)
-  const applications = [
-    // --- APLIKASI UMUM (General) ---
-    {
-      id: "DAA-05",
-      name: "eSKM (Survei Kepuasan Masyarakat)",
-      description: "Survei kepuasan masyarakat secara online untuk mengukur kualitas layanan publik.",
-      classificationLevel1: "Aplikasi Umum", // RAA.01
-      classificationLevel2: "Layanan Publik", // RAA.01.01
-      owner: "Biro Perencanaan"
-    },
-    {
-      id: "DAA-06",
-      name: "Sincan",
-      description: "Sistem Perencanaan Kinerja Tahunan (RKT) secara digital.",
-      classificationLevel1: "Aplikasi Umum", // RAA.01
-      classificationLevel2: "Administrasi Pemerintahan", // RAA.01.02
-      owner: "Biro Perencanaan"
-    },
-    {
-      id: "DAA-07",
-      name: "JDIH BMKG",
-      description: "Sistem Informasi untuk penyebarluasan produk hukum di lingkungan BMKG.",
-      classificationLevel1: "Aplikasi Umum", // RAA.01
-      classificationLevel2: "Layanan Publik", // RAA.01.01
-      owner: "Biro Hukum dan Organisasi"
-    },
-    {
-      id: "DAA-08",
-      name: "e-Moreg",
-      description: "Sistem monitoring regulasi untuk evaluasi progres penyusunan peraturan.",
-      classificationLevel1: "Aplikasi Umum", // RAA.01
-      classificationLevel2: "Administrasi Pemerintahan", // RAA.01.02
-      owner: "Biro Hukum dan Organisasi"
-    },
-    {
-      id: "DAA-10",
-      name: "PTSP BMKG",
-      description: "Platform Pengajuan Permohonan Pelayanan MKKuG (Kalibrasi, Konsultasi, Data) dari Publik.",
-      classificationLevel1: "Aplikasi Umum", // RAA.01
-      classificationLevel2: "Layanan Publik", // RAA.01.01
-      owner: "Pusat Database"
-    },
-    {
-      id: "DAA-11",
-      name: "SI SKP",
-      description: "Sistem Informasi Penilaian Kinerja Pegawai.",
-      classificationLevel1: "Aplikasi Umum", // RAA.01
-      classificationLevel2: "Administrasi Pemerintahan", // RAA.01.02
-      owner: "Biro Umum dan SDM"
-    },
-    {
-      id: "DAA-12",
-      name: "SITUKIN / PRESMOB",
-      description: "Mencatat kehadiran mobile dan menghitung tunjangan kinerja pegawai.",
-      classificationLevel1: "Aplikasi Umum", // RAA.01
-      classificationLevel2: "Administrasi Pemerintahan", // RAA.01.02
-      owner: "Biro Umum dan SDM"
-    },
-    {
-      id: "DAA-88",
-      name: "Website BMKG",
-      description: "Media publikasi informasi MKKuG dan perubahan iklim kepada masyarakat luas.",
-      classificationLevel1: "Aplikasi Umum", // RAA.01
-      classificationLevel2: "Layanan Publik", // RAA.01.01
-      owner: "Pusat Database"
-    },
-
-    // --- APLIKASI KHUSUS (Specific) ---
-    {
-      id: "DAA-57",
-      name: "INDARE",
-      description: "Sistem penyedia informasi data rescue wilayah Indian Ocean (Data Historis).",
-      classificationLevel1: "Aplikasi Khusus", // RAA.02
-      classificationLevel2: "Misi Tertentu", // RAA.02.01
-      owner: "Pusat Database"
-    },
-    {
-      id: "DAA-58",
-      name: "SACA&D",
-      description: "Sistem informasi yang menyediakan data harian dan informasi iklim.",
-      classificationLevel1: "Aplikasi Khusus", // RAA.02
-      classificationLevel2: "Misi Tertentu", // RAA.02.01
-      owner: "Pusat Database"
-    },
-    {
-      id: "DAA-74",
-      name: "API KHATULISTIWA",
-      description: "Informasi peringatan dini potensi terjadinya kebakaran hutan dan lahan (Karhutla).",
-      classificationLevel1: "Aplikasi Khusus", // RAA.02
-      classificationLevel2: "Fungsi Tertentu", // RAA.02.02
-      owner: "Pusat Database"
-    },
-    {
-      id: "DAA-75",
-      name: "InaNWP",
-      description: "Sistem pemodelan cuaca numerik (WRF) dengan asimilasi data observasi.",
-      classificationLevel1: "Aplikasi Khusus", // RAA.02
-      classificationLevel2: "Fungsi Tertentu", // RAA.02.02
-      owner: "Pusat Litbang"
-    },
-    {
-      id: "DAA-87",
-      name: "Signature",
-      description: "Model spasial animasi prakiraan cuaca dan informasi prakiraan berbasis dampak.",
-      classificationLevel1: "Aplikasi Khusus", // RAA.02
-      classificationLevel2: "Misi Tertentu", // RAA.02.01
-      owner: "Pusat Meteorologi Publik"
-    },
-    {
-      id: "DAA-89",
-      name: "Ina-TIS (Tide Information System)",
-      description: "Sistem informasi prediksi pasang surut dan banjir rob (AWS Maritim).",
-      classificationLevel1: "Aplikasi Khusus", // RAA.02
-      classificationLevel2: "Layanan Publik", // Note unik: Aplikasi Khusus tapi melayani Publik
-      owner: "Pusat Meteorologi Maritim"
-    }
-  ];
-
+  const [applications, setApplications] = useState([]);
   const [filter, setFilter] = useState('All');
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    fetchApplications();
+  }, []);
+
+  const fetchApplications = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('applications')
+        .select('*')
+        .order('id', { ascending: true });
+
+      if (error) throw error;
+      setApplications(data || []);
+    } catch (error) {
+      console.error('Error fetching applications:', error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Filter logika disesuaikan dengan nama kolom database (snake_case)
   const filteredApps = filter === 'All' 
     ? applications 
-    : applications.filter(app => app.classificationLevel1 === filter);
+    : applications.filter(app => app.classification_level_1 === filter);
 
-  // Helper untuk warna badge status
   const getBadgeColor = (level2) => {
+    if (!level2) return "badge-default";
     if (level2.includes("Administrasi")) return "badge-admin";
     if (level2.includes("Layanan Publik")) return "badge-public";
     if (level2.includes("Tertentu")) return "badge-mission";
     return "badge-default";
   };
 
+  if (loading) {
+    return <div style={{...styles.container, textAlign: 'center', padding: '40px'}}>Loading data...</div>;
+  }
+
   return (
-    <div className="ea-container">
-      <header className="ea-header">
-        <h1>Classification Matrix</h1>
-        <p>Klasifikasi Domain Arsitektur Aplikasi (DAA) berdasarkan Peraturan BMKG No. 9 Tahun 2023</p>
+    <div style={styles.container}>
+      <header style={styles.header}>
+        <h1 style={styles.headerTitle}>Classification Matrix</h1>
+        <p style={styles.headerSubtitle}>Klasifikasi Domain Arsitektur Aplikasi (DAA) berdasarkan Peraturan BMKG No. 9 Tahun 2023</p>
       </header>
 
-      <div className="ea-controls">
+      <div style={styles.controls}>
         <button 
-          className={`filter-btn ${filter === 'All' ? 'active' : ''}`} 
+          style={{...styles.filterBtn, ...(filter === 'All' ? styles.filterBtnActive : {})}}
           onClick={() => setFilter('All')}
         >
           Semua Aplikasi ({applications.length})
         </button>
         <button 
-          className={`filter-btn ${filter === 'Aplikasi Umum' ? 'active' : ''}`} 
+          style={{...styles.filterBtn, ...(filter === 'Aplikasi Umum' ? styles.filterBtnActive : {})}}
           onClick={() => setFilter('Aplikasi Umum')}
         >
           Aplikasi Umum (Berbagi Pakai)
         </button>
         <button 
-          className={`filter-btn ${filter === 'Aplikasi Khusus' ? 'active' : ''}`} 
+          style={{...styles.filterBtn, ...(filter === 'Aplikasi Khusus' ? styles.filterBtnActive : {})}}
           onClick={() => setFilter('Aplikasi Khusus')}
         >
           Aplikasi Khusus (Spesifik)
         </button>
       </div>
 
-      <div className="matrix-wrapper">
-        <table className="ea-matrix-table">
+      <div style={styles.tableWrapper}>
+        <table style={styles.table}>
           <thead>
             <tr>
-              <th style={{width: '80px'}}>Kode DAA</th>
-              <th style={{width: '200px'}}>Nama Aplikasi</th>
-              <th>Deskripsi & Fungsi</th>
-              <th style={{width: '150px'}}>Klasifikasi (L1)</th>
-              <th style={{width: '180px'}}>Domain (L2)</th>
-              <th style={{width: '150px'}}>Unit Pengelola</th>
+              <th style={{...styles.th, width: '80px'}}>KODE DAA</th>
+              <th style={{...styles.th, width: '200px'}}>NAMA APLIKASI</th>
+              <th style={styles.th}>DESKRIPSI & FUNGSI</th>
+              <th style={{...styles.th, width: '150px'}}>KLASIFIKASI (L1)</th>
+              <th style={{...styles.th, width: '180px'}}>DOMAIN (L2)</th>
+              <th style={{...styles.th, width: '150px'}}>UNIT PENGELOLA</th>
             </tr>
           </thead>
           <tbody>
-            {filteredApps.map((app, index) => (
-              <tr key={index}>
-                <td className="col-id">{app.id}</td>
-                <td className="col-name">{app.name}</td>
-                <td className="col-desc">{app.description}</td>
-                <td>
-                  <span className={`badge level-1 ${app.classificationLevel1 === 'Aplikasi Umum' ? 'aplikasi-umum' : 'aplikasi-khusus'}`}>
-                    {app.classificationLevel1}
+            {filteredApps.map((app) => (
+              <tr key={app.id} style={styles.tr}>
+                <td style={styles.tdId}>{app.id}</td>
+                <td style={styles.tdName}>{app.name}</td>
+                <td style={styles.tdDesc}>{app.description}</td>
+                <td style={styles.td}>
+                  <span style={{
+                    ...styles.badge,
+                    ...(app.classification_level_1 === 'Aplikasi Umum' ? styles.badgeL1Umum : styles.badgeL1Khusus)
+                  }}>
+                    {app.classification_level_1}
                   </span>
                 </td>
-                <td>
-                  <span className={`badge level-2 ${getBadgeColor(app.classificationLevel2)}`}>
-                    {app.classificationLevel2}
+                <td style={styles.td}>
+                  <span style={{
+                    ...styles.badge,
+                    ...(getBadgeColor(app.classification_level_2) === 'badge-admin' ? styles.badgeAdmin : {}),
+                    ...(getBadgeColor(app.classification_level_2) === 'badge-public' ? styles.badgePublic : {}),
+                    ...(getBadgeColor(app.classification_level_2) === 'badge-mission' ? styles.badgeMission : {})
+                  }}>
+                    {app.classification_level_2}
                   </span>
                 </td>
-                <td className="col-owner">{app.owner}</td>
+                <td style={styles.tdOwner}>{app.owner}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
       
-      <footer className="ea-footer">
-        <p>Total Aplikasi terdata: {applications.length} item. Sumber: Lampiran Perka BMKG 9/2023 Tabel 3.</p>
+      <footer style={styles.footer}>
+        <p>Total Aplikasi terdata: {applications.length} item. Sumber: Database & Lampiran Perka BMKG 9/2023 Tabel 3.</p>
       </footer>
     </div>
   );
+};
+
+const styles = {
+  container: {
+    fontFamily: "'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+    maxWidth: '100%',
+    margin: '0 auto',
+    padding: '16px',
+    backgroundColor: '#ffffff'
+  },
+  header: {
+    backgroundColor: '#2980b9',
+    color: 'white',
+    padding: '20px 24px',
+    marginBottom: '0',
+    borderRadius: '0'
+  },
+  headerTitle: {
+    color: 'white',
+    margin: '0',
+    fontSize: '20px',
+    fontWeight: '600',
+    textAlign: 'center'
+  },
+  headerSubtitle: {
+    color: 'rgba(255, 255, 255, 0.9)',
+    margin: '4px 0 0',
+    fontSize: '12px',
+    textAlign: 'center'
+  },
+  controls: {
+    marginBottom: '0',
+    display: 'flex',
+    gap: '0',
+    flexWrap: 'wrap',
+    backgroundColor: '#ffffff',
+    padding: '0',
+    borderBottom: '1px solid #ddd'
+  },
+  filterBtn: {
+    padding: '12px 20px',
+    border: 'none',
+    borderBottom: '3px solid transparent',
+    backgroundColor: '#ffffff',
+    color: '#666',
+    cursor: 'pointer',
+    fontWeight: '400',
+    fontSize: '13px',
+    borderRadius: '0'
+  },
+  filterBtnActive: {
+    color: '#2980b9',
+    borderBottomColor: '#2980b9',
+    fontWeight: '600'
+  },
+  tableWrapper: {
+    overflowX: 'auto',
+    backgroundColor: '#ffffff',
+    border: '1px solid #ddd',
+    borderTop: 'none'
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'collapse',
+    minWidth: '800px',
+    backgroundColor: '#ffffff'
+  },
+  th: {
+    backgroundColor: '#ffffff',
+    color: '#495057',
+    fontWeight: '600',
+    textAlign: 'left',
+    padding: '12px 16px',
+    fontSize: '11px',
+    textTransform: 'uppercase',
+    letterSpacing: '0.5px',
+    borderBottom: '2px solid #dee2e6'
+  },
+  tr: {
+    backgroundColor: '#ffffff'
+  },
+  td: {
+    padding: '14px 16px',
+    borderBottom: '1px solid #e9ecef',
+    fontSize: '13px',
+    verticalAlign: 'top',
+    color: '#333',
+    lineHeight: '1.5',
+    backgroundColor: '#ffffff'
+  },
+  tdId: {
+    padding: '14px 16px',
+    borderBottom: '1px solid #e9ecef',
+    fontFamily: "'Consolas', 'Monaco', monospace",
+    color: '#333',
+    fontWeight: '600',
+    fontSize: '12px',
+    backgroundColor: '#ffffff'
+  },
+  tdName: {
+    padding: '14px 16px',
+    borderBottom: '1px solid #e9ecef',
+    fontWeight: '600',
+    color: '#222',
+    fontSize: '13px',
+    backgroundColor: '#ffffff'
+  },
+  tdDesc: {
+    padding: '14px 16px',
+    borderBottom: '1px solid #e9ecef',
+    color: '#555',
+    fontSize: '13px',
+    lineHeight: '1.6',
+    backgroundColor: '#ffffff'
+  },
+  tdOwner: {
+    padding: '14px 16px',
+    borderBottom: '1px solid #e9ecef',
+    color: '#777',
+    fontSize: '12px',
+    fontStyle: 'italic',
+    backgroundColor: '#ffffff'
+  },
+  badge: {
+    display: 'inline-block',
+    padding: '4px 10px',
+    borderRadius: '3px',
+    fontSize: '10px',
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: '0.3px'
+  },
+  badgeL1Umum: {
+    backgroundColor: '#d1ecf1',
+    color: '#0c5460'
+  },
+  badgeL1Khusus: {
+    backgroundColor: '#d1ecf1',
+    color: '#0c5460'
+  },
+  badgeAdmin: {
+    backgroundColor: '#e2e3e5',
+    color: '#383d41'
+  },
+  badgePublic: {
+    backgroundColor: '#d1ecf1',
+    color: '#0c5460'
+  },
+  badgeMission: {
+    backgroundColor: '#e2e3e5',
+    color: '#383d41'
+  },
+  footer: {
+    marginTop: '16px',
+    textAlign: 'center',
+    fontSize: '11px',
+    color: '#999',
+    padding: '12px',
+    fontStyle: 'italic',
+    backgroundColor: '#ffffff'
+  }
 };
 
 export default ApplicationClassificationMatrix;
