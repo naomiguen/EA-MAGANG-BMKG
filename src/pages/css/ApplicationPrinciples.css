@@ -1,0 +1,137 @@
+:root {
+  --primary-bmkg: #0077b6; /* Warna biru BMKG */
+  --secondary-bg: #f0f4f8;
+  --card-surface: #ffffff;
+  --text-primary: #2d3748;
+  --text-secondary: #4a5568;
+  --accent-warning: #e53e3e;
+  --accent-tech: #2b6cb0;
+  --border-radius: 12px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--secondary-bg);
+}
+
+.ea-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.ea-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.ea-header h1 {
+  color: var(--primary-bmkg);
+  margin-bottom: 8px;
+  font-size: 2.25rem;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 24px;
+}
+
+.principle-card {
+  background: var(--card-surface);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-left: 5px solid var(--primary-bmkg);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.principle-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  padding: 20px;
+  background-color: #f8fafc;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.principle-badge {
+  display: inline-block;
+  background-color: var(--primary-bmkg);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.card-header h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.card-body {
+  padding: 20px;
+  flex: 1;
+}
+
+.info-group {
+  margin-bottom: 16px;
+}
+
+.info-group:last-child {
+  margin-bottom: 0;
+}
+
+.info-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.info-group p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+/* Styling khusus untuk bagian teknis */
+.info-group.technical {
+  background-color: #ebf8ff;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px dashed var(--accent-tech);
+}
+
+.info-group.technical label {
+  color: var(--accent-tech);
+}
+
+.card-footer {
+  padding: 12px 20px;
+  background-color: #f7fafc;
+  border-top: 1px solid #edf2f7;
+  font-size: 0.85rem;
+  color: #718096;
+  text-align: right;
+  font-style: italic;
+}

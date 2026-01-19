@@ -33,7 +33,6 @@ const TechnologyEnvironmentDiagram = () => {
         `);
 
       if (error) throw error;
-
       // Transformasi Data: Mengubah format DB kembali ke format UI yang diinginkan
       const structuredData = {
         external: [],

@@ -30,6 +30,8 @@ import TechnologyAppMatrix from "./pages/TechnologyAppMatrix";
 import SolutionConceptPage from "./pages/SolutionConceptPage";
 import ApplicationPortfolioPage from "./pages/PortfolioCatalogPage";
 import AppOrgMatrixPage from "./pages/AppOrgMatrix";
+import ApplicationPrinciples from "./pages/ApplicationPrinciples";
+import ApplicationClassificationMatrix from "./pages/ApplicationClassificationMatrix";
 import BusinessInteractionDiagram from "./pages/BusinessInteractionDiagram";
 import CorporateGovernancePage from "./pages/CorporateGovernancePage";
 import OrganizationDiagramPage from "./pages/OrganizationDiagramPage";
@@ -38,7 +40,6 @@ import PetaKonsepLevel0Page from "./pages/PetaKonsepLevel0Page";
 import PetaKonsepLevel01Page from "./pages/PetaKonsepLevel01Page";
 import CommunicationDiagramPage from "./pages/CommunicationDiagramPage";
 import PortofolioAssesmentPage from "./pages/PortofolioAssesmentPage"
-
 
 
 function App() {
@@ -81,6 +82,9 @@ function App() {
           <Route path="/tech/appMatrix" element={<TechnologyAppMatrix />} />
           <Route path="/app/portfolio" element={<ApplicationPortfolioPage />} />
           <Route path="/app/org_matrix" element={<AppOrgMatrixPage />} />
+          <Route path="/app/principles" element={<ApplicationPrinciples />} />
+          <Route path="/app/classification" element={<ApplicationClassificationMatrix />} />
+
           <Route path="/business/interaction" element={<BusinessInteractionDiagram />} />
           <Route path="/business/corporate_governance" element={<CorporateGovernancePage />} />
           <Route path="/business-process/peta-konsep" element={<PetaKonsepPage />} />
@@ -88,6 +92,7 @@ function App() {
           <Route path="/business-process/level-01" element={<PetaKonsepLevel01Page />} />
           <Route path="/app/communicationDiagram" element={<CommunicationDiagramPage />} /> 
           <Route path="/app/porto-assesment" element={<PortofolioAssesmentPage />} /> 
+
 
 
           {/* Placeholder untuk halaman yang belum ada */}

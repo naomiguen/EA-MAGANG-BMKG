@@ -18,7 +18,7 @@ const TechnologyStandarCatalog = () => {
       const { data, error: fetchError } = await supabase
         .from('spbe_architecture_catalog') 
         .select('*')
-        .order('id', { ascending: true });
+        .order('standard_id', { ascending: true });
 
       if (fetchError) throw fetchError;
       setCatalogData(data || []);
@@ -70,7 +70,7 @@ const TechnologyStandarCatalog = () => {
             Referensi Arsitektur SPBE - Badan Meteorologi, Klimatologi, dan Geofisika
           </p>
           <div className="header-meta">
-            <small>Sesuai Perka BMKG No. 9 Tahun 2023</small>
+            <small>Sesuai Perka BMKG No. 9 Tahun 2023 & Perpres No. 132 Tahun 2022</small>
           </div>
         </div>
       </div>
@@ -97,7 +97,7 @@ const TechnologyStandarCatalog = () => {
             <option value="Aplikasi">Domain Aplikasi</option>
             <option value="Infrastruktur">Domain Infrastruktur</option>
             <option value="Data">Domain Data</option>
-            <option value="Keamanan">Domain Keamanan</option>
+            {/* <option value="Keamanan">Domain Keamanan</option> */}
           </select>
 
           <button onClick={fetchCatalogData} className="refresh-button">

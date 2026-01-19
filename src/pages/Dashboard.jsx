@@ -91,7 +91,7 @@ const Dashboard = () => {
       return;
     }
     if (item.title === "Functional Decomposition Diagram") {
-      navigate('/vision/functional');
+      navigate('/business/functional');
       return;
     }
     if (item.title === "Business Process - Risk Matrix") {
@@ -162,6 +162,14 @@ const Dashboard = () => {
     }
     if (item.title === "Application - Organization Matrix") {
       navigate("/app/org_matrix");
+      return;
+    }
+    if (item.title === "Application Principles") {
+      navigate("/app/principles");
+      return;
+    }
+    if (item.title === "Application - Classification Matrix") {
+      navigate("/app/classification");
       return;
     }
     if (item.title === "Application - Communication Diagram") {

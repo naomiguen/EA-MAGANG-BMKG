@@ -60,14 +60,14 @@ const Navbar = () => {
       name: 'Application', 
       href: null, 
       children: [
-        { name: 'Application Principles', href: '/app' },
+        { name: 'Application Principles', href: '/app/principles' },
         { name: 'Application Portfolio Catalog', href: '/app/portfolio' },
         { name: 'Application Use Case Diagram', href: '/app' },
         { name: 'Application - Portofolio Assessment', href: '/app/porto-assesment' },
         { name: 'Application - User and Location Diagram', href: '/app' },
         { name: 'Application - Communication Diagram', href: '/app/communicationDiagram' },
         { name: 'Application - Business Process Matrix', href: '/app' },
-        { name: 'Application - Classification Matrix', href: '/app' },
+        { name: 'Application - Classification Matrix', href: '/app/classification' },
         { name: 'Application - Organization Matrix', href: '/app/org_matrix' },
       ]
     },
