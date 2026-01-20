@@ -4,6 +4,7 @@ import { Users, AppWindow } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
 
 const AppOrgMatrixPage = () => {
+<<<<<<< HEAD
   const [matrixData, setMatrixData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -28,6 +29,72 @@ const AppOrgMatrixPage = () => {
       setLoading(false);
     }
   };
+=======
+  const matrixData = [
+    {
+      id: 1,
+      orgUnit: "Unit Observasi",
+      role: "Pengamatan & Pengumpulan Data",
+      applications: [
+        "BMKGSoft (Input Data & Pengiriman)",
+        "CMSS (Communication Meteo Switching System)"
+      ],
+    },
+    {
+      id: 2,
+      orgUnit: "Unit Analisa & Prakiraan",
+      role: "Analisis Cuaca & Peringatan Dini",
+      applications: [
+        "Synergie Workstation",
+        "Weather Radar Application",
+        "CMSS",
+        "Aplikasi Nowcasting",
+      ],
+    },
+    {
+      id: 3,
+      orgUnit: "Tata Usaha (Keuangan)",
+      role: "Pengelolaan Anggaran & Laporan",
+      applications: [
+        "Aplikasi SAKTI (Sistem Aplikasi Keuangan Tingkat Instansi)",
+        "Aplikasi SAIBA (Sistem Akuntansi Instansi)",
+        "Aplikasi GPP (Gaji)",
+        "SPRINT"
+      ],
+    },
+    {
+      id: 4,
+      orgUnit: "Tata Usaha (Aset/BMN)",
+      role: "Manajemen Barang Milik Negara",
+      applications: [
+        "SIMAK BMN (Sistem Informasi Manajemen dan Akuntansi BMN)",
+        "SIMAN (Sistem Informasi Manajemen Aset Negara)",
+        "SIPPB"
+      ],
+    },
+    {
+      id: 5,
+      orgUnit: "Tata Usaha (Kepegawaian)",
+      role: "Manajemen SDM & Administrasi",
+      applications: [
+        "Aplikasi SIMAS (Sistem Informasi Manajemen ASN)",
+        "E-Kinerja & SPRESO (Presensi Online)",
+        "MySAPK BKN",
+        "E-Office BMKG (Surat Menyurat)"
+      ],
+    },
+    {
+      id: 6,
+      orgUnit: "Unit Teknisi",
+      role: "Pemeliharaan & Metadata",
+      applications: [
+        "Monitoring Tools (Alat & Jaringan)",
+        "Aplikasi Metadata WIGOS",
+        "Aplikasi Maintenance Logbook"
+      ],
+    },
+  ];
+>>>>>>> zaraa
 
   return (
     <div className="min-h-screen bg-slate-50 py-10 px-4 md:px-8 font-sans text-slate-800">

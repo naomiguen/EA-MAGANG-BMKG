@@ -1,10 +1,15 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+=======
+import React from "react";
+>>>>>>> zaraa
 import { ArrowLeft, Database, Server, CheckCircle2 } from "lucide-react";
 // Import client supabase
 import { supabase } from "../lib/supabaseClient";
 
 const ApplicationPortfolioPage = () => {
+<<<<<<< HEAD
   const navigate = useNavigate();
   
   // State untuk data dan loading
@@ -32,6 +37,95 @@ const ApplicationPortfolioPage = () => {
       setLoading(false);
     }
   };
+=======
+  const portfolioData = [
+    // --- CORE BUSINESS (UTAMA - OBSERVASI & KOMUNIKASI) ---
+    {
+      id: 1,
+      physicalName: "BMKGSoft",
+      logicalComp: "Meteorological Data Entry",
+      service: "Layanan Pengolahan Data Observasi",
+      category: "Core Business",
+      status: "Active",
+    },
+    {
+      id: 2,
+      physicalName: "CMSS",
+      logicalComp: "Data Communication System",
+      service: "Layanan Pertukaran Data Global (GTS)",
+      category: "Core Business",
+      status: "Active",
+    },
+    
+    // --- CORE ANALYSIS (FORECASTER) ---
+    {
+      id: 3,
+      physicalName: "Synergie, Radar & Nowcasting",
+      logicalComp: "Forecaster Workstation",
+      service: "Layanan Analisis & Prakiraan Cuaca",
+      category: "Core Analysis",
+      status: "Active",
+    },
+
+    // // --- PUBLIC SERVICE (DATIN) - BARU ---
+    // {
+    //   id: 4,
+    //   physicalName: "Portal Web, PNBP & Database Center",
+    //   logicalComp: "Public Service System",
+    //   service: "Layanan Informasi & Jasa Meteorologi",
+    //   category: "Core Business",
+    //   status: "Active",
+    // },
+    
+    // --- SUPPORT (KEUANGAN - TU) ---
+    {
+      id: 5,
+      physicalName: "SAKTI, SAIBA, GPP & SPRINT",
+      logicalComp: "Financial Management System",
+      service: "Layanan Perbendaharaan, Gaji & Anggaran",
+      category: "Support (Gov)",
+      status: "Active",
+    },
+
+    // --- SUPPORT (ASET - TU) ---
+    {
+      id: 6,
+      physicalName: "SIMAK, SIMAN, SAKTI & SIPPB",
+      logicalComp: "Asset Management System",
+      service: "Layanan Inventarisasi Aset Negara",
+      category: "Support (Gov)",
+      status: "Active",
+    },
+
+    // --- MANAGEMENT (SDM - TU) ---
+    {
+      id: 7,
+      physicalName: "SIMAS, SPRESO, MySAPK & E-Kinerja",
+      logicalComp: "HR Information System",
+      service: "Layanan Manajemen SDM & Absensi",
+      category: "Management",
+      status: "Active",
+    },
+    {
+      id: 8,
+      physicalName: "E-Office BMKG",
+      logicalComp: "Office Automation",
+      service: "Layanan Persuratan Digital",
+      category: "Management",
+      status: "Active",
+    },
+
+    // --- TEKNIS & PEMELIHARAAN (TEKNISI) ---
+    {
+      id: 9,
+      physicalName: "WIGOS, Monitoring Tools & Logbook",
+      logicalComp: "Maintenance & Metadata System",
+      service: "Layanan Standarisasi & Pemeliharaan Alat",
+      category: "Core Technical",
+      status: "Active",
+    },
+  ];
+>>>>>>> zaraa
 
   // Helper untuk warna kategori
   const getCategoryColor = (category) => {
@@ -46,6 +140,7 @@ const ApplicationPortfolioPage = () => {
       
       {/* --- 1. HEADER HALAMAN --- */}
       <div className="max-w-7xl mx-auto mb-10 text-center relative">
+<<<<<<< HEAD
         <button
           onClick={() => navigate(-1)}
           className="absolute left-0 top-0 md:-left-8 flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors font-medium"
@@ -53,6 +148,8 @@ const ApplicationPortfolioPage = () => {
           <ArrowLeft size={20} />
           <span className="hidden md:inline">Kembali</span>
         </button>
+=======
+>>>>>>> zaraa
 
         <div>
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900 pt-8 md:pt-0">
@@ -72,7 +169,7 @@ const ApplicationPortfolioPage = () => {
             <thead>
               <tr className="bg-blue-600 text-white text-sm uppercase tracking-wider border-b border-slate-200">
                 <th className="p-4 font-bold border-r border-slate-700 w-16 text-center">No</th>
-                <th className="p-4 font-bold border-r border-slate-700 min-w-[200px]">Physical App Component</th>
+                <th className="p-4 font-bold border-r border-slate-700 min-w-[250px]">Physical App Component</th>
                 <th className="p-4 font-bold border-r border-slate-700 min-w-[200px]">Logical App Component</th>
                 <th className="p-4 font-bold border-r border-slate-700 min-w-[250px]">Info System Service</th>
                 <th className="p-4 font-bold border-r border-slate-700 w-[150px]">Category</th>
@@ -102,14 +199,24 @@ const ApplicationPortfolioPage = () => {
                   {/* Perhatikan penamaan properti (snake_case) sesuai DB */}
                   <td className="p-4 border-r border-slate-100 font-semibold text-slate-800">
                     <div className="flex items-center gap-2">
+<<<<<<< HEAD
                       <Database size={16} className="text-slate-400" />
                       {item.physical_name}
+=======
+                      <Database size={16} className="text-slate-400 shrink-0" />
+                      {item.physicalName}
+>>>>>>> zaraa
                     </div>
                   </td>
                   <td className="p-4 border-r border-slate-100">
                     <div className="flex items-center gap-2">
+<<<<<<< HEAD
                       <Server size={16} className="text-slate-400" />
                       {item.logical_comp}
+=======
+                      <Server size={16} className="text-slate-400 shrink-0" />
+                      {item.logicalComp}
+>>>>>>> zaraa
                     </div>
                   </td>
                   <td className="p-4 border-r border-slate-100">
