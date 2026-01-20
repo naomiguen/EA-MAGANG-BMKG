@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Database, FileText, Table as TableIcon } from "lucide-center"; // Pastikan package ini benar
+import { Database, FileText, Table as TableIcon } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
 
 const AppDataMatrixPage = () => {

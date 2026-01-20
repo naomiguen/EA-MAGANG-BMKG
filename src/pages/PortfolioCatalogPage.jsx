@@ -1,45 +1,12 @@
-<<<<<<< HEAD
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-=======
 import React from "react";
->>>>>>> zaraa
+import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Database, Server, CheckCircle2 } from "lucide-react";
-// Import client supabase
-import { supabase } from "../lib/supabaseClient";
 
 const ApplicationPortfolioPage = () => {
-<<<<<<< HEAD
   const navigate = useNavigate();
-  
-  // State untuk data dan loading
-  const [portfolioData, setPortfolioData] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  // Fetch data saat halaman dimuat
-  useEffect(() => {
-    fetchPortfolio();
-  }, []);
-
-  const fetchPortfolio = async () => {
-    try {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from('application_portfolio')
-        .select('*')
-        .order('id', { ascending: true });
-
-      if (error) throw error;
-      setPortfolioData(data);
-    } catch (error) {
-      console.error("Error fetching portfolio:", error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-=======
+  // Data langsung didefinisikan sebagai variabel tunggal
   const portfolioData = [
-    // --- CORE BUSINESS (UTAMA - OBSERVASI & KOMUNIKASI) ---
     {
       id: 1,
       physicalName: "BMKGSoft",
@@ -56,8 +23,6 @@ const ApplicationPortfolioPage = () => {
       category: "Core Business",
       status: "Active",
     },
-    
-    // --- CORE ANALYSIS (FORECASTER) ---
     {
       id: 3,
       physicalName: "Synergie, Radar & Nowcasting",
@@ -66,18 +31,6 @@ const ApplicationPortfolioPage = () => {
       category: "Core Analysis",
       status: "Active",
     },
-
-    // // --- PUBLIC SERVICE (DATIN) - BARU ---
-    // {
-    //   id: 4,
-    //   physicalName: "Portal Web, PNBP & Database Center",
-    //   logicalComp: "Public Service System",
-    //   service: "Layanan Informasi & Jasa Meteorologi",
-    //   category: "Core Business",
-    //   status: "Active",
-    // },
-    
-    // --- SUPPORT (KEUANGAN - TU) ---
     {
       id: 5,
       physicalName: "SAKTI, SAIBA, GPP & SPRINT",
@@ -86,18 +39,14 @@ const ApplicationPortfolioPage = () => {
       category: "Support (Gov)",
       status: "Active",
     },
-
-    // --- SUPPORT (ASET - TU) ---
     {
       id: 6,
-      physicalName: "SIMAK, SIMAN, SAKTI & SIPPB",
+      physicalName: "SIMAK, SIMAN, SAKTI & SIPNB",
       logicalComp: "Asset Management System",
       service: "Layanan Inventarisasi Aset Negara",
       category: "Support (Gov)",
       status: "Active",
     },
-
-    // --- MANAGEMENT (SDM - TU) ---
     {
       id: 7,
       physicalName: "SIMAS, SPRESO, MySAPK & E-Kinerja",
@@ -114,8 +63,6 @@ const ApplicationPortfolioPage = () => {
       category: "Management",
       status: "Active",
     },
-
-    // --- TEKNIS & PEMELIHARAAN (TEKNISI) ---
     {
       id: 9,
       physicalName: "WIGOS, Monitoring Tools & Logbook",
@@ -125,9 +72,7 @@ const ApplicationPortfolioPage = () => {
       status: "Active",
     },
   ];
->>>>>>> zaraa
 
-  // Helper untuk warna kategori
   const getCategoryColor = (category) => {
     if (!category) return "bg-slate-100 text-slate-700";
     if (category.includes("Core")) return "bg-blue-100 text-blue-700";
@@ -137,10 +82,7 @@ const ApplicationPortfolioPage = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 py-10 px-4 md:px-8 font-sans text-slate-800">
-      
-      {/* --- 1. HEADER HALAMAN --- */}
       <div className="max-w-7xl mx-auto mb-10 text-center relative">
-<<<<<<< HEAD
         <button
           onClick={() => navigate(-1)}
           className="absolute left-0 top-0 md:-left-8 flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors font-medium"
@@ -148,21 +90,17 @@ const ApplicationPortfolioPage = () => {
           <ArrowLeft size={20} />
           <span className="hidden md:inline">Kembali</span>
         </button>
-=======
->>>>>>> zaraa
 
         <div>
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900 pt-8 md:pt-0">
             Application Portfolio Catalog
           </h1>
           <p className="text-slate-600 mt-3 text-lg max-w-3xl mx-auto">
-            Daftar inventaris seluruh aplikasi, layanan sistem informasi, dan komponen logis 
-            yang beroperasi di lingkungan BMKG Balikpapan.
+            Daftar inventaris seluruh aplikasi dan layanan sistem informasi di lingkungan BMKG Balikpapan.
           </p>
         </div>
       </div>
 
-      {/* --- 2. TABEL DATA --- */}
       <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
@@ -177,46 +115,21 @@ const ApplicationPortfolioPage = () => {
               </tr>
             </thead>
             <tbody className="text-slate-700 text-sm">
-              
-              {/* Loading State */}
-              {loading && (
-                <tr>
-                  <td colSpan="6" className="p-8 text-center text-slate-500 italic">
-                    Memuat data portofolio...
-                  </td>
-                </tr>
-              )}
-
-              {/* Data Loop */}
-              {!loading && portfolioData.map((item, index) => (
-                <tr 
-                  key={item.id} 
-                  className="hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0"
-                >
+              {portfolioData.map((item, index) => (
+                <tr key={item.id} className="hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0">
                   <td className="p-4 text-center font-medium text-slate-400 border-r border-slate-100">
                     {index + 1}
                   </td>
-                  {/* Perhatikan penamaan properti (snake_case) sesuai DB */}
                   <td className="p-4 border-r border-slate-100 font-semibold text-slate-800">
                     <div className="flex items-center gap-2">
-<<<<<<< HEAD
-                      <Database size={16} className="text-slate-400" />
-                      {item.physical_name}
-=======
                       <Database size={16} className="text-slate-400 shrink-0" />
                       {item.physicalName}
->>>>>>> zaraa
                     </div>
                   </td>
                   <td className="p-4 border-r border-slate-100">
                     <div className="flex items-center gap-2">
-<<<<<<< HEAD
-                      <Server size={16} className="text-slate-400" />
-                      {item.logical_comp}
-=======
                       <Server size={16} className="text-slate-400 shrink-0" />
                       {item.logicalComp}
->>>>>>> zaraa
                     </div>
                   </td>
                   <td className="p-4 border-r border-slate-100">
@@ -239,7 +152,6 @@ const ApplicationPortfolioPage = () => {
           </table>
         </div>
       </div>
-
     </div>
   );
 };

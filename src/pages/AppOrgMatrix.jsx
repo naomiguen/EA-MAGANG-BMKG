@@ -1,35 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Users, AppWindow } from "lucide-react";
-// Import client supabase kamu
-import { supabase } from "../lib/supabaseClient";
 
 const AppOrgMatrixPage = () => {
-<<<<<<< HEAD
-  const [matrixData, setMatrixData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchMatrixData();
-  }, []);
-
-  const fetchMatrixData = async () => {
-    try {
-      setLoading(true);
-      // Supabase otomatis mengonversi kolom array PostgreSQL menjadi array JavaScript
-      const { data, error } = await supabase
-        .from('app_org_matrix')
-        .select('*')
-        .order('id', { ascending: true });
-
-      if (error) throw error;
-      setMatrixData(data);
-    } catch (error) {
-      console.error("Error fetching org matrix:", error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-=======
+  // Langsung definisikan data di sini tanpa useState jika tidak ada perubahan data
   const matrixData = [
     {
       id: 1,
@@ -56,9 +29,9 @@ const AppOrgMatrixPage = () => {
       orgUnit: "Tata Usaha (Keuangan)",
       role: "Pengelolaan Anggaran & Laporan",
       applications: [
-        "Aplikasi SAKTI (Sistem Aplikasi Keuangan Tingkat Instansi)",
-        "Aplikasi SAIBA (Sistem Akuntansi Instansi)",
-        "Aplikasi GPP (Gaji)",
+        "Aplikasi SAKTI",
+        "Aplikasi SAIBA",
+        "Aplikasi GPP",
         "SPRINT"
       ],
     },
@@ -67,8 +40,8 @@ const AppOrgMatrixPage = () => {
       orgUnit: "Tata Usaha (Aset/BMN)",
       role: "Manajemen Barang Milik Negara",
       applications: [
-        "SIMAK BMN (Sistem Informasi Manajemen dan Akuntansi BMN)",
-        "SIMAN (Sistem Informasi Manajemen Aset Negara)",
+        "SIMAK BMN",
+        "SIMAN",
         "SIPPB"
       ],
     },
@@ -77,10 +50,10 @@ const AppOrgMatrixPage = () => {
       orgUnit: "Tata Usaha (Kepegawaian)",
       role: "Manajemen SDM & Administrasi",
       applications: [
-        "Aplikasi SIMAS (Sistem Informasi Manajemen ASN)",
-        "E-Kinerja & SPRESO (Presensi Online)",
+        "Aplikasi SIMAS",
+        "E-Kinerja & SPRESO",
         "MySAPK BKN",
-        "E-Office BMKG (Surat Menyurat)"
+        "E-Office BMKG"
       ],
     },
     {
@@ -88,26 +61,23 @@ const AppOrgMatrixPage = () => {
       orgUnit: "Unit Teknisi",
       role: "Pemeliharaan & Metadata",
       applications: [
-        "Monitoring Tools (Alat & Jaringan)",
+        "Monitoring Tools",
         "Aplikasi Metadata WIGOS",
         "Aplikasi Maintenance Logbook"
       ],
     },
   ];
->>>>>>> zaraa
 
   return (
     <div className="min-h-screen bg-slate-50 py-10 px-4 md:px-8 font-sans text-slate-800">
       
       {/* Header */}
       <div className="max-w-6xl mx-auto mb-8 text-center">
-        <div className="relative">
-            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2 pt-8 md:pt-0">
-              Application - Organization Matrix
-            </h1>
-        </div>
+        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2 pt-8 md:pt-0">
+          Application - Organization Matrix
+        </h1>
         <p className="text-slate-600 text-lg max-w-3xl mx-auto mt-4">
-          Pemetaan hubungan antara Unit Organisasi dengan Aplikasi yang digunakan untuk mendukung tugas dan fungsinya sesuai SK Uraian Tugas.
+          Pemetaan hubungan antara Unit Organisasi dengan Aplikasi sesuai SK Uraian Tugas.
         </p>
       </div>
 
@@ -132,39 +102,25 @@ const AppOrgMatrixPage = () => {
               </tr>
             </thead>
             <tbody className="text-slate-700">
-              
-              {/* Loading State */}
-              {loading && (
-                <tr>
-                  <td colSpan="2" className="p-8 text-center text-slate-500 italic">
-                    Memuat data matriks organisasi...
-                  </td>
-                </tr>
-              )}
-
-              {/* Data Rows */}
-              {!loading && matrixData.map((item, index) => (
+              {matrixData.map((item, index) => (
                 <tr 
                   key={item.id} 
                   className={`border-b border-slate-100 transition-colors ${
                     index % 2 === 0 ? "bg-white" : "bg-slate-50"
                   } hover:bg-blue-50`}
                 >
-                  {/* Kolom Organisasi (item.org_unit) */}
                   <td className="p-5 border-r border-slate-200 align-top">
                     <div className="font-bold text-slate-900 text-base mb-1">
-                      {item.org_unit} 
+                      {item.orgUnit} 
                     </div>
                     <div className="text-xs text-slate-500 font-medium uppercase tracking-wide">
                       {item.role}
                     </div>
                   </td>
 
-                  {/* Kolom Aplikasi (item.applications) */}
                   <td className="p-5 align-top">
                     <div className="flex flex-wrap gap-2">
-                      {/* Pastikan applications ada isinya sebelum di-map */}
-                      {item.applications && item.applications.map((app, idx) => (
+                      {item.applications.map((app, idx) => (
                         <span 
                           key={idx} 
                           className="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-white border border-slate-300 text-slate-700 shadow-sm"
