@@ -164,8 +164,6 @@ const Dashboard = () => {
       navigate("/app/org_matrix");
       return;
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
     if (item.title === "Application Principles") {
       navigate("/app/principles");
       return;
@@ -182,20 +180,17 @@ const Dashboard = () => {
       navigate("/app/porto-assesment");
       return;
     }
-=======
+
     if (item.title === "Application Use Case Diagram") {
       navigate("/app/usecase");
       return;
     }
 
-    // Default: halaman belum dibuat
->>>>>>> zaraa
-=======
     if (item.title === "Application - Business Process Matrix"){
       navigate("/app/process-matrix");
       return;
     }
->>>>>>> origin/rahmi
+
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 
