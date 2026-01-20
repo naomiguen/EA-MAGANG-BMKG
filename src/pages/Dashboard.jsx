@@ -165,6 +165,7 @@ const Dashboard = () => {
       return;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (item.title === "Application Principles") {
       navigate("/app/principles");
       return;
@@ -189,6 +190,12 @@ const Dashboard = () => {
 
     // Default: halaman belum dibuat
 >>>>>>> zaraa
+=======
+    if (item.title === "Application - Business Process Matrix"){
+      navigate("/app/process-matrix");
+      return;
+    }
+>>>>>>> origin/rahmi
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 

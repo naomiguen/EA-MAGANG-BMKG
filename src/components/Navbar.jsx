@@ -82,25 +82,8 @@ const Navbar = () => {
         { name: 'Technology Standard Catalog', href: '/tech/standardsCatalog' },
       ]
     },
+
     { 
-<<<<<<< HEAD
-=======
-      name: 'Application', 
-      href: null, 
-      children: [
-        { name: 'Application Principles', href: '/app' },
-        { name: 'Application Portfolio Catalog', href: '/app/portfolio' },
-        { name: 'Application Use Case Diagram', href: '/app/usecase' },
-        { name: 'Application - Portofolio Assessment', href: '/app' },
-        { name: 'Application - User and Location Diagram', href: '/app' },
-        { name: 'Application - Communication Diagram', href: '/app' },
-        { name: 'Application - Business Process Matrix', href: '/app' },
-        { name: 'Application - Classification Matrix', href: '/app' },
-        { name: 'Application - Organization Matrix', href: '/app/org_matrix' },
-      ]
-    },
-    { 
->>>>>>> zaraa
       name: 'Architecture Implementation', 
       href: null, 
       children: [
