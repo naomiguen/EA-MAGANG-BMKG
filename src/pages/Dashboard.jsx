@@ -164,6 +164,10 @@ const Dashboard = () => {
       navigate("/app/org_matrix");
       return;
     }
+    if (item.title === "Application - Business Process Matrix"){
+      navigate("/app/process-matrix");
+      return;
+    }
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 

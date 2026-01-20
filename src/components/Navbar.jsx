@@ -58,7 +58,7 @@ const Navbar = () => {
         { name: 'Application - Portofolio Assessment', href: '/app' },
         { name: 'Application - User and Location Diagram', href: '/app' },
         { name: 'Application - Communication Diagram', href: '/app' },
-        { name: 'Application - Business Process Matrix', href: '/app' },
+        { name: 'Application - Business Process Matrix', href: '/app/process-matrix' },
         { name: 'Application - Classification Matrix', href: '/app' },
         { name: 'Application - Organization Matrix', href: '/app/org_matrix' },
       ]

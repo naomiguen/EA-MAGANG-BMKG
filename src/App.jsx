@@ -29,6 +29,7 @@ import TechnologyNetworkDiagram from "./pages/TechnologyNetworkDiagram";
 import TechnologyAppMatrix from "./pages/TechnologyAppMatrix";
 import SolutionConceptPage from "./pages/SolutionConceptPage";
 import ApplicationPortfolioPage from "./pages/PortfolioCatalogPage";
+import AppBusinessProcessMatrixPage from "./pages/AppBusinessProcessMatrix";
 import AppOrgMatrixPage from "./pages/AppOrgMatrix";
 import BusinessInteractionDiagram from "./pages/BusinessInteractionDiagram";
 import CorporateGovernancePage from "./pages/CorporateGovernancePage";
@@ -78,6 +79,7 @@ function App() {
           <Route path="/tech/networkCommunicationDiagram" element={<TechnologyNetworkDiagram />} />
           <Route path="/tech/appMatrix" element={<TechnologyAppMatrix />} />
           <Route path="/app/portfolio" element={<ApplicationPortfolioPage />} />
+          <Route path="/app/process-matrix" element={<AppBusinessProcessMatrixPage />} />
           <Route path="/app/org_matrix" element={<AppOrgMatrixPage />} />
           <Route path="/business/interaction" element={<BusinessInteractionDiagram />} />
           <Route path="/business/corporate_governance" element={<CorporateGovernancePage />} />
