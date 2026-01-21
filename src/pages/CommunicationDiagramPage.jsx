@@ -1,93 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabaseClient';
 import petaKonsepSvg from '../assets/communicationDiagram.drawio.svg?raw';
 
 const DiagramArsitektur = () => {
   const [selectedApp, setSelectedApp] = useState(null);
+  const [appDetails, setAppDetails] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const appDetails = {
-    bmkgsoft: {
-      title: "BMKGSoft & WXREV",
-      type: "Core Business",
-      desc: "Layanan Pengolahan Data Observasi. Sistem Nowcasting mengambil data hujan/suhu harian dari sini via API.",
-      color: "#1e88e5",
-      details: {
-        fungsi: "Sistem pengolahan data observasi cuaca dari stasiun meteorologi di seluruh Indonesia",
-        dataYangDisediakan: ["Data suhu udara harian", "Data curah hujan", "Data kelembaban", "Data tekanan udara"],
-        metodeAkses: "REST API dengan autentikasi token",
-        frekuensiUpdate: "Real-time setiap 10 menit"
-      }
-    },
-    cmss: {
-      title: "CMSS & AFTN",
-      type: "Core Business",
-      desc: "Backbone komunikasi data global (GTS). Sumber data satelit Himawari & Radar real-time.",
-      color: "#1e88e5",
-      details: {
-        fungsi: "Communication Management System & Aeronautical Fixed Telecommunication Network",
-        dataYangDisediakan: ["Data satelit Himawari-8/9", "Data radar cuaca real-time", "Data GTS"],
-        metodeAkses: "Protocol GTS, FTP, dan WebSocket",
-        frekuensiUpdate: "Real-time (continuous streaming)"
-      }
-    },
-    wigos: {
-      title: "WIGOS",
-      type: "Core Technical",
-      desc: "Database metadata alat. Sistem perlu tahu koordinat lat/long radar agar plotting peta akurat.",
-      color: "#1976d2",
-      details: {
-        fungsi: "WMO Integrated Global Observing System - Database metadata peralatan observasi",
-        dataYangDisediakan: ["Koordinat geografis (Lat/Long) radar", "Spesifikasi teknis alat"],
-        metodeAkses: "REST API dan database query",
-        frekuensiUpdate: "Update saat ada perubahan metadata"
-      }
-    },
-    simas: {
-      title: "SIMAS & SPRESO",
-      type: "Management",
-      desc: "Sistem Kepegawaian. Digunakan untuk validasi login (Single Sign-On) pegawai BMKG.",
-      color: "#1565c0",
-      details: {
-        fungsi: "Sistem Informasi Manajemen Aparatur Sipil Negara - SSO Provider",
-        dataYangDisediakan: ["Data profil pegawai", "Role dan hak akses", "Token autentikasi SSO"],
-        metodeAkses: "OAuth 2.0 / SAML SSO",
-        frekuensiUpdate: "Sinkronisasi harian"
-      }
-    },
-    nowcasting: {
-      title: "SISTEM NOWCASTING",
-      type: "Future State",
-      desc: "Aplikasi Web-based baru. Mengolah data mentah dari berbagai sumber menjadi visualisasi peringatan dini.",
-      color: "#6a1b9a",
-      details: {
-        fungsi: "Platform terpusat untuk prediksi cuaca jangka pendek (0-6 jam ke depan)",
-        fiturUtama: ["Dashboard real-time", "Visualisasi peta interaktif", "Sistem alerting otomatis"],
-        teknologi: "Web-based (React/Vue), Node.js backend, PostgreSQL/TimescaleDB",
-        target: "Forecaster, Analis Cuaca, Management BMKG"
-      }
-    },
-    portal: {
-      title: "Portal Web BMKG",
-      type: "Output / Diseminasi",
-      desc: "Website publik. Sistem otomatis mengirim (Push) warning ke sini agar dibaca masyarakat.",
-      color: "#1e88e5",
-      details: {
-        fungsi: "Portal informasi cuaca untuk masyarakat umum",
-        outputYangDiterima: ["Warning cuaca ekstrem", "Prakiraan cuaca", "Peta radar dan satelit"],
-        metodeIntegrasi: "REST API push notification",
-        audiensTarget: "Masyarakat umum, media massa"
-      }
-    },
-    synergie: {
-      title: "Synergie Lama",
-      type: "Legacy Workstation",
-      desc: "Software desktop eksisting. Data tetap dikirim ke sini untuk backward compatibility.",
-      color: "#1e88e5",
-      details: {
-        fungsi: "Legacy workstation software untuk analisis cuaca (berbasis desktop)",
-        alasanIntegrasi: ["Backward compatibility", "Transisi bertahap"],
-        metodeIntegrasi: "File export (NetCDF, GRIB2) dan FTP transfer",
-        statusPenggunaan: "Akan di-phase out secara bertahap"
-      }
+  useEffect(() => {
+    fetchAppDetails();
+  }, []);
+
+  const fetchAppDetails = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const { data: apps, error: appsError } = await supabase
+        .from('application_details')
+        .select('*');
+
+      if (appsError) throw appsError;
+
+      const { data: fields, error: fieldsError } = await supabase
+        .from('application_detail_fields')
+        .select('*')
+        .order('display_order');
+
+      if (fieldsError) throw fieldsError;
+
+      const transformedData = {};
+      
+      apps.forEach(app => {
+        const appFields = fields.filter(f => f.app_id === app.id);
+        
+        const details = {};
+        appFields.forEach(field => {
+          if (field.field_type === 'list') {
+            if (!details[field.field_name]) {
+              details[field.field_name] = [];
+            }
+            details[field.field_name].push(field.field_value);
+          } else {
+            details[field.field_name] = field.field_value;
+          }
+        });
+
+        transformedData[app.id] = {
+          title: app.title,
+          type: app.type,
+          desc: app.description,
+          color: app.color,
+          details: details
+        };
+      });
+
+      setAppDetails(transformedData);
+    } catch (err) {
+      console.error('Error fetching app details:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -96,7 +70,6 @@ const DiagramArsitektur = () => {
     let foundId = null;
     let attempts = 0;
     
-    // Memanjat ke atas mencari atribut data-cell-id atau id
     while (current && attempts < 10) {
       const id = current.getAttribute ? (current.getAttribute('data-cell-id') || current.id) : null;
       
@@ -117,6 +90,34 @@ const DiagramArsitektur = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-800 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading diagram...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md w-full">
+          <h3 className="text-red-800 font-bold mb-2">Error Loading Data</h3>
+          <p className="text-red-600 text-sm mb-4">{error}</p>
+          <button
+            onClick={fetchAppDetails}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 font-sans p-4 sm:p-8">
       
@@ -125,9 +126,14 @@ const DiagramArsitektur = () => {
           Application Communication Diagram
         </h1>
         <p className="text-gray-600 text-sm sm:text-base">Klik pada kotak sistem untuk melihat detail.</p>
+        <button
+          onClick={fetchAppDetails}
+          className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+        >
+          Refresh Data
+        </button>
       </div>
 
-      {/* CONTAINER SVG */}
       <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 sm:p-6 overflow-auto">
         <div 
           id="svg-wrapper"
@@ -137,7 +143,6 @@ const DiagramArsitektur = () => {
         />
       </div>
 
-      {/* MODAL POPUP */}
       {selectedApp && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" 
@@ -147,7 +152,6 @@ const DiagramArsitektur = () => {
             className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden animate-[slideUp_0.3s_ease-out]" 
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header */}
             <div 
               className="p-4 sm:p-6 text-white flex justify-between items-start"
               style={{ backgroundColor: selectedApp.color }}
@@ -170,14 +174,12 @@ const DiagramArsitektur = () => {
               </button>
             </div>
 
-            {/* Body */}
             <div className="p-4 sm:p-6 max-h-[60vh] overflow-y-auto">
               <p className="text-gray-700 text-sm sm:text-base mb-6 leading-relaxed border-b pb-4">
                 {selectedApp.desc}
               </p>
 
               <div className="space-y-4">
-                {/* Fungsi Utama */}
                 {selectedApp.details.fungsi && (
                   <div className="bg-slate-50 p-4 rounded-lg border-l-4 border-slate-400">
                     <h3 className="font-bold text-slate-800 text-xs sm:text-sm uppercase mb-2">Fungsi Utama</h3>
@@ -185,7 +187,6 @@ const DiagramArsitektur = () => {
                   </div>
                 )}
 
-                {/* Data yang Disediakan / Output */}
                 {(selectedApp.details.dataYangDisediakan || selectedApp.details.outputYangDiterima) && (
                   <div>
                     <h3 className="font-bold text-gray-800 text-xs sm:text-sm uppercase mb-3">
@@ -202,7 +203,6 @@ const DiagramArsitektur = () => {
                   </div>
                 )}
                 
-                {/* Fitur Unggulan (Nowcasting) */}
                 {selectedApp.details.fiturUtama && (
                   <div>
                     <h3 className="font-bold text-gray-800 text-xs sm:text-sm uppercase mb-3">Fitur Unggulan</h3>
@@ -216,7 +216,6 @@ const DiagramArsitektur = () => {
                   </div>
                 )}
 
-                {/* Alasan Integrasi (Synergie) */}
                 {selectedApp.details.alasanIntegrasi && (
                   <div>
                     <h3 className="font-bold text-gray-800 text-xs sm:text-sm uppercase mb-3">Alasan Integrasi</h3>
@@ -231,7 +230,6 @@ const DiagramArsitektur = () => {
                   </div>
                 )}
 
-                {/* Info Teknis (Grid 2 Kolom) */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                   {selectedApp.details.metodeAkses && (
                     <div className="bg-blue-50 p-3 rounded-lg border-l-2 border-blue-400">
@@ -267,6 +265,12 @@ const DiagramArsitektur = () => {
                     <div className="bg-teal-50 p-3 rounded-lg border-l-2 border-teal-400">
                       <div className="font-semibold text-teal-900 text-xs uppercase mb-1">Audiens</div>
                       <div className="text-teal-700 text-sm">{selectedApp.details.audiensTarget}</div>
+                    </div>
+                  )}
+                  {selectedApp.details.teknologi && (
+                    <div className="bg-purple-50 p-3 rounded-lg border-l-2 border-purple-400">
+                      <div className="font-semibold text-purple-900 text-xs uppercase mb-1">Teknologi</div>
+                      <div className="text-purple-700 text-sm">{selectedApp.details.teknologi}</div>
                     </div>
                   )}
                 </div>

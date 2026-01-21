@@ -43,7 +43,8 @@ import CommunicationDiagramPage from "./pages/CommunicationDiagramPage";
 import PortofolioAssesmentPage from "./pages/PortofolioAssesmentPage"
 import UseCaseGallery from "./pages/AppUseCasePage";
 import DetailPage from "./pages/DetailUsecasePage";
-
+import BusinessProcessAppMatrix from "./pages/BusinessAppMatrix";
+import BusinessDataMatrixPage from "./pages/BusinessDataMatrixPage";  
 
 function App() {
   return (
@@ -97,6 +98,8 @@ function App() {
           <Route path="/app/porto-assesment" element={<PortofolioAssesmentPage />} /> 
           <Route path="/app/usecase" element={<UseCaseGallery />} />
           <Route path="/detail/:id" element={<DetailPage />} />
+          <Route path="/business/appMatrix" element={<BusinessProcessAppMatrix />} />
+          <Route path="/business/dataMatrix" element={<BusinessDataMatrixPage />} />
 
 
           {/* Placeholder untuk halaman yang belum ada */}
