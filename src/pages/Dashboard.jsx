@@ -90,6 +90,10 @@ const Dashboard = () => {
       navigate('/business/businessprinciples');
       return;
     }
+    if (item.title === "KPI") {
+      navigate('/business/kpi');
+      return;
+    }
     if (item.title === "Solution Concept Diagram") {
       navigate('/vision/solution');
       return;

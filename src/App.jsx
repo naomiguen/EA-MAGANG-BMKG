@@ -27,6 +27,7 @@ import ConceptualDiagramPage from "./pages/ConceptualPage";
 import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix";
 import BusinessProcessPage from "./pages/BusinessProcess";
 import BusinessPrinciplePage from "./pages/BusinessPrinciple";
+import KPIpage from "./pages/KPI";
 import TechnologyNetworkDiagram from "./pages/TechnologyNetworkDiagram";
 import TechnologyAppMatrix from "./pages/TechnologyAppMatrix";
 import SolutionConceptPage from "./pages/SolutionConceptPage";
@@ -75,6 +76,7 @@ function App() {
           <Route path="/business/functional" element={<FunctionalDecompositionPage />} />
           <Route path="/business/probis" element={<BusinessProcessPage />} />
           <Route path="/business/businessprinciples" element={<BusinessPrinciplePage />} />
+          <Route path="/business/kpi" element={<KPIpage />} />
           <Route path="/data/dataprinciples" element={<DataPrinciplesPage />} />
           <Route path="/data/component" element={<DataEntityPage />} />
           <Route path="/data/logical" element={<LogicalDataDiagram />} />
