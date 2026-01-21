@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { appData } from "../services/data"; // Sesuaikan path data Anda
+import { appData } from "../services/data";
 
 const DetailPage = () => {
   const { id } = useParams();

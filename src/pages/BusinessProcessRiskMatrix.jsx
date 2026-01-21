@@ -1,6 +1,5 @@
 // BusinessProcessRiskMatrix.jsx
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import "./css/BusinessProcessRiskMatrix.css";
 
 function MatrixIcon({ variant }) {
@@ -45,33 +44,15 @@ function MatrixCard({ title, subtitle, variant, onClick }) {
 }
 
 export default function BusinessProcessRiskMatrix() {
-  const navigate = useNavigate();
-
   return (
     <main className="bprm-page">
       <div className="bprm-container">
         <header className="bprm-hero">
           <h1 className="bprm-title">Business Process Risk Matrix</h1>
           <p className="bprm-subtitle">
-            Pilih salah satu matriks untuk melihat detail pada halaman masing masing.
+            Pemetaan risiko ke proses bisnis, kontrol, owner, dan aplikasi pendukung.
           </p>
         </header>
-
-        <section className="bprm-grid" aria-label="Risk matrices">
-          <MatrixCard
-            title="Corporate Risk Profile Matrix"
-            subtitle="Ringkasan risiko tingkat korporat untuk pemetaan governance dan objective."
-            variant="pink"
-            onClick={() => navigate("/business/risk/corporateRisk")}
-          />
-
-          <MatrixCard
-            title="Business Process Risk Matrix"
-            subtitle="Pemetaan risiko ke proses bisnis, kontrol, owner, dan aplikasi pendukung."
-            variant="green"
-            onClick={() => navigate("/business/risk/businessProcessRiskMatrix")}
-          />
-        </section>
       </div>
     </main>
   );

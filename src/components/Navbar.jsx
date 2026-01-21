@@ -35,13 +35,15 @@ const Navbar = () => {
       name: 'Business Arch', 
       href: null, 
       children: [
-        { name: 'Organizational Actor Catalog', href: '/business/organizational' },
-        { name: 'Business Process Map', href: '/business/process' },
-        { name: 'Business Process - Risk Matrix', href: '/business/RiskMatrix' },
-        { name: 'Functional Decomposition Diagram', href: '/business/functional' },
-        { name: 'Business Process', href: '/business/probis' },
         { name: 'Business Interaction', href: '/business/Interaction' },
+        { name: 'Business Process', href: '/business/probis' },
+        { name: 'Business Process - Application Matrix', href: '/business/appMatrix' },
+        { name: 'Business Process - Data Matrix', href: '/business/dataMatrix' },
+        { name: 'Business Process - Risk Matrix', href: '/business/RiskMatrix' },
+        { name: 'Business Process Map', href: '/business/process' },
         { name: 'Corporate Governance', href: '/business/corporate_governance' },
+        { name: 'Functional Decomposition Diagram', href: '/business/functional' },
+        { name: 'Organizational Actor Catalog', href: '/business/organizational' },
       ]
     },
     {
@@ -60,15 +62,15 @@ const Navbar = () => {
       name: 'Application', 
       href: null, 
       children: [
-        { name: 'Application Principles', href: '/app/principles' },
+        { name: 'Application Use Case Diagram', href: '/app/usecase' },
         { name: 'Application Portfolio Catalog', href: '/app/portfolio' },
-        { name: 'Application Use Case Diagram', href: '/app' },
-        { name: 'Application - Portofolio Assessment', href: '/app/porto-assesment' },
-        { name: 'Application - User and Location Diagram', href: '/app' },
-        { name: 'Application - Communication Diagram', href: '/app/communicationDiagram' },
+        { name: 'Application Principles', href: '/app/principles' },
         { name: 'Application - Business Process Matrix', href: '/app/process-matrix' },
         { name: 'Application - Classification Matrix', href: '/app/classification' },
+        { name: 'Application - Communication Diagram', href: '/app/communicationDiagram' },
         { name: 'Application - Organization Matrix', href: '/app/org_matrix' },
+        { name: 'Application - Portofolio Assessment', href: '/app/porto-assesment' },
+        { name: 'Application - User and Location Diagram', href: '/app' },
       ]
     },
     { 

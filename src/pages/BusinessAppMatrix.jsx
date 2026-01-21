@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../lib/supabaseClient";
 
-const AppBusinessProcessMatrixPage = () => {
+const BusinessProcessAppMatrix = () => {
   const [processes, setProcesses] = useState([]);
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch data dari Supabase
   useEffect(() => {
     fetchData();
   }, []);
@@ -17,7 +16,7 @@ const AppBusinessProcessMatrixPage = () => {
       setLoading(true);
       setError(null);
 
-      // Fetch business processes (sorted)
+      // Fetch business processes (sorted) - MENGGUNAKAN TABEL YANG SAMA
       const { data: processesData, error: processesError } = await supabase
         .from('business_processes')
         .select('*')
@@ -25,7 +24,7 @@ const AppBusinessProcessMatrixPage = () => {
 
       if (processesError) throw processesError;
 
-      // Fetch applications
+      // Fetch applications - MENGGUNAKAN TABEL YANG SAMA
       const { data: appsData, error: appsError } = await supabase
         .from('appbusinessprocessmatrix')
         .select('*')
@@ -33,42 +32,41 @@ const AppBusinessProcessMatrixPage = () => {
 
       if (appsError) throw appsError;
 
-      // Fetch app-process mapping
+      // Fetch app-process mapping - MENGGUNAKAN TABEL YANG SAMA
       const { data: mappingData, error: mappingError } = await supabase
         .from('app_process_mapping')
         .select('application_id, process_id');
 
       if (mappingError) throw mappingError;
 
-      // Transform data untuk aplikasi dengan proses mapping
-      const transformedApps = appsData.map(app => {
-        const processMapping = {};
+      // Transform data untuk proses dengan aplikasi mapping (ORIENTASI TERBALIK)
+      const transformedProcesses = processesData.map(proc => {
+        const appMapping = {};
         
-        processesData.forEach(process => {
+        appsData.forEach(app => {
           const hasMapping = mappingData.some(
-            m => m.application_id === app.id && m.process_id === process.id
+            m => m.application_id === app.id && m.process_id === proc.id
           );
-          processMapping[process.name] = hasMapping;
+          appMapping[app.name] = hasMapping;
         });
 
         return {
-          id: app.id,
-          name: app.name,
-          processes: processMapping
+          id: proc.id,
+          name: proc.name,
+          apps: appMapping
         };
       });
 
-      setProcesses(processesData.map(p => p.name));
-      setApplications(transformedApps);
-      setLoading(false);
+      setApplications(appsData.map(a => a.name));
+      setProcesses(transformedProcesses);
     } catch (err) {
       console.error('Error fetching data:', err);
       setError(err.message);
+    } finally {
       setLoading(false);
     }
   };
 
-  // Komponen Checkmark
   const CheckmarkImage = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +82,6 @@ const AppBusinessProcessMatrixPage = () => {
     </svg>
   );
 
-  // Loading state
   if (loading) {
     return (
       <div className="p-6 bg-gray-50 min-h-screen flex justify-center items-center">
@@ -96,7 +93,6 @@ const AppBusinessProcessMatrixPage = () => {
     );
   }
 
-  // Error state
   if (error) {
     return (
       <div className="p-6 bg-gray-50 min-h-screen flex justify-center items-center">
@@ -114,13 +110,12 @@ const AppBusinessProcessMatrixPage = () => {
     );
   }
 
-  // Main render
   return (
     <div className="p-6 bg-gray-50 min-h-screen flex justify-center">
       <div className="w-full max-w-7xl">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-800">
-            Matriks Aplikasi & Proses Bisnis
+            Matriks Proses Bisnis & Aplikasi
           </h2>
           <button
             onClick={fetchData}
@@ -138,32 +133,32 @@ const AppBusinessProcessMatrixPage = () => {
                   scope="col"
                   className="px-6 py-4 font-bold text-gray-900 sticky left-0 bg-gray-100 z-10 shadow-sm border-r border-gray-200 whitespace-nowrap"
                 >
-                  Application \ Process
+                  Process \ Application
                 </th>
-                {processes.map((proc) => (
+                {applications.map((app) => (
                   <th
-                    key={proc}
+                    key={app}
                     scope="col"
                     className="px-4 py-3 text-center min-w-[200px] border-r border-gray-300 whitespace-nowrap"
                   >
-                    {proc}
+                    {app}
                   </th>
                 ))}
               </tr>
             </thead>
 
             <tbody className="divide-y divide-gray-200">
-              {applications.map((app) => (
-                <tr key={app.id} className="bg-white hover:bg-gray-50 transition-colors">
+              {processes.map((proc) => (
+                <tr key={proc.id} className="bg-white hover:bg-gray-50 transition-colors">
                   <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap sticky left-0 bg-white hover:bg-gray-50 z-10 border-r border-gray-100 shadow-sm">
-                    {app.name}
+                    {proc.name}
                   </td>
 
-                  {processes.map((proc) => {
-                    const isChecked = app.processes[proc] === true;
+                  {applications.map((app) => {
+                    const isChecked = proc.apps[app] === true;
                     return (
                       <td
-                        key={`${app.id}-${proc}`}
+                        key={`${proc.id}-${app}`}
                         className={`px-4 py-4 text-center border-r border-gray-200 last:border-r-0 ${
                           isChecked ? "bg-green-100" : "bg-white"
                         }`}
@@ -179,11 +174,11 @@ const AppBusinessProcessMatrixPage = () => {
         </div>
 
         <div className="mt-4 text-sm text-gray-500 text-center">
-          Total: {applications.length} aplikasi × {processes.length} proses bisnis
+          Total: {processes.length} proses bisnis × {applications.length} aplikasi
         </div>
       </div>
     </div>
   );
 };
 
-export default AppBusinessProcessMatrixPage;
+export default BusinessProcessAppMatrix;
