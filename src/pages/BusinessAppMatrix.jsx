@@ -1,6 +1,6 @@
 import React from "react";
 
-const BusinessProcessAppMatrixPage = () => {
+const BusinessProcessAppMatrix = () => {
   const applications = [
     "BMKGSoft",
     "EDGE",
@@ -127,7 +127,7 @@ const BusinessProcessAppMatrixPage = () => {
     <div className="p-6 bg-gray-50 min-h-screen flex justify-center">
       <div className="w-full max-w-7xl">
         <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-          Matriks Aplikasi & Proses Bisnis
+          Matriks Proses Bisnis & Aplikasi
         </h2>
 
         {/* Wrapper Table untuk Scroll Horizontal (Overflow) */}
@@ -185,4 +185,4 @@ const BusinessProcessAppMatrixPage = () => {
   );
 };
 
-export default BusinessProcessAppMatrixPage;
+export default BusinessProcessAppMatrix;

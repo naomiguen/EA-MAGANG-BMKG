@@ -157,7 +157,7 @@ const AppBusinessProcessMatrixPage = () => {
               <tr>
                 <th
                   scope="col"
-                  className="px-6 py-4 font-bold text-gray-900 sticky left-0 bg-gray-100 z-10 shadow-sm border-r border-gray-200"
+                  className="px-6 py-4 font-bold text-gray-900 sticky left-0 bg-gray-100 z-10 shadow-sm border-r border-gray-200 whitespace-nowrap"
                 >
                   Application \ Process
                 </th>
@@ -165,7 +165,7 @@ const AppBusinessProcessMatrixPage = () => {
                   <th
                     key={proc}
                     scope="col"
-                    className="px-4 py-3 text-center min-w-[180px] border-r border-gray-300"
+                    className="px-4 py-3 text-center min-w-[200px] border-r border-gray-300 whitespace-nowrap"
                   >
                     {proc}
                   </th>
