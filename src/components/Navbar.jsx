@@ -38,6 +38,7 @@ const Navbar = () => {
         { name: 'Organizational Actor Catalog', href: '/business/organizational' },
         { name: 'Business Process Map', href: '/business/process' },
         { name: 'Business Process - Risk Matrix', href: '/business/RiskMatrix' },
+        { name: 'Business Process - Application Matrix', href: '/business/appMatrix' },
         { name: 'Functional Decomposition Diagram', href: '/business/functional' },
         { name: 'Business Process', href: '/business/probis' },
         { name: 'Business Interaction', href: '/business/Interaction' },
@@ -62,7 +63,7 @@ const Navbar = () => {
       children: [
         { name: 'Application Principles', href: '/app/principles' },
         { name: 'Application Portfolio Catalog', href: '/app/portfolio' },
-        { name: 'Application Use Case Diagram', href: '/app' },
+        { name: 'Application Use Case Diagram', href: '/app/usecase' },
         { name: 'Application - Portofolio Assessment', href: '/app/porto-assesment' },
         { name: 'Application - User and Location Diagram', href: '/app' },
         { name: 'Application - Communication Diagram', href: '/app/communicationDiagram' },

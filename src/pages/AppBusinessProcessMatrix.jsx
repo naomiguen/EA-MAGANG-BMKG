@@ -1,108 +1,130 @@
 import React from "react";
 
 const AppBusinessProcessMatrixPage = () => {
-  const applications = [
-    "BMKGSoft",
-    "EDGE",
-    "CMSS",
-    "Synergie Workstation",
-    "Portal Web BMKG",
-    "SIPPB",
-    "SIMAN",
-    "SIMAK BMN",
-    "SAKTI",
-    "App Persediaan",
-    "My SAPK",
-    "SIMAS",
-    "E-Office",
-    "SPRESO",
+  const processes = [
+    "Pengamatan Unsur Cuaca Permukaan",
+    "Pengamatan Cuaca Udara Atas (Radar)",
+    "Encoding Data",
+    "Pengiriman Data ke Pusat/Global",
+    "Kompilasi Data Global",
+    "Visualisasi dan Analisis Cuaca",
+    "Analisis Citra Satelit dan Radar",
+    "Pembuatan Prakiraan Cuaca",
+    "Diseminasi Informasi (Publikasi)",
+    "Penyusunan dan Revisi Anggaran",
+    "Inventarisasi Aset Tetap (BMN)",
+    "Akuntansi Aset dan Pelaporan Keuangan",
+    "Pengelolaan Persediaan (Gudang)",
+    "Administrasi Data Pegawai",
+    "Persuratan dan Disposisi",
+    "Pengelolaan Absensi dan Tukin",
+    "Pelaksanaan Anggaran (Pembayaran)",
   ];
 
-  const processes = [
+  const applications = [
     {
       id: 1,
-      name: "Pengamatan Unsur Cuaca Permukaan",
-      apps: { BMKGSoft: true },
+      name: "BMKGSoft",
+      processes: {
+        "Pengamatan Unsur Cuaca Permukaan": true,
+        "Encoding Data": true,
+        "Pembuatan Prakiraan Cuaca": true,
+      },
     },
     {
       id: 2,
-      name: "Pengamatan Cuaca Udara Atas (Radar)",
-      apps: { EDGE: true },
+      name: "EDGE",
+      processes: {
+        "Pengamatan Cuaca Udara Atas (Radar)": true,
+      },
     },
     {
       id: 3,
-      name: "Encoding Data",
-      apps: { BMKGSoft: true },
+      name: "CMSS",
+      processes: {
+        "Pengiriman Data ke Pusat/Global": true,
+        "Kompilasi Data Global": true,
+      },
     },
     {
       id: 4,
-      name: "Pengiriman Data ke Pusat/Global",
-      apps: { CMSS: true },
+      name: "Synergie Workstation",
+      processes: {
+        "Visualisasi dan Analisis Cuaca": true,
+        "Analisis Citra Satelit dan Radar": true,
+        "Pembuatan Prakiraan Cuaca": true,
+      },
     },
     {
       id: 5,
-      name: "Kompilasi Data Global",
-      apps: { CMSS: true },
+      name: "Portal Web BMKG",
+      processes: {
+        "Diseminasi Informasi (Publikasi)": true,
+      },
     },
     {
       id: 6,
-      name: "Visualisasi dan Analisis Cuaca",
-      apps: { "Synergie Workstation": true },
+      name: "SIPPB",
+      processes: {
+        "Penyusunan dan Revisi Anggaran": true,
+      },
     },
     {
       id: 7,
-      name: "Analisis Citra Satelit dan Radar",
-      apps: { "Synergie Workstation": true },
+      name: "SIMAN",
+      processes: {
+        "Inventarisasi Aset Tetap (BMN)": true,
+      },
     },
     {
       id: 8,
-      name: "Pembuatan Prakiraan Cuaca",
-      apps: { "Synergie Workstation": true, BMKGSoft: true },
+      name: "SIMAK BMN",
+      processes: {
+        "Akuntansi Aset dan Pelaporan Keuangan": true,
+      },
     },
     {
       id: 9,
-      name: "Diseminasi Informasi (Publikasi)",
-      apps: { "Portal Web BMKG": true },
+      name: "SAKTI",
+      processes: {
+        "Akuntansi Aset dan Pelaporan Keuangan": true,
+        "Pelaksanaan Anggaran (Pembayaran)": true,
+      },
     },
     {
       id: 10,
-      name: "Penyusunan dan Revisi Anggaran",
-      apps: { SIPPB: true },
+      name: "App Persediaan",
+      processes: {
+        "Pengelolaan Persediaan (Gudang)": true,
+      },
     },
     {
       id: 11,
-      name: "Inventarisasi Aset Tetap (BMN)",
-      apps: { SIMAN: true },
+      name: "My SAPK",
+      processes: {
+        "Administrasi Data Pegawai": true,
+      },
     },
     {
       id: 12,
-      name: "Akuntansi Aset dan Pelaporan Keuangan",
-      apps: { "SIMAK BMN": true, SAKTI: true },
+      name: "SIMAS",
+      processes: {
+        "Administrasi Data Pegawai": true,
+      },
     },
     {
       id: 13,
-      name: "Pengelolaan Persediaan (Gudang)",
-      apps: { "App Persediaan": true },
+      name: "E-Office",
+      processes: {
+        "Persuratan dan Disposisi": true,
+      },
     },
     {
       id: 14,
-      name: "Administrasi Data Pegawai",
-      apps: { "My SAPK": true, SIMAS: true },
-    },
-    {
-      id: 15,
-      name: "Persuratan dan Disposisi",
-      apps: { "E-Office": true },
-    },
-    {
-      id: 16,
-      name: "Pengelolaan Absensi dan Tukin",
-      apps: { SPRESO: true },
-    },
-    {
-      id: 17,
-      name: "Pelaksanaan Anggaran (Pembayaran)",
-      apps: { SAKTI: true },
+      name: "SPRESO",
+      processes: {
+        "Pengelolaan Absensi dan Tukin": true,
+      },
     },
   ];
 
@@ -110,7 +132,7 @@ const AppBusinessProcessMatrixPage = () => {
   const CheckmarkImage = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="w-5 h-5 mx-auto text-gray-800" // Tailwind classes
+      className="w-5 h-5 mx-auto text-gray-800"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -123,53 +145,46 @@ const AppBusinessProcessMatrixPage = () => {
   );
 
   return (
-    // Container Utama dengan padding dan background abu-abu tipis
     <div className="p-6 bg-gray-50 min-h-screen flex justify-center">
       <div className="w-full max-w-7xl">
         <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
           Matriks Aplikasi & Proses Bisnis
         </h2>
 
-        {/* Wrapper Table untuk Scroll Horizontal (Overflow) */}
         <div className="overflow-x-auto shadow-md sm:rounded-lg border border-gray-200 bg-white">
           <table className="w-full text-sm text-left text-gray-500">
-            {/* HEADER */}
             <thead className="text-xs text-gray-700 uppercase bg-gray-100 border-b border-gray-200">
               <tr>
-                {/* Kolom Pertama Sticky (Nempel di kiri) */}
                 <th
                   scope="col"
                   className="px-6 py-4 font-bold text-gray-900 sticky left-0 bg-gray-100 z-10 shadow-sm border-r border-gray-200"
                 >
-                  Process \ Application
+                  Application \ Process
                 </th>
-                {applications.map((app) => (
+                {processes.map((proc) => (
                   <th
-                    key={app}
+                    key={proc}
                     scope="col"
-                    className="px-4 py-3 text-center min-w-[100px] border-r border-gray-300" // Min-width biar header gak gepeng
+                    className="px-4 py-3 text-center min-w-[180px] border-r border-gray-300"
                   >
-                    {app}
+                    {proc}
                   </th>
                 ))}
               </tr>
             </thead>
 
-            {/* BODY */}
             <tbody className="divide-y divide-gray-200">
-              {processes.map((proc) => (
-                <tr key={proc.id} className="bg-white hover:bg-gray-50 transition-colors">
+              {applications.map((app) => (
+                <tr key={app.id} className="bg-white hover:bg-gray-50 transition-colors">
                   
-                  {/* Nama Proses (Sticky Left) */}
                   <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap sticky left-0 bg-white hover:bg-gray-50 z-10 border-r border-gray-100 shadow-sm">
-                    {proc.name}
+                    {app.name}
                   </td>
 
-                  {/* Looping Checkbox */}
-                  {applications.map((app) => {
-                    const isChecked = proc.apps[app] === true;
+                  {processes.map((proc) => {
+                    const isChecked = app.processes[proc] === true;
                     return (
-                      <td key={`${proc.id}-${app}`} className={`px-4 py-4 text-center border-r border-gray-200 last:border-r-0 
+                      <td key={`${app.id}-${proc}`} className={`px-4 py-4 text-center border-r border-gray-200 last:border-r-0 
                       ${isChecked ? "bg-green-100" : "bg-white"}`}>
                         {isChecked ? <CheckmarkImage /> : null}
                       </td>

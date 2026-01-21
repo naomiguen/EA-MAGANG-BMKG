@@ -2,6 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Database, FileText, Table as TableIcon } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
 
+// 3. Data Fallback (Defined outside component to avoid dependency issues)
+const fallbackData = [
+  { id: 1, app_name: "BMKGSoft", description: "Sistem penginputan data meteorologi.", data_entity: "Data Observasi", data_type: "Transactional Data" },
+  { id: 2, app_name: "CMSS", description: "Sistem pertukaran data global.", data_entity: "WMO Coded Data", data_type: "Transactional Data" },
+  { id: 3, app_name: "Synergie, Radar & Nowcasting", description: "Workstation analisis cuaca.", data_entity: "Produk Informasi", data_type: "Analytical Data" },
+  { id: 4, app_name: "Aplikasi SAKTI", description: "Sistem keuangan terintegrasi.", data_entity: "Data Keuangan", data_type: "Transactional Data" },
+  { id: 5, app_name: "Persediaan & SIPNB", description: "Manajemen aset negara.", data_entity: "Inventaris BMN", data_type: "Master Data" },
+  { id: 6, app_name: "E-Kinerja", description: "Manajemen kinerja ASN.", data_entity: "Data Kepegawaian", data_type: "Master Data" },
+  { id: 7, app_name: "E-Office BMKG", description: "Persuratan digital.", data_entity: "Dokumen Naskah Dinas", data_type: "Transactional Data" },
+  { id: 8, app_name: "WIGOS", description: "Metadata alat.", data_entity: "Metadata Alat (OSCAR)", data_type: "Master Data" }
+];
+
 const AppDataMatrixPage = () => {
   // 1. State untuk menampung data
   const [appDataMatrix, setAppDataMatrix] = useState([]);
@@ -9,40 +21,28 @@ const AppDataMatrixPage = () => {
 
   // 2. Fetch data saat komponen di-mount
   useEffect(() => {
+    const fetchAppData = async () => {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('app_data_matrix')
+          .select('*')
+          .order('id', { ascending: true });
+
+        if (error) throw error;
+        setAppDataMatrix(data);
+      } catch (error) {
+        console.error("Error fetching data:", error.message);
+        
+        // Jika database kosong/error, kita gunakan data fallback agar tidak kosong melompong
+        setAppDataMatrix(fallbackData); 
+      } finally {
+        setLoading(false);
+      }
+    };
+    
     fetchAppData();
   }, []);
-
-  const fetchAppData = async () => {
-    try {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from('app_data_matrix')
-        .select('*')
-        .order('id', { ascending: true });
-
-      if (error) throw error;
-      setAppDataMatrix(data);
-    } catch (error) {
-      console.error("Error fetching data:", error.message);
-      
-      // Jika database kosong/error, kita gunakan data fallback agar tidak kosong melompong
-      setAppDataMatrix(fallbackData); 
-    } finally {
-      setLoading(false);
-    }
-  }; // Kurung penutup fungsi fetchAppData yang tadi hilang
-
-  // 3. Data Fallback (Ganti nama agar tidak bentrok dengan state)
-  const fallbackData = [
-    { id: 1, app_name: "BMKGSoft", description: "Sistem penginputan data meteorologi.", data_entity: "Data Observasi", data_type: "Transactional Data" },
-    { id: 2, app_name: "CMSS", description: "Sistem pertukaran data global.", data_entity: "WMO Coded Data", data_type: "Transactional Data" },
-    { id: 3, app_name: "Synergie, Radar & Nowcasting", description: "Workstation analisis cuaca.", data_entity: "Produk Informasi", data_type: "Analytical Data" },
-    { id: 4, app_name: "Aplikasi SAKTI", description: "Sistem keuangan terintegrasi.", data_entity: "Data Keuangan", data_type: "Transactional Data" },
-    { id: 5, app_name: "Persediaan & SIPNB", description: "Manajemen aset negara.", data_entity: "Inventaris BMN", data_type: "Master Data" },
-    { id: 6, app_name: "E-Kinerja", description: "Manajemen kinerja ASN.", data_entity: "Data Kepegawaian", data_type: "Master Data" },
-    { id: 7, app_name: "E-Office BMKG", description: "Persuratan digital.", data_entity: "Dokumen Naskah Dinas", data_type: "Transactional Data" },
-    { id: 8, app_name: "WIGOS", description: "Metadata alat.", data_entity: "Metadata Alat (OSCAR)", data_type: "Master Data" }
-  ];
 
   // 4. Helper Style
   const getDataTypeStyle = (type) => {
