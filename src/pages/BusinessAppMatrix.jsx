@@ -1,116 +1,76 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { supabase } from "../lib/supabaseClient";
 
 const BusinessProcessAppMatrix = () => {
-  const applications = [
-    "BMKGSoft",
-    "EDGE",
-    "CMSS",
-    "Synergie Workstation",
-    "Portal Web BMKG",
-    "SIPPB",
-    "SIMAN",
-    "SIMAK BMN",
-    "SAKTI",
-    "App Persediaan",
-    "My SAPK",
-    "SIMAS",
-    "E-Office",
-    "SPRESO",
-  ];
+  const [processes, setProcesses] = useState([]);
+  const [applications, setApplications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const processes = [
-    {
-      id: 1,
-      name: "Pengamatan Unsur Cuaca Permukaan",
-      apps: { BMKGSoft: true },
-    },
-    {
-      id: 2,
-      name: "Pengamatan Cuaca Udara Atas (Radar)",
-      apps: { EDGE: true },
-    },
-    {
-      id: 3,
-      name: "Encoding Data",
-      apps: { BMKGSoft: true },
-    },
-    {
-      id: 4,
-      name: "Pengiriman Data ke Pusat/Global",
-      apps: { CMSS: true },
-    },
-    {
-      id: 5,
-      name: "Kompilasi Data Global",
-      apps: { CMSS: true },
-    },
-    {
-      id: 6,
-      name: "Visualisasi dan Analisis Cuaca",
-      apps: { "Synergie Workstation": true },
-    },
-    {
-      id: 7,
-      name: "Analisis Citra Satelit dan Radar",
-      apps: { "Synergie Workstation": true },
-    },
-    {
-      id: 8,
-      name: "Pembuatan Prakiraan Cuaca",
-      apps: { "Synergie Workstation": true, BMKGSoft: true },
-    },
-    {
-      id: 9,
-      name: "Diseminasi Informasi (Publikasi)",
-      apps: { "Portal Web BMKG": true },
-    },
-    {
-      id: 10,
-      name: "Penyusunan dan Revisi Anggaran",
-      apps: { SIPPB: true },
-    },
-    {
-      id: 11,
-      name: "Inventarisasi Aset Tetap (BMN)",
-      apps: { SIMAN: true },
-    },
-    {
-      id: 12,
-      name: "Akuntansi Aset dan Pelaporan Keuangan",
-      apps: { "SIMAK BMN": true, SAKTI: true },
-    },
-    {
-      id: 13,
-      name: "Pengelolaan Persediaan (Gudang)",
-      apps: { "App Persediaan": true },
-    },
-    {
-      id: 14,
-      name: "Administrasi Data Pegawai",
-      apps: { "My SAPK": true, SIMAS: true },
-    },
-    {
-      id: 15,
-      name: "Persuratan dan Disposisi",
-      apps: { "E-Office": true },
-    },
-    {
-      id: 16,
-      name: "Pengelolaan Absensi dan Tukin",
-      apps: { SPRESO: true },
-    },
-    {
-      id: 17,
-      name: "Pelaksanaan Anggaran (Pembayaran)",
-      apps: { SAKTI: true },
-    },
-  ];
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  // Komponen Checkmark dengan class Tailwind
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Fetch business processes (sorted) - MENGGUNAKAN TABEL YANG SAMA
+      const { data: processesData, error: processesError } = await supabase
+        .from('business_processes')
+        .select('*')
+        .order('sort_order');
+
+      if (processesError) throw processesError;
+
+      // Fetch applications - MENGGUNAKAN TABEL YANG SAMA
+      const { data: appsData, error: appsError } = await supabase
+        .from('appbusinessprocessmatrix')
+        .select('*')
+        .order('name');
+
+      if (appsError) throw appsError;
+
+      // Fetch app-process mapping - MENGGUNAKAN TABEL YANG SAMA
+      const { data: mappingData, error: mappingError } = await supabase
+        .from('app_process_mapping')
+        .select('application_id, process_id');
+
+      if (mappingError) throw mappingError;
+
+      // Transform data untuk proses dengan aplikasi mapping (ORIENTASI TERBALIK)
+      const transformedProcesses = processesData.map(proc => {
+        const appMapping = {};
+        
+        appsData.forEach(app => {
+          const hasMapping = mappingData.some(
+            m => m.application_id === app.id && m.process_id === proc.id
+          );
+          appMapping[app.name] = hasMapping;
+        });
+
+        return {
+          id: proc.id,
+          name: proc.name,
+          apps: appMapping
+        };
+      });
+
+      setApplications(appsData.map(a => a.name));
+      setProcesses(transformedProcesses);
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const CheckmarkImage = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="w-5 h-5 mx-auto text-gray-800" // Tailwind classes
+      className="w-5 h-5 mx-auto text-gray-800"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -122,24 +82,56 @@ const BusinessProcessAppMatrix = () => {
     </svg>
   );
 
+  if (loading) {
+    return (
+      <div className="p-6 bg-gray-50 min-h-screen flex justify-center items-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-6 bg-gray-50 min-h-screen flex justify-center items-center">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
+          <h3 className="text-red-800 font-bold mb-2">Error Loading Data</h3>
+          <p className="text-red-600 text-sm mb-4">{error}</p>
+          <button
+            onClick={fetchData}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    // Container Utama dengan padding dan background abu-abu tipis
     <div className="p-6 bg-gray-50 min-h-screen flex justify-center">
       <div className="w-full max-w-7xl">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-          Matriks Proses Bisnis & Aplikasi
-        </h2>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">
+            Matriks Proses Bisnis & Aplikasi
+          </h2>
+          <button
+            onClick={fetchData}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-sm"
+          >
+            Refresh Data
+          </button>
+        </div>
 
-        {/* Wrapper Table untuk Scroll Horizontal (Overflow) */}
         <div className="overflow-x-auto shadow-md sm:rounded-lg border border-gray-200 bg-white">
           <table className="w-full text-sm text-left text-gray-500">
-            {/* HEADER */}
             <thead className="text-xs text-gray-700 uppercase bg-gray-100 border-b border-gray-200">
               <tr>
-                {/* Kolom Pertama Sticky (Nempel di kiri) */}
                 <th
                   scope="col"
-                  className="px-6 py-4 font-bold text-gray-900 sticky left-0 bg-gray-100 z-10 shadow-sm border-r border-gray-200"
+                  className="px-6 py-4 font-bold text-gray-900 sticky left-0 bg-gray-100 z-10 shadow-sm border-r border-gray-200 whitespace-nowrap"
                 >
                   Process \ Application
                 </th>
@@ -147,7 +139,7 @@ const BusinessProcessAppMatrix = () => {
                   <th
                     key={app}
                     scope="col"
-                    className="px-4 py-3 text-center min-w-[100px] border-r border-gray-300" // Min-width biar header gak gepeng
+                    className="px-4 py-3 text-center min-w-[200px] border-r border-gray-300 whitespace-nowrap"
                   >
                     {app}
                   </th>
@@ -155,22 +147,22 @@ const BusinessProcessAppMatrix = () => {
               </tr>
             </thead>
 
-            {/* BODY */}
             <tbody className="divide-y divide-gray-200">
               {processes.map((proc) => (
                 <tr key={proc.id} className="bg-white hover:bg-gray-50 transition-colors">
-                  
-                  {/* Nama Proses (Sticky Left) */}
                   <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap sticky left-0 bg-white hover:bg-gray-50 z-10 border-r border-gray-100 shadow-sm">
                     {proc.name}
                   </td>
 
-                  {/* Looping Checkbox */}
                   {applications.map((app) => {
                     const isChecked = proc.apps[app] === true;
                     return (
-                      <td key={`${proc.id}-${app}`} className={`px-4 py-4 text-center border-r border-gray-200 last:border-r-0 
-                      ${isChecked ? "bg-green-100" : "bg-white"}`}>
+                      <td
+                        key={`${proc.id}-${app}`}
+                        className={`px-4 py-4 text-center border-r border-gray-200 last:border-r-0 ${
+                          isChecked ? "bg-green-100" : "bg-white"
+                        }`}
+                      >
                         {isChecked ? <CheckmarkImage /> : null}
                       </td>
                     );
@@ -179,6 +171,10 @@ const BusinessProcessAppMatrix = () => {
               ))}
             </tbody>
           </table>
+        </div>
+
+        <div className="mt-4 text-sm text-gray-500 text-center">
+          Total: {processes.length} proses bisnis × {applications.length} aplikasi
         </div>
       </div>
     </div>
