@@ -110,7 +110,16 @@ const Dashboard = () => {
       navigate('/business/corporate_governance');
       return;
     }
+    
+    if (item.title === "Business Process - Application Matrix"){
+      navigate("/business/appMatrix");
+      return;
+    }
 
+    if (item.title === "Business Process - Data Matrix"){
+      navigate("/business/dataMatrix");
+      return;
+    }
 
     // Data Section
     if (item.title === "Data Entity - Data Component Catalog") {
@@ -188,11 +197,6 @@ const Dashboard = () => {
 
     if (item.title === "Application - Business Process Matrix"){
       navigate("/app/process-matrix");
-      return;
-    }
-    
-    if (item.title === "Business Process - Application Matrix"){
-      navigate("/business/appMatrix");
       return;
     }
 

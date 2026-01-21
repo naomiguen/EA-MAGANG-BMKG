@@ -35,10 +35,11 @@ const Navbar = () => {
       name: 'Business Arch', 
       href: null, 
       children: [
-        { name: 'Business Process - Application Matrix', href: '/business/appMatrix' },
-        { name: 'Business Process - Risk Matrix', href: '/business/RiskMatrix' },
         { name: 'Business Interaction', href: '/business/Interaction' },
         { name: 'Business Process', href: '/business/probis' },
+        { name: 'Business Process - Application Matrix', href: '/business/appMatrix' },
+        { name: 'Business Process - Data Matrix', href: '/business/dataMatrix' },
+        { name: 'Business Process - Risk Matrix', href: '/business/RiskMatrix' },
         { name: 'Business Process Map', href: '/business/process' },
         { name: 'Corporate Governance', href: '/business/corporate_governance' },
         { name: 'Functional Decomposition Diagram', href: '/business/functional' },

@@ -43,7 +43,7 @@ import CommunicationDiagramPage from "./pages/CommunicationDiagramPage";
 import PortofolioAssesmentPage from "./pages/PortofolioAssesmentPage"
 import UseCaseGallery from "./pages/AppUseCasePage";
 import DetailPage from "./pages/DetailUsecasePage";
-import BusinessProcessAppMatrixPage from "./pages/BusinessAppMatrix";
+import BusinessProcessAppMatrix from "./pages/BusinessAppMatrix";
 import BusinessDataMatrixPage from "./pages/BusinessDataMatrixPage";  
 
 function App() {

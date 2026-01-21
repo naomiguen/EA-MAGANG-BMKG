@@ -101,7 +101,7 @@ const BusinessDataMatrixPage = () => {
       {/* Header */}
       <div className="text-center mb-10 max-w-4xl">
         <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3">
-          Data Entity - Business Function Matrix
+          Business Proceas - Data Entity Matrix
         </h1>
         <p className="text-slate-500 text-lg">
           Pemetaan hubungan antara fungsi bisnis (baris) dengan entitas data (kolom) dalam operasional stasiun.
@@ -115,12 +115,12 @@ const BusinessDataMatrixPage = () => {
             <thead>
               <tr>
                 {/* Pojok Kiri Atas Kosong */}
-                <th className="bg-slate-100 border-b border-r border-slate-200 p-4 text-left font-bold text-slate-700 min-w-[200px]">
+                <th className="bg-slate-100 border-b border-r border-slate-200 p-4 text-left font-bold text-slate-700 min-w-[200px] whitespace-nowrap">
                   Fungsi Bisnis \ Entitas Data
                 </th>
                 {/* Header Kolom (Data Entities) */}
                 {dataEntities.map(data => (
-                  <th key={data.id} className="bg-slate-50 border-b border-slate-200 p-4 text-center font-semibold text-slate-600 min-w-[100px] hover:bg-slate-100 transition-colors">
+                  <th key={data.id} className="bg-slate-50 border-b border-slate-200 p-4 text-center font-semibold text-slate-600 min-w-[100px] hover:bg-slate-100 transition-colors whitespace-nowrap">
                     {data.name}
                   </th>
                 ))}
@@ -138,7 +138,7 @@ const BusinessDataMatrixPage = () => {
                 businessFunctions.map(func => (
                   <tr key={func.id} className="hover:bg-slate-50 transition-colors">
                     {/* Header Baris */}
-                    <th className="bg-white border-r border-slate-200 p-4 text-left font-medium text-slate-800 border-b">
+                    <th className="bg-white border-r border-slate-200 p-4 text-left font-medium text-slate-800 border-b whitespace-nowrap">
                       {func.name}
                     </th>
                     {/* Sel Matriks */}
