@@ -24,6 +24,7 @@ const Navbar = () => {
       children: [
         { name: 'Architecture Principles', href: '/vision/principles' },
         { name: 'Architecture Goals', href: '/vision/goals' },
+        { name: 'Business Canvas Model', href: '/vision/businessmodelcanvas' },
         { name: 'Organization Decomposition Diagram', href: '/vision/organization' },
         { name: 'Stakeholder Catalog', href: '/vision/stakeholder' },
         { name: 'Solution Concept Diagram', href: '/vision/solution' },
@@ -36,6 +37,7 @@ const Navbar = () => {
       href: null, 
       children: [
         { name: 'Business Interaction', href: '/business/Interaction' },
+        { name: 'Business Principles', href: '/business/businessprinciples' },
         { name: 'Business Process', href: '/business/probis' },
         { name: 'Business Process - Application Matrix', href: '/business/appMatrix' },
         { name: 'Business Process - Data Matrix', href: '/business/dataMatrix' },
@@ -43,6 +45,7 @@ const Navbar = () => {
         { name: 'Business Process Map', href: '/business/process' },
         { name: 'Corporate Governance', href: '/business/corporate_governance' },
         { name: 'Functional Decomposition Diagram', href: '/business/functional' },
+        { name: 'KPI', href: '/business/kpi' },
         { name: 'Organizational Actor Catalog', href: '/business/organizational' },
       ]
     },
