@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import StrategyMapPage from "./pages/StrategyMapPage";
 import ValueChainPage from "./pages/ValueChainPage";
+import BusinessModelCanvas from "./pages/BusinessModelCanvas";
 import ArchitecturePrinciplesPage from "./pages/ArchitecturePrinciplesPage";
 import ArchitectureGoalsPage from "./pages/ArchitectureGoalsPage";
 import StakeholderTable from "./pages/StakeholderPage";
@@ -25,6 +26,8 @@ import AppDataMatrixPage from "./pages/AppDataMatrixPage";
 import ConceptualDiagramPage from "./pages/ConceptualPage";
 import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix";
 import BusinessProcessPage from "./pages/BusinessProcess";
+import BusinessPrinciplePage from "./pages/BusinessPrinciple";
+import KPIpage from "./pages/KPI";
 import TechnologyNetworkDiagram from "./pages/TechnologyNetworkDiagram";
 import TechnologyAppMatrix from "./pages/TechnologyAppMatrix";
 import SolutionConceptPage from "./pages/SolutionConceptPage";
@@ -65,6 +68,7 @@ function App() {
           <Route path="/vision/stakeholder" element={<StakeholderTable />} />
           <Route path="/vision/organization" element={<OrganizationDiagramPage />} />
           <Route path="/vision/principles" element={<ArchitecturePrinciplesPage />} />
+          <Route path="/vision/businessmodelcanvas" element={<BusinessModelCanvas />} />
           <Route path="/vision/goals" element={<ArchitectureGoalsPage />} />
           <Route path="/vision/technologyPrinciples" element={<TechnologyPrinciples />} />
           <Route path="/business/RiskMatrix" element={<BusinessProcessRiskMatrix />} />
@@ -72,6 +76,8 @@ function App() {
           <Route path="/business/organizational" element={<OrgStructurePage />} />
           <Route path="/business/functional" element={<FunctionalDecompositionPage />} />
           <Route path="/business/probis" element={<BusinessProcessPage />} />
+          <Route path="/business/businessprinciples" element={<BusinessPrinciplePage />} />
+          <Route path="/business/kpi" element={<KPIpage />} />
           <Route path="/data/dataprinciples" element={<DataPrinciplesPage />} />
           <Route path="/data/component" element={<DataEntityPage />} />
           <Route path="/data/logical" element={<LogicalDataDiagram />} />

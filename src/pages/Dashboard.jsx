@@ -59,6 +59,10 @@ const Dashboard = () => {
       navigate("/vision/valuechain");
       return;
     }
+    if (item.title === "Business Model Canvas") {
+      navigate("/vision/businessmodelcanvas");
+      return;
+    }
     if (item.title === "Architecture Principles") {
       navigate("/vision/principles");
       return;
@@ -82,6 +86,14 @@ const Dashboard = () => {
     
     
     // Business Section
+    if (item.title === "Business Principles") {
+      navigate('/business/businessprinciples');
+      return;
+    }
+    if (item.title === "KPI") {
+      navigate('/business/kpi');
+      return;
+    }
     if (item.title === "Solution Concept Diagram") {
       navigate('/vision/solution');
       return;
