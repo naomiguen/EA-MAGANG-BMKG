@@ -48,6 +48,7 @@ import UseCaseGallery from "./pages/AppUseCasePage";
 import DetailPage from "./pages/DetailUsecasePage";
 import BusinessProcessAppMatrix from "./pages/BusinessAppMatrix";
 import BusinessDataMatrixPage from "./pages/BusinessDataMatrixPage";  
+import ImplementationPage from "./pages/implementationPage";
 
 function App() {
   return (
@@ -106,6 +107,7 @@ function App() {
           <Route path="/detail/:id" element={<DetailPage />} />
           <Route path="/business/appMatrix" element={<BusinessProcessAppMatrix />} />
           <Route path="/business/dataMatrix" element={<BusinessDataMatrixPage />} />
+          <Route path="/imp/planning" element={<ImplementationPage />} />
 
 
           {/* Placeholder untuk halaman yang belum ada */}
