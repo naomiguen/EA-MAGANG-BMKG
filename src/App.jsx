@@ -48,7 +48,7 @@ import UseCaseGallery from "./pages/AppUseCasePage";
 import DetailPage from "./pages/DetailUsecasePage";
 import BusinessProcessAppMatrix from "./pages/BusinessAppMatrix";
 import BusinessDataMatrixPage from "./pages/BusinessDataMatrixPage";  
-import ImplementationPage from "./pages/implementationPage";
+import ImplementationPage from "./pages/ImplementationPage";
 
 function App() {
   return (
