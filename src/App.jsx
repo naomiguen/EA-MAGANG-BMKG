@@ -43,6 +43,7 @@ import CommunicationDiagramPage from "./pages/CommunicationDiagramPage";
 import PortofolioAssesmentPage from "./pages/PortofolioAssesmentPage"
 import UseCaseGallery from "./pages/AppUseCasePage";
 import DetailPage from "./pages/DetailUsecasePage";
+import ImplementationPage from "./pages/implementationPage";
 
 
 function App() {
@@ -97,6 +98,7 @@ function App() {
           <Route path="/app/porto-assesment" element={<PortofolioAssesmentPage />} /> 
           <Route path="/app/usecase" element={<UseCaseGallery />} />
           <Route path="/detail/:id" element={<DetailPage />} />
+          <Route path="/imp/planning" element={<ImplementationPage />} />
 
 
           {/* Placeholder untuk halaman yang belum ada */}
