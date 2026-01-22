@@ -168,6 +168,10 @@ const Dashboard = () => {
       navigate("/app/process-matrix");
       return;
     }
+    if(item.title === "Architecture Implementation - Architecture Governance"){
+      navigate("/imp/governance");
+      return;
+    }
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 
