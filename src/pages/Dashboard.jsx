@@ -59,6 +59,10 @@ const Dashboard = () => {
       navigate("/vision/valuechain");
       return;
     }
+    if (item.title === "Business Model Canvas") {
+      navigate("/vision/businessmodelcanvas");
+      return;
+    }
     if (item.title === "Architecture Principles") {
       navigate("/vision/principles");
       return;
@@ -82,6 +86,14 @@ const Dashboard = () => {
     
     
     // Business Section
+    if (item.title === "Business Principles") {
+      navigate('/business/businessprinciples');
+      return;
+    }
+    if (item.title === "KPI") {
+      navigate('/business/kpi');
+      return;
+    }
     if (item.title === "Solution Concept Diagram") {
       navigate('/vision/solution');
       return;
@@ -91,7 +103,7 @@ const Dashboard = () => {
       return;
     }
     if (item.title === "Functional Decomposition Diagram") {
-      navigate('/vision/functional');
+      navigate('/business/functional');
       return;
     }
     if (item.title === "Business Process - Risk Matrix") {
@@ -110,7 +122,16 @@ const Dashboard = () => {
       navigate('/business/corporate_governance');
       return;
     }
+    
+    if (item.title === "Business Process - Application Matrix"){
+      navigate("/business/appMatrix");
+      return;
+    }
 
+    if (item.title === "Business Process - Data Matrix"){
+      navigate("/business/dataMatrix");
+      return;
+    }
 
     // Data Section
     if (item.title === "Data Entity - Data Component Catalog") {
@@ -164,12 +185,41 @@ const Dashboard = () => {
       navigate("/app/org_matrix");
       return;
     }
+    if (item.title === "Application Principles") {
+      navigate("/app/principles");
+      return;
+    }
+    if (item.title === "Application - Classification Matrix") {
+      navigate("/app/classification");
+      return;
+    }
+    if (item.title === "Application - Communication Diagram") {
+      navigate("/app/communicationDiagram");
+      return;
+    }
+    if (item.title === "Application - Portofolio Assessment") {
+      navigate("/app/porto-assesment");
+      return;
+    }
+
+    if (item.title === "Application Use Case Diagram") {
+      navigate("/app/usecase");
+      return;
+    }
+
     if (item.title === "Application - Business Process Matrix"){
       navigate("/app/process-matrix");
       return;
     }
+
     if(item.title === "Architecture Implementation - Architecture Governance"){
       navigate("/imp/governance");
+      return;
+    }
+
+    //Implementation
+    if (item.title === "Architecture Implementation Planning") {
+      navigate("/imp/planning");
       return;
     }
     alert(`Halaman untuk "${item.title}" belum dibuat.`);

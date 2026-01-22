@@ -1,5 +1,5 @@
-import React from 'react'
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
+
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import "./css/OrganizationDiagramPage.css"
 import { supabase } from "../lib/supabaseClient"
 

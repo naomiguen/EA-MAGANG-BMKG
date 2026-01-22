@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../lib/supabaseClient';
 import { 
   ArrowLeft, X, Info, CheckCircle, Activity, 
   FileText, Database, Settings, Users, CloudRain,
@@ -7,247 +8,81 @@ import {
 } from 'lucide-react';
 import petaKonsepSvg from '../assets/peta_konsep.drawio.svg?raw';
 
+// Icon mapping untuk dynamic icon rendering
+const iconMap = {
+  Plane,
+  Shield,
+  UserCheck,
+  Users,
+  CloudRain,
+  Settings,
+  Activity,
+  Database,
+  CheckCircle,
+  FileText,
+  Package
+};
+
 const PetaKonsepPage = () => {
   const navigate = useNavigate();
   const [activeId, setActiveId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const processDetails = {
-    "PERUM-LPNPI": {
-      title: "Perum LPPNPI",
-      icon: Plane,
-      color: "bg-cyan-500",
-      desc: "Lembaga Penyelenggara Pelayanan Navigasi Penerbangan Indonesia - Stakeholder utama pengguna layanan MKG.",
-      items: [
-        "Permintaan briefing cuaca penerbangan",
-        "Koordinasi operasional bandara",
-        "Feedback layanan meteorologi"
-      ],
-      pic: "External Stakeholder"
-    },
-    "ANGKASA-PURA-I": {
-      title: "Angkasa Pura I Balikpapan",
-      icon: Plane,
-      color: "bg-cyan-500",
-      desc: "Pengelola Bandara Sepinggan - Partner dalam operasional bandara dan layanan penerbangan.",
-      items: [
-        "Koordinasi operasional bandara",
-        "Registrasi pilot & crew",
-        "Fasilitas ruang briefing"
-      ],
-      pic: "External Stakeholder"
-    },
-    "ANGKASA-PURA-II": {
-      title: "Angkasa Pura II Balikpapan",
-      icon: Plane,
-      color: "bg-cyan-500",
-      desc: "Partner operasional bandara dalam penyediaan layanan penerbangan.",
-      items: [
-        "Koordinasi keamanan bandara",
-        "Support infrastruktur",
-        "Monitoring aktivitas penerbangan"
-      ],
-      pic: "External Stakeholder"
-    },
-    "LANUD-DHOMBER": {
-      title: "Lanud Dhomber",
-      icon: Shield,
-      color: "bg-cyan-500",
-      desc: "Lanud Dhomber - Pengguna layanan meteorologi untuk kepentingan penerbangan militer.",
-      items: [
-        "Briefing cuaca untuk operasi militer",
-        "Koordinasi penerbangan TNI AU",
-        "Data cuaca khusus"
-      ],
-      pic: "External Stakeholder"
-    },
-    "AIRLINES": {
-      title: "Airlines (Maskapai)",
-      icon: Plane,
-      color: "bg-cyan-500",
-      desc: "Maskapai penerbangan yang membutuhkan informasi cuaca untuk keselamatan penerbangan.",
-      items: [
-        "Flight briefing sebelum take-off",
-        "Informasi cuaca en-route",
-        "Data METAR, TAF, SIGMET"
-      ],
-      pic: "External Stakeholder"
-    },
+  const [processDetails, setProcessDetails] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    // ===== PROSES UTAMA (Core Business) =====
-    "REGISTRASI": {
-      title: "PROSES: Registrasi",
-      icon: UserCheck,
-      color: "bg-green-600",
-      desc: "Tahap pendaftaran pilot/crew sebelum mendapatkan layanan briefing cuaca.",
-      items: [
-        "Registrasi identitas pilot",
-        "Verifikasi dokumen penerbangan",
-        "Input data ke sistem",
-        "Penjadwalan briefing"
-      ],
-      pic: "Petugas Pelayanan"
-    },
-    "KOORD-BIDANG-OBSDATIN": {
-      title: "Koordinator Bidang Observasi & Data",
-      icon: Users,
-      color: "bg-blue-700",
-      desc: "Koordinator yang mengawasi seluruh proses observasi dan pengelolaan data meteorologi.",
-      items: [
-        "Supervisi unit observasi & data",
-        "Koordinasi antar unit",
-        "Monitoring kualitas data",
-        "Evaluasi kinerja"
-      ],
-      pic: "Koordinator"
-    },
-    "FORECASTER": {
-      title: "FORECASTER (F)",
-      icon: CloudRain,
-      color: "bg-green-600",
-      desc: "Petugas yang melakukan analisis dan membuat prakiraan cuaca untuk penerbangan.",
-      items: [
-        "Analisis peta sinoptik",
-        "Membuat TAF (Terminal Aerodrome Forecast)",
-        "Menerbitkan SIGMET/AIRMET",
-        "Briefing cuaca untuk pilot"
-      ],
-      pic: "Unit Forecaster"
-    },
-    "TEKNISI": {
-      title: "TEKNISI",
-      icon: Settings,
-      color: "bg-green-600",
-      desc: "Teknisi yang melakukan maintenance dan kalibrasi alat-alat meteorologi.",
-      items: [
-        "Maintenance peralatan AWS/AWOS",
-        "Kalibrasi sensor meteorologi",
-        "Troubleshooting gangguan teknis",
-        "Laporan kondisi alat"
-      ],
-      pic: "Unit Teknisi"
-    },
-    "OBSERVASI": {
-      title: "OBSERVASI (O)",
-      icon: Activity,
-      color: "bg-green-600",
-      desc: "Pengamatan unsur cuaca secara kontinyu untuk menghasilkan data METAR/SPECI.",
-      items: [
-        "Pengamatan cuaca permukaan",
-        "Pembacaan instrumen",
-        "Encoding METAR/SPECI",
-        "Input data ke CMSS"
-      ],
-      pic: "Unit Observasi"
-    },
-    "DATA-DAN-INFORMASI": {
-      title: "DATA DAN INFORMASI",
-      icon: Database,
-      color: "bg-pink-600",
-      desc: "Unit yang mengelola database, melakukan QC, dan menyediakan layanan data iklim.",
-      items: [
-        "Quality Control (QC) data harian",
-        "Pengiriman data ke Jakarta",
-        "Database klimatologi",
-        "Layanan permintaan data"
-      ],
-      pic: "Unit Data & Informasi"
-    },
-    "QC": {
-      title: "QC (Quality Control)",
-      icon: CheckCircle,
-      color: "bg-green-600",
-      desc: "Proses penjaminan mutu data sebelum didistribusikan ke pengguna.",
-      items: [
-        "Verifikasi validitas data",
-        "Koreksi data anomali",
-        "Standardisasi format",
-        "Dokumentasi QC"
-      ],
-      pic: "Unit Data & Informasi"
-    },
-    "KUPT": {
-      title: "KUPT (Kepala Unit Pelaksana Teknis)",
-      icon: Users,
-      color: "bg-green-600",
-      desc: "Pengawas teknis yang memastikan seluruh proses operasional berjalan sesuai standar.",
-      items: [
-        "Supervisi operasional harian",
-        "Evaluasi kinerja unit",
-        "Koordinasi dengan pusat",
-        "Pengambilan keputusan strategis"
-      ],
-      pic: "Manajemen"
-    },
+  useEffect(() => {
+    // Fetch data dari Supabase
+    const fetchProcessData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-    // ===== OUTPUT =====
-    "KEPUASAN-PELANGGAN": {
-      title: "OUTPUT: Kepuasan Pelanggan",
-      icon: Users,
-      color: "bg-cyan-500",
-      desc: "Hasil akhir layanan berupa kepuasan stakeholder dan keselamatan penerbangan.",
-      items: [
-        "Indeks Kepuasan Masyarakat (IKM)",
-        "Zero accident related to weather",
-        "Feedback positif dari airlines",
-        "Peningkatan kualitas layanan"
-      ],
-      pic: "Seluruh Unit"
-    },
+        // Fetch nodes
+        const { data: nodesData, error: nodesError } = await supabase
+          .from('peta_konsep_nodes')
+          .select('*')
+          .order('sort_order');
 
-    // ===== SUPPORT SYSTEM (Input dari bawah) =====
-    "IT": {
-      title: "SUPPORT: IT",
-      icon: Database,
-      color: "bg-gray-500",
-      desc: "Dukungan infrastruktur teknologi informasi untuk sistem operasional.",
-      items: [
-        "Maintenance jaringan & server",
-        "Support sistem CMSS",
-        "Keamanan data",
-        "Backup & recovery"
-      ],
-      pic: "Unit IT"
-    },
-    "TATA-USAHA": {
-      title: "SUPPORT: Tata Usaha",
-      icon: FileText,
-      color: "bg-gray-500",
-      desc: "Administrasi umum, keuangan, dan pengelolaan SDM.",
-      items: [
-        "Administrasi kepegawaian",
-        "Pengelolaan keuangan",
-        "Pengadaan barang/jasa",
-        "Surat menyurat"
-      ],
-      pic: "Tata Usaha"
-    },
-    "GUDANG-ALAT-BAHAN": {
-      title: "SUPPORT: Gudang Alat/Bahan",
-      icon: Package,
-      color: "bg-gray-500",
-      desc: "Pengelolaan inventaris alat, suku cadang, dan bahan operasional.",
-      items: [
-        "Penyimpanan alat & spare part",
-        "Distribusi kebutuhan operasional",
-        "Stock opname",
-        "Maintenance logistik"
-      ],
-      pic: "Teknisi & TU"
-    },
-    "REGULASI": {
-      title: "SUPPORT: Regulasi",
-      icon: FileText,
-      color: "bg-gray-500",
-      desc: "Dasar hukum dan standar operasional yang mengatur seluruh aktivitas.",
-      items: [
-        "UU No. 31 Tahun 2009 (MKG)",
-        "ICAO Annex 3",
-        "SOP Operasional",
-        "ISO 9001:2015"
-      ],
-      pic: "Manajemen & QA"
-    }
-  };
+        if (nodesError) throw nodesError;
+
+        // Fetch activities
+        const { data: activitiesData, error: activitiesError } = await supabase
+          .from('peta_konsep_activities')
+          .select('*')
+          .order('sort_order');
+
+        if (activitiesError) throw activitiesError;
+
+        // Transform data ke format yang sama dengan processDetails
+        const transformedData = {};
+        
+        nodesData.forEach(node => {
+          const nodeActivities = activitiesData
+            .filter(act => act.node_id === node.id)
+            .map(act => act.activity_text);
+
+          transformedData[node.id] = {
+            title: node.title,
+            icon: iconMap[node.icon_name] || FileText,
+            color: node.color_class,
+            desc: node.description,
+            items: nodeActivities,
+            pic: node.pic
+          };
+        });
+
+        setProcessDetails(transformedData);
+      } catch (err) {
+        console.error('Error fetching process data:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProcessData();
+  }, []);
 
   // LOGIKA KLIK DIAGRAM 
   const handleDiagramClick = (e) => {
@@ -255,11 +90,9 @@ const PetaKonsepPage = () => {
     let foundId = null;
     let attempts = 0;
     
-    // Memanjat DOM tree mencari ID atau data-cell-id
     while (current && attempts < 10) {
       const id = current.getAttribute ? (current.getAttribute('data-cell-id') || current.id) : null;
       
-      // Cek apakah ID tersebut ada di kamus data kita?
       if (id && processDetails[id]) {
         foundId = id;
         break; 
@@ -278,6 +111,36 @@ const PetaKonsepPage = () => {
 
   const activeInfo = activeId ? processDetails[activeId] : null;
 
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex justify-center items-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Memuat data peta konsep...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex justify-center items-center p-6">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
+          <h3 className="text-red-800 font-bold mb-2">Error Loading Data</h3>
+          <p className="text-red-600 text-sm mb-4">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 font-sans p-6 md:p-8">
       
@@ -294,7 +157,13 @@ const PetaKonsepPage = () => {
             <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800">Peta Konsep Proses Bisnis</h1>
             <p className="text-gray-500 text-xs sm:text-sm md:text-base mt-1">Visualisasi Alur Kerja BMKG Stasiun Balikpapan</p>
           </div>
-          <div className="w-10 flex-shrink-0"></div>
+          <button
+            onClick={() => window.location.reload()}
+            className="p-2 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 text-blue-600 transition-colors shadow-sm flex-shrink-0"
+            title="Refresh Data"
+          >
+            <Activity size={20} />
+          </button>
         </div>
       </div>
 

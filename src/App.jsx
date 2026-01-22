@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import StrategyMapPage from "./pages/StrategyMapPage";
 import ValueChainPage from "./pages/ValueChainPage";
+import BusinessModelCanvas from "./pages/BusinessModelCanvas";
 import ArchitecturePrinciplesPage from "./pages/ArchitecturePrinciplesPage";
 import ArchitectureGoalsPage from "./pages/ArchitectureGoalsPage";
 import StakeholderTable from "./pages/StakeholderPage";
@@ -25,12 +26,16 @@ import AppDataMatrixPage from "./pages/AppDataMatrixPage";
 import ConceptualDiagramPage from "./pages/ConceptualPage";
 import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix";
 import BusinessProcessPage from "./pages/BusinessProcess";
+import BusinessPrinciplePage from "./pages/BusinessPrinciple";
+import KPIpage from "./pages/KPI";
 import TechnologyNetworkDiagram from "./pages/TechnologyNetworkDiagram";
 import TechnologyAppMatrix from "./pages/TechnologyAppMatrix";
 import SolutionConceptPage from "./pages/SolutionConceptPage";
 import ApplicationPortfolioPage from "./pages/PortfolioCatalogPage";
 import AppBusinessProcessMatrixPage from "./pages/AppBusinessProcessMatrix";
 import AppOrgMatrixPage from "./pages/AppOrgMatrix";
+import ApplicationPrinciples from "./pages/ApplicationPrinciples";
+import ApplicationClassificationMatrix from "./pages/ApplicationClassificationMatrix";
 import BusinessInteractionDiagram from "./pages/BusinessInteractionDiagram";
 import CorporateGovernancePage from "./pages/CorporateGovernancePage";
 import OrganizationDiagramPage from "./pages/OrganizationDiagramPage";
@@ -38,7 +43,13 @@ import PetaKonsepPage from "./pages/PetaKonsepPage";
 import PetaKonsepLevel0Page from "./pages/PetaKonsepLevel0Page";
 import PetaKonsepLevel01Page from "./pages/PetaKonsepLevel01Page";
 import ArchitectureGovernancePage from "./pages/ArchitectureGovernance";
-
+import CommunicationDiagramPage from "./pages/CommunicationDiagramPage";
+import PortofolioAssesmentPage from "./pages/PortofolioAssesmentPage"
+import UseCaseGallery from "./pages/AppUseCasePage";
+import DetailPage from "./pages/DetailUsecasePage";
+import BusinessProcessAppMatrix from "./pages/BusinessAppMatrix";
+import BusinessDataMatrixPage from "./pages/BusinessDataMatrixPage";  
+import ImplementationPage from "./pages/ImplementationPage";
 
 
 function App() {
@@ -60,6 +71,7 @@ function App() {
           <Route path="/vision/stakeholder" element={<StakeholderTable />} />
           <Route path="/vision/organization" element={<OrganizationDiagramPage />} />
           <Route path="/vision/principles" element={<ArchitecturePrinciplesPage />} />
+          <Route path="/vision/businessmodelcanvas" element={<BusinessModelCanvas />} />
           <Route path="/vision/goals" element={<ArchitectureGoalsPage />} />
           <Route path="/vision/technologyPrinciples" element={<TechnologyPrinciples />} />
           <Route path="/business/RiskMatrix" element={<BusinessProcessRiskMatrix />} />
@@ -67,6 +79,8 @@ function App() {
           <Route path="/business/organizational" element={<OrgStructurePage />} />
           <Route path="/business/functional" element={<FunctionalDecompositionPage />} />
           <Route path="/business/probis" element={<BusinessProcessPage />} />
+          <Route path="/business/businessprinciples" element={<BusinessPrinciplePage />} />
+          <Route path="/business/kpi" element={<KPIpage />} />
           <Route path="/data/dataprinciples" element={<DataPrinciplesPage />} />
           <Route path="/data/component" element={<DataEntityPage />} />
           <Route path="/data/logical" element={<LogicalDataDiagram />} />
@@ -82,12 +96,22 @@ function App() {
           <Route path="/app/portfolio" element={<ApplicationPortfolioPage />} />
           <Route path="/app/process-matrix" element={<AppBusinessProcessMatrixPage />} />
           <Route path="/app/org_matrix" element={<AppOrgMatrixPage />} />
+          <Route path="/app/principles" element={<ApplicationPrinciples />} />
+          <Route path="/app/classification" element={<ApplicationClassificationMatrix />} />
           <Route path="/business/interaction" element={<BusinessInteractionDiagram />} />
           <Route path="/business/corporate_governance" element={<CorporateGovernancePage />} />
           <Route path="/business-process/peta-konsep" element={<PetaKonsepPage />} />
           <Route path="/business-process/level-0" element={<PetaKonsepLevel0Page />} />
           <Route path="/business-process/level-01" element={<PetaKonsepLevel01Page />} />
           <Route path="/imp/governance" element={<ArchitectureGovernancePage />} />
+          <Route path="/app/communicationDiagram" element={<CommunicationDiagramPage />} /> 
+          <Route path="/app/porto-assesment" element={<PortofolioAssesmentPage />} /> 
+          <Route path="/app/usecase" element={<UseCaseGallery />} />
+          <Route path="/detail/:id" element={<DetailPage />} />
+          <Route path="/business/appMatrix" element={<BusinessProcessAppMatrix />} />
+          <Route path="/business/dataMatrix" element={<BusinessDataMatrixPage />} />
+          <Route path="/imp/planning" element={<ImplementationPage />} />
+
 
 
           {/* Placeholder untuk halaman yang belum ada */}

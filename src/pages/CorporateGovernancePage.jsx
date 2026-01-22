@@ -1,175 +1,150 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Book, Shield, Scale, FileText, Globe, Users, X, GitBranch } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { supabase } from '../lib/supabaseClient';
 
 const CorporateGovernancePage = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [showBPMOptions, setShowBPMOptions] = useState(false);
-  const navigate = useNavigate();
+  const [governanceData, setGovernanceData] = useState([]);
+  const [bpmOptions, setBpmOptions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // --- DATA STATIC (Regulasi, ISO, SOP) ---
-  const governanceData = [
-    {
-      id: "REG-01",
-      title: "Legal Foundation",
-      subtitle: "Dasar Hukum & Undang-Undang",
-      icon: Scale,
-      color: "bg-blue-100 text-blue-700",
-      description: "Landasan hukum tertinggi yang mengatur tugas, fungsi, dan wewenang BMKG.",
-      documents: [
-        { 
-          name: "UU No. 31 Tahun 2009", 
-          type: "Undang-Undang", 
-          desc: "Tentang MKG", 
-          ref: "RI",
-          link: "https://example.com/uu-31-2009.pdf" // Ganti dengan link asli
-        },
-        { 
-          name: "Perpres No. 39 Tahun 2019", 
-          type: "Perpres", 
-          desc: "Satu Data Indonesia", 
-          ref: "RI",
-          link: "https://example.com/perpres-39-2019.pdf" // Ganti dengan link asli
-        },
-        { 
-          name: "PP No. 11 Tahun 2016", 
-          type: "PP", 
-          desc: "Tarif PNBP", 
-          ref: "RI",
-          link: "https://example.com/pp-11-2016.pdf" // Ganti dengan link asli
-        }
-      ]
-    },
-    {
-      id: "STD-01",
-      title: "International Standards",
-      subtitle: "Standar Penerbangan & Mutu",
-      icon: Globe,
-      color: "bg-green-100 text-green-700",
-      description: "Standar internasional ISO 9001:2015 dan ICAO yang wajib dipatuhi.",
-      documents: [
-        { 
-          name: "ISO 9001:2015", 
-          type: "Quality", 
-          desc: "Sistem Manajemen Mutu", 
-          ref: "ISO",
-          link: "https://example.com/iso-9001-2015.pdf" // Ganti dengan link asli
-        },
-        { 
-          name: "ICAO Annex 3", 
-          type: "Aviation", 
-          desc: "Meteorological Service", 
-          ref: "ICAO",
-          link: "https://example.com/icao-annex3.pdf" // Ganti dengan link asli
-        },
-        { 
-          name: "Kebijakan Mutu", 
-          type: "Internal", 
-          desc: "KM-WMM-03", 
-          ref: "BMKG",
-          link: "https://example.com/kebijakan-mutu.pdf" // Ganti dengan link asli
-        }
-      ]
-    },
-    {
-      id: "SOP-01",
-      title: "Operational Procedures",
-      subtitle: "SOP & Instruksi Kerja",
-      icon: FileText,
-      color: "bg-orange-100 text-orange-700",
-      description: "Panduan teknis langkah-demi-langkah pelaksanaan tugas operasional.",
-      documents: [
-        { 
-          name: "SOP Operasional Teknisi", 
-          type: "SOP", 
-          desc: "HK.05.00/TEK.002", 
-          ref: "Teknis",
-          link: "https://hfctpsuwjytwyhrdoggb.supabase.co/storage/v1/object/public/governance-files/SOP%20Operasional%20Teknisi%20SAMS%20(1).pdf" 
-        },
-        { 
-          name: "SOP Pengamatan Udara", 
-          type: "SOP", 
-          desc: "Surface Observation", 
-          ref: "Obs",
-          link: "https://example.com/sop-briefing.pdf"
-        },
-        { 
-          name: "SOP Briefing Penerbangan", 
-          type: "SOP", 
-          desc: "Flight Briefing", 
-          ref: "Fcst",
-          link: "https://example.com/sop-briefing.pdf" 
-        }
-      ]
-    },
-    {
-      id: "ORG-01",
-      title: "Organization Structure",
-      subtitle: "Struktur Organisasi",
-      icon: Users,
-      color: "bg-pink-100 text-pink-700",
-      description: "Hierarki jabatan dan alur koordinasi antar unit kerja (Data Real-time).",
-      isNavigate: true,
-      navigateTo: '/vision/organization'
-    },
-    {
-      id: "BPM-01",
-      title: "Business Process Map",
-      subtitle: "Peta Proses Bisnis",
-      icon: GitBranch,
-      color: "bg-purple-100 text-purple-700",
-      description: "Visualisasi alur proses bisnis dan interaksi antar unit kerja di BMKG.",
-      isBPM: true
-    }
-  ];
+  useEffect(() => {
+    const iconMap = {
+      'Scale': Scale,
+      'Globe': Globe,
+      'FileText': FileText,
+      'Users': Users,
+      'GitBranch': GitBranch,
+      'Book': Book,
+      'Shield': Shield
+    };
 
-  // Data untuk pilihan Business Process Map
-  const bpmOptions = [
-    {
-      id: 'peta-konsep',
-      title: 'Peta Konsep',
-      description: 'Overview proses bisnis secara keseluruhan',
-      route: '/business-process/peta-konsep',
-      icon: '🗺️'
-    },
-    {
-      id: 'level-0',
-      title: 'Peta Konsep Level 0',
-      description: 'Proses bisnis tingkat tertinggi (Core Processes)',
-      route: '/business-process/level-0',
-      icon: '📊'
-    },
-    {
-      id: 'level-0-1',
-      title: 'Peta Konsep Level 0-1',
-      description: 'Detail proses bisnis hingga sub-proses',
-      route: '/business-process/level-01',
-      icon: '🔍'
-    }
-  ];
+    const fetchGovernanceData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const { data: categories, error: catError } = await supabase
+          .from('governance_categories')
+          .select('*')
+          .order('display_order');
+
+        if (catError) throw catError;
+
+        const { data: documents, error: docsError } = await supabase
+          .from('governance_documents')
+          .select('*')
+          .order('display_order');
+
+        if (docsError) throw docsError;
+
+        const { data: bpmOpts, error: bpmError } = await supabase
+          .from('bpm_options')
+          .select('*')
+          .order('display_order');
+
+        if (bpmError) throw bpmError;
+
+        const transformedCategories = categories.map(cat => {
+          const categoryDocs = documents.filter(doc => doc.category_id === cat.id);
+          
+          return {
+            id: cat.id,
+            title: cat.title,
+            subtitle: cat.subtitle,
+            icon: iconMap[cat.icon] || FileText,
+            color: cat.color,
+            description: cat.description,
+            isNavigate: cat.is_navigate,
+            navigateTo: cat.navigate_to,
+            isBPM: cat.is_bpm,
+            documents: categoryDocs.map(doc => ({
+              name: doc.doc_name,
+              type: doc.doc_type,
+              desc: doc.description,
+              ref: doc.reference,
+              link: doc.doc_link
+            }))
+          };
+        });
+
+        const transformedBPM = bpmOpts.map(opt => ({
+          id: opt.id,
+          title: opt.title,
+          description: opt.description,
+          route: opt.route,
+          icon: opt.icon
+        }));
+
+        setGovernanceData(transformedCategories);
+        setBpmOptions(transformedBPM);
+      } catch (err) {
+        console.error('Error fetching governance data:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGovernanceData();
+  }, []);
 
   const handleCardClick = (item) => {
     if (item.isBPM) {
       setShowBPMOptions(true);
     } else if (item.isNavigate) {
-      navigate(item.navigateTo);
+      window.location.href = item.navigateTo;
     } else {
       setSelectedItem(item);
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-900 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading governance data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md w-full">
+          <h3 className="text-red-800 font-bold mb-2">Error Loading Data</h3>
+          <p className="text-red-600 text-sm mb-4">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 font-sans p-6 md:p-12">
       
-      {/* HEADER */}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-blue-900 mb-3">Corporate Governance</h1>
         <p className="text-gray-600 max-w-2xl mx-auto">
           Repository Dokumen Standar, Regulasi, dan Struktur Organisasi BMKG Balikpapan.
         </p>
+        <button
+          onClick={() => window.location.reload()}
+          className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+        >
+          Refresh Data
+        </button>
       </div>
 
-      {/* GRID KARTU */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
         {governanceData.map((item) => (
           <div 
@@ -191,7 +166,6 @@ const CorporateGovernancePage = () => {
         ))}
       </div>
 
-      {/* POP-UP MODAL DOKUMEN */}
       {selectedItem && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm p-4 animate-fade-in"
@@ -201,7 +175,6 @@ const CorporateGovernancePage = () => {
             className="bg-white rounded-2xl shadow-2xl w-full flex flex-col max-h-[90vh] animate-scale-up max-w-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header Modal */}
             <div className="bg-gray-50 px-8 py-5 border-b border-gray-200 flex justify-between items-center">
               <div className="flex items-center gap-4">
                 <div className={`p-2 rounded-lg ${selectedItem.color}`}>
@@ -217,9 +190,7 @@ const CorporateGovernancePage = () => {
               </button>
             </div>
 
-            {/* CONTENT MODAL */}
             <div className="flex-1 overflow-auto bg-slate-50 p-6">
-              {/* TAMPILAN TABEL DOKUMEN */}
               <table className="w-full text-left border-collapse bg-white shadow-sm rounded-lg overflow-hidden">
                 <thead className="bg-gray-100 text-gray-500 font-semibold text-xs uppercase">
                   <tr>
@@ -265,7 +236,6 @@ const CorporateGovernancePage = () => {
         </div>
       )}
 
-      {/* POP-UP PILIHAN BUSINESS PROCESS MAP */}
       {showBPMOptions && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm p-4 animate-fade-in"
@@ -275,7 +245,6 @@ const CorporateGovernancePage = () => {
             className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl animate-scale-up"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header */}
             <div className="bg-gradient-to-r from-purple-500 to-purple-600 px-8 py-6 rounded-t-2xl">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -296,14 +265,13 @@ const CorporateGovernancePage = () => {
               </div>
             </div>
 
-            {/* Options */}
             <div className="p-6 space-y-3">
               {bpmOptions.map((option) => (
                 <div
                   key={option.id}
                   onClick={() => {
                     setShowBPMOptions(false);
-                    navigate(option.route);
+                    window.location.href = option.route;
                   }}
                   className="flex items-center gap-4 p-4 bg-gray-50 hover:bg-purple-50 border-2 border-gray-200 hover:border-purple-300 rounded-xl cursor-pointer transition-all duration-200 group"
                 >
@@ -323,7 +291,6 @@ const CorporateGovernancePage = () => {
               ))}
             </div>
 
-            {/* Footer */}
             <div className="bg-gray-50 border-t px-6 py-4 rounded-b-2xl">
               <button 
                 onClick={() => setShowBPMOptions(false)} 

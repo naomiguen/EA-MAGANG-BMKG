@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from "../lib/supabaseClient";
 
-const DataFunctionMatrixPage = () => {
+const BusinessDataMatrixPage = () => {
   const [businessFunctions, setBusinessFunctions] = useState([]);
   const [dataEntities, setDataEntities] = useState([]);
   const [relationships, setRelationships] = useState([]);
@@ -101,10 +101,10 @@ const DataFunctionMatrixPage = () => {
       {/* Header */}
       <div className="text-center mb-10 max-w-4xl">
         <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3">
-          Data Entity - Business Function Matrix
+          Business Proceas - Data Entity Matrix
         </h1>
         <p className="text-slate-500 text-lg">
-          Pemetaan hubungan antara entitas data (baris) dengan fungsi bisnis (kolom) dalam operasional stasiun.
+          Pemetaan hubungan antara fungsi bisnis (baris) dengan entitas data (kolom) dalam operasional stasiun.
         </p>
       </div>
 
@@ -114,14 +114,14 @@ const DataFunctionMatrixPage = () => {
           <table className="w-full border-collapse text-sm">
             <thead>
               <tr>
-                {/* Pojok Kiri Atas */}
+                {/* Pojok Kiri Atas Kosong */}
                 <th className="bg-slate-100 border-b border-r border-slate-200 p-4 text-left font-bold text-slate-700 min-w-[200px] whitespace-nowrap">
-                  Entitas Data \ Fungsi Bisnis
+                  Fungsi Bisnis \ Entitas Data
                 </th>
-                {/* Header Kolom (Business Functions) */}
-                {businessFunctions.map(func => (
-                  <th key={func.id} className="bg-slate-50 border-b border-slate-200 p-4 text-center font-semibold text-slate-600 min-w-[150px] hover:bg-slate-100 transition-colors whitespace-nowrap">
-                    {func.name}
+                {/* Header Kolom (Data Entities) */}
+                {dataEntities.map(data => (
+                  <th key={data.id} className="bg-slate-50 border-b border-slate-200 p-4 text-center font-semibold text-slate-600 min-w-[100px] hover:bg-slate-100 transition-colors whitespace-nowrap">
+                    {data.name}
                   </th>
                 ))}
               </tr>
@@ -129,24 +129,24 @@ const DataFunctionMatrixPage = () => {
             <tbody>
               {businessFunctions.length === 0 || dataEntities.length === 0 ? (
                 <tr>
-                  <td colSpan={businessFunctions.length + 1} className="px-6 py-8 text-center text-slate-400">
+                  <td colSpan={dataEntities.length + 1} className="px-6 py-8 text-center text-slate-400">
                     Tidak ada data tersedia
                   </td>
                 </tr>
               ) : (
-                /* Baris (Data Entities) */
-                dataEntities.map(data => (
-                  <tr key={data.id} className="hover:bg-slate-50 transition-colors">
+                /* Baris (Business Functions) */
+                businessFunctions.map(func => (
+                  <tr key={func.id} className="hover:bg-slate-50 transition-colors">
                     {/* Header Baris */}
                     <th className="bg-white border-r border-slate-200 p-4 text-left font-medium text-slate-800 border-b whitespace-nowrap">
-                      {data.name}
+                      {func.name}
                     </th>
                     {/* Sel Matriks */}
-                    {businessFunctions.map(func => {
+                    {dataEntities.map(data => {
                       const relation = getRelation(func.id, data.id);
                       return (
                         <td 
-                          key={func.id} 
+                          key={data.id} 
                           className={`border-b border-slate-100 p-4 text-center border-r last:border-r-0 ${getCellClass(relation)}`}
                         >
                           {relation}
@@ -183,4 +183,4 @@ const DataFunctionMatrixPage = () => {
   );
 };
 
-export default DataFunctionMatrixPage;
+export default BusinessDataMatrixPage;
