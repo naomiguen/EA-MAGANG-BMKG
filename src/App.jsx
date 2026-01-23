@@ -63,49 +63,52 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           
           {/* Halaman Detail (Sesuai Link Navbar & Dashboard) */}
-          <Route path="/vision/valuechain" element={<ValueChainPage />} />
-          <Route path="/vision/strategy" element={<StrategyMapPage />} />
-          <Route path="/vision/stakeholder" element={<StakeholderTable />} />
-          <Route path="/vision/organization" element={<OrganizationDiagramPage />} />
+          {/* Vision */}
           <Route path="/vision/principles" element={<ArchitecturePrinciplesPage />} />
-          <Route path="/vision/businessmodelcanvas" element={<BusinessModelCanvas />} />
           <Route path="/vision/goals" element={<ArchitectureGoalsPage />} />
-          <Route path="/vision/technologyPrinciples" element={<TechnologyPrinciples />} />
-          <Route path="/business/RiskMatrix" element={<BusinessProcessRiskMatrix />} />
+          <Route path="/vision/business-model-canvas" element={<BusinessModelCanvas />} />
+          <Route path="/vision/organization" element={<OrganizationDiagramPage />} />
+          <Route path="/vision/stakeholder" element={<StakeholderTable />} />
           <Route path="/vision/solution" element={<SolutionConceptPage />} />
-          <Route path="/business/organizational" element={<OrgStructurePage />} />
-          <Route path="/business/functional" element={<FunctionalDecompositionPage />} />
-          <Route path="/business/probis" element={<BusinessProcessPage />} />
-          <Route path="/business/businessprinciples" element={<BusinessPrinciplePage />} />
-          <Route path="/business/kpi" element={<KPIpage />} />
-          <Route path="/data/dataprinciples" element={<DataPrinciplesPage />} />
-          <Route path="/data/component" element={<DataEntityPage />} />
-          <Route path="/data/logical" element={<LogicalDataDiagram />} />
-          <Route path="/data/function_matrix" element={<DataFunctionMatrixPage />} />
-          <Route path="/tech/standardsCatalog" element={<TechnologyStandarCatalog />} />
-          <Route path="/tech/environmentDiagram" element={<TechnologyEnvironmentDiagram />} />
-          <Route path="/business/RiskMatrix" element={<BusinessProcessRiskMatrix />} />
-          <Route path="/tech/technologyPrinciples" element={<TechnologyPrinciples />} />
-          <Route path="/data/appmatrix" element={<AppDataMatrixPage />} />
-          <Route path="/data/concept" element={<ConceptualDiagramPage />} />
-          <Route path="/tech/networkCommunicationDiagram" element={<TechnologyNetworkDiagram />} />
-          <Route path="/tech/appMatrix" element={<TechnologyAppMatrix />} />
-          <Route path="/app/portfolio" element={<ApplicationPortfolioPage />} />
-          <Route path="/app/process-matrix" element={<AppBusinessProcessMatrixPage />} />
-          <Route path="/app/org_matrix" element={<AppOrgMatrixPage />} />
-          <Route path="/app/principles" element={<ApplicationPrinciples />} />
-          <Route path="/app/classification" element={<ApplicationClassificationMatrix />} />
+          <Route path="/vision/value-chain" element={<ValueChainPage />} />
+          <Route path="/vision/strategy" element={<StrategyMapPage />} />
+          {/* Business */}
           <Route path="/business/interaction" element={<BusinessInteractionDiagram />} />
-          <Route path="/business/corporate_governance" element={<CorporateGovernancePage />} />
+          <Route path="/business/principles" element={<BusinessPrinciplePage />} />
+          <Route path="/business/process" element={<BusinessProcessPage />} />
+          <Route path="/business/application-matrix" element={<BusinessProcessAppMatrix />} />
+          <Route path="/business/data-matrix" element={<BusinessDataMatrixPage />} />
+          <Route path="/business/risk-matrix" element={<BusinessProcessRiskMatrix />} />
+          <Route path="/business/corporate-governance" element={<CorporateGovernancePage />} />
+          <Route path="/business/functional-decomposition-diagram" element={<FunctionalDecompositionPage />} />
+          <Route path="/business/kpi" element={<KPIpage />} />
+          <Route path="/business/organizational" element={<OrgStructurePage />} />
           <Route path="/business-process/peta-konsep" element={<PetaKonsepPage />} />
           <Route path="/business-process/level-0" element={<PetaKonsepLevel0Page />} />
           <Route path="/business-process/level-01" element={<PetaKonsepLevel01Page />} />
-          <Route path="/app/communicationDiagram" element={<CommunicationDiagramPage />} /> 
-          <Route path="/app/porto-assesment" element={<PortofolioAssesmentPage />} /> 
+          {/* Data */}
+          <Route path="/data/application-matrix" element={<AppDataMatrixPage />} />
+          <Route path="/data/concept" element={<ConceptualDiagramPage />} />
+          <Route path="/data/function-matrix" element={<DataFunctionMatrixPage />} />
+          <Route path="/data/component-catalog" element={<DataEntityPage />} />
+          <Route path="/data/principles" element={<DataPrinciplesPage />} />
+          <Route path="/data/logical-data-diagram" element={<LogicalDataDiagram />} />
+          {/* Application */}
           <Route path="/app/usecase" element={<UseCaseGallery />} />
+          <Route path="/app/portfolio-catalog" element={<ApplicationPortfolioPage />} />
+          <Route path="/app/principles" element={<ApplicationPrinciples />} />
+          <Route path="/app/process-matrix" element={<AppBusinessProcessMatrixPage />} />
+          <Route path="/app/classification-matrix" element={<ApplicationClassificationMatrix />} />
+          <Route path="/app/communication-diagram" element={<CommunicationDiagramPage />} /> 
+          <Route path="/app/organization-matrix" element={<AppOrgMatrixPage />} />
+          <Route path="/app/portofolio-assesment" element={<PortofolioAssesmentPage />} /> 
+          {/* Technology */}
+          <Route path="/tech/environment-diagram" element={<TechnologyEnvironmentDiagram />} />
+          <Route path="/tech/network-communication-diagram" element={<TechnologyNetworkDiagram />} />
+          <Route path="/tech/application-matrix" element={<TechnologyAppMatrix />} />
+          <Route path="/tech/technology-principles" element={<TechnologyPrinciples />} />
+          <Route path="/tech/standards-catalog" element={<TechnologyStandarCatalog />} />
           <Route path="/detail/:id" element={<DetailPage />} />
-          <Route path="/business/appMatrix" element={<BusinessProcessAppMatrix />} />
-          <Route path="/business/dataMatrix" element={<BusinessDataMatrixPage />} />
 
 
           {/* Placeholder untuk halaman yang belum ada */}

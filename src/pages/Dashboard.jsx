@@ -56,11 +56,11 @@ const Dashboard = () => {
       return;
     }
     if (item.title === "Value Chain Diagram") {
-      navigate("/vision/valuechain");
+      navigate("/vision/value-chain");
       return;
     }
     if (item.title === "Business Model Canvas") {
-      navigate("/vision/businessmodelcanvas");
+      navigate("/vision/business-model-canvas");
       return;
     }
     if (item.title === "Architecture Principles") {
@@ -75,27 +75,23 @@ const Dashboard = () => {
       navigate("/vision/stakeholder");
       return;
     }
-    if (item.title === "Technology Principles") {
-      navigate("/vision/technologyPrinciples");
-      return;
-    }
     if (item.title === "Organization Decomposition Diagram") {
       navigate("/vision/organization");
+      return;
+    }
+    if (item.title === "Solution Concept Diagram") {
+      navigate('/vision/solution');
       return;
     }
     
     
     // Business Section
     if (item.title === "Business Principles") {
-      navigate('/business/businessprinciples');
+      navigate('/business/principles');
       return;
     }
     if (item.title === "KPI") {
       navigate('/business/kpi');
-      return;
-    }
-    if (item.title === "Solution Concept Diagram") {
-      navigate('/vision/solution');
       return;
     }
     if (item.title === "Organizational Actor Catalog") {
@@ -103,86 +99,69 @@ const Dashboard = () => {
       return;
     }
     if (item.title === "Functional Decomposition Diagram") {
-      navigate('/business/functional');
+      navigate('/business/functional-decomposition-diagram');
       return;
     }
     if (item.title === "Business Process - Risk Matrix") {
-      navigate("/business/RiskMatrix");
+      navigate("/business/risk-matrix");
       return;
     }
     if (item.title === "Business Process") {
-      navigate('/business/probis');
+      navigate('/business/process');
       return;
     }
     if (item.title === "Business Interaction Diagram") {
-      navigate('/business/Interaction');
+      navigate('/business/interaction');
       return;
     }
     if (item.title === "Corporate Governance") {
-      navigate('/business/corporate_governance');
+      navigate('/business/corporate-governance');
       return;
     }
     
     if (item.title === "Business Process - Application Matrix"){
-      navigate("/business/appMatrix");
+      navigate("/business/application-matrix");
       return;
     }
-
+    
     if (item.title === "Business Process - Data Matrix"){
-      navigate("/business/dataMatrix");
+      navigate("/business/data-matrix");
       return;
     }
 
     // Data Section
     if (item.title === "Data Entity - Data Component Catalog") {
-      navigate('/data/component');
+      navigate('/data/component-catalog');
       return;
     }
     if (item.title === "Logical Data Diagram") {
-      navigate('/data/logical');
+      navigate('/data/logical-data-diagram');
       return;
     }
     if (item.title === "Data Entity - Business Function Matrix") {
-      navigate('/data/function_matrix');
+      navigate('/data/function-matrix');
       return;
     }
     if (item.title === "Data Principles") {
-      navigate('/data/dataprinciples');
+      navigate('/data/principles');
       return;
     }
     if (item.title === "Application - Data Matrix") {
-      navigate('/data/appmatrix');
+      navigate('/data/application-matrix');
       return;
     }
     if (item.title === "Conceptual Data Diagram") {
       navigate('/data/concept');
       return;
     }
-
-    // Technology Section
-    if (item.title === 'Technology Standard Catalog') {
-      navigate("/tech/standardsCatalog");
-      return;
-    }
-    if (item.title === "Environment and Location Diagram") {
-      navigate("/tech/environmentDiagram");
-      return;
-    }
-    if (item.title === "Network Communication Diagram") {
-      navigate("/tech/networkCommunicationDiagram");
-      return;
-    }
-    if (item.title === "Technology - Application Matrix") {
-      navigate("/tech/appMatrix");
-      return;
-    }
+    
     // application section
     if (item.title === "Application Portfolio Catalog") {
-      navigate("/app/portfolio");
+      navigate("/app/portfolio-catalog");
       return;
     }
     if (item.title === "Application - Organization Matrix") {
-      navigate("/app/org_matrix");
+      navigate("/app/organization-matrix");
       return;
     }
     if (item.title === "Application Principles") {
@@ -190,25 +169,44 @@ const Dashboard = () => {
       return;
     }
     if (item.title === "Application - Classification Matrix") {
-      navigate("/app/classification");
+      navigate("/app/classification-matrix");
       return;
     }
     if (item.title === "Application - Communication Diagram") {
-      navigate("/app/communicationDiagram");
+      navigate("/app/communication-diagram");
       return;
     }
     if (item.title === "Application - Portofolio Assessment") {
-      navigate("/app/porto-assesment");
+      navigate("/app/portofolio-assesment");
       return;
     }
-
     if (item.title === "Application Use Case Diagram") {
-      navigate("/app/usecase");
+      navigate("/app/usecase-diagram");
       return;
     }
-
     if (item.title === "Application - Business Process Matrix"){
       navigate("/app/process-matrix");
+      return;
+    }
+    // Technology Section
+    if (item.title === "Technology Principles") {
+      navigate("/tech/technology-principles");
+      return;
+    }
+    if (item.title === 'Technology Standard Catalog') {
+      navigate("/tech/standards-catalog");
+      return;
+    }
+    if (item.title === "Environment and Location Diagram") {
+      navigate("/tech/environment-diagram");
+      return;
+    }
+    if (item.title === "Network Communication Diagram") {
+      navigate("/tech/network-communication-diagram");
+      return;
+    }
+    if (item.title === "Technology - Application Matrix") {
+      navigate("/tech/application-matrix");
       return;
     }
 
