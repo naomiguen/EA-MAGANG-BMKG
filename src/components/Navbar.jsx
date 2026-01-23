@@ -78,7 +78,7 @@ const Navbar = () => {
       children: [
         { name: 'Application Principles', href: '/app/principles', keywords:'perpres NO.95/2018, Perka BMKG' },
         { name: 'Application Portfolio Catalog', href: '/app/portfolio', keywords:'Aplikasi, BMKGsoft, Synergie, Radar, Sakti, Simak, Siman, SIPNB, Simas, Nowcasting' },
-        { name: 'Application Use Case Diagram', href: '/app', keywords:'BMKGSoft' }, //belum selesai
+        { name: 'Application Use Case Diagram', href: '/app/usecase', keywords:'BMKGSoft' }, //belum selesai
         { name: 'Application - Portofolio Assessment', href: '/app/porto-assesment', keywords:'functional quality, technical quality, replace, maintain, eliminate, reassess, bmkgsoft, nowcasting, simas' },
         { name: 'Application - User and Location Diagram', href: '/app' },
         { name: 'Application - Communication Diagram', href: '/app/communicationDiagram', keywords:'data observasi, sistem sumber data, aplikasi target, tujuan data, web based' },
