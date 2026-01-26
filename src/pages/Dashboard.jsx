@@ -212,12 +212,16 @@ const Dashboard = () => {
       return;
     }
 
+    if(item.title === "Architecture Implementation - Architecture Governance"){
+      navigate("/imp/governance");
+      return;
+    }
+
     //Implementation
     if (item.title === "Architecture Implementation Planning") {
       navigate("/imp/planning");
       return;
     }
-
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 

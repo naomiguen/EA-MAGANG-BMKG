@@ -103,7 +103,7 @@ const Navbar = () => {
       href: null, 
       children: [
         { name: 'Architecture Implementation Planning', href: '/imp/planning' },
-        { name: 'Architecture Governance', href: '/implemen' },
+        { name: 'Architecture Governance', href: '/imp/governance' },
       ]
     },
   ];

@@ -42,6 +42,7 @@ import OrganizationDiagramPage from "./pages/OrganizationDiagramPage";
 import PetaKonsepPage from "./pages/PetaKonsepPage";
 import PetaKonsepLevel0Page from "./pages/PetaKonsepLevel0Page";
 import PetaKonsepLevel01Page from "./pages/PetaKonsepLevel01Page";
+import ArchitectureGovernancePage from "./pages/ArchitectureGovernance";
 import CommunicationDiagramPage from "./pages/CommunicationDiagramPage";
 import PortofolioAssesmentPage from "./pages/PortofolioAssesmentPage"
 import UseCaseGallery from "./pages/AppUseCasePage";
@@ -49,6 +50,7 @@ import DetailPage from "./pages/DetailUsecasePage";
 import BusinessProcessAppMatrix from "./pages/BusinessAppMatrix";
 import BusinessDataMatrixPage from "./pages/BusinessDataMatrixPage";  
 import ImplementationPage from "./pages/ImplementationPage";
+
 
 function App() {
   return (
@@ -101,6 +103,7 @@ function App() {
           <Route path="/business-process/peta-konsep" element={<PetaKonsepPage />} />
           <Route path="/business-process/level-0" element={<PetaKonsepLevel0Page />} />
           <Route path="/business-process/level-01" element={<PetaKonsepLevel01Page />} />
+          <Route path="/imp/governance" element={<ArchitectureGovernancePage />} />
           <Route path="/app/communicationDiagram" element={<CommunicationDiagramPage />} /> 
           <Route path="/app/porto-assesment" element={<PortofolioAssesmentPage />} /> 
           <Route path="/app/usecase" element={<UseCaseGallery />} />
@@ -108,6 +111,7 @@ function App() {
           <Route path="/business/appMatrix" element={<BusinessProcessAppMatrix />} />
           <Route path="/business/dataMatrix" element={<BusinessDataMatrixPage />} />
           <Route path="/imp/planning" element={<ImplementationPage />} />
+
 
 
           {/* Placeholder untuk halaman yang belum ada */}
