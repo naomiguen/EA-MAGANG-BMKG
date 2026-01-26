@@ -24,14 +24,43 @@ export const appData = [
     title: "BMKGSoft",
     description: "Aplikasi ini berfungsi menggantikan pencatatan manual (Buku ME-48), melakukan perhitungan parameter cuaca secara otomatis (koreksi barometer, kelembaban, dll), serta mengubah data menjadi format sandi baku (SYNOP, METAR) sebelum dikirimkan melalui sistem CMSS.",
     logoUrl: "https://hfctpsuwjytwyhrdoggb.supabase.co/storage/v1/object/public/usecase/logobmkg.png",
-    diagramUrl: "https://hfctpsuwjytwyhrdoggb.supabase.co/storage/v1/object/public/usecase/use-case-bmkgsoft.png",
+    diagramUrl: "/ucd/ucd-bmkgsoft.svg",
+    useCaseDetails: {
+      "01": { title: "Login", description: "Otentikasi pengguna (Observer, Admin, Forecaster) untuk masuk ke dalam sistem BMKGSoft." },
+      "02": { title: "Input Data Sinoptik (SYNOP)", description: "Memasukkan data pengamatan cuaca permukaan secara jam-jaman untuk keperluan sandi SYNOP." },
+      "03": { title: "Input Data Penerbangan (METAR/SPECI)", description: "Memasukkan data cuaca khusus bandara untuk laporan rutin (METAR) atau cuaca buruk (SPECI) demi keselamatan penerbangan." },
+      "04": { title: "Input Data Angin Atas (PIBAL)", description: "Mencatat hasil pengamatan arah dan kecepatan angin lapisan atas menggunakan balon pilot." },
+      "05": { title: "Auto-fill Data AWS", description: "Fitur otomatisasi pengisian data formulir yang ditarik langsung dari sensor Automatic Weather Station (AWS)." },
+      "06": { title: "Input Data Klimatologi", description: "Memasukkan data unsur iklim seperti penguapan (Open Pan) dan lamanya penyinaran matahari." },
+      "07": { title: "Verifikasi Data Observasi", description: "Proses validasi dan pengecekan kualitas data (Quality Control) sebelum data dikirim atau disimpan permanen." },
+      "08": { title: "Melihat Grafik Meteorogram", description: "Menampilkan visualisasi tren perubahan unsur cuaca (suhu, tekanan, angin) dalam bentuk grafik time-series." },
+      "09": { title: "Melihat Data Tabel Harian", description: "Menampilkan rekapitulasi seluruh data pengamatan dalam satu hari penuh dalam format tabelaris (FKL)." },
+      "10": { title: "Manajemen User", description: "Pengaturan akun pengguna, peran (role), dan hak akses untuk keamanan aplikasi." },
+      "11": { title: "Kelola Metadata Stasiun", description: "Pengaturan informasi dasar stasiun seperti koordinat, elevasi, dan daftar peralatan yang terpasang." }
+    }
   },
   {
     id: "syn",
-    title: "Synergy",
+    title: "Synergie",
     description: "Aplikasi ini digunakan sebagai alat bantu analisis meteorologi untuk menyusun berbagai produk layanan cuaca, antara lain pembuatan prakiraan cuaca, penyusunan produk penerbangan, dan analisis data satelit & radar",
     logoUrl: "https://hfctpsuwjytwyhrdoggb.supabase.co/storage/v1/object/public/usecase/logobmkg.png",
-    diagramUrl: "https://hfctpsuwjytwyhrdoggb.supabase.co/storage/v1/object/public/usecase/use-case-synergie.png",
+    diagramUrl: "/ucd/ucd-synergie.svg",
+    useCaseDetails: {
+      // --- Bagian Atas (Forecaster/Prakirawan) ---
+      "01": { title: "Melakukan visualisasi peta cuaca", description: "Menampilkan lapisan (layer) data meteorologi seperti citra satelit, radar, dan model cuaca di atas peta digital interaktif." },
+      "02": { title: "Monitoring dashboard operasional", description: "Memantau ringkasan status cuaca terkini dan parameter kritis stasiun dalam satu tampilan layar terpusat (widget view)." },
+      "03": { title: "Monitoring peringatan dini", description: "Melacak wilayah yang terdeteksi memiliki potensi cuaca ekstrem (warning/alert) berdasarkan ambang batas parameter tertentu." },
+      "04": { title: "Monitoring cuaca penerbangan", description: "Memantau kondisi cuaca spesifik di area bandara (Aerodrome) dan jalur penerbangan untuk mendukung keselamatan navigasi udara." },
+      "05": { title: "Melihat buletin cuaca", description: "Membaca dan menganalisis data pengamatan mentah berupa teks sandi (SYNOP, METAR, SPECI) yang dikirim dari stasiun lain." },
+      "06": { title: "Menjalankan makro analysis", description: "Mengeksekusi serangkaian perintah otomatis (script) untuk membuka kombinasi peta dan data analisis rutin dengan satu kali klik." },
+
+      // --- Bagian Bawah (Admin) ---
+      "07": { title: "Mengelola preferensi sistem", description: "Mengatur konfigurasi global aplikasi seperti penetapan zona waktu, satuan pengukuran default, dan hak akses pengguna." },
+      "08": { title: "Konfigurasi sumber data eksternal", description: "Menghubungkan aplikasi Synergie dengan server data luar (seperti WMS/Web Map Service) untuk menambah lapisan informasi peta." },
+      "09": { title: "Mengelola peta dasar", description: "Menambah, menghapus, atau memperbarui peta latar belakang (Basemap) seperti peta topografi, jalan, atau batas administrasi." },
+      "10": { title: "Melakukan konversi unit", description: "Menggunakan alat bantu utilitas sistem untuk mengubah satuan parameter cuaca (misal: Knots ke km/jam) secara akurat." },
+      "11": { title: "Akses konsol sistem", description: "Membuka antarmuka baris perintah (Command Line Interface) untuk keperluan maintenance, debugging, atau pengaturan tingkat lanjut." }
+    }
   },
   {
     id: "nowcasting",
@@ -68,7 +97,29 @@ export const appData = [
     title: "MY SAPK BKN",
     description: "Aplikasi  dari BKN untuk memudahkan PNS mengakses data kepegawaian, layanan, hingga pemutakhiran data mandiri secara daring, mencakup profil PNS, KPE Virtual, notifikasi layanan kenaikan pangkat/pensiun, serta data pendukung lainnya seperti BPJS dan Taspen, demi menciptakan data kepegawaian nasional yang lebih akurat. ",
     logoUrl: "https://hfctpsuwjytwyhrdoggb.supabase.co/storage/v1/object/public/usecase/logo-sapk-bkn.png",
-    diagramUrl: "https://hfctpsuwjytwyhrdoggb.supabase.co/storage/v1/object/public/usecase/use-case-my-sapk-bkn.png",
+    diagramUrl: "/ucd/ucd-my-sapk-bkn.svg",
+    useCaseDetails: {
+      // --- Bagian Kiri (Pegawai ASN) ---
+      "01": { title: "Update riwayat CPNS/PNS", description: "Memperbarui atau memperbaiki data Surat Keputusan (SK) pengangkatan Calon PNS dan PNS jika terdapat kesalahan input." },
+      "02": { title: "Update riwayat Diklat/Kursus", description: "Menambahkan data sertifikat pelatihan fungsional, teknis, atau struktural yang baru saja diikuti untuk pengembangan kompetensi." },
+      "03": { title: "Update riwayat golongan", description: "Memperbarui data kepangkatan terakhir (Golongan/Ruang) sesuai dengan SK Kenaikan Pangkat terbaru." },
+      "04": { title: "Update riwayat jabatan", description: "Memutakhirkan informasi jabatan struktural atau fungsional saat ini jika terjadi mutasi, promosi, atau rotasi." },
+      "05": { title: "Update riwayat keluarga", description: "Menambahkan atau mengubah data pasangan (suami/istri) dan anak guna keperluan administrasi tunjangan keluarga." },
+      "06": { title: "Update riwayat pendidikan", description: "Mencatat gelar pendidikan formal terbaru yang diperoleh melalui Tugas Belajar atau Izin Belajar." },
+      "07": { title: "Update riwayat penghargaan", description: "Memasukkan data tanda jasa atau Satyalancana Karya Satya yang diterima dari pemerintah." },
+      "08": { title: "Update riwayat organisasi", description: "Menambahkan pengalaman keaktifan dalam organisasi profesi atau kemasyarakatan yang relevan." },
+      "09": { title: "Melihat riwayat pengajuan", description: "Memantau status usulan pemutakhiran data (apakah masih 'Input', 'Verifikasi Instansi', atau sudah 'Disetujui')." },
+      "10": { title: "Melihat profil saya", description: "Menampilkan ringkasan data diri utama pegawai (NIP, Nama, Unit Kerja) dalam satu kartu identitas digital." },
+      "11": { title: "Melihat notifikasi", description: "Menerima pesan sistem mengenai status persetujuan atau penolakan atas data yang telah diajukan." },
+      "12": { title: "Mengelola dokumen saya", description: "Mengunggah dan menyimpan arsip digital dokumen penting (KTP, KK, SK, NPWP) ke penyimpanan cloud BKN." },
+      "13": { title: "Melihat kompetensi dan performa", description: "Menampilkan skor hasil asesmen kompetensi (CAT) dan nilai kinerja tahunan (SKP) yang terintegrasi." },
+      "14": { title: "Membaca berita terbaru", description: "Mengakses informasi terkini, regulasi baru, dan pengumuman resmi terkait kepegawaian dari BKN Pusat." },
+
+      // --- Bagian Kanan (Verifikator Instansi & Pusat) ---
+      "15": { title: "Verifikasi usulan PDM", description: "Admin instansi memeriksa kesesuaian data dan dokumen yang diajukan pegawai sebelum diteruskan ke database nasional." },
+      "16": { title: "Monitoring progres PDM instansi", description: "Memantau statistik persentase pegawai yang sudah menyelesaikan Pemutakhiran Data Mandiri di lingkup instansi." },
+      "17": { title: "Persetujuan akhir", description: "Otorisasi final oleh BKN Pusat untuk perubahan data yang bersifat krusial/sensitif (seperti Tanggal Lahir atau TMT Pangkat)." }
+    }
   },
   {
     id: "sakti",
@@ -124,7 +175,36 @@ export const appData = [
     title: "SIMAK-BMN (Sistem Informasi Manajemen dan Akuntansi Barang Milik Negara)",
     description: "Aplikasi terpadu dari Kementerian Keuangan untuk mengelola, mencatat, dan melaporkan seluruh siklus hidup Barang Milik Negara (BMN) di instansi pemerintah, mulai dari pengadaan, mutasi, hingga penghapusan untuk mendukung penyusunan laporan keuangan yang akuntabel dan akurat melalui proses komputarisasi data aset negara.",
     logoUrl: "https://hfctpsuwjytwyhrdoggb.supabase.co/storage/v1/object/public/usecase/logo-simak-bmn.png",
-    diagramUrl: "https://hfctpsuwjytwyhrdoggb.supabase.co/storage/v1/object/public/usecase/use-case-simak-bmn.drawio.png",
+    diagramUrl: "/ucd/ucd-simak-bmn.svg",
+    useCaseDetails: {
+      // --- Bagian Kiri (Operator BMN - Transaksi & Laporan) ---
+      "01": { title: "Input saldo awal BMN", description: "Memasukkan data nilai aset dari periode sebelumnya sebagai pembuka pembukuan tahun berjalan." },
+      "02": { title: "Input perolehan BMN", description: "Mencatat aset yang baru didapat, baik melalui pembelian, hibah masuk, atau transfer masuk." },
+      "03": { title: "Input konstruksi dalam pengerjaan (KDP)", description: "Mencatat aset berupa bangunan atau gedung yang proses pembangunannya belum selesai pada tahun berjalan." },
+      "04": { title: "Input perubahan BMN", description: "Mengupdate data aset yang mengalami perubahan nilai akibat renovasi, penilaian kembali (revaluasi), atau koreksi." },
+      "05": { title: "Input penghapusan BMN", description: "Mengeluarkan aset dari daftar inventaris aktif karena dijual (lelang), dimusnahkan, atau diserahkan ke pihak lain." },
+      "06": { title: "Input usulan barang rusak/hilang", description: "Melaporkan status barang yang rusak berat atau hilang untuk diproses penghapusannya dari neraca." },
+      "07": { title: "Input penghentian BMN", description: "Mengubah status aset menjadi tidak aktif sementara waktu (penghentian dari penggunaan operasional)." },
+      "08": { title: "Cek kartu identitas barang (KIB)", description: "Mengelola dan memverifikasi dokumen identitas untuk aset besar seperti Tanah (KIB A), Gedung (KIB C), dll." },
+      "09": { title: "Kelola daftar barang ruangan (DBR)", description: "Memetakan lokasi aset ke dalam ruangan spesifik dan mencetak daftar inventaris per ruangan." },
+      "10": { title: "Mencetak label aset", description: "Mencetak stiker kode barang (barcode) untuk ditempelkan pada fisik aset sebagai penanda inventaris." },
+      "11": { title: "Monitoring history aset", description: "Melacak riwayat lengkap siklus hidup aset, mulai dari perolehan, mutasi, hingga perbaikan yang pernah dilakukan." },
+      "12": { title: "Mencetak laporan BMN", description: "Menghasilkan laporan rutin pengelolaan barang milik negara (Intrakomptabel) untuk periode semesteran atau tahunan." },
+      "13": { title: "Mencetak laporan posisi di neraca", description: "Menyajikan data nilai aset dalam format akuntansi untuk kebutuhan penyusunan Neraca Keuangan Satker." },
+      "14": { title: "Mencetak catatan atas laporan", description: "Menghasilkan narasi penjelasan (CaLK) terkait angka-angka yang tersaji dalam laporan BMN." },
+      "15": { title: "Menerima data dari SAKTI", description: "Melakukan integrasi data (ADK) dari aplikasi SAKTI untuk menarik data detail belanja modal/kwitansi pembelian." },
+      "16": { title: "Mengirim data ke UAPPB-W / E-Rekon", description: "Mengirimkan ADK hasil rekonsiliasi BMN ke tingkat wilayah atau mengunggahnya ke portal rekonsiliasi Kemenkeu." },
+
+      // --- Bagian Kanan (Administrator/Setup - Konfigurasi) ---
+      "17": { title: "Manajemen pengguna", description: "Pengaturan akun user, password, dan hak akses operator aplikasi SIMAK BMN." },
+      "18": { title: "Konfigurasi identitas laporan (setup logo)", description: "Mengatur kop surat dan logo instansi yang akan tampil otomatis pada setiap cetakan laporan." },
+      "19": { title: "Pemutakhiran kode Satker", description: "Memperbarui referensi kode satuan kerja jika terjadi perubahan nomenklatur atau organisasi." },
+      "20": { title: "Pemutakhiran hierarki organisasi", description: "Mengatur struktur pelaporan berjenjang (UAKPB melapor ke UAPPB-W dan UAPB mana)." },
+      "21": { title: "Mapping kantor pelayanan", description: "Menentukan kantor KPKNL dan KPPN mitra kerja tempat satker melakukan pelaporan dan rekonsiliasi." },
+      "22": { title: "Update referensi wilayah", description: "Memperbarui kode lokasi provinsi/kabupaten/kota sesuai aturan Kemendagri terbaru." },
+      "23": { title: "Update referensi kode barang", description: "Memperbarui kamus kode aset (katalog barang) sesuai aturan kodifikasi terbaru dari DJKN." },
+      "24": { title: "Cek masa manfaat dan penyusutan", description: "Melihat tabel referensi umur ekonomis aset yang digunakan sistem untuk menghitung penyusutan otomatis." }
+    }
   },
   {
     id: "sprint",
@@ -149,28 +229,71 @@ export const appData = [
     title: "SIMAN (Sistem Informasi Manajemen Aset Negara)",
     description: "Aplikasi digital dari Kementerian Keuangan (DJKN) untuk mengelola seluruh siklus Barang Milik Negara (BMN) secara terintegrasi dan transparan, mulai dari perencanaan hingga penghapusan.",
     logoUrl: "https://hfctpsuwjytwyhrdoggb.supabase.co/storage/v1/object/public/usecase/logo-siman.png",
-    diagramUrl: "https://hfctpsuwjytwyhrdoggb.supabase.co/storage/v1/object/public/usecase/use-case-siman.png",
-  },
-  {
-    id: "sippb",
-    title: "SIPPB (Sistem Informasi Perencanaan dan Penganggaran BMKG)",
-    description: "Aplikasi berbasis web yang dikembangkan oleh BMKG Pusat untuk memfasilitasi proses penyusunan, penelaahan, dan penetapan rencana kerja serta anggaran tahunan di seluruh satuan kerja (stasiun) BMKG.",
-    logoUrl: "https://hfctpsuwjytwyhrdoggb.supabase.co/storage/v1/object/public/usecase/logobmkg.png",
-    diagramUrl: "https://hfctpsuwjytwyhrdoggb.supabase.co/storage/v1/object/public/usecase/use-case-sippb.png",
+    diagramUrl: "/ucd/ucd-siman.svg",
+    useCaseDetails: {
+      // --- Bagian Kiri (Operator BMN) ---
+      "01": { title: "Melakukan registrasi dan aktivasi akun SIMAN", description: "Proses pendaftaran awal dan pengaktifan akun pengguna untuk dapat mengakses fitur-fitur dalam aplikasi SIMAN." },
+      "02": { title: "Request akun pengguna baru", description: "Mengajukan permohonan pembuatan akun tambahan untuk staf atau operator baru di lingkungan satker." },
+      "03": { title: "Mengelola profil instansi/satker", description: "Memperbarui informasi identitas satuan kerja, alamat, kontak, dan struktur organisasi." },
+      "04": { title: "Melakukan reset kode autentikator/OTP", description: "Fitur pemulihan keamanan untuk mereset kode One-Time Password jika pengguna mengalami gagal login berulang." },
+      "05": { title: "Update data detail aset tanah", description: "Melengkapi atribut aset tanah meliputi dokumen kepemilikan, Nomor Induk Bidang (NIB), dan data Geospasial (IGT)." },
+      "06": { title: "Update data bangunan", description: "Memperbarui spesifikasi teknis bangunan seperti Luas Dasar, Koefisien Dasar Bangunan (KDB), dan koordinat letak bangunan." },
+      "07": { title: "Mencetak Label BMN", description: "Menghasilkan label fisik berisi kode batang (Barcode/QR) untuk ditempelkan pada fisik aset." },
+      "08": { title: "Mengelola ruangan", description: "Manajemen data ruangan, pendataan lantai, serta pencetakan Daftar Barang Ruangan (DBR) dan Daftar Barang Lainnya (DBL)." },
+      "09": { title: "Melakukan mutasi barang antar ruangan", description: "Mencatat perpindahan lokasi fisik aset dari satu ruangan ke ruangan lain dalam satu satker." },
+      "10": { title: "Menyusun usulan RKBMN", description: "Membuat Rencana Kebutuhan Barang Milik Negara (Pengadaan/Pemeliharaan) untuk tahun anggaran mendatang." },
+      "11": { title: "Upload dokumen kelengkapan RKBMN", description: "Mengunggah dokumen pendukung seperti TOR dan RAB sebagai syarat pengajuan usulan kebutuhan aset." },
+      "12": { title: "Mengirim data usulan RKBMN", description: "Melakukan submit data usulan perencanaan kebutuhan ke tingkat banding atau kantor pusat." },
+      "13": { title: "Merekam dan membuat Laporan Wasdal", description: "Menyusun laporan Pengawasan dan Pengendalian (Wasdal) aset untuk periode Semester I, II, dan Tahunan." },
+      "14": { title: "Mencatat tindak lanjut perbaikan aset", description: "Mendokumentasikan tindakan perbaikan yang dilakukan atas aset yang ditemukan tidak sesuai standar saat wasdal." },
+      "15": { title: "Merekam Berita Acara (BA) Wasdal", description: "Membuat dokumen formal Berita Acara hasil pelaksanaan pengawasan dan pengendalian BMN." },
+      "16": { title: "Upload dokumen pendukung Wasdal", description: "Mengunggah bukti fisik, foto dokumentasi, dan surat terkait pelaporan Wasdal." },
+
+      // --- Bagian Kanan (KUPT/Kepala Kantor) ---
+      "17": { title: "Validasi Usulan RKBMN", description: "Persetujuan dan pengesahan oleh Kepala Kantor atas rencana kebutuhan aset yang diajukan operator." },
+      "18": { title: "Validasi Laporan Wasdal", description: "Pemeriksaan dan persetujuan akhir terhadap laporan hasil pengawasan dan pengendalian aset." },
+      "19": { title: "Monitoring status penetapan (PSP) aset", description: "Memantau progres persetujuan Penetapan Status Penggunaan (PSP) aset yang diajukan ke pengelola barang." }
+    }
   },
   {
     id: "spreso",
     title: "SPRESO (Sistem Presensi Online)",
     description: "Aplikasi ini adalah backend (sistem pusat) yang mengolah data kehadiran pegawai untuk menentukan besaran uang Tunjangan Kinerja (Tukin) dan Uang Makan yang akan diterima setiap bulan.",
     logoUrl: "https://hfctpsuwjytwyhrdoggb.supabase.co/storage/v1/object/public/usecase/logo-espreso.jpeg",
-    diagramUrl: "https://hfctpsuwjytwyhrdoggb.supabase.co/storage/v1/object/public/usecase/use-case-spreso.png",
+    diagramUrl: "/ucd/ucd-spreso.svg",
+    useCaseDetails: {
+      // --- Bagian Kiri (Karyawan Biro Umum) ---
+      "01": { title: "Mengelola data kepegawaian", description: "Melakukan input, update, dan verifikasi master data seluruh pegawai termasuk riwayat jabatan dan golongan." },
+      "02": { title: "Mengelola data pelaksana tugas (PLT)", description: "Mencatat dan memperbarui status pegawai yang menjabat sebagai Pelaksana Tugas untuk penyesuaian hak tunjangan." },
+      "03": { title: "Melakukan perhitungan tunjangan kinerja", description: "Sistem mengkalkulasi besaran Tukin secara otomatis berdasarkan capaian kinerja dan rekap kehadiran." },
+      "04": { title: "Melakukan perhitungan uang makan", description: "Menghitung total uang makan yang diterima pegawai berdasarkan jumlah hari hadir (WFO) yang tercatat di mesin absensi." },
+      "05": { title: "Melakukan perhitungan potongan tunjangan", description: "Menerapkan aturan pengurangan tunjangan akibat keterlambatan, pulang cepat, atau ketidakhadiran tanpa keterangan (Alpa)." },
+      "06": { title: "Membuat laporan (generate laporan)", description: "Menghasilkan rekapitulasi pembayaran tunjangan dan presensi bulanan sebagai dokumen pertanggungjawaban." },
+      "07": { title: "Export data laporan", description: "Mengunduh hasil laporan yang telah digenerate ke dalam format Excel atau PDF untuk arsip dan proses pencairan dana." },
+
+      // --- Bagian Kanan (Pegawai) ---
+      "08": { title: "Melakukan presensi mobile", description: "Pegawai melakukan absensi masuk dan pulang menggunakan aplikasi di HP berbasis lokasi (GPS) dan swafoto (Selfie)." },
+      "09": { title: "Menerima hasil perhitungan gaji/tukin", description: "Pegawai melihat informasi final nominal gaji dan tunjangan kinerja yang akan ditransfer ke rekening setelah dipotong pajak/denda." }
+    }
   },
   {
     id: "simas",
     title: "SIMAS (Sistem Informasi Manajemen Aparatur Sipil Negara)",
     description: "Aplikasi berbasis web yang berfungsi untuk mengelola data kepegawaian secara internal. Sistem ini dirancang untuk mengotomatisasi proses bisnis pengelolaan SDM di lingkungan BMKG, melengkapi aplikasi nasional seperti MyASN (BKN).",
     logoUrl: "https://hfctpsuwjytwyhrdoggb.supabase.co/storage/v1/object/public/usecase/00%20Logo%202a.png",
-    diagramUrl: "https://hfctpsuwjytwyhrdoggb.supabase.co/storage/v1/object/public/usecase/use-case-simas.png",
+    diagramUrl: "/ucd/ucd-simas.svg",
+    useCaseDetails: {
+      // --- Bagian Kiri (Agendaris / Admin TU) ---
+      "01": { title: "Melakukan pengajuan cuti online", description: "Mengisi formulir permohonan izin, sakit, atau cuti tahunan secara digital untuk diajukan kepada pejabat berwenang." },
+      "02": { title: "Mengajukan perubahan DRH", description: "Mengusulkan pemutakhiran atau perbaikan data Daftar Riwayat Hidup (seperti pendidikan, keluarga, pangkat) yang belum sesuai." },
+      "03": { title: "Melihat DRH lengkap", description: "Menampilkan profil lengkap pegawai (Curriculum Vitae) yang mencakup seluruh riwayat karir dan data pribadi dalam sistem." },
+      "04": { title: "Melihat status pengajuan", description: "Memantau progres usulan cuti atau perubahan data, apakah masih dalam antrian verifikasi, disetujui, atau ditolak." },
+      "05": { title: "Melihat info ulang tahun pegawai", description: "Fitur dashboard yang menampilkan notifikasi daftar rekan kerja satu unit yang sedang berulang tahun pada hari ini." },
+
+      // --- Bagian Kanan (Approver / Pejabat Penyetuju) ---
+      "06": { title: "Melakukan verifikasi cuti", description: "Pejabat berwenang memeriksa sisa kuota cuti dan memberikan persetujuan (Approve) atau penolakan atas ajuan cuti bawahan." },
+      "07": { title: "Melakukan verifikasi ubah DRH", description: "Memvalidasi kebenaran data dan dokumen pendukung perubahan riwayat hidup sebelum data tersebut diperbarui secara permanen di database." }
+    }
   },
   {
     id: "info",
