@@ -358,7 +358,7 @@ const Dashboard = () => {
               fontWeight: 'normal', 
               color: '#64748b' 
             }}>
-              ({architectureData.vision?.length || 0} items)
+              ({architectureData.vision?.length || 0})
             </span>
           </h2>
           <div className="vision-grid">
