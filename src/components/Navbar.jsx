@@ -43,6 +43,8 @@ const Navbar = () => {
         { name: 'Solution Concept Diagram', href: '/vision/solution', keywords:'Diagram, Solusi, User Layer' },
         { name: 'Value Chain', href: '/vision/valuechain', keywords:'Aktivitas Pendukung, Aktifitas Utama' },
         { name: 'Vision, Mission and Corporate Strategy', href: '/vision/strategy', keywords:'Visi, Misi, Map, Strategi' },
+        { name: 'Business Canvas Model', href: '/vision/businessmodelcanvas' },
+
       ]
     },
     { 
@@ -58,7 +60,8 @@ const Navbar = () => {
         { name: 'Business Process', href: '/business/probis', keywords:'Bisnis proses, Proses Bisnis Leveel 0-1' },
         { name: 'Business Interaction', href: '/business/Interaction', keywords:'Bisnis Interkasi, Business Interaction, Support, Internal, eksternal' },
         { name: 'Corporate Governance', href: '/business/corporate_governance', keywords:'Legal Foundation, Dsar hukum, undang-undang, UU, Perpres, PP, international standards, Operational Procedures, Peta konsep, Business process map' },
-
+        { name: 'Business Principles', href: '/business/businessprinciples' },
+        { name: 'KPI', href: '/business/kpi' },
       ]
     },
     {
