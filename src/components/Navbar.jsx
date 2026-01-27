@@ -51,6 +51,7 @@ const Navbar = () => {
       children: [
         { name: 'Business Process - Application Matrix', href: '/business/appMatrix' },
         { name: 'Business Process - Data Matrix', href: '/business/dataMatrix' },
+        { name: 'Risk', href: '/business/risk' },
         { name: 'Organizational Actor Catalog', href: '/business/organizational', keywords:'Jabatan, Katalog, Aktor, Pimpinan' },
         { name: 'Business Process - Risk Matrix', href: '/business/RiskMatrix', keywords: 'Corporate, Korporat' },
         { name: 'Functional Decomposition Diagram', href: '/business/functional', keywords: 'Fungsi bisnis, Tugas, Level' },
