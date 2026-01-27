@@ -28,12 +28,14 @@ import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix";
 import BusinessProcessPage from "./pages/BusinessProcess";
 import BusinessPrinciplePage from "./pages/BusinessPrinciple";
 import KPIpage from "./pages/KPI";
+// import BusinessProcessKPIMatrixPage from "./pages/BusinessProcessKPIMatrix"
 import TechnologyNetworkDiagram from "./pages/TechnologyNetworkDiagram";
 import TechnologyAppMatrix from "./pages/TechnologyAppMatrix";
 import SolutionConceptPage from "./pages/SolutionConceptPage";
 import ApplicationPortfolioPage from "./pages/PortfolioCatalogPage";
 import AppBusinessProcessMatrixPage from "./pages/AppBusinessProcessMatrix";
 import AppOrgMatrixPage from "./pages/AppOrgMatrix";
+import AppUserLocationPage from "./pages/AppUserLocation"
 import ApplicationPrinciples from "./pages/ApplicationPrinciples";
 import ApplicationClassificationMatrix from "./pages/ApplicationClassificationMatrix";
 import BusinessInteractionDiagram from "./pages/BusinessInteractionDiagram";
@@ -81,6 +83,7 @@ function App() {
           <Route path="/business/probis" element={<BusinessProcessPage />} />
           <Route path="/business/businessprinciples" element={<BusinessPrinciplePage />} />
           <Route path="/business/kpi" element={<KPIpage />} />
+          {/* <Route path="/business/businessprocess-kpimatrix" element={<BusinessProcessKPIMatrixPage />} /> */}
           <Route path="/data/dataprinciples" element={<DataPrinciplesPage />} />
           <Route path="/data/component" element={<DataEntityPage />} />
           <Route path="/data/logical" element={<LogicalDataDiagram />} />
@@ -95,6 +98,7 @@ function App() {
           <Route path="/tech/appMatrix" element={<TechnologyAppMatrix />} />
           <Route path="/app/portfolio" element={<ApplicationPortfolioPage />} />
           <Route path="/app/process-matrix" element={<AppBusinessProcessMatrixPage />} />
+          <Route path="/app/user-and-location" element={<AppUserLocationPage />} />
           <Route path="/app/org_matrix" element={<AppOrgMatrixPage />} />
           <Route path="/app/principles" element={<ApplicationPrinciples />} />
           <Route path="/app/classification" element={<ApplicationClassificationMatrix />} />
