@@ -276,9 +276,8 @@
   }
 
   .orgPageTitle {
-    font-size: 0.95rem;
-    white-space: nowrap;
-    overflow: hidden;       
+    font-size: 1rem;
+    white-space: nowrap; 
     text-overflow: ellipsis; 
     width: 100%;            
   }
@@ -327,5 +326,8 @@
 
   .mobile-only-hint {
     display: block;
+  }
+  .orgMuted {
+    font-size: 0.75rem;
   }
 }

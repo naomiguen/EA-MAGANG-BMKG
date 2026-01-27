@@ -1,0 +1,154 @@
+/* Solution Concept Page Styles */
+
+.solution-page {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  padding: 2.5rem 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: #1e293b;
+}
+
+/* Back Button Container */
+.back-button-container {
+  max-width: 80rem;
+  margin: 0 auto 1.5rem;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #475569;
+  background: none;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.back-button:hover {
+  color: #2563eb;
+}
+
+/* Page Header */
+.page-header {
+  max-width: 80rem;
+  margin: 0 auto 2.5rem;
+  text-align: center;
+}
+
+.icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  background-color: #ccfbf1;
+  color: #0f766e;
+  border-radius: 9999px;
+  margin-bottom: 1rem;
+}
+
+.page-title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: #0f172a;
+  margin-bottom: 1rem;
+}
+
+/* Diagram Container */
+.diagram-container {
+  max-width: 80rem;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+/* Diagram Header */
+.diagram-header {
+  background-color: #f1f5f9;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.diagram-title {
+  font-weight: 600;
+  color: #334155;
+}
+
+.diagram-format {
+  font-size: 0.75rem;
+  font-family: 'Courier New', monospace;
+  color: #94a3b8;
+  background-color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #e2e8f0;
+}
+
+/* Diagram Content */
+.diagram-content {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+}
+
+.diagram-image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* Diagram Description */
+.diagram-description {
+  background-color: #eff6ff;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid #dbeafe;
+}
+
+.description-title {
+  font-weight: bold;
+  color: #1e40af;
+  margin-bottom: 0.5rem;
+}
+
+.description-list {
+  list-style-type: disc;
+  list-style-position: inside;
+  color: #334155;
+  font-size: 0.875rem;
+}
+
+.description-list li {
+  margin-bottom: 0.25rem;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .solution-page {
+    padding: 1.5rem 1rem;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .diagram-content {
+    padding: 0.5rem;
+  }
+
+  .description-list {
+    font-size: 0.875rem;
+  }
+  
+  .diagram-description {
+    padding: 1rem 1.5rem;
+  }
+}
