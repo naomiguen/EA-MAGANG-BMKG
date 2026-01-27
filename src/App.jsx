@@ -89,7 +89,6 @@ function App() {
           <Route path="/business-process/peta-konsep" element={<PetaKonsepPage />} />
           <Route path="/business-process/level-0" element={<PetaKonsepLevel0Page />} />
           <Route path="/business-process/level-01" element={<PetaKonsepLevel01Page />} />
-<<<<<<< HEAD
           {/* Data */}
           <Route path="/data/application-matrix" element={<AppDataMatrixPage />} />
           <Route path="/data/concept" element={<ConceptualDiagramPage />} />
@@ -98,11 +97,6 @@ function App() {
           <Route path="/data/principles" element={<DataPrinciplesPage />} />
           <Route path="/data/logical-data-diagram" element={<LogicalDataDiagram />} />
           {/* Application */}
-=======
-          <Route path="/imp/governance" element={<ArchitectureGovernancePage />} />
-          <Route path="/app/communicationDiagram" element={<CommunicationDiagramPage />} /> 
-          <Route path="/app/porto-assesment" element={<PortofolioAssesmentPage />} /> 
->>>>>>> b4f8523074ba84fa975b85d1e6826fd3b4f85861
           <Route path="/app/usecase" element={<UseCaseGallery />} />
           <Route path="/app/portfolio-catalog" element={<ApplicationPortfolioPage />} />
           <Route path="/app/principles" element={<ApplicationPrinciples />} />
@@ -118,13 +112,10 @@ function App() {
           <Route path="/tech/technology-principles" element={<TechnologyPrinciples />} />
           <Route path="/tech/standards-catalog" element={<TechnologyStandarCatalog />} />
           <Route path="/detail/:id" element={<DetailPage />} />
-<<<<<<< HEAD
-=======
+          <Route path="/imp/governance" element={<ArchitectureGovernancePage />} />
           <Route path="/business/appMatrix" element={<BusinessProcessAppMatrix />} />
           <Route path="/business/dataMatrix" element={<BusinessDataMatrixPage />} />
           <Route path="/imp/planning" element={<ImplementationPage />} />
-
->>>>>>> b4f8523074ba84fa975b85d1e6826fd3b4f85861
 
 
           {/* Placeholder untuk halaman yang belum ada */}
