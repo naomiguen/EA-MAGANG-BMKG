@@ -52,6 +52,7 @@ import DetailPage from "./pages/DetailUsecasePage";
 import BusinessProcessAppMatrix from "./pages/BusinessAppMatrix";
 import BusinessDataMatrixPage from "./pages/BusinessDataMatrixPage";  
 import ImplementationPage from "./pages/ImplementationPage";
+import Risk from "./pages/Risk";
 
 
 function App() {
@@ -77,6 +78,7 @@ function App() {
           <Route path="/vision/goals" element={<ArchitectureGoalsPage />} />
           <Route path="/vision/technologyPrinciples" element={<TechnologyPrinciples />} />
           <Route path="/business/RiskMatrix" element={<BusinessProcessRiskMatrix />} />
+          <Route path="/business/risk" element={<Risk />} />
           <Route path="/vision/solution" element={<SolutionConceptPage />} />
           <Route path="/business/organizational" element={<OrgStructurePage />} />
           <Route path="/business/functional" element={<FunctionalDecompositionPage />} />

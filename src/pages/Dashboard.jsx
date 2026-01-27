@@ -136,6 +136,10 @@ const Dashboard = () => {
       navigate("/business/dataMatrix");
       return;
     }
+    if (item.title === "Risk"){
+      navigate("/business/risk");
+      return;
+    }
 
     // Data Section
     if (item.title === "Data Entity - Data Component Catalog") {
