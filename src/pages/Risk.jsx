@@ -71,7 +71,7 @@ const Risk = () => {
     },
 
     { id: 'tu', label: 'TU', icon: <FileText />, color: 'bg-[#D1C4E9]', border: 'border-[#B39DDB]', accent: 'bg-[#9575CD]', 
-      diagrams: [{ label: 'Kegiatan Rutin Harian', file: '/risk/tu/risk- admin.drawio.svg' }] },
+      diagrams: [{ label: 'Kegiatan Rutin Harian', file: '/risk/tu/risk-admin.drawio.svg' }] },
 
 { 
       id: 'wmm', 
