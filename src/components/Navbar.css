@@ -8,6 +8,10 @@
   transition: box-shadow 0.3s;
   font-family: system-ui, -apple-system, sans-serif;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  -webkit-transition: box-shadow 0.3s;
+  -moz-transition: box-shadow 0.3s;
+  -ms-transition: box-shadow 0.3s;
+  -o-transition: box-shadow 0.3s;
 }
 
 .navbar.scrolled {
@@ -470,6 +474,7 @@
   }
 }
 
+
 @media (min-width: 1024px) {
   .navbar-container {
     padding: 0 1.5rem;
@@ -603,5 +608,55 @@
   .navbar-search-icon {
     width: 1.5rem;
     height: 1.5rem;
+  }
+}
+
+/* Fix untuk layar 900px ke bawah - navbar lebih kecil */
+@media (max-width: 900px) {
+  .navbar-inner {
+    height: 3rem;
+  }
+  
+  .navbar-logo-icon {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+  
+  .navbar-logo-icon span {
+    font-size: 0.625rem;
+  }
+  
+  .navbar-logo-title {
+    font-size: 0.625rem;
+  }
+  
+  .navbar-logo-subtitle {
+    font-size: 0.5rem;
+  }
+  
+  .navbar-hamburger-icon {
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+  
+  /* Mobile menu text lebih kecil */
+  .navbar-mobile-menu-link,
+  .navbar-mobile-menu-label {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .navbar-mobile-submenu-toggle {
+    padding: 0.375rem;
+  }
+  
+  .navbar-mobile-submenu-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  .navbar-mobile-submenu-link {
+    padding: 0.425rem 0.75rem;
+    font-size: 0.8125rem;
   }
 }
