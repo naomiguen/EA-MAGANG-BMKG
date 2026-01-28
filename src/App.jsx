@@ -28,12 +28,14 @@ import BusinessProcessRiskMatrix from "./pages/BusinessProcessRiskMatrix";
 import BusinessProcessPage from "./pages/BusinessProcess";
 import BusinessPrinciplePage from "./pages/BusinessPrinciple";
 import KPIpage from "./pages/KPI";
+import BusinessProcessKPIMatrixPage from "./pages/BusinessProcessKPIMatrix"
 import TechnologyNetworkDiagram from "./pages/TechnologyNetworkDiagram";
 import TechnologyAppMatrix from "./pages/TechnologyAppMatrix";
 import SolutionConceptPage from "./pages/SolutionConceptPage";
 import ApplicationPortfolioPage from "./pages/PortfolioCatalogPage";
 import AppBusinessProcessMatrixPage from "./pages/AppBusinessProcessMatrix";
 import AppOrgMatrixPage from "./pages/AppOrgMatrix";
+import AppUserLocationPage from "./pages/AppUserLocation"
 import ApplicationPrinciples from "./pages/ApplicationPrinciples";
 import ApplicationClassificationMatrix from "./pages/ApplicationClassificationMatrix";
 import BusinessInteractionDiagram from "./pages/BusinessInteractionDiagram";
@@ -50,7 +52,9 @@ import DetailPage from "./pages/DetailUsecasePage";
 import BusinessProcessAppMatrix from "./pages/BusinessAppMatrix";
 import BusinessDataMatrixPage from "./pages/BusinessDataMatrixPage";  
 import ImplementationPage from "./pages/ImplementationPage";
-
+import Risk from "./pages/Risk";
+import SOPListPage from './pages/SOPListPage';
+import QualityPolicyPage from './pages/QualityPolicyPage';
 
 function App() {
   return (
@@ -116,6 +120,8 @@ function App() {
           <Route path="/business/appMatrix" element={<BusinessProcessAppMatrix />} />
           <Route path="/business/dataMatrix" element={<BusinessDataMatrixPage />} />
           <Route path="/imp/planning" element={<ImplementationPage />} />
+          <Route path="/sop-list" element={<SOPListPage />} />
+          <Route path="/quality-policy" element={<QualityPolicyPage />} />
 
 
           {/* Placeholder untuk halaman yang belum ada */}

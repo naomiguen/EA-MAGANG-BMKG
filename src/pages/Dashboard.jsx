@@ -104,6 +104,10 @@ const Dashboard = () => {
       navigate("/business/risk-matrix");
       return;
     }
+    if (item.title === "Business Process - KPI Matrix") {
+      navigate("/business/businessprocess-kpimatrix");
+      return;
+    }
     if (item.title === "Business Process") {
       navigate('/business/process');
       return;
@@ -122,6 +126,10 @@ const Dashboard = () => {
     }
     if (item.title === "Business Process - Data Matrix"){
       navigate("/business/data-matrix");
+      return;
+    }
+    if (item.title === "Risk"){
+      navigate("/business/risk");
       return;
     }
 
@@ -160,6 +168,11 @@ const Dashboard = () => {
       navigate("/app/organization-matrix");
       return;
     }
+     if (item.title === "Application - User and Location Diagram") {
+      navigate("/app/user-and-location");
+      return;
+    }
+    "/app/user-and-location"
     if (item.title === "Application Principles") {
       navigate("/app/principles");
       return;
