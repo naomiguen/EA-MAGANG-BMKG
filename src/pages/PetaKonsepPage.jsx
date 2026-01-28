@@ -188,7 +188,7 @@ const PetaKonsepPage = () => {
         </div>
       </div>
 
-      {/* POP-UP MODAL */}
+      {/* POP-UP MODAL - IMPROVED COLORS */}
       {isModalOpen && activeInfo && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in"
@@ -198,57 +198,69 @@ const PetaKonsepPage = () => {
             className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-scale-up"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Modal Header */}
-            <div className={`${activeInfo.color} p-6 text-white flex justify-between items-start`}>
-              <div className="flex gap-4">
-                <div className="p-2 bg-white/20 rounded-lg backdrop-blur-md">
-                  <activeInfo.icon size={28} />
+            {/* Modal Header - Unified Gradient Design */}
+            <div className={`${activeInfo.color} p-6 text-white relative overflow-hidden`}>
+              {/* Decorative Elements */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+              
+              <div className="relative z-10 flex justify-between items-start">
+                <div className="flex gap-4 items-start">
+                  <div className="p-3 bg-white/20 rounded-xl backdrop-blur-md shadow-lg">
+                    <activeInfo.icon size={28} strokeWidth={2} />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold mb-1">{activeInfo.title}</h3>
+                    <div className="flex items-center gap-2 text-white/90">
+                      <UserCheck size={14} />
+                      <span className="text-sm font-medium">{activeInfo.pic}</span>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold">{activeInfo.title}</h3>
-                  <p className="text-white/80 text-xs mt-1 uppercase tracking-wider font-semibold">
-                    PIC: {activeInfo.pic}
-                  </p>
-                </div>
+                <button 
+                  onClick={() => setIsModalOpen(false)} 
+                  className="text-white/80 hover:text-white hover:bg-white/20 p-2 rounded-lg transition-all"
+                >
+                  <X size={22} />
+                </button>
               </div>
-              <button onClick={() => setIsModalOpen(false)} className="text-white/70 hover:text-white transition-colors">
-                <X size={24} />
-              </button>
             </div>
 
-            {/* Modal Body */}
-            <div className="p-6">
+            {/* Modal Body - Unified Design */}
+            <div className="p-6 bg-gradient-to-br from-gray-50 to-white">
+              {/* Description Section */}
               <div className="mb-6">
-                <h4 className="text-xs font-bold text-gray-400 uppercase mb-2">Deskripsi Aktivitas</h4>
-                <p className="text-gray-700 leading-relaxed text-sm border-l-4 border-gray-200 pl-3">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full"></div>
+                  <h4 className="text-sm font-bold text-gray-700 uppercase tracking-wide">Deskripsi Aktivitas</h4>
+                </div>
+                <p className="text-gray-700 leading-relaxed text-sm bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
                   {activeInfo.desc}
                 </p>
               </div>
 
-              <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                <h4 className="text-xs font-bold text-gray-500 uppercase mb-3 flex items-center gap-2">
-                  <CheckCircle size={14} className="text-green-500" />
-                  Key Activities / Items
-                </h4>
-                <ul className="space-y-2">
+              {/* Activities List - Unified Design */}
+              <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-1 h-6 bg-gradient-to-b from-green-500 to-emerald-500 rounded-full"></div>
+                  <h4 className="text-sm font-bold text-gray-700 uppercase tracking-wide">Key Activities</h4>
+                </div>
+                <ul className="space-y-2.5">
                   {activeInfo.items.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-sm text-gray-700 bg-white p-2 rounded shadow-sm border border-gray-100">
-                      <span className="mt-1.5 w-1.5 h-1.5 bg-blue-500 rounded-full flex-shrink-0"></span>
-                      {item}
+                    <li key={idx} className="flex items-start gap-3 text-sm text-gray-700 bg-gradient-to-r from-gray-50 to-white p-3 rounded-lg border border-gray-100 hover:border-blue-200 hover:shadow-md transition-all duration-200">
+                      <div className="mt-1.5 w-5 h-5 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex-shrink-0 flex items-center justify-center shadow-sm">
+                        <CheckCircle size={12} className="text-white" />
+                      </div>
+                      <span className="flex-1">{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
 
-            {/* Modal Footer */}
-            <div className="bg-gray-50 px-6 py-4 border-t flex justify-end">
-              <button 
-                onClick={() => setIsModalOpen(false)}
-                className="px-5 py-2 bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 rounded-lg text-sm font-bold transition-colors shadow-sm"
-              >
-                Tutup
-              </button>
+            {/* Modal Footer - Unified Design */}
+            <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-t border-gray-200 flex justify-end">
+              
             </div>
           </div>
         </div>
