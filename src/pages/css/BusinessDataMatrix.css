@@ -121,6 +121,8 @@
 
 .matrix-table-wrapper {
   overflow-x: auto;
+  max-height: 600px;
+  overflow-y: auto;
 }
 
 /* Table */
@@ -130,7 +132,7 @@
   font-size: 0.875rem;
 }
 
-/* Table Headers */
+/* Table Headers - STICKY */
 .matrix-corner-header {
   background-color: #f1f5f9;
   border-bottom: 1px solid #cbd5e1;
@@ -141,6 +143,10 @@
   color: #334155;
   min-width: 200px;
   white-space: nowrap;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 4;
 }
 
 .matrix-column-header {
@@ -153,6 +159,9 @@
   min-width: 100px;
   transition: background-color 0.2s;
   white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 .matrix-column-header:hover {
@@ -177,6 +186,9 @@
   font-weight: 500;
   color: #1e293b;
   white-space: nowrap;
+  position: sticky;
+  left: 0;
+  z-index: 1;
 }
 
 /* Table Cells */
@@ -266,6 +278,10 @@
   .matrix-subtitle {
     font-size: 1rem;
   }
+
+  .matrix-table-wrapper {
+    max-height: 500px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -287,6 +303,10 @@
 
   .matrix-table {
     font-size: 0.75rem;
+  }
+
+  .matrix-table-wrapper {
+    max-height: 450px;
   }
 
   .matrix-corner-header,
@@ -325,6 +345,10 @@
 
   .matrix-table {
     font-size: 0.7rem;
+  }
+
+  .matrix-table-wrapper {
+    max-height: 400px;
   }
 
   .matrix-corner-header,

@@ -4,79 +4,86 @@ const ConceptualDiagramPage = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center py-12 px-4">
       
-      <div className="text-center mb-12 max-w-4xl">
-        <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
+      <div className="text-center mb-12 max-w-4xl px-4">
+        <h1 className="text-3xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 leading-tight">
           Conceptual Data Diagram
         </h1>
-        <p className="text-slate-600 text-lg">
+        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
           Gambaran hubungan konseptual antar entitas data utama di Stasiun Meteorologi.
         </p>
       </div>
 
-      {/* CANVAS DIAGRAM */}
-      <div className="relative w-full max-w-5xl h-[600px] bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden flex justify-center items-center">
+      {/* CANVAS DIAGRAM - Responsive Container */}
+      <div className="w-full max-w-6xl bg-white rounded-xl shadow-xl border border-slate-200 p-4 md:p-8">
         
-        {/* --- ENTITAS (BOXES) --- */}
-        
-        {/* 1. PERSONIL (Atas Tengah) */}
-        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 z-20">
-          <EntityBox title="Sumber Daya Manusia" />
-        </div>
+        {/* SVG Container untuk diagram yang fully responsive */}
+        <svg 
+          viewBox="0 0 1000 700" 
+          className="w-full h-auto"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          {/* Define reusable components */}
+          <defs>
+            {/* Filter for shadows */}
+            <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+              <feOffset dx="0" dy="2" result="offsetblur"/>
+              <feComponentTransfer>
+                <feFuncA type="linear" slope="0.2"/>
+              </feComponentTransfer>
+              <feMerge>
+                <feMergeNode/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
 
-        {/* 2. DATA ADMINISTRASI (PINDAH KE SINI: Kanan Tengah - Sejajar Data Observasi) */}
-        <div className="absolute top-1/2 right-20 transform -translate-y-1/2 z-20">
-          <EntityBox title="Data Administrasi" />
-        </div>
+          {/* --- GARIS PENGHUBUNG --- */}
+          <g stroke="#94a3b8" strokeWidth="2" fill="none">
+            {/* Personil ke Data Observasi (Atas ke Tengah) */}
+            <line x1="500" y1="100" x2="500" y2="300" />
+            
+            {/* Personil ke Peralatan (Kiri Bawah) */}
+            <line x1="450" y1="100" x2="200" y2="300" />
 
-        {/* 3. PERALATAN (Kiri Tengah) */}
-        <div className="absolute top-1/2 left-10 transform -translate-y-1/2 z-20">
-          <EntityBox title="Peralatan" />
-        </div>
+            {/* Personil ke Data Administrasi (Kanan Bawah) */}
+            <line x1="550" y1="100" x2="800" y2="300" />
+            
+            {/* Peralatan ke Data Observasi */}
+            <line x1="250" y1="350" x2="400" y2="350" />
+            
+            {/* Data Observasi ke Produk Informasi */}
+            <line x1="500" y1="400" x2="500" y2="550" />
+            
+            {/* Produk Informasi ke Stakeholder */}
+            <line x1="600" y1="600" x2="750" y2="600" />
+          </g>
 
-        {/* 4. DATA OBSERVASI (Tengah Pusat) */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
-          <EntityBox title="Data Observasi" highlight />
-        </div>
-
-        {/* 5. PRODUK INFORMASI (Bawah Tengah) */}
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20">
-          <EntityBox title="Produk Informasi" />
-        </div>
-
-        {/* 6. STAKEHOLDER (Bawah Kanan) */}
-        <div className="absolute bottom-10 right-20 z-20">
-          <EntityBox title="Stakeholder" />
-        </div>
-
-
-        {/* --- GARIS PENGHUBUNG (SVG LINES) --- */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none z-10">
+          {/* --- ENTITAS (BOXES) --- */}
           
-          {/* Garis: Personil ke Data Observasi (Atas ke Tengah) */}
-          <line x1="50%" y1="90" x2="50%" y2="270" stroke="#94a3b8" strokeWidth="2" />
-          
-          {/* Garis: Personil ke Peralatan (Menyamping ke Kiri Bawah) */}
-          <line x1="450" y1="90" x2="150" y2="270" stroke="#94a3b8" strokeWidth="2" />
+          {/* 1. Sumber Daya Manusia (Atas Tengah) */}
+          <EntityBox x={500} y={50} title="Sumber Daya Manusia" />
 
-          {/* Garis: Personil ke Data Administrasi (Menyamping ke Kanan Bawah - DIPERBAIKI) */}
-          {/* Garis ini sekarang simetris dengan garis Peralatan (ke arah kanan bawah) */}
-          <line x1="550" y1="90" x2="850" y2="270" stroke="#94a3b8" strokeWidth="2" />
-          
-          {/* Garis: Peralatan ke Data Observasi (Kiri ke Tengah) */}
-          <line x1="180" y1="300" x2="420" y2="300" stroke="#94a3b8" strokeWidth="2" />
-          
-          {/* Garis: Data Observasi ke Produk Informasi (Tengah ke Bawah - VERTIKAL) */}
-          <line x1="50%" y1="330" x2="50%" y2="500" stroke="#94a3b8" strokeWidth="2" />
-          
-          {/* Garis: Produk Informasi ke Stakeholder (Bawah Tengah ke Kanan - HORIZONTAL) */}
-          {/* Posisinya dijaga di tengah kotak (y=530) agar rapi */}
-          <line x1="600" y1="530" x2="820" y2="530" stroke="#94a3b8" strokeWidth="2" />
+          {/* 2. Peralatan (Kiri Tengah) */}
+          <EntityBox x={150} y={350} title="Peralatan" />
+
+          {/* 3. Data Observasi (Tengah - Highlighted) */}
+          <EntityBox x={500} y={350} title="Data Observasi" highlight={true} />
+
+          {/* 4. Data Administrasi (Kanan Tengah) */}
+          <EntityBox x={850} y={350} title="Data Administrasi" />
+
+          {/* 5. Produk Informasi (Bawah Tengah) */}
+          <EntityBox x={500} y={600} title="Produk Informasi" />
+
+          {/* 6. Stakeholder (Bawah Kanan) */}
+          <EntityBox x={850} y={600} title="Stakeholder" />
 
         </svg>
 
       </div>
 
-      <div className="mt-8 text-center text-sm text-slate-500 max-w-2xl">
+      <div className="mt-8 text-center text-xs sm:text-sm text-slate-500 max-w-2xl px-4 leading-relaxed">
         * Diagram ini menggunakan notasi konseptual sederhana untuk menunjukkan relasi bisnis antar entitas data utama.
       </div>
 
@@ -84,20 +91,63 @@ const ConceptualDiagramPage = () => {
   );
 };
 
-// Komponen Kotak Entitas
-const EntityBox = ({ title, highlight = false }) => (
-  <div className={`
-    w-44 px-4 py-3 rounded-md shadow-md border 
-    flex flex-col items-center text-center
-    ${highlight ? 'bg-yellow-50 border-yellow-400' : 'bg-white border-gray-300'}
-  `}>
-    <span className="text-[10px] text-gray-500 italic mb-1">
-      &lt;&lt;dDataEntity&gt;&gt;
-    </span>
-    <h3 className="font-bold text-gray-800 text-sm">
-      {title}
-    </h3>
-  </div>
-);
+// Komponen Kotak Entitas sebagai SVG Component
+const EntityBox = ({ x, y, title, highlight = false }) => {
+  const boxWidth = 180;
+  const boxHeight = 80;
+  const bgColor = highlight ? '#fefce8' : '#ffffff';
+  const borderColor = highlight ? '#facc15' : '#d1d5db';
+  
+  return (
+    <g transform={`translate(${x - boxWidth/2}, ${y - boxHeight/2})`}>
+      {/* Shadow */}
+      <rect
+        x="2"
+        y="2"
+        width={boxWidth}
+        height={boxHeight}
+        rx="6"
+        fill="#000"
+        opacity="0.1"
+      />
+      
+      {/* Main Box */}
+      <rect
+        x="0"
+        y="0"
+        width={boxWidth}
+        height={boxHeight}
+        rx="6"
+        fill={bgColor}
+        stroke={borderColor}
+        strokeWidth="2"
+      />
+      
+      {/* Stereotype text */}
+      <text
+        x={boxWidth/2}
+        y="20"
+        textAnchor="middle"
+        fontSize="10"
+        fill="#6b7280"
+        fontStyle="italic"
+      >
+        &lt;&lt;dDataEntity&gt;&gt;
+      </text>
+      
+      {/* Title text */}
+      <text
+        x={boxWidth/2}
+        y="50"
+        textAnchor="middle"
+        fontSize="14"
+        fontWeight="bold"
+        fill="#1f2937"
+      >
+        {title}
+      </text>
+    </g>
+  );
+};
 
 export default ConceptualDiagramPage;

@@ -7,9 +7,24 @@ const BusinessProcessAppMatrix = () => {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
     fetchData();
+    
+    // Check screen size
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth <= 900);
+    };
+    
+    // Initial check
+    checkScreenSize();
+    
+    // Add event listener
+    window.addEventListener('resize', checkScreenSize);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
   const fetchData = async () => {
@@ -66,6 +81,19 @@ const BusinessProcessAppMatrix = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Fungsi untuk memecah text menjadi chunks 2 kata
+  const formatHeaderText = (text) => {
+    const words = text.split(' ');
+    const chunks = [];
+    
+    for (let i = 0; i < words.length; i += 2) {
+      const chunk = words.slice(i, i + 2).join(' ');
+      chunks.push(chunk);
+    }
+    
+    return chunks;
   };
 
   const CheckmarkImage = () => (
@@ -133,14 +161,35 @@ const BusinessProcessAppMatrix = () => {
                 <th className="app-matrix-corner-header">
                   Process \ Application
                 </th>
-                {applications.map((app) => (
-                  <th
-                    key={app}
-                    className="app-matrix-column-header"
-                  >
-                    {app}
-                  </th>
-                ))}
+                {applications.map((app) => {
+                  // Hanya format jadi 2 kata per baris jika layar kecil
+                  if (isSmallScreen) {
+                    const textChunks = formatHeaderText(app);
+                    return (
+                      <th
+                        key={app}
+                        className="app-matrix-column-header"
+                      >
+                        {textChunks.map((chunk, idx) => (
+                          <React.Fragment key={idx}>
+                            {chunk}
+                            {idx < textChunks.length - 1 && <br />}
+                          </React.Fragment>
+                        ))}
+                      </th>
+                    );
+                  } else {
+                    // Layar besar: tampilkan normal tanpa break
+                    return (
+                      <th
+                        key={app}
+                        className="app-matrix-column-header"
+                      >
+                        {app}
+                      </th>
+                    );
+                  }
+                })}
               </tr>
             </thead>
 
@@ -148,7 +197,18 @@ const BusinessProcessAppMatrix = () => {
               {processes.map((proc) => (
                 <tr key={proc.id} className="app-matrix-row">
                   <td className="app-matrix-row-header">
-                    {proc.name}
+                    {isSmallScreen ? (
+                      <>
+                        {formatHeaderText(proc.name).map((chunk, idx) => (
+                          <React.Fragment key={idx}>
+                            {chunk}
+                            {idx < formatHeaderText(proc.name).length - 1 && <br />}
+                          </React.Fragment>
+                        ))}
+                      </>
+                    ) : (
+                      proc.name
+                    )}
                   </td>
 
                   {applications.map((app) => {

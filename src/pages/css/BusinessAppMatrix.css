@@ -237,6 +237,81 @@
   }
 }
 
+@media (max-width: 900px) {
+  .app-matrix-column-header {
+    white-space: normal;
+    line-height: 1.4;
+    min-width: 90px;
+    max-width: 110px;
+    padding: 0.75rem 0.5rem;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  .app-matrix-row-header {
+    white-space: normal;
+    line-height: 1.4;
+    min-width: 150px;
+    max-width: 180px;
+    font-size: 0.75rem;
+    padding: 0.75rem 1rem;
+    text-align: left;
+  }
+
+  .app-matrix-table {
+    font-size: 0.75rem;
+  }
+
+  .app-matrix-thead {
+    font-size: 0.7rem;
+  }
+
+  .app-matrix-corner-header {
+    font-size: 0.7rem;
+    padding: 0.75rem 1rem;
+    white-space: normal;
+    line-height: 1.3;
+  }
+
+  .app-matrix-cell {
+    padding: 0.75rem 0.5rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .app-matrix-column-header {
+    white-space: normal;
+    line-height: 1.4;
+    min-width: 100px;
+    max-width: 120px;
+    padding: 0.75rem 0.5rem;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  .app-matrix-table {
+    font-size: 0.75rem;
+  }
+
+  .app-matrix-thead {
+    font-size: 0.7rem;
+  }
+
+  .app-matrix-corner-header {
+    font-size: 0.7rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .app-matrix-row-header {
+    font-size: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .app-matrix-cell {
+    padding: 0.75rem 0.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .app-matrix-page {
     padding: 1rem;
@@ -270,13 +345,14 @@
   }
 
   .app-matrix-column-header {
-    min-width: 150px;
+    min-width: 90px;
+    max-width: 110px;
   }
 }
 
 @media (max-width: 480px) {
   .app-matrix-page {
-    padding: 0.75rem;
+    padding: 0.45rem;
   }
 
   .app-matrix-title {
@@ -284,7 +360,7 @@
   }
 
   .refresh-button {
-    padding: 0.35rem 0.6rem;
+    padding: 0.35rem 0.4rem;
     font-size: 0.7rem;
   }
 
@@ -304,7 +380,8 @@
   }
 
   .app-matrix-column-header {
-    min-width: 120px;
+    min-width: 80px;
+    max-width: 100px;
   }
 
   .checkmark-icon {
