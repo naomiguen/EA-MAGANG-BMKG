@@ -53,7 +53,8 @@ import BusinessProcessAppMatrix from "./pages/BusinessAppMatrix";
 import BusinessDataMatrixPage from "./pages/BusinessDataMatrixPage";  
 import ImplementationPage from "./pages/ImplementationPage";
 import Risk from "./pages/Risk";
-
+import SOPListPage from './pages/SOPListPage';
+import QualityPolicyPage from './pages/QualityPolicyPage';
 
 function App() {
   return (
@@ -117,6 +118,8 @@ function App() {
           <Route path="/business/appMatrix" element={<BusinessProcessAppMatrix />} />
           <Route path="/business/dataMatrix" element={<BusinessDataMatrixPage />} />
           <Route path="/imp/planning" element={<ImplementationPage />} />
+          <Route path="/sop-list" element={<SOPListPage />} />
+          <Route path="/quality-policy" element={<QualityPolicyPage />} />
 
 
 
