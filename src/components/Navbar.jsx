@@ -62,6 +62,7 @@ const Navbar = () => {
         { name: 'Corporate Governance', href: '/business/corporate_governance', keywords:'Legal Foundation, Dsar hukum, undang-undang, UU, Perpres, PP, international standards, Operational Procedures, Peta konsep, Business process map' },
         { name: 'Business Principles', href: '/business/businessprinciples' },
         { name: 'KPI', href: '/business/kpi' },
+        { name: 'Business Process - KPI Matrix', href: '/business/businessprocess-kpimatrix' },
       ]
     },
     {

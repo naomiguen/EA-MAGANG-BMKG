@@ -110,10 +110,10 @@ const Dashboard = () => {
       navigate("/business/RiskMatrix");
       return;
     }
-    // if (item.title === "Business Process - KPI Matrix") {
-    //   navigate("/business/businessprocess-kpimatrix");
-    //   return;
-    // }
+    if (item.title === "Business Process - KPI Matrix") {
+      navigate("/business/businessprocess-kpimatrix");
+      return;
+    }
     if (item.title === "Business Process") {
       navigate('/business/probis');
       return;
