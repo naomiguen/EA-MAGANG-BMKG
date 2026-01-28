@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../lib/supabaseClient";
+import "./css/BusinessAppMatrix.css";
 
 const BusinessProcessAppMatrix = () => {
   const [processes, setProcesses] = useState([]);
@@ -70,7 +71,7 @@ const BusinessProcessAppMatrix = () => {
   const CheckmarkImage = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="w-5 h-5 mx-auto text-gray-800"
+      className="checkmark-icon"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -84,10 +85,10 @@ const BusinessProcessAppMatrix = () => {
 
   if (loading) {
     return (
-      <div className="p-6 bg-gray-50 min-h-screen flex justify-center items-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading data...</p>
+      <div className="app-matrix-page app-matrix-loading">
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p className="loading-text">Loading data...</p>
         </div>
       </div>
     );
@@ -95,13 +96,13 @@ const BusinessProcessAppMatrix = () => {
 
   if (error) {
     return (
-      <div className="p-6 bg-gray-50 min-h-screen flex justify-center items-center">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
-          <h3 className="text-red-800 font-bold mb-2">Error Loading Data</h3>
-          <p className="text-red-600 text-sm mb-4">{error}</p>
+      <div className="app-matrix-page app-matrix-error-page">
+        <div className="error-container">
+          <h3 className="error-title">Error Loading Data</h3>
+          <p className="error-message">{error}</p>
           <button
             onClick={fetchData}
-            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+            className="error-retry-button"
           >
             Retry
           </button>
@@ -111,35 +112,31 @@ const BusinessProcessAppMatrix = () => {
   }
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen flex justify-center">
-      <div className="w-full max-w-7xl">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">
+    <div className="app-matrix-page">
+      <div className="app-matrix-container">
+        <div className="app-matrix-header">
+          <h2 className="app-matrix-title">
             Matriks Proses Bisnis & Aplikasi
           </h2>
           <button
             onClick={fetchData}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-sm"
+            className="refresh-button"
           >
             Refresh Data
           </button>
         </div>
 
-        <div className="overflow-x-auto shadow-md sm:rounded-lg border border-gray-200 bg-white">
-          <table className="w-full text-sm text-left text-gray-500">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-100 border-b border-gray-200">
+        <div className="app-matrix-table-wrapper">
+          <table className="app-matrix-table">
+            <thead className="app-matrix-thead">
               <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-4 font-bold text-gray-900 sticky left-0 bg-gray-100 z-10 shadow-sm border-r border-gray-200 whitespace-nowrap"
-                >
+                <th className="app-matrix-corner-header">
                   Process \ Application
                 </th>
                 {applications.map((app) => (
                   <th
                     key={app}
-                    scope="col"
-                    className="px-4 py-3 text-center min-w-[200px] border-r border-gray-300 whitespace-nowrap"
+                    className="app-matrix-column-header"
                   >
                     {app}
                   </th>
@@ -147,10 +144,10 @@ const BusinessProcessAppMatrix = () => {
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-gray-200">
+            <tbody className="app-matrix-tbody">
               {processes.map((proc) => (
-                <tr key={proc.id} className="bg-white hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap sticky left-0 bg-white hover:bg-gray-50 z-10 border-r border-gray-100 shadow-sm">
+                <tr key={proc.id} className="app-matrix-row">
+                  <td className="app-matrix-row-header">
                     {proc.name}
                   </td>
 
@@ -159,9 +156,7 @@ const BusinessProcessAppMatrix = () => {
                     return (
                       <td
                         key={`${proc.id}-${app}`}
-                        className={`px-4 py-4 text-center border-r border-gray-200 last:border-r-0 ${
-                          isChecked ? "bg-green-100" : "bg-white"
-                        }`}
+                        className={`app-matrix-cell ${isChecked ? "app-matrix-cell-checked" : ""}`}
                       >
                         {isChecked ? <CheckmarkImage /> : null}
                       </td>
@@ -173,7 +168,7 @@ const BusinessProcessAppMatrix = () => {
           </table>
         </div>
 
-        <div className="mt-4 text-sm text-gray-500 text-center">
+        <div className="app-matrix-footer">
           Total: {processes.length} proses bisnis × {applications.length} aplikasi
         </div>
       </div>
