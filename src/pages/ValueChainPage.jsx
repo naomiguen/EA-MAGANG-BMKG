@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { createPortal } from 'react-dom'; 
 // 1. Import data lokal Anda
 import { localValueChainData } from '../services/ValueChData'; 

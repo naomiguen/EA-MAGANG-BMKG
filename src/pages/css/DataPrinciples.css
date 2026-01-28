@@ -1,0 +1,414 @@
+/* Data Principles Page Styles */
+
+.principles-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f1f5f9 100%);
+  padding: 3rem 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Loading State */
+.principles-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-container {
+  text-align: center;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid transparent;
+  border-bottom-color: #2563eb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  color: #475569;
+  font-size: 1.125rem;
+}
+
+/* Error State */
+.principles-error-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-container {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  max-width: 28rem;
+}
+
+.error-title {
+  color: #991b1b;
+  font-weight: bold;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.error-retry-button {
+  background-color: #dc2626;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.error-retry-button:hover {
+  background-color: #b91c1c;
+}
+
+/* Header */
+.principles-header {
+  max-width: 72rem;
+  margin: 0 auto 4rem;
+}
+
+.header-content {
+  text-align: center;
+}
+
+.principles-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #0f172a;
+  letter-spacing: -0.025em;
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+
+.principles-subtitle {
+  font-size: 1.125rem;
+  color: #475569;
+  max-width: 42rem;
+  margin: 0 auto 1rem;
+}
+
+.header-divider {
+  width: 6rem;
+  height: 0.25rem;
+  background: linear-gradient(to right, #3b82f6, #06b6d4);
+  margin: 0 auto;
+  border-radius: 9999px;
+}
+
+/* Principles Container */
+.principles-container {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.principles-empty {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  padding: 3rem;
+  text-align: center;
+}
+
+.empty-text {
+  color: #cbd5e1;
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+/* Principle Card */
+.principle-card {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  transition: box-shadow 0.3s, transform 0.3s;
+  margin-bottom: 2rem;
+}
+
+.principle-card:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+.card-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card Left - Blue Section */
+.card-left {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  padding: 2rem;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-left-bg-circle {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+}
+
+.card-left-bg-circle.circle-1 {
+  width: 8rem;
+  height: 8rem;
+  top: 0;
+  right: 0;
+  margin-top: -4rem;
+  margin-right: -4rem;
+}
+
+.card-left-bg-circle.circle-2 {
+  width: 6rem;
+  height: 6rem;
+  bottom: 0;
+  left: 0;
+  margin-bottom: -3rem;
+  margin-left: -3rem;
+}
+
+.card-left-content {
+  position: relative;
+  z-index: 10;
+}
+
+.principle-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: bold;
+  background-color: white;
+  color: #1d4ed8;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.principle-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  line-height: 1.25;
+  margin-top: 0;
+}
+
+.title-divider {
+  width: 3rem;
+  height: 0.25rem;
+  background-color: #22d3ee;
+  border-radius: 9999px;
+  margin-bottom: 1rem;
+}
+
+.principle-statement {
+  color: #dbeafe;
+  line-height: 1.625;
+  font-style: italic;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* Card Right - White Section */
+.card-right {
+  padding: 2rem;
+  background-color: white;
+}
+
+.card-right-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.principle-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.section-label {
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.section-text {
+  color: #334155;
+  line-height: 1.625;
+  margin: 0;
+}
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+}
+
+.implication-box {
+  background: linear-gradient(to right, #fefce8, #fef3c7);
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  border-left: 4px solid #facc15;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive Design */
+@media (min-width: 1024px) {
+  .card-wrapper {
+    flex-direction: row;
+  }
+
+  .card-left {
+    width: 40%;
+  }
+
+  .card-right {
+    width: 60%;
+  }
+}
+
+@media (max-width: 1023px) {
+  .principles-title {
+    font-size: 2rem;
+  }
+
+  .principles-subtitle {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .principles-page {
+    padding: 2rem 1rem;
+  }
+
+  .principles-header {
+    margin-bottom: 3rem;
+  }
+
+  .principles-title {
+    font-size: 1.75rem;
+  }
+
+  .principles-subtitle {
+    font-size: 0.875rem;
+  }
+
+  .principle-card {
+    margin-bottom: 1.5rem;
+  }
+
+  .card-left,
+  .card-right {
+    padding: 1.5rem;
+  }
+
+  .principle-title {
+    font-size: 1.25rem;
+  }
+
+  .principle-statement {
+    font-size: 0.75rem;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+  }
+
+  .section-text {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .principles-page {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .principles-header {
+    margin-bottom: 2rem;
+  }
+
+  .principles-title {
+    font-size: 1.5rem;
+  }
+
+  .principles-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .card-left,
+  .card-right {
+    padding: 1rem;
+  }
+
+  .principle-badge {
+    font-size: 0.625rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .principle-title {
+    font-size: 1.125rem;
+  }
+
+  .principle-statement {
+    font-size: 0.75rem;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+  }
+
+  .section-text {
+    font-size: 0.75rem;
+  }
+
+  .implication-box {
+    padding: 1rem;
+  }
+
+  .loading-text {
+    font-size: 1rem;
+  }
+
+  .empty-text {
+    font-size: 1rem;
+  }
+}
