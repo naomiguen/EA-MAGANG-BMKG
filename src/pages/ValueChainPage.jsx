@@ -57,13 +57,12 @@ return (
       display: 'flex', 
       flexDirection: 'column', 
       alignItems: 'center', 
-      justifyContent: 'center', // Memastikan seluruh konten di tengah layar secara vertikal
+      justifyContent: 'center',
       padding: '60px 20px' 
     }}>
       <style>{`
         svg text, svg tspan { pointer-events: none !important; }
         
-        /* Tambahan CSS agar elemen SVG yang di-inject benar-benar terpusat */
         .svg-container svg {
           display: block;
           margin: 0 auto;
@@ -76,19 +75,50 @@ return (
             transition: all 0.2s ease;
         }
         [id]:hover { opacity: 0.7; filter: brightness(1.1); }
+
+        /* Mobile Responsive */
+        @media (max-width: 479px) {
+          .value-chain-title {
+            font-size: 1.5rem !important;
+            margin: 0 0 8px 0 !important;
+          }
+          
+          .value-chain-subtitle {
+            font-size: 0.85rem !important;
+          }
+          
+          .value-chain-container {
+            padding: 40px 16px !important;
+          }
+        }
+
+        @media (max-width: 390px) {
+          .value-chain-title {
+            font-size: 1.25rem !important;
+            margin: 0 0 6px 0 !important;
+          }
+          
+          .value-chain-subtitle {
+            font-size: 0.75rem !important;
+          }
+
+          .value-chain-container {
+            padding: 24px 12px !important;
+          }
+        }
       `}</style>
 
       <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-        <h1 style={{ fontSize: '3rem', fontWeight: '900', color: '#000000', margin: '0 0 10px 0' }}>
+        <h1 className="value-chain-title" style={{ fontSize: '3rem', fontWeight: '900', color: '#000000', margin: '0 0 10px 0' }}>
           Value Chain BMKG
         </h1>
-        <p style={{ color: '#4b5563', fontSize: '1.1rem' }}>
+        <p className="value-chain-subtitle" style={{ color: '#4b5563', fontSize: '1.1rem' }}>
           Klik kotak pada diagram untuk melihat detail aktivitas
         </p>
       </div>
 
       <div 
-        className="bg-white shadow-2xl svg-container" // Tambahkan class 'svg-container'
+        className="bg-white shadow-2xl svg-container value-chain-container"
         style={{ 
             width: '100%', 
             maxWidth: '1200px', 
@@ -96,10 +126,8 @@ return (
             padding: '40px', 
             borderRadius: '12px',
             backgroundColor: '#ffffff',
-            // --- TAMBAHKAN DUA BARIS INI ---
             display: 'flex',
             justifyContent: 'center' 
-            // ------------------------------
         }}
         onClick={handleSvgClick}
         dangerouslySetInnerHTML={{ __html: valueChainRawSvg }}
