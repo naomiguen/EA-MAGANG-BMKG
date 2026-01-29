@@ -85,7 +85,7 @@ const Dashboard = () => {
     
     // Business Section
     if (item.title === "Business Principles") {
-      navigate('/business/principles');
+      navigate('/business/businessprinciples');
       return;
     }
     if (item.title === "KPI") {
@@ -97,7 +97,7 @@ const Dashboard = () => {
       return;
     }
     if (item.title === "Functional Decomposition Diagram") {
-      navigate('/business/functional-decomposition-diagram');
+      navigate('/business/functional');
       return;
     }
     if (item.title === "Business Process - Risk Matrix") {
@@ -109,7 +109,7 @@ const Dashboard = () => {
       return;
     }
     if (item.title === "Business Process") {
-      navigate('/business/process');
+      navigate('/business/probis');
       return;
     }
     if (item.title === "Business Interaction Diagram") {
@@ -117,7 +117,7 @@ const Dashboard = () => {
       return;
     }
     if (item.title === "Corporate Governance") {
-      navigate('/business/corporate-governance');
+      navigate('/business/corporate_governance');
       return;
     }
     if (item.title === "Business Process - Application Matrix"){
@@ -169,10 +169,9 @@ const Dashboard = () => {
       return;
     }
      if (item.title === "Application - User and Location Diagram") {
-      navigate("/app/user-and-location");
+      navigate("/app/AppUserLocation");
       return;
     }
-    "/app/user-and-location"
     if (item.title === "Application Principles") {
       navigate("/app/principles");
       return;
@@ -190,7 +189,7 @@ const Dashboard = () => {
       return;
     }
     if (item.title === "Application Use Case Diagram") {
-      navigate("/app/usecase-diagram");
+      navigate("/app/usecase");
       return;
     }
     if (item.title === "Application - Business Process Matrix"){
@@ -220,11 +219,11 @@ const Dashboard = () => {
       return;
     }
 
-    // Implementation Section
-    if(item.title === "Architecture Implementation - Architecture Governance"){
+    if(item.title === "Architecture Governance"){
       navigate("/imp/governance");
       return;
     }
+
     if (item.title === "Architecture Implementation Planning") {
       navigate("/imp/planning");
       return;

@@ -30,7 +30,6 @@ const Navbar = () => {
         { name: 'Value Chain', href: '/vision/valuechain', keywords:'Aktivitas Pendukung, Aktifitas Utama' },
         { name: 'Vision, Mission and Corporate Strategy', href: '/vision/strategy', keywords:'Visi, Misi, Map, Strategi' },
         { name: 'Business Canvas Model', href: '/vision/businessmodelcanvas' },
-
       ]
     },
     { 
@@ -45,9 +44,9 @@ const Navbar = () => {
         { name: 'Functional Decomposition Diagram', href: '/business/functional', keywords: 'Fungsi bisnis, Tugas, Level' },
         { name: 'Business Process', href: '/business/probis', keywords:'Bisnis proses, Proses Bisnis Leveel 0-1' },
         { name: 'Business Interaction', href: '/business/Interaction', keywords:'Bisnis Interkasi, Business Interaction, Support, Internal, eksternal' },
-        { name: 'Corporate Governance', href: '/business/corporate_governance', keywords:'Legal Foundation, Dsar hukum, undang-undang, UU, Perpres, PP, international standards, Operational Procedures, Peta konsep, Business process map' },
+        { name: 'Corporate Governance', href: '/business/corporate_governance', keywords:'Legal Foundation, Dsar hukum, undang-undang, UU, Perpres, PP, international standards, Operational Procedures, Peta konsep, Business process map, renstra, SOP, ISO, UU' },
         { name: 'Business Principles', href: '/business/businessprinciples' },
-        { name: 'KPI', href: '/business/kpi' },
+        { name: 'KPI', href: '/business/kpi', keywords:'Teknisi, Datin, TU, Observasi, WMM' },
         { name: 'Business Process - KPI Matrix', href: '/business/businessprocess-kpimatrix' },
       ]
     },
@@ -67,7 +66,7 @@ const Navbar = () => {
       name: 'Application', 
       href: null, 
       children: [
-        { name: 'Application Use Case Diagram',             href: '/app/usecase-diagram' },
+        { name: 'Application Use Case Diagram',             href: '/app/usecase' },
         { name: 'Application Portfolio Catalog',            href: '/app/portfolio-catalog' },
         { name: 'Application Principles',                   href: '/app/principles' },
         { name: 'Application - Business Process Matrix',    href: '/app/process-matrix' },
@@ -75,7 +74,7 @@ const Navbar = () => {
         { name: 'Application - Communication Diagram',      href: '/app/communication-diagram' },
         { name: 'Application - Organization Matrix',        href: '/app/organization-matrix' },
         { name: 'Application - Portofolio Assessment',      href: '/app/portofolio-assesment' },
-        { name: 'Application - User and Location Diagram',  href: '/app' },
+        { name: 'Application - User and Location Diagram',  href: '/app/AppUserLocation' },
       ]
     },
     { 
@@ -93,8 +92,8 @@ const Navbar = () => {
       name: 'Architecture Implementation', 
       href: null, 
       children: [
-        { name: 'Architecture Implementation Planning', href: '/implementation/planning' },
-        { name: 'Architecture Governance',              href: '/implementation/governance' },
+        { name: 'Architecture Implementation Planning', href: '/imp/planning' },
+        { name: 'Architecture Governance',              href: '/imp/governance' },
       ]
     },
   ];
