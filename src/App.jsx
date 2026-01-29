@@ -58,12 +58,12 @@ import QualityPolicyPage from "./pages/QualityPolicyPage";
 
 function App() {
   return (
-    <div className="app-container min-h-screen bg-gray-50 flex flex-col font-sans">
+    <div className="min-h-screen flex flex-col font-sans">
       {/* 1. NAVBAR (Muncul di semua halaman) */}
       <Navbar />
 
-      {/*  AREA KONTEN (Berubah sesuai URL) */}
-      <div className="content-area flex-1 relative">
+      {/*  AREA KONTEN (Berubah sesuai URL) - Background dari setiap page */}
+      <div className="flex-1 pt-[60px]">
         <Routes>
           {/* Halaman Utama (Menu Kotak-kotak) */}
           <Route path="/" element={<Dashboard />} />
@@ -84,7 +84,7 @@ function App() {
           />
           <Route path="/vision/stakeholder" element={<StakeholderTable />} />
           <Route path="/vision/solution" element={<SolutionConceptPage />} />
-          <Route path="/vision/valuechain" element={<ValueChainPage />} />
+          <Route path="/vision/value-chain" element={<ValueChainPage />} />
           <Route path="/vision/strategy" element={<StrategyMapPage />} />
           {/* Business */}
           <Route
@@ -230,7 +230,7 @@ function App() {
           <Route
             path="*"
             element={
-              <div className="p-10 text-center text-gray-500">
+              <div className="p-10 text-center text-primary-800 bg-primary-50 min-h-screen">
                 <h2 className="text-2xl font-bold">
                   404 - Halaman Belum Dibuat
                 </h2>

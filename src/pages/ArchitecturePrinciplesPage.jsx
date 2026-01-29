@@ -50,27 +50,28 @@ const ArchitecturePrinciplesPage = () => {
   return (
     <div
       style={{
-        padding: "16px",
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "#f0f7ff", // primary-50
         minHeight: "100vh",
         fontFamily: "system-ui, -apple-system, sans-serif",
       }}
     >
+      <div style={{ padding: "16px" }}>
       <div style={{ textAlign: "center", marginBottom: "32px" }}>
         <h1
           style={{
-            fontSize: "clamp(24px, 5vw, 32px)",
-            fontWeight: "700",
-            color: "#1e3a8a",
+            fontSize: "clamp(40px, 5vw, 48px)",
+            fontWeight: "800",
+            color: "#00467f", // primary-700
             margin: "0 0 8px 0",
+            letterSpacing: "-0.02em",
           }}
         >
           Architecture Principles
         </h1>
         <p
           style={{
-            fontSize: "clamp(13px, 3vw, 16px)",
-            color: "#64748b",
+            fontSize: "clamp(16px, 3vw, 18px)",
+            color: "#003660", // primary-800
             margin: 0,
           }}
         >
@@ -93,10 +94,10 @@ const ArchitecturePrinciplesPage = () => {
             style={{
               gridColumn: "1 / -1",
               background: "white",
-              border: "1px solid #e5e7eb",
+              border: "1px solid #99d4ff", // primary-200
               borderRadius: "12px",
               padding: "16px",
-              color: "#64748b",
+              color: "#003660", // primary-800
               fontWeight: 600,
             }}
           >
@@ -139,10 +140,10 @@ const ArchitecturePrinciplesPage = () => {
             style={{
               gridColumn: "1 / -1",
               background: "white",
-              border: "1px solid #e5e7eb",
+              border: "1px solid #99d4ff", // primary-200
               borderRadius: "12px",
               padding: "16px",
-              color: "#64748b",
+              color: "#003660", // primary-800
             }}
           >
             Tidak ada principle yang aktif di database.
@@ -159,20 +160,20 @@ const ArchitecturePrinciplesPage = () => {
               style={{
                 backgroundColor: "white",
                 borderRadius: "12px",
-                border: "1px solid #e5e7eb",
+                border: "1px solid #99d4ff", // primary-200
                 overflow: "hidden",
                 transition: "all 0.3s ease",
                 transform: hoveredId === item.id ? "translateY(-4px)" : "translateY(0)",
                 boxShadow:
                   hoveredId === item.id
-                    ? "0 10px 25px -5px rgba(0, 0, 0, 0.15)"
-                    : "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
+                    ? "0 10px 25px -5px rgba(0, 100, 181, 0.2)" // primary-500 dengan opacity
+                    : "0 1px 3px 0 rgba(0, 70, 127, 0.1)", // primary-700 dengan opacity
                 cursor: "pointer",
               }}
             >
               <div
                 style={{
-                  background: "linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)",
+                  background: "linear-gradient(135deg, #00467f 0%, #0064b5 100%)", // primary-700 to primary-500
                   padding: "16px 20px",
                   display: "flex",
                   justifyContent: "space-between",
@@ -195,11 +196,11 @@ const ArchitecturePrinciplesPage = () => {
                   style={{
                     fontSize: "11px",
                     fontWeight: "600",
-                    backgroundColor: "rgba(255, 255, 255, 0.25)",
-                    color: "white",
+                    backgroundColor: "#bfe2ff", // primary-100
+                    color: "#002541", // primary-900
                     padding: "4px 12px",
                     borderRadius: "12px",
-                    border: "1px solid rgba(255, 255, 255, 0.3)",
+                    border: "1px solid #99d4ff", // primary-200
                   }}
                 >
                   {item.category}
@@ -213,7 +214,7 @@ const ArchitecturePrinciplesPage = () => {
                       display: "block",
                       fontSize: "11px",
                       fontWeight: "700",
-                      color: "#94a3b8",
+                      color: "#0064b5", // primary-500
                       letterSpacing: "0.5px",
                       marginBottom: "6px",
                     }}
@@ -222,7 +223,7 @@ const ArchitecturePrinciplesPage = () => {
                   </label>
                   <p
                     style={{
-                      color: "#1e293b",
+                      color: "#002541", // primary-900
                       fontSize: "clamp(13px, 3vw, 15px)",
                       fontWeight: "600",
                       margin: 0,
@@ -239,7 +240,7 @@ const ArchitecturePrinciplesPage = () => {
                       display: "block",
                       fontSize: "11px",
                       fontWeight: "700",
-                      color: "#94a3b8",
+                      color: "#0064b5", // primary-500
                       letterSpacing: "0.5px",
                       marginBottom: "6px",
                     }}
@@ -248,7 +249,7 @@ const ArchitecturePrinciplesPage = () => {
                   </label>
                   <p
                     style={{
-                      color: "#475569",
+                      color: "#003660", // primary-800
                       fontSize: "clamp(12px, 2.5vw, 14px)",
                       margin: 0,
                       lineHeight: "1.6",
@@ -260,10 +261,10 @@ const ArchitecturePrinciplesPage = () => {
 
                 <div
                   style={{
-                    backgroundColor: "#fef3c7",
+                    backgroundColor: "#fef3c7", // Tetap kuning untuk implication (accent)
                     padding: "12px",
                     borderRadius: "8px",
-                    borderLeft: "4px solid #f59e0b",
+                    borderLeft: "4px solid #fbbf24", // secondary-500
                   }}
                 >
                   <label
@@ -293,6 +294,7 @@ const ArchitecturePrinciplesPage = () => {
               </div>
             </div>
           ))}
+      </div>
       </div>
     </div>
   );

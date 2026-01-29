@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
@@ -6,6 +6,9 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState(null);
   const [scrolled, setScrolled] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
   const location = useLocation();
 
   useEffect(() => {
@@ -27,9 +30,9 @@ const Navbar = () => {
         { name: 'Organization Decomposition Diagram', href: '/vision/organization', keywords:'Diagram, Kepala stasiun, Koordinator, Anggota' },
         { name: 'Stakeholder Catalog', href: '/vision/stakeholder', keywords:'Stekholder, Katalog, Peran, Kepentingan' },
         { name: 'Solution Concept Diagram', href: '/vision/solution', keywords:'Diagram, Solusi, User Layer' },
-        { name: 'Value Chain', href: '/vision/valuechain', keywords:'Aktivitas Pendukung, Aktifitas Utama' },
+        { name: 'Value Chain', href: '/vision/value-chain', keywords:'Aktivitas Pendukung, Aktifitas Utama' },
         { name: 'Vision, Mission and Corporate Strategy', href: '/vision/strategy', keywords:'Visi, Misi, Map, Strategi' },
-        { name: 'Business Canvas Model', href: '/vision/businessmodelcanvas' },
+        { name: 'Business Canvas Model', href: '/vision/business-model-canvas' },
       ]
     },
     { 
@@ -48,6 +51,7 @@ const Navbar = () => {
         { name: 'Business Principles', href: '/business/businessprinciples' },
         { name: 'KPI', href: '/business/kpi', keywords:'Teknisi, Datin, TU, Observasi, WMM' },
         { name: 'Business Process - KPI Matrix', href: '/business/businessprocess-kpimatrix' },
+        { name: 'Business Model Canvas', href:'/vision/business-model-canvas'},
       ]
     },
     {
@@ -97,6 +101,67 @@ const Navbar = () => {
       ]
     },
   ];
+
+  const hiddenSearchItems = [
+    { name: 'SOP Operasional Teknisi', href: '/', category: 'Dok', keywords: ''},
+  ];
+
+  const searchableItems = useMemo(() => {
+    let items = [];
+    navigation.forEach(parent => {
+      // 1. Masukkan Parent jika punya href (bukan null)
+      if (parent.href) {
+        items.push({ 
+          name: parent.name, 
+          href: parent.href, 
+          category: 'Main Menu' 
+        });
+      }
+      // 2. Masukkan semua Children
+      if (parent.children) {
+        parent.children.forEach(child => {
+          items.push({ 
+            name: child.name, 
+            href: child.href, 
+            category: parent.name 
+          });
+        });
+      }
+    });
+
+    items = [...items, ...hiddenSearchItems];
+    return items;
+  }, []);
+
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+
+    if (query.length > 0) {
+      const results = searchableItems.filter(item => 
+        item.name.toLowerCase().includes(query) || 
+        item.category.toLowerCase().includes(query) ||
+        (item.keywords && item.keywords.toLowerCase().includes(query)) 
+      );
+      setSearchResults(results);
+    } else {
+      setSearchResults([]);
+    }
+  };
+
+  const closeSearch = () => {
+    setIsSearchOpen(false);
+    setSearchQuery('');
+    setSearchResults([]);
+  };
+
+  const toggleSearch = () => {
+    setIsSearchOpen(!isSearchOpen);
+    if (!isSearchOpen) {
+      setSearchQuery('');
+      setSearchResults([]);
+    }
+  };
 
   const isActive = (item) => {
     if (!item.href) return false;
@@ -172,7 +237,7 @@ const Navbar = () => {
 
           {/* SEARCH BUTTON */}
           <div className="navbar-search">
-            <button className="navbar-search-button">
+            <button className="navbar-search-button" onClick={toggleSearch}>
               <svg className="navbar-search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
@@ -196,6 +261,49 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+
+      {/* SEARCH MODAL */}
+      {isSearchOpen && (
+        <div className="navbar-search-modal">
+          <div className="navbar-search-modal-content">
+            <div className="navbar-search-modal-header">
+              <input
+                type="text"
+                placeholder="Cari menu..."
+                value={searchQuery}
+                onChange={handleSearch}
+                className="navbar-search-input"
+                autoFocus
+              />
+              <button onClick={closeSearch} className="navbar-search-close">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            {searchResults.length > 0 && (
+              <div className="navbar-search-results">
+                {searchResults.map((result, index) => (
+                  <Link
+                    key={index}
+                    to={result.href}
+                    onClick={closeSearch}
+                    className="navbar-search-result-item"
+                  >
+                    <div className="navbar-search-result-name">{result.name}</div>
+                    <div className="navbar-search-result-category">{result.category}</div>
+                  </Link>
+                ))}
+              </div>
+            )}
+            {searchQuery && searchResults.length === 0 && (
+              <div className="navbar-search-no-results">
+                Tidak ada hasil ditemukan
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* MOBILE MENU */}
       <div className={`navbar-mobile-menu ${isOpen ? 'open' : ''}`}>

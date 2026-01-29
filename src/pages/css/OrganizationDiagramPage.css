@@ -1,23 +1,21 @@
-/* src/pages/css/OrganizationDiagramPage.css */
-
 .orgPageWrapper {
   padding: 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #f5f5f5;
-  /* Mencegah scroll horizontal pada body utama */
+  background: #f0f7ff;
   overflow-x: hidden; 
+  font-family: 'Iter', system-ui, sans-serif;
 }
 
 .orgTopBar {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
   gap: 1rem;
-  padding: 1.25rem;
+  padding: 1.5rem 1.25rem;
   background: white;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 100, 181, 0.1);
 }
 
 .orgTopActions {
@@ -27,29 +25,36 @@
 }
 
 .orgPageTitle {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   font-weight: 800;
-  color: #1a1a1a;
+  color: #00467f;
   line-height: 1.2;
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .orgPageTitle {
+    font-size: 3rem;
+  }
 }
 
 /* --- PERBAIKAN UTAMA: Card menyesuaikan tinggi isi (fit-content) --- */
 .orgDiagramCardFull {
-  /* HAPUS flex: 1; agar tidak memaksa full height */
   display: flex;
   flex-direction: column;
   margin: 1.25rem;
   background: white;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  /* Tambahkan ini: */
+  box-shadow: 0 4px 20px rgba(0, 100, 181, 0.12);
+  border: 2px solid #bfe2ff;
   height: fit-content;
   min-height: 0; 
 }
 
 .orgDiagramHeader {
-  background: linear-gradient(135deg, #0f5f8a 0%, #1a7ba8 100%);
+  background: linear-gradient(135deg, #0064b5 0%, #00569b 100%);
   color: white;
   padding: 1rem 1.5rem;
   font-weight: 800;
@@ -58,16 +63,15 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  border-bottom: 3px solid #fbbf24;
 }
 
 /* --- PERBAIKAN KEDUA: Canvas juga menyesuaikan tinggi --- */
 .orgDiagramCanvasFull {
-  /* HAPUS flex: 1; */
-  background: #fafafa;
+  background: #f0f7ff;
   overflow: auto; 
   padding: 3rem 2rem;
   position: relative; 
-  /* Tambahkan ini: */
   height: fit-content;
 }
 
@@ -108,7 +112,7 @@
 .orgLineDownHead {
   width: 3px;
   height: 40px;
-  background: linear-gradient(180deg, #2c5282 0%, #1a1a1a 100%);
+  background: linear-gradient(180deg, #0064b5 0%, #00467f 100%);
   border-radius: 2px;
   margin: 0;
 }
@@ -128,7 +132,7 @@
   position: absolute;
   top: 0;
   height: var(--line-thickness);
-  background: #1a1a1a;
+  background: #00467f;
   border-radius: 2px;
   pointer-events: none;
   z-index: 0;
@@ -148,7 +152,7 @@
 .orgVerticalLineToCoord {
   width: 3px;
   height: 40px;
-  background: linear-gradient(180deg, #1a1a1a 0%, #444 100%);
+  background: linear-gradient(180deg, #00467f 0%, #0064b5 100%);
   border-radius: 2px;
   margin: 0;
 }
@@ -156,7 +160,7 @@
 .orgVerticalLineToUnits {
   width: 3px;
   height: 40px;
-  background: linear-gradient(180deg, #2c5282 0%, #1a1a1a 100%);
+  background: linear-gradient(180deg, #0064b5 0%, #00467f 100%);
   border-radius: 2px;
   margin: 0;
 }
@@ -179,7 +183,7 @@
   left: calc(var(--unit-col-width) / 2);
   right: calc(var(--unit-col-width) / 2);
   height: var(--line-thickness);
-  background: #1a1a1a;
+  background: #00467f;
   border-radius: 2px;
 }
 
@@ -194,19 +198,19 @@
 .orgVerticalLineToUnit {
   width: 3px;
   height: 40px;
-  background: linear-gradient(180deg, #1a1a1a 0%, #444 100%);
+  background: linear-gradient(180deg, #00467f 0%, #0064b5 100%);
   border-radius: 2px;
   margin: 0;
 }
 
 /* Node styles */
 .orgNode {
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-  border: 3px solid #2c5282;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+  border: 3px solid #0064b5;
   border-radius: 12px;
   width: var(--coord-col-width);
   max-width: 100%;
-  box-shadow: 0 4px 16px rgba(44, 82, 130, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 100, 181, 0.2);
   padding: 1.25rem 1.5rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
@@ -215,13 +219,14 @@
 
 .orgNode:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(44, 82, 130, 0.25);
+  box-shadow: 0 6px 24px rgba(0, 100, 181, 0.3);
+  border-color: #00569b;
 }
 
 .orgNodeTitle {
   font-weight: 800;
   font-size: 1.05rem;
-  color: #1a1a1a;
+  color: #00467f;
   white-space: normal;
   word-break: break-word;
   line-height: 1.4;
@@ -232,7 +237,7 @@
 .orgNodeSubtitle {
   white-space: normal;
   word-break: break-word;
-  color: #555;
+  color: #003660;
   font-size: 0.95rem;
   font-weight: 500;
   line-height: 1.4;
@@ -241,10 +246,10 @@
 
 .orgUnitNode {
   background: white;
-  border: 2.5px solid #1a1a1a;
+  border: 2.5px solid #0064b5;
   border-radius: 10px;
   width: 100%;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 12px rgba(0, 100, 181, 0.15);
   padding: 1.15rem 1.35rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
@@ -253,16 +258,17 @@
 
 .orgUnitNode:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 20px rgba(0, 100, 181, 0.25);
+  border-color: #00569b;
 }
 
 .orgUnitTitle {
   font-weight: 800;
   margin-bottom: 0.85rem;
   font-size: 1rem;
-  color: #1a1a1a;
+  color: #00467f;
   padding-bottom: 0.65rem;
-  border-bottom: 2px solid #e0e0e0;
+  border-bottom: 2px solid #bfe2ff;
   text-align: center;
 }
 
@@ -278,7 +284,7 @@
 
 .orgMemberList li {
   margin-bottom: 0.35rem;
-  color: #333;
+  color: #003660;
 }
 
 .orgMemberList li:last-child {
@@ -286,7 +292,7 @@
 }
 
 .orgMuted {
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 54, 96, 0.5);
   font-style: italic;
 }
 
@@ -296,17 +302,18 @@
   border-radius: 10px;
   padding: 0.65rem 1rem;
   font-weight: 700;
-  background: #0f5f8a;
+  background: #0064b5;
   color: white;
   cursor: pointer;
   font-size: 0.95rem;
   transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 100, 181, 0.2);
 }
 
 .orgBtn:hover:not(:disabled) {
-  background: #1a7ba8;
+  background: #00569b;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(15, 95, 138, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 100, 181, 0.3);
 }
 
 .orgBtn:active:not(:disabled) {
@@ -319,21 +326,24 @@
 }
 
 .orgBtnGhost {
-  background: rgba(0, 0, 0, 0.06);
-  color: rgba(0, 0, 0, 0.85);
+  background: white;
+  color: #00467f;
+  box-shadow: none;
+  border: 2px solid #bfe2ff;
 }
 
 .orgBtnGhost:hover:not(:disabled) {
-  background: rgba(0, 0, 0, 0.12);
+  background: #f0f7ff;
+  border-color: #0064b5;
 }
 
 .orgBtnDanger {
-  background: #d32f2f;
+  background: #dc2626;
   color: white;
 }
 
 .orgBtnDanger:hover:not(:disabled) {
-  background: #c62828;
+  background: #b91c1c;
 }
 
 .orgRowBtns {
@@ -347,7 +357,7 @@
 .orgModalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 70, 127, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -362,20 +372,22 @@
   background: white;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 100, 181, 0.3);
   display: flex;
   flex-direction: column;
+  border: 2px solid #bfe2ff;
 }
 
 .orgModalHeader {
   padding: 1.15rem 1.5rem;
-  background: linear-gradient(135deg, #0f5f8a 0%, #1a7ba8 100%);
+  background: linear-gradient(135deg, #0064b5 0%, #00569b 100%);
   color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
   font-weight: 800;
+  border-bottom: 3px solid #fbbf24;
 }
 
 .orgModalTitle {
@@ -385,7 +397,7 @@
 .orgModalBody {
   padding: 0;
   overflow: auto;
-  background: #f8f9fa;
+  background: #f0f7ff;
 }
 
 .orgModalGrid {
@@ -397,17 +409,17 @@
   border-radius: 14px;
   padding: 1.35rem;
   margin-bottom: 1rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 12px rgba(0, 100, 181, 0.08);
+  border: 1px solid #bfe2ff;
 }
 
 .orgSectionTitle {
   font-weight: 800;
   margin-bottom: 1rem;
   font-size: 1.05rem;
-  color: #1a1a1a;
+  color: #00467f;
   padding-bottom: 0.65rem;
-  border-bottom: 2px solid #e0e0e0;
+  border-bottom: 2px solid #bfe2ff;
 }
 
 .orgField {
@@ -419,57 +431,59 @@
 
 .orgLabel {
   font-size: 0.9rem;
-  color: rgba(0, 0, 0, 0.75);
+  color: #003660;
   font-weight: 600;
 }
 
 .orgInput,
 .orgSelect {
-  border: 2px solid rgba(0, 0, 0, 0.15);
+  border: 2px solid #bfe2ff;
   border-radius: 10px;
   padding: 0.7rem 0.9rem;
   font-size: 0.95rem;
   background: white;
   transition: all 0.2s ease;
+  color: #003660;
 }
 
 .orgInput:focus,
 .orgSelect:focus {
   outline: none;
-  border-color: #0f5f8a;
-  box-shadow: 0 0 0 3px rgba(15, 95, 138, 0.1);
+  border-color: #0064b5;
+  box-shadow: 0 0 0 3px rgba(0, 100, 181, 0.1);
 }
 
 .orgInput:disabled,
 .orgSelect:disabled {
-  background: rgba(0, 0, 0, 0.04);
+  background: rgba(0, 100, 181, 0.05);
   cursor: not-allowed;
 }
 
 .orgDivider {
   height: 1px;
-  background: rgba(0, 0, 0, 0.1);
+  background: #bfe2ff;
   margin: 1.25rem 0;
 }
 
 .orgWarning {
   margin-top: 0.75rem;
-  color: #d32f2f;
+  color: #dc2626;
   font-size: 0.9rem;
   font-weight: 500;
   padding: 0.65rem;
-  background: rgba(211, 47, 47, 0.08);
+  background: rgba(220, 38, 38, 0.08);
   border-radius: 8px;
-  border-left: 3px solid #d32f2f;
+  border-left: 3px solid #dc2626;
 }
 
 .orgMeta {
   margin-top: 0.75rem;
   font-size: 0.9rem;
-  color: rgba(0, 0, 0, 0.7);
+  color: #003660;
   padding: 0.65rem;
-  background: rgba(0, 0, 0, 0.03);
+  background: rgba(0, 100, 181, 0.05);
   border-radius: 8px;
+  border: 1px solid #bfe2ff;
 }
 
 .orgMemberCrudList {
@@ -484,21 +498,21 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 0.85rem;
-  border: 2px solid rgba(0, 0, 0, 0.1);
+  border: 2px solid #bfe2ff;
   border-radius: 12px;
   background: white;
   transition: all 0.2s ease;
 }
 
 .orgMemberRow:hover {
-  border-color: rgba(0, 0, 0, 0.2);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-color: #0064b5;
+  box-shadow: 0 2px 8px rgba(0, 100, 181, 0.15);
 }
 
 .orgMemberName {
   flex: 1;
   font-weight: 500;
-  color: #1a1a1a;
+  color: #00467f;
 }
 
 /* =================================================================
@@ -508,26 +522,25 @@
   
   /* 1. HEADER ATAS (Judul Halaman) - Kecil & Rapi */
   .orgTopBar {
-    padding: 0.75rem 1rem; 
+    padding: 1rem; 
     align-items: center;   
   }
 
   .orgPageTitle {
-    font-size: 0.95rem;     /* Ukuran font kecil */
-    white-space: nowrap;    /* Paksa 1 baris */
-    overflow: hidden;       
-    text-overflow: ellipsis; 
+    font-size: 1.5rem;
+    white-space: normal;
+    text-align: center;
     width: 100%;            
   }
 
   /* 2. CARD DIAGRAM & HEADER BIRU - Tipis & Fit Content */
   .orgDiagramCardFull {
     margin: 0.75rem; 
-    height: fit-content;    /* PENTING: Agar tinggi mengikuti isi, tidak melar */
+    height: fit-content;
   }
 
   .orgDiagramHeader {
-    padding: 0.6rem 1rem;   /* Header biru tipis */
+    padding: 0.6rem 1rem;
     font-size: 0.9rem; 
     min-height: auto;
   }
@@ -537,18 +550,18 @@
     padding: 0.35rem 0.75rem; 
     font-size: 0.8rem;   
     border-radius: 6px;
-    margin: 0;             /* Pastikan tidak ada margin aneh */
+    margin: 0;
   }
 
   /* 4. CANVAS DIAGRAM - Hemat Ruang & Fit Content */
   .orgDiagramCanvasFull {
-    padding: 1rem;          /* Padding 1rem rata agar rapi */
-    height: fit-content;    /* PENTING: Ikuti tinggi chart */
+    padding: 1rem;
+    height: fit-content;
   }
 
   /* 5. CHART PADDING - Hilangkan jarak bawah yang besar */
   .orgChartFull {
-    padding-bottom: 0px !important; /* Hapus total padding bawah chart */
+    padding-bottom: 0px !important;
   }
   
   /* 6. MODAL - Penyesuaian Padding */
@@ -559,24 +572,31 @@
   .orgSection {
     padding: 1rem;
   }
+  
   .orgModalTitle {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
   }
+  
   .orgBtn.orgBtnGhost {
     font-size: 0.75rem;
   }
+  
   .orgSelect {
     font-size: 0.75rem;
   }
+  
   .orgBtn {
     font-size: 0.75rem;
   }
+  
   .orgBtn .orgBtnDanger {
     font-size: 0.75rem;
   }
+  
   .orgInput {
     font-size: 0.75rem;
   }
+  
   .orgMemberCrudList {
     font-size: 0.75rem;
   }
