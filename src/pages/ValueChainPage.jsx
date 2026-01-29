@@ -152,23 +152,53 @@ const ValueChainPage = () => {
         .svg-container [id]:hover ellipse {
           filter: none !important;
         }
+
+        /* Mobile Responsive */
+        @media (max-width: 479px) {
+          .value-chain-title {
+            font-size: 1.5rem !important;
+            margin: 0 0 8px 0 !important;
+          }
+          
+          .value-chain-subtitle {
+            font-size: 0.85rem !important;
+          }
+          
+          .value-chain-container {
+            padding: 40px 16px !important;
+          }
+        }
+
+        @media (max-width: 390px) {
+          .value-chain-title {
+            font-size: 1.25rem !important;
+            margin: 0 0 6px 0 !important;
+          }
+          
+          .value-chain-subtitle {
+            font-size: 0.75rem !important;
+          }
+
+          .value-chain-container {
+            padding: 24px 12px !important;
+          }
+        }
       `}</style>
 
       {/* Header Section */}
       <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-        
-        <h1 style={{ 
+        <h1 className="value-chain-title" style={{ 
           fontSize: '3rem', 
           fontWeight: '800', 
-          color: '#00467f', // Dark blue
+          color: '#00467f', 
           margin: '0 0 10px 0',
           letterSpacing: '-0.025em'
         }}>
           Value Chain BMKG
         </h1>
         
-        <p style={{ 
-          color: '#003660', // Medium blue
+        <p className="value-chain-subtitle" style={{ 
+          color: '#003660', 
           fontSize: '1.25rem',
           fontWeight: '600',
           marginBottom: '1.5rem'
@@ -188,11 +218,11 @@ const ValueChainPage = () => {
 
       {/* SVG Container */}
       <div 
-        className="bg-white shadow-2xl svg-container"
+        className="bg-white shadow-2xl svg-container value-chain-container"
         style={{ 
           width: '100%', 
           maxWidth: '1200px', 
-          border: '2px solid #bfe2ff', // Light blue border
+          border: '2px solid #bfe2ff', 
           padding: '40px', 
           borderRadius: '12px',
           backgroundColor: '#ffffff',

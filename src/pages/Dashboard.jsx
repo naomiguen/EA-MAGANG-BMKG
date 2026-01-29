@@ -10,7 +10,6 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch data dari Supabase saat komponen mount
   useEffect(() => {
     let isMounted = true;
 
@@ -84,7 +83,6 @@ const Dashboard = () => {
       return;
     }
     
-    
     // Business Section
     if (item.title === "Business Principles") {
       navigate('/business/businessprinciples');
@@ -122,12 +120,10 @@ const Dashboard = () => {
       navigate('/business/corporate_governance');
       return;
     }
-    
     if (item.title === "Business Process - Application Matrix"){
       navigate("/business/application-matrix");
       return;
     }
-    
     if (item.title === "Business Process - Data Matrix"){
       navigate("/business/data-matrix");
       return;
@@ -163,7 +159,7 @@ const Dashboard = () => {
       return;
     }
     
-    // application section
+    // Application Section
     if (item.title === "Application Portfolio Catalog") {
       navigate("/app/portfolio-catalog");
       return;
@@ -200,6 +196,7 @@ const Dashboard = () => {
       navigate("/app/process-matrix");
       return;
     }
+    
     // Technology Section
     if (item.title === "Technology Principles") {
       navigate("/tech/technology-principles");
@@ -222,6 +219,7 @@ const Dashboard = () => {
       return;
     }
 
+    // Implementation Section
     if(item.title === "Architecture Governance"){
       navigate("/imp/governance");
       return;
@@ -231,6 +229,7 @@ const Dashboard = () => {
       navigate("/imp/planning");
       return;
     }
+    
     alert(`Halaman untuk "${item.title}" belum dibuat.`);
   };
 
@@ -249,93 +248,29 @@ const Dashboard = () => {
     </div>
   );
 
-  // Loading State
   if (loading) {
     return (
-      <div className="architecture-container" style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh'
-      }}>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{
-            width: '60px',
-            height: '60px',
-            border: '4px solid #e2e8f0',
-            borderTop: '4px solid #1d4ed8',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite',
-            margin: '0 auto 20px'
-          }}></div>
-          <h2 style={{ color: '#64748b', fontSize: '18px', fontWeight: '600' }}>
-            Memuat Enterprise Architecture...
-          </h2>
+      <div className="loading-container">
+        <div className="loading-content">
+          <div className="loading-spinner"></div>
+          <h2 className="loading-text">Memuat Enterprise Architecture...</h2>
         </div>
-        <style>
-          {`
-            @keyframes spin {
-              0% { transform: rotate(0deg); }
-              100% { transform: rotate(360deg); }
-            }
-          `}
-        </style>
       </div>
     );
   }
 
-  // Error State
   if (error) {
     return (
-      <div className="architecture-container" style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
-        padding: '20px'
-      }}>
-        <div style={{
-          backgroundColor: '#fee2e2',
-          border: '2px solid #fca5a5',
-          borderRadius: '12px',
-          padding: '32px',
-          maxWidth: '500px',
-          textAlign: 'center'
-        }}>
-          <h2 style={{ 
-            color: '#dc2626', 
-            margin: '0 0 16px 0', 
-            fontSize: '24px',
-            fontWeight: 'bold' 
-          }}>
-            ⚠️ Gagal Memuat Data
-          </h2>
-          <p style={{ 
-            color: '#991b1b', 
-            margin: '0 0 20px 0', 
-            fontSize: '16px',
-            lineHeight: '1.5'
-          }}>
-            {error}
-          </p>
+      <div className="error-container">
+        <div className="error-content">
+          <h2 className="error-title">⚠️ Gagal Memuat Data</h2>
+          <p className="error-message">{error}</p>
           <button
+            className="error-button"
             onClick={() => {
               localStorage.clear();
               window.location.reload();
             }}
-            style={{
-              backgroundColor: '#dc2626',
-              color: 'white',
-              border: 'none',
-              padding: '12px 24px',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '16px',
-              fontWeight: '600',
-              transition: 'background-color 0.2s'
-            }}
-            onMouseOver={(e) => e.target.style.backgroundColor = '#b91c1c'}
-            onMouseOut={(e) => e.target.style.backgroundColor = '#dc2626'}
           >
             Coba Lagi
           </button>
@@ -344,18 +279,10 @@ const Dashboard = () => {
     );
   }
 
-  // Empty State
   if (!architectureData) {
     return (
-      <div className="architecture-container" style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh'
-      }}>
-        <p style={{ color: '#94a3b8', fontSize: '18px' }}>
-          Tidak ada data tersedia
-        </p>
+      <div className="empty-container">
+        <p className="empty-text">Tidak ada data tersedia</p>
       </div>
     );
   }
@@ -363,136 +290,97 @@ const Dashboard = () => {
   return (
     <div className="architecture-container">
       <div className="architecture-wrapper">
-        {/* Header Title */}
         <div className="dashboard-header">
           <h1 className="dashboard-title">Enterprise Architecture</h1>
           <h2 className="dashboard-subtitle">BMKG Balikpapan</h2>
         </div>
 
-        {/* Architecture Vision Section */}
         <div className="vision-section">
           <h2 className="section-title">
             Architecture Vision 
-            <span style={{ 
-              marginLeft: '10px', 
-              fontSize: '14px', 
-              fontWeight: 'normal', 
-              color: '#64748b' 
-            }}>
+            <span className="section-count">
               ({architectureData.vision?.length || 0})
             </span>
           </h2>
           <div className="vision-grid">
             {architectureData.vision?.map((item) => renderCard(item)) || (
-              <p style={{ color: '#94a3b8' }}>Tidak ada data</p>
+              <p className="no-data-text">Tidak ada data</p>
             )}
           </div>
         </div>
 
-        {/* Main Architecture Sections */}
         <div className="main-sections-grid">
-          {/* Business Architecture */}
           <div className="architecture-section">
             <h2 className="section-title">
               Business Architecture
-              <span style={{ 
-                marginLeft: '10px', 
-                fontSize: '14px', 
-                fontWeight: 'normal', 
-                color: '#64748b' 
-              }}>
+              <span className="section-count">
                 ({architectureData.business?.length || 0})
               </span>
             </h2>
             <div className="section-grid">
               {architectureData.business?.map((item) => renderCard(item)) || (
-                <p style={{ color: '#94a3b8' }}>Tidak ada data</p>
+                <p className="no-data-text">Tidak ada data</p>
               )}
             </div>
           </div>
 
-          {/* Data Architecture */}
           <div className="architecture-section">
             <h2 className="section-title">
               Data Architecture
-              <span style={{ 
-                marginLeft: '10px', 
-                fontSize: '14px', 
-                fontWeight: 'normal', 
-                color: '#64748b' 
-              }}>
+              <span className="section-count">
                 ({architectureData.data?.length || 0})
               </span>
             </h2>
             <div className="section-grid">
               {architectureData.data?.map((item) => renderCard(item)) || (
-                <p style={{ color: '#94a3b8' }}>Tidak ada data</p>
+                <p className="no-data-text">Tidak ada data</p>
               )}
             </div>
           </div>
 
-          {/* Application Architecture */}
           <div className="architecture-section">
             <h2 className="section-title">
               Application Architecture
-              <span style={{ 
-                marginLeft: '10px', 
-                fontSize: '14px', 
-                fontWeight: 'normal', 
-                color: '#64748b' 
-              }}>
+              <span className="section-count">
                 ({architectureData.application?.length || 0})
               </span>
             </h2>
             <div className="section-grid">
               {architectureData.application?.map((item) => renderCard(item)) || (
-                <p style={{ color: '#94a3b8' }}>Tidak ada data</p>
+                <p className="no-data-text">Tidak ada data</p>
               )}
             </div>
           </div>
 
-          {/* Technology Architecture */}
           <div className="architecture-section">
             <h2 className="section-title">
               Technology Architecture
-              <span style={{ 
-                marginLeft: '10px', 
-                fontSize: '14px', 
-                fontWeight: 'normal', 
-                color: '#64748b' 
-              }}>
+              <span className="section-count">
                 ({architectureData.technology?.length || 0})
               </span>
             </h2>
             <div className="section-grid">
               {architectureData.technology?.map((item) => renderCard(item)) || (
-                <p style={{ color: '#94a3b8' }}>Tidak ada data</p>
+                <p className="no-data-text">Tidak ada data</p>
               )}
             </div>
           </div>
         </div>
 
-        {/* Architecture Implementation Section */}
         <div className="implementation-section">
           <h2 className="section-title">
             Architecture Implementation
-            <span style={{ 
-              marginLeft: '10px', 
-              fontSize: '14px', 
-              fontWeight: 'normal', 
-              color: '#64748b' 
-            }}>
+            <span className="section-count">
               ({architectureData.implementation?.length || 0})
             </span>
           </h2>
           <div className="implementation-grid">
             {architectureData.implementation?.map((item) => renderCard(item)) || (
-              <p style={{ color: '#94a3b8' }}>Tidak ada data</p>
+              <p className="no-data-text">Tidak ada data</p>
             )}
           </div>
         </div>
 
-        {/* Legend */}
         <div className="legend-container">
           <div className="legend-item">
             <div className="legend-box card-green"></div>

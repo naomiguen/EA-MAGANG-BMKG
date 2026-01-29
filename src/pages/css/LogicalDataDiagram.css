@@ -123,11 +123,12 @@
   transform: translateX(-50%);
 }
 
-/* LABEL N di GARIS HORIZONTAL (3 label) - DESKTOP */
+/* LABEL N di GARIS VERTIKAL (3 label) - DESKTOP */
+/* Label N diturunkan agar ada di garis vertikal yang turun ke kartu anak */
 .label-n-left,
 .label-n-center,
 .label-n-right {
-  top: 50%;
+  top: 70%; /* DITURUNKAN - ada di garis vertikal, bukan di tengah horizontal */
   transform: translateY(-50%);
 }
 
