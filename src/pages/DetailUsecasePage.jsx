@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { createPortal } from "react-dom";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { appData } from "../services/data";
+import { ArrowLeft, ZoomIn, ZoomOut, RefreshCw, X, Info, Maximize2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const DetailPage = () => {
   const { id } = useParams();
@@ -24,7 +27,14 @@ const DetailPage = () => {
     }
   }, [data]);
 
-  if (!data) return <div style={styles.notFound}><h2>Data tidak ditemukan!</h2></div>;
+  if (!data) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-white text-primary-950">
+        <h2 className="text-2xl font-black uppercase tracking-tighter">Data tidak ditemukan!</h2>
+        <button onClick={() => navigate("/app/usecase")} className="mt-4 text-primary-600 font-bold hover:underline"> Kembali ke Galeri</button>
+      </div>
+    );
+  }
 
   const handleSvgClick = (e) => {
     e.preventDefault();
@@ -47,224 +57,126 @@ const DetailPage = () => {
   };
 
   return (
-    <div style={styles.pageBackground}>
-      <div style={styles.navContainer}>
-        <button onClick={() => navigate("/app/usecase")} style={styles.backBtn}>
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <line x1="19" y1="12" x2="5" y2="12"></line>
-            <polyline points="12 19 5 12 12 5"></polyline>
-          </svg>
-        </button>
+    <div className="min-h-screen bg-white py-12 px-4 md:px-12 font-sans flex flex-col items-center">
+      
+      {/* 1. Navigation & Header Section - CENTERED */}
+      <div className="w-full max-w-5xl flex flex-col items-center mb-12">
+        <div className="w-full flex justify-start mb-8">
+          <button 
+            onClick={() => navigate("/app/usecase")} 
+            className="p-3 bg-primary-50 text-primary-700 rounded-2xl hover:bg-primary-100 transition-all flex items-center gap-2 font-black uppercase text-xs tracking-widest"
+          >
+            <ArrowLeft size={18} /> Kembali
+          </button>
+        </div>
+
+        <div className="text-center border-b-4 border-secondary-500 pb-10 w-full">
+          <h1 className="text-3xl md:text-5xl font-black text-primary-700 mb-4 uppercase tracking-tighter leading-tight">
+            {data.title}
+          </h1>
+          <p className="text-primary-800 text-lg md:text-xl font-bold flex items-center justify-center gap-2 italic">
+            <Info size={20} className="text-secondary-600 flex-shrink-0" />
+            {data.description}
+          </p>
+        </div>
       </div>
 
-      <div style={styles.header}>
-        <h1 style={styles.title}>{data.title}</h1>
-        <p style={styles.description}>{data.description}</p>
+      {/* 2. Interactive Diagram Area */}
+      
+      <div className="max-w-6xl w-full bg-white rounded-[2.5rem] shadow-2xl border border-primary-100 overflow-hidden relative">
+        <TransformWrapper initialScale={1} centerOnInit={true} minScale={0.5} maxScale={3}>
+          {({ zoomIn, zoomOut, resetTransform }) => (
+            <>
+              {/* Floating Zoom Controls */}
+              <div className="absolute top-24 right-6 z-20 flex flex-col gap-3 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-xl border border-primary-100">
+                <button onClick={() => zoomIn()} className="p-2 hover:bg-primary-100 text-primary-700 rounded-xl transition-colors"><ZoomIn size={24}/></button>
+                <button onClick={() => zoomOut()} className="p-2 hover:bg-primary-100 text-primary-700 rounded-xl transition-colors"><ZoomOut size={24}/></button>
+                <button onClick={() => resetTransform()} className="p-2 hover:bg-primary-100 text-primary-700 rounded-xl transition-colors"><RefreshCw size={24}/></button>
+              </div>
+
+              {/* Header Box Diagram */}
+              <div className="bg-primary-700 px-8 py-5 flex justify-between items-center text-white border-b-4 border-secondary-500 relative z-10">
+                <div className="flex items-center gap-3 text-sm font-black uppercase tracking-widest text-secondary-100">
+                  <div className="w-2.5 h-2.5 bg-secondary-500 rounded-full animate-pulse"></div>
+                  Use Case Interactivity Enabled
+                </div>
+                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-primary-800 px-4 py-2 rounded-xl border border-primary-600">
+                  <Maximize2 size={12} className="text-secondary-500" />
+                  Interactive SVG HD
+                </div>
+              </div>
+
+              {/* SVG Canvas Area */}
+              <div className="h-[70vh] bg-slate-50/50 cursor-grab active:cursor-grabbing relative flex items-center justify-center">
+                <TransformComponent wrapperStyle={{ width: "100%", height: "100%" }}>
+                  <div 
+                    className="flex justify-center items-center w-[1200px] p-12 transition-all"
+                    onClick={handleSvgClick}
+                    dangerouslySetInnerHTML={{ __html: svgContent }}
+                  />
+                </TransformComponent>
+              </div>
+            </>
+          )}
+        </TransformWrapper>
       </div>
 
-      <div style={styles.imageCard}>
-        <div 
-          style={styles.svgWrapper}
-          onClick={handleSvgClick}
-          dangerouslySetInnerHTML={{ __html: svgContent }}
-        />
+      {/* Helper Hint */}
+      <div className="mt-8 text-center text-primary-400 font-bold uppercase tracking-[0.2em] text-[10px]">
+        Klik pada elips Use Case untuk melihat rincian fungsionalitas
       </div>
 
-      {/* --- POPUP MODAL DENGAN STYLE BARU --- */}
-      {isModalOpen && selectedUseCase && (
-        <ModalPopup 
-          data={selectedUseCase} 
-          onClose={() => setIsModalOpen(false)} 
-        />
-      )}
+      {/* 3. Modal Popup Section */}
+      <AnimatePresence>
+        {isModalOpen && selectedUseCase && (
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-primary-950/40 backdrop-blur-md p-4" onClick={() => setIsModalOpen(false)}>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-lg overflow-hidden border border-primary-100"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="bg-primary-700 p-8 text-white flex justify-between items-start border-b-4 border-secondary-500">
+                <div className="flex flex-col items-start">
+                  <span className="inline-block px-3 py-1 rounded-full bg-secondary-500 text-primary-950 text-[10px] font-black mb-3 tracking-widest uppercase shadow-sm">
+                    Use Case Detail
+                  </span>
+                  <h2 className="text-2xl font-black uppercase tracking-tight leading-none text-left">{selectedUseCase.title}</h2>
+                </div>
+                <button onClick={() => setIsModalOpen(false)} className="bg-white/10 hover:bg-white/20 p-2 rounded-xl transition-all text-white"><X size={24}/></button>
+              </div>
 
+              <div className="p-10 text-center flex flex-col items-center">
+                <h4 className="text-[11px] font-black text-primary-400 uppercase tracking-[0.2em] mb-4 text-center">Deskripsi Fungsionalitas</h4>
+                <p className="text-primary-900 text-xl leading-relaxed font-bold italic max-w-sm">
+                  "{selectedUseCase.description}"
+                </p>
+                <div className="mt-8 bg-primary-50 p-4 rounded-2xl border border-primary-100 flex items-center gap-3">
+                   <Info size={18} className="text-primary-600" />
+                   <p className="text-xs text-primary-700 font-black uppercase tracking-wider">Functional Requirement v1.0</p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Global SVG Interactions CSS */}
       <style>{`
-        svg [id], svg [data-cell-id] { cursor: pointer !important; }
+        svg [id], svg [data-cell-id] { cursor: pointer !important; transition: all 0.3s ease; }
         svg text, svg tspan { pointer-events: none !important; }
-        svg [id]:hover ellipse { fill: #f1f5f9 !important; stroke: #2563eb !important; transition: 0.2s; }
-        
-        @keyframes popIn {
-          from { opacity: 0; transform: scale(0.95) translateY(10px); }
-          to { opacity: 1; transform: scale(1) translateY(0); }
+        svg [id]:hover ellipse, svg [data-cell-id]:hover ellipse { 
+          fill: #fefce8 !important; 
+          stroke: #fbbf24 !important; 
+          stroke-width: 4px !important;
+        }
+        svg [id]:hover rect, svg [data-cell-id]:hover rect { 
+          stroke: #fbbf24 !important;
         }
       `}</style>
     </div>
   );
-};
-
-// --- Komponen Modal (Popup) Yang Sudah Diperbaiki ---
-const ModalPopup = ({ data, onClose }) => {
-  return createPortal(
-    <div style={modalStyles.overlay} onClick={onClose}>
-      <div style={modalStyles.content} onClick={(e) => e.stopPropagation()}>
-        
-        {/* MODAL HEADER */}
-        <div style={modalStyles.header}>
-          <h2 style={modalStyles.headerTitle}>
-            {data.title}
-          </h2>
-          <button onClick={onClose} style={modalStyles.closeBtn}>
-            &times;
-          </button>
-        </div>
-
-        {/* MODAL CONTENT */}
-        <div style={modalStyles.body}>
-          <div style={{ marginBottom: '20px' }}>
-            <label style={modalStyles.label}>
-              DESKRIPSI USE CASE
-            </label>
-            <p style={modalStyles.desc}>
-              {data.description}
-            </p>
-          </div>
-        </div>
-
-      </div>
-    </div>,
-    document.body
-  );
-};
-
-// --- STYLING OBJECTS ---
-
-const modalStyles = {
-  overlay: {
-    position: 'fixed',
-    top: 0, left: 0, right: 0, bottom: 0,
-    backgroundColor: 'rgba(15, 23, 42, 0.6)',
-    backdropFilter: 'blur(4px)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 2000,
-  },
-  content: {
-    backgroundColor: 'white',
-    borderRadius: '16px',
-    width: '90%',
-    maxWidth: '550px',
-    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
-    overflow: 'hidden',
-    animation: 'popIn 0.3s ease-out'
-  },
-  header: {
-    backgroundColor: '#1e40af',
-    padding: '20px 24px',
-    borderBottom: '4px solid #1e3a8a',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  headerTitle: {
-    margin: 0,
-    color: 'white',
-    fontSize: '18px',
-    fontWeight: 'bold'
-  },
-  closeBtn: {
-    background: 'rgba(255,255,255,0.2)',
-    border: 'none',
-    color: 'white',
-    width: '32px',
-    height: '32px',
-    borderRadius: '50%',
-    fontSize: '20px',
-    cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    transition: '0.2s'
-  },
-  body: {
-    padding: '24px'
-  },
-  label: {
-    display: 'block',
-    fontSize: '12px',
-    fontWeight: 'bold',
-    color: '#94a3b8',
-    marginBottom: '6px',
-    letterSpacing: '1px'
-  },
-  desc: {
-    margin: 0,
-    color: '#334155',
-    lineHeight: '1.6',
-    fontSize: '15px'
-  },
-  footerBtn: {
-    padding: '10px 24px',
-    backgroundColor: '#1e40af',
-    color: 'white',
-    border: 'none',
-    borderRadius: '8px',
-    fontWeight: '600',
-    cursor: 'pointer',
-    transition: 'background 0.2s'
-  }
-};
-
-const styles = {
-  pageBackground: { 
-    minHeight: "100vh", 
-    backgroundColor: "#f4f6f8", 
-    padding: "20px 40px", 
-    display: "flex", 
-    flexDirection: "column", 
-    alignItems: "center" },
-
-  navContainer: { 
-    width: "100%", 
-    maxWidth: "1100px", 
-    display: "flex", 
-    marginBottom: "20px" },
-
-  backBtn: { 
-    background: "transparent", 
-    border: "none", 
-    cursor: "pointer", 
-    color: "#2c3e50" },
-
-  header: { 
-    textAlign: "center", 
-    maxWidth: "800px", 
-    marginBottom: "30px" },
-
-  title: { fontSize: "2.2rem", 
-    fontWeight: "800", 
-    margin: "0 0 15px 0" },
-
-  description: { 
-    fontSize: "1.1rem", 
-    color: "#636e72" },
-
-  imageCard: {
-      backgroundColor: "white",
-      width: "100%",
-      maxWidth: "1100px",
-      minHeight: "500px", // Memberikan ruang vertikal yang cukup
-      borderRadius: "16px",
-      boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-      padding: "40px",
-      display: "flex",
-      justifyContent: "center", // Tengah secara Horizontal
-      alignItems: "center",     // Tengah secara Vertikal
-      margin: "0 auto",         // Pastikan card-nya sendiri di tengah halaman
-    },
-
-  svgWrapper: {
-      width: "100%",
-      maxWidth: "800px", // Sesuaikan dengan lebar diagram Anda
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      overflow: "visible", 
-    },
-
-  notFound: { 
-    textAlign: "center", 
-    marginTop: "50px" }
 };
 
 export default DetailPage;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from "../lib/supabaseClient"; 
-import './css/LogicalDataDiagram.css';
+import { supabase } from "../lib/supabaseClient";
+import { Loader2, AlertCircle, Database, Hash } from 'lucide-react';
 
 const LogicalDataDiagram = () => {
   const [erdData, setErdData] = useState([]);
@@ -15,20 +15,11 @@ const LogicalDataDiagram = () => {
     try {
       setLoading(true);
       setError(null);
-
       const { data: entities, error: entitiesError } = await supabase
         .from('erd_entities')
         .select(`
-          id,
-          title,
-          type,
-          display_order,
-          erd_attributes (
-            name,
-            key_type,
-            description,
-            display_order
-          )
+          id, title, type, display_order,
+          erd_attributes (name, key_type, description, display_order)
         `)
         .order('display_order', { ascending: true });
 
@@ -36,141 +27,123 @@ const LogicalDataDiagram = () => {
 
       const transformedData = entities.map(entity => ({
         title: entity.title,
-        type: entity.type,
         attributes: entity.erd_attributes
           .sort((a, b) => a.display_order - b.display_order)
-          .map(attr => ({
-            name: attr.name,
-            key: attr.key_type || '',
-            desc: attr.description
-          }))
+          .map(attr => ({ name: attr.name, key: attr.key_type || '' }))
       }));
-
       setErdData(transformedData);
     } catch (err) {
-      console.error('Error fetching ERD data:', err);
       setError(err.message);
     } finally {
       setLoading(false);
     }
   };
 
-  const findEntity = (keyword) => {
-    return erdData.find(e => e.title.toLowerCase().includes(keyword.toLowerCase()));
-  };
+  const findEntity = (keyword) => erdData.find(e => e.title.toLowerCase().includes(keyword.toLowerCase()));
 
-  const pegawaiEntity = findEntity('pegawai');
-  const observasiEntity = findEntity('observasi');
-  const asetEntity = findEntity('aset');
-  const produkEntity = findEntity('produk');
-
-  // Komponen Kartu Entitas
   const EntityCard = ({ entity }) => {
     if (!entity) return null;
     return (
-      <div className="erd-card">
-        <div className="erd-card-header">
-          <h3>{entity.title}</h3>
+      <div className="w-60 bg-white rounded-2xl shadow-xl border-2 border-primary-100 overflow-hidden group hover:border-primary-500 transition-all duration-300">
+        <div className="bg-primary-700 p-3 text-white border-b-4 border-secondary-500 text-center">
+          <h3 className="text-[11px] font-black uppercase tracking-widest">{entity.title}</h3>
         </div>
-        <div className="erd-card-body">
-          <ul className="erd-attribute-list">
-            {entity.attributes.map((attr, idx) => (
-              <li key={idx} className="erd-attribute-item">
-                <div className="erd-attribute-content">
-                  {attr.key === 'PK' && (
-                    <span className="badge badge-pk">PK</span>
-                  )}
-                  {attr.key === 'FK' && (
-                    <span className="badge badge-fk">FK</span>
-                  )}
-                  <span className={`attribute-name ${attr.key ? 'is-key' : ''}`} title={attr.name}>
-                    {attr.name}
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <ul className="divide-y divide-primary-50">
+          {entity.attributes.map((attr, idx) => (
+            <li key={idx} className="px-3 py-2 flex items-center gap-2 hover:bg-primary-50 transition-colors">
+              <div className="w-5 flex-shrink-0 text-center">
+                {attr.key === 'PK' && <span className="text-[8px] font-black bg-secondary-500 text-primary-950 px-1 rounded shadow-sm">PK</span>}
+                {attr.key === 'FK' && <span className="text-[8px] font-black bg-primary-100 text-primary-700 px-1 rounded">FK</span>}
+              </div>
+              <span className={`text-[10px] font-bold uppercase tracking-tight ${attr.key ? 'text-primary-900' : 'text-slate-500 font-medium'}`}>
+                {attr.name}
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     );
   };
 
-  if (loading) {
-    return (
-      <div className="erd-page-container" style={{ justifyContent: 'center' }}>
-        <div className="erd-loading">Memuat data ERD...</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="erd-page-container" style={{ justifyContent: 'center' }}>
-        <div className="erd-error">{error}</div>
-      </div>
-    );
-  }
+  if (loading) return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white">
+      <Loader2 className="w-12 h-12 animate-spin mb-4 text-primary-600" />
+      <p className="font-black uppercase tracking-widest text-primary-600 text-xs">Memetakan Model Data...</p>
+    </div>
+  );
 
   return (
-    <div className="erd-page-container">
+    <div className="min-h-screen bg-white font-sans flex flex-col items-center p-4 md:p-12">
       
-      <div className="erd-header">
-        <h1>Logical Data Model (ERD)</h1>
-        <p>Hubungan Entitas: Pegawai ke Observasi, Aset, dan Produk</p>
+      {/* Header Section */}
+      <div className="w-full max-w-5xl text-center mb-16 border-b-4 border-secondary-500 pb-10">
+        <h1 className="text-3xl md:text-5xl font-black text-primary-700 mb-4 uppercase tracking-tighter leading-tight">
+          Logical Data Model (ERD)
+        </h1>
+        <p className="text-primary-800 text-lg font-bold uppercase tracking-wide flex items-center justify-center gap-2 italic">
+          <Database size={24} className="text-secondary-600" />
+          Arsitektur Hubungan Entitas Data Operasional
+        </p>
       </div>
 
-      <div className="erd-diagram-wrapper">
+      <div className="w-full max-w-6xl flex flex-col items-center relative">
         
-        {/* LEVEL 1: PEGAWAI (PARENT) */}
-        <div className="erd-level-1-wrapper">
-            <EntityCard entity={pegawaiEntity} />
-            <div className="connector-label label-1">1</div>
+        {/* LEVEL 1: PARENT */}
+        <div className="relative z-20">
+            <EntityCard entity={findEntity('pegawai')} />
+            {/* Titik Keluar Garis */}
+            <div className="absolute left-1/2 -translate-x-1/2 -bottom-1.5 w-3 h-3 bg-primary-700 rounded-full border-2 border-white shadow-sm"></div>
+            <div className="absolute left-1/2 -translate-x-1/2 top-full mt-3 bg-secondary-500 text-primary-950 px-3 py-0.5 rounded-full text-[10px] font-black shadow-md">1</div>
         </div>
 
-        {/* CONNECTOR LINES (SVG) dengan Label N di garis horizontal */}
-        <div className="erd-lines-container">
-            <svg preserveAspectRatio="none">
-                <line x1="50%" y1="0" x2="50%" y2="50%" className="line-stroke" />
-                <line x1="16.6%" y1="50%" x2="83.4%" y2="50%" className="line-stroke" />
-                <line x1="16.6%" y1="50%" x2="16.6%" y2="100%" className="line-stroke" />
-                <line x1="50%" y1="50%" x2="50%" y2="100%" className="line-stroke" />
-                <line x1="83.4%" y1="50%" x2="83.4%" y2="100%" className="line-stroke" />
+        {/* CONNECTOR LINES (SVG) */}
+        <div className="w-full h-32 relative -mt-1 z-10">
+            <svg viewBox="0 0 1000 120" className="w-full h-full preserve-3d">
+                <path 
+                  d="M 500 0 L 500 60 M 500 60 L 166 60 L 166 120 M 500 60 L 500 120 M 500 60 L 834 60 L 834 120" 
+                  fill="none" 
+                  stroke="#cbd5e1" 
+                  strokeWidth="3" 
+                  strokeDasharray="8 4"
+                />
             </svg>
             
-            {/* Label N di garis HORIZONTAL - INI YANG DIPERBAIKI */}
-            <div className="connector-label label-n-left">N</div>
-            <div className="connector-label label-n-center">N</div>
-            <div className="connector-label label-n-right">N</div>
+            {/* Label N (Many) */}
+            <div className="absolute bottom-2 left-[16.6%] -translate-x-1/2 bg-white text-primary-700 px-2 py-0.5 rounded border border-primary-200 text-[10px] font-black shadow-sm">N</div>
+            <div className="absolute bottom-2 left-[50%] -translate-x-1/2 bg-white text-primary-700 px-2 py-0.5 rounded border border-primary-200 text-[10px] font-black shadow-sm">N</div>
+            <div className="absolute bottom-2 left-[83.4%] -translate-x-1/2 bg-white text-primary-700 px-2 py-0.5 rounded border border-primary-200 text-[10px] font-black shadow-sm">N</div>
         </div>
 
-        {/* LEVEL 2: CHILDREN (GRID 3 KOLOM) */}
-        <div className="erd-level-2-grid">
-            
-            <div className="erd-child-wrapper">
-                <EntityCard entity={asetEntity} />
-            </div>
-
-            <div className="erd-child-wrapper">
-                <EntityCard entity={observasiEntity} />
-            </div>
-
-            <div className="erd-child-wrapper">
-                <EntityCard entity={produkEntity} />
-            </div>
-
+        {/* LEVEL 2: CHILDREN */}
+        <div className="flex flex-row justify-between w-full gap-4 relative z-20">
+            {[findEntity('aset'), findEntity('observasi'), findEntity('produk')].map((ent, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center">
+                <div className="w-3 h-3 bg-primary-700 rounded-full mb-[-6px] z-20 border-2 border-white shadow-sm"></div>
+                <EntityCard entity={ent} />
+              </div>
+            ))}
         </div>
-
       </div>
 
-      <div className="erd-legend">
-        <h4>Keterangan:</h4>
-        <ul>
-          <li><b>Pegawai → Aset (1:N):</b> Satu teknisi memelihara banyak alat.</li>
-          <li><b>Pegawai → Observasi (1:N):</b> Satu observer melakukan banyak pengamatan.</li>
-          <li><b>Pegawai → Produk (1:N):</b> Satu forecaster menerbitkan banyak produk info.</li>
-        </ul>
+      {/* Legend / Keterangan */}
+      
+      <div className="mt-20 w-full max-w-4xl bg-primary-50 rounded-[2.5rem] border border-primary-100 p-8 shadow-inner">
+        <h4 className="text-primary-800 font-black uppercase tracking-[0.2em] text-[10px] mb-6 text-center italic flex items-center justify-center gap-2">
+           Analisis Relasi Kardinalitas Data
+        </h4>
+        <div className="grid md:grid-cols-3 gap-4">
+          {[
+            {label: 'Pegawai - Aset', desc: 'Satu Teknisi memelihara banyak Alat Meteorologi.'},
+            {label: 'Pegawai - Observasi', desc: 'Satu Observer melakukan banyak pengamatan rutin.'},
+            {label: 'Pegawai - Produk', desc: 'Satu Forecaster menerbitkan banyak Produk Informasi.'}
+          ].map((item, i) => (
+            <div key={i} className="bg-white p-5 rounded-2xl border border-primary-100 shadow-sm flex flex-col gap-2">
+              <span className="w-fit bg-secondary-500 px-2 py-0.5 rounded text-primary-950 font-black text-[9px]">1:N RELATION</span>
+              <p className="text-primary-950 text-[11px] font-bold uppercase leading-tight">{item.desc}</p>
+            </div>
+          ))}
+        </div>
       </div>
-
     </div>
   );
 };

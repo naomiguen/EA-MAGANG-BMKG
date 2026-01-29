@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { Loader2, AlertCircle, ZoomIn, ZoomOut, RefreshCw, X, Info, Activity } from "lucide-react";
 import petaKonsepSvg from '../assets/communicationDiagram.drawio.svg?raw';
 
 const DiagramArsitektur = () => {
@@ -17,30 +19,21 @@ const DiagramArsitektur = () => {
       setLoading(true);
       setError(null);
 
-      const { data: apps, error: appsError } = await supabase
-        .from('application_details')
-        .select('*');
+      const [appsRes, fieldsRes] = await Promise.all([
+        supabase.from('application_details').select('*'),
+        supabase.from('application_detail_fields').select('*').order('display_order')
+      ]);
 
-      if (appsError) throw appsError;
-
-      const { data: fields, error: fieldsError } = await supabase
-        .from('application_detail_fields')
-        .select('*')
-        .order('display_order');
-
-      if (fieldsError) throw fieldsError;
+      if (appsRes.error) throw appsRes.error;
+      if (fieldsRes.error) throw fieldsRes.error;
 
       const transformedData = {};
-      
-      apps.forEach(app => {
-        const appFields = fields.filter(f => f.app_id === app.id);
-        
+      appsRes.data.forEach(app => {
+        const appFields = fieldsRes.data.filter(f => f.app_id === app.id);
         const details = {};
         appFields.forEach(field => {
           if (field.field_type === 'list') {
-            if (!details[field.field_name]) {
-              details[field.field_name] = [];
-            }
+            if (!details[field.field_name]) details[field.field_name] = [];
             details[field.field_name].push(field.field_value);
           } else {
             details[field.field_name] = field.field_value;
@@ -58,7 +51,6 @@ const DiagramArsitektur = () => {
 
       setAppDetails(transformedData);
     } catch (err) {
-      console.error('Error fetching app details:', err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -72,224 +64,193 @@ const DiagramArsitektur = () => {
     
     while (current && attempts < 10) {
       const id = current.getAttribute ? (current.getAttribute('data-cell-id') || current.id) : null;
-      
       if (id && appDetails[id]) {
         foundId = id;
-        console.log("Klik terdeteksi pada:", foundId);
         break; 
       }
-      
       if (current.id === 'svg-wrapper') break;
-      
       current = current.parentNode;
       attempts++;
     }
 
-    if (foundId) {
-      setSelectedApp(appDetails[foundId]);
-    }
+    if (foundId) setSelectedApp(appDetails[foundId]);
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-800 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading diagram...</p>
-        </div>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-white text-primary-600">
+        <Loader2 className="w-12 h-12 animate-spin mb-4" />
+        <p className="font-black uppercase tracking-widest text-center">Sinkronisasi Diagram Komunikasi...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md w-full">
-          <h3 className="text-red-800 font-bold mb-2">Error Loading Data</h3>
-          <p className="text-red-600 text-sm mb-4">{error}</p>
-          <button
-            onClick={fetchAppDetails}
-            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
-          >
-            Retry
-          </button>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-white p-8">
+        <div className="bg-red-50 border border-red-100 rounded-[2rem] p-8 max-w-md text-center">
+          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h3 className="text-red-800 font-black uppercase mb-2">Gagal Memuat Diagram</h3>
+          <p className="text-red-600 text-sm mb-6">{error}</p>
+          <button onClick={fetchAppDetails} className="bg-primary-600 text-white px-8 py-3 rounded-2xl font-bold hover:bg-primary-700 transition-all shadow-lg uppercase text-xs">Coba Lagi</button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans p-4 sm:p-8">
+    <div className="min-h-screen bg-white py-12 px-4 md:px-12 font-sans flex flex-col items-center">
       
-      <div className="text-center mb-6 sm:mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-2 tracking-tight">
+      {/* 1. Header Section - CENTERED */}
+      <div className="w-full max-w-5xl text-center mb-16 border-b-4 border-secondary-500 pb-10">
+        <h1 className="text-3xl md:text-5xl font-black text-primary-700 mb-4 uppercase tracking-tighter leading-tight">
           Application Communication Diagram
         </h1>
-        <p className="text-gray-600 text-sm sm:text-base">Klik pada kotak sistem untuk melihat detail.</p>
-        <button
-          onClick={fetchAppDetails}
-          className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
-        >
-          Refresh Data
-        </button>
+        <p className="text-primary-800 text-lg md:text-xl font-bold flex items-center justify-center gap-2 italic">
+          <Activity size={20} className="text-secondary-600 flex-shrink-0" />
+          Arsitektur Interaksi dan Aliran Data antar Sistem Informasi
+        </p>
       </div>
 
-      <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 sm:p-6 overflow-auto">
-        <div 
-          id="svg-wrapper"
-          className="w-full max-w-6xl mx-auto flex justify-center cursor-pointer"
-          onClick={handleDiagramClick}
-          dangerouslySetInnerHTML={{ __html: petaKonsepSvg }} 
-        />
+      {/* 2. Interactive Diagram Area */}
+      
+      <div className="max-w-6xl w-full bg-white rounded-[2.5rem] shadow-2xl border border-primary-100 overflow-hidden relative group">
+        <TransformWrapper initialScale={1} centerOnInit={true} minScale={0.5} maxScale={3}>
+          {({ zoomIn, zoomOut, resetTransform }) => (
+            <>
+              {/* Floating Zoom Controls */}
+              <div className="absolute top-24 right-6 z-20 flex flex-col gap-3 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-xl border border-primary-100">
+                <button onClick={() => zoomIn()} className="p-2 hover:bg-primary-100 text-primary-700 rounded-xl transition-colors"><ZoomIn size={24}/></button>
+                <button onClick={() => zoomOut()} className="p-2 hover:bg-primary-100 text-primary-700 rounded-xl transition-colors"><ZoomOut size={24}/></button>
+                <button onClick={() => resetTransform()} className="p-2 hover:bg-primary-100 text-primary-700 rounded-xl transition-colors"><RefreshCw size={24}/></button>
+              </div>
+
+              {/* Diagram Header Meta */}
+              <div className="bg-primary-700 px-8 py-5 flex justify-between items-center text-white border-b-4 border-secondary-500 relative z-10">
+                <div className="flex items-center gap-3 text-sm font-black uppercase tracking-widest text-secondary-100">
+                  <div className="w-2.5 h-2.5 bg-secondary-500 rounded-full animate-pulse"></div>
+                  Interactive Architecture View
+                </div>
+                <div className="hidden sm:block text-[10px] font-black uppercase tracking-widest bg-primary-800 px-4 py-2 rounded-xl border border-primary-600">
+                  Click on blocks for technical details
+                </div>
+              </div>
+
+              <div className="h-[70vh] bg-slate-50/50 cursor-grab active:cursor-grabbing relative flex items-center justify-center">
+                <TransformComponent wrapperStyle={{ width: "100%", height: "100%" }}>
+                  <div 
+                    id="svg-wrapper"
+                    className="flex justify-center items-center w-[1200px] p-12 transition-all"
+                    onClick={handleDiagramClick}
+                    dangerouslySetInnerHTML={{ __html: petaKonsepSvg }} 
+                  />
+                </TransformComponent>
+              </div>
+            </>
+          )}
+        </TransformWrapper>
       </div>
 
+      {/* 3. Modal Detail Section */}
       {selectedApp && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" 
-          onClick={() => setSelectedApp(null)}
-        >
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-primary-950/40 backdrop-blur-md p-4 animate-in fade-in duration-300" onClick={() => setSelectedApp(null)}>
           <div 
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden animate-[slideUp_0.3s_ease-out]" 
+            className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-3xl overflow-hidden border border-primary-100 animate-in zoom-in-95 duration-300" 
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Modal Header */}
             <div 
-              className="p-4 sm:p-6 text-white flex justify-between items-start"
+              className="p-8 text-white flex justify-between items-start border-b-4 border-secondary-500"
               style={{ backgroundColor: selectedApp.color }}
             >
               <div className="flex-1">
-                <span className="inline-block px-2 py-1 bg-white/20 rounded text-xs font-bold uppercase tracking-wider mb-2">
+                <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-[10px] font-black uppercase tracking-widest mb-3 border border-white/30 shadow-sm">
                   {selectedApp.type}
                 </span>
-                <h2 className="text-xl sm:text-2xl font-bold leading-tight">
+                <h2 className="text-2xl sm:text-3xl font-black leading-tight uppercase tracking-tighter">
                   {selectedApp.title}
                 </h2>
               </div>
               <button 
                 onClick={() => setSelectedApp(null)}
-                className="text-white/80 hover:text-white hover:bg-white/20 rounded-full p-2 ml-2 transition-colors flex-shrink-0"
+                className="bg-white/10 hover:bg-white/20 rounded-2xl p-2 transition-all"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <X size={24} />
               </button>
             </div>
 
-            <div className="p-4 sm:p-6 max-h-[60vh] overflow-y-auto">
-              <p className="text-gray-700 text-sm sm:text-base mb-6 leading-relaxed border-b pb-4">
-                {selectedApp.desc}
-              </p>
+            {/* Modal Content */}
+            <div className="p-8 max-h-[60vh] overflow-y-auto space-y-8 bg-slate-50/30">
+              <div className="text-center flex flex-col items-center border-b border-primary-100 pb-8">
+                <h4 className="text-[10px] font-black text-primary-400 uppercase tracking-[0.2em] mb-3">Deskripsi Sistem</h4>
+                <p className="text-primary-900 text-lg leading-relaxed font-bold italic max-w-2xl">
+                  "{selectedApp.desc}"
+                </p>
+              </div>
 
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {selectedApp.details.fungsi && (
-                  <div className="bg-slate-50 p-4 rounded-lg border-l-4 border-slate-400">
-                    <h3 className="font-bold text-slate-800 text-xs sm:text-sm uppercase mb-2">Fungsi Utama</h3>
-                    <p className="text-slate-700 text-sm">{selectedApp.details.fungsi}</p>
+                  <div className="bg-white p-6 rounded-3xl border border-primary-100 shadow-sm">
+                    <h3 className="font-black text-primary-800 text-xs uppercase tracking-widest mb-3 border-b border-primary-50 pb-2">Fungsi Utama</h3>
+                    <p className="text-primary-900/70 text-sm font-medium leading-relaxed">{selectedApp.details.fungsi}</p>
                   </div>
                 )}
 
                 {(selectedApp.details.dataYangDisediakan || selectedApp.details.outputYangDiterima) && (
-                  <div>
-                    <h3 className="font-bold text-gray-800 text-xs sm:text-sm uppercase mb-3">
+                  <div className="bg-white p-6 rounded-3xl border border-primary-100 shadow-sm">
+                    <h3 className="font-black text-primary-800 text-xs uppercase tracking-widest mb-3 border-b border-primary-50 pb-2">
                       {selectedApp.details.dataYangDisediakan ? "Data & Informasi" : "Output Sistem"}
                     </h3>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <ul className="space-y-2">
                       {(selectedApp.details.dataYangDisediakan || selectedApp.details.outputYangDiterima).map((item, idx) => (
-                        <li key={idx} className="flex items-start text-sm text-gray-600 bg-gray-50 p-2 rounded">
-                          <span className="mr-2 text-blue-500 font-bold">•</span>
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                
-                {selectedApp.details.fiturUtama && (
-                  <div>
-                    <h3 className="font-bold text-gray-800 text-xs sm:text-sm uppercase mb-3">Fitur Unggulan</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedApp.details.fiturUtama.map((item, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-purple-100 text-purple-800 text-xs font-semibold rounded-full border border-purple-200">
+                        <li key={idx} className="flex items-center text-sm font-bold text-primary-700/80 uppercase tracking-tight">
+                          <div className="w-1.5 h-1.5 bg-secondary-500 rounded-full mr-3 shrink-0" />
                           {item}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {selectedApp.details.alasanIntegrasi && (
-                  <div>
-                    <h3 className="font-bold text-gray-800 text-xs sm:text-sm uppercase mb-3">Alasan Integrasi</h3>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {selectedApp.details.alasanIntegrasi.map((item, idx) => (
-                        <li key={idx} className="flex items-start text-sm text-gray-600 bg-gray-50 p-2 rounded">
-                          <span className="mr-2 text-blue-500 font-bold">•</span>
-                          <span>{item}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 )}
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                  {selectedApp.details.metodeAkses && (
-                    <div className="bg-blue-50 p-3 rounded-lg border-l-2 border-blue-400">
-                      <div className="font-semibold text-blue-900 text-xs uppercase mb-1">Metode Akses</div>
-                      <div className="text-blue-700 text-sm">{selectedApp.details.metodeAkses}</div>
-                    </div>
-                  )}
-                  {selectedApp.details.frekuensiUpdate && (
-                    <div className="bg-green-50 p-3 rounded-lg border-l-2 border-green-400">
-                      <div className="font-semibold text-green-900 text-xs uppercase mb-1">Frekuensi Update</div>
-                      <div className="text-green-700 text-sm">{selectedApp.details.frekuensiUpdate}</div>
-                    </div>
-                  )}
-                  {selectedApp.details.target && (
-                    <div className="bg-indigo-50 p-3 rounded-lg border-l-2 border-indigo-400">
-                      <div className="font-semibold text-indigo-900 text-xs uppercase mb-1">Target Pengguna</div>
-                      <div className="text-indigo-700 text-sm">{selectedApp.details.target}</div>
-                    </div>
-                  )}
-                  {selectedApp.details.metodeIntegrasi && (
-                    <div className="bg-orange-50 p-3 rounded-lg border-l-2 border-orange-400">
-                      <div className="font-semibold text-orange-900 text-xs uppercase mb-1">Metode Integrasi</div>
-                      <div className="text-orange-700 text-sm">{selectedApp.details.metodeIntegrasi}</div>
-                    </div>
-                  )}
-                  {selectedApp.details.statusPenggunaan && (
-                    <div className="bg-amber-50 p-3 rounded-lg border-l-2 border-amber-400">
-                      <div className="font-semibold text-amber-900 text-xs uppercase mb-1">Status</div>
-                      <div className="text-amber-700 text-sm">{selectedApp.details.statusPenggunaan}</div>
-                    </div>
-                  )}
-                  {selectedApp.details.audiensTarget && (
-                    <div className="bg-teal-50 p-3 rounded-lg border-l-2 border-teal-400">
-                      <div className="font-semibold text-teal-900 text-xs uppercase mb-1">Audiens</div>
-                      <div className="text-teal-700 text-sm">{selectedApp.details.audiensTarget}</div>
-                    </div>
-                  )}
-                  {selectedApp.details.teknologi && (
-                    <div className="bg-purple-50 p-3 rounded-lg border-l-2 border-purple-400">
-                      <div className="font-semibold text-purple-900 text-xs uppercase mb-1">Teknologi</div>
-                      <div className="text-purple-700 text-sm">{selectedApp.details.teknologi}</div>
-                    </div>
-                  )}
-                </div>
               </div>
+
+              {/* Technical Badges Section */}
+              <div className="flex flex-wrap gap-4 justify-center pt-4">
+                {selectedApp.details.metodeAkses && (
+                  <div className="bg-primary-50 px-5 py-2 rounded-2xl border border-primary-100 flex flex-col items-center">
+                    <span className="text-[9px] font-black text-primary-400 uppercase tracking-widest">Akses</span>
+                    <span className="text-xs font-black text-primary-700">{selectedApp.details.metodeAkses}</span>
+                  </div>
+                )}
+                {selectedApp.details.frekuensiUpdate && (
+                  <div className="bg-emerald-50 px-5 py-2 rounded-2xl border border-emerald-100 flex flex-col items-center">
+                    <span className="text-[9px] font-black text-emerald-400 uppercase tracking-widest">Update</span>
+                    <span className="text-xs font-black text-emerald-700">{selectedApp.details.frekuensiUpdate}</span>
+                  </div>
+                )}
+                {selectedApp.details.teknologi && (
+                  <div className="bg-purple-50 px-5 py-2 rounded-2xl border border-purple-100 flex flex-col items-center">
+                    <span className="text-[9px] font-black text-purple-400 uppercase tracking-widest">Stack</span>
+                    <span className="text-xs font-black text-purple-700">{selectedApp.details.teknologi}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            <div className="bg-primary-50 p-4 text-center border-t border-primary-100">
+               <p className="text-primary-300 font-black uppercase tracking-[0.4em] text-[9px]">
+                  Communication Architecture Detail v1.0
+               </p>
             </div>
           </div>
         </div>
       )}
 
+      {/* Global Style for SVG Interactions */}
       <style>{`
-        @keyframes slideUp {
-          from { 
-            opacity: 0; 
-            transform: translateY(20px); 
-          }
-          to { 
-            opacity: 1; 
-            transform: translateY(0); 
-          }
+        #svg-wrapper [id], #svg-wrapper [data-cell-id] { cursor: pointer !important; transition: all 0.3s ease; }
+        #svg-wrapper [id]:hover, #svg-wrapper [data-cell-id]:hover { 
+          filter: brightness(1.1) drop-shadow(0 0 8px rgba(0,70,127,0.3));
+          transform: translateY(-2px);
         }
       `}</style>
     </div>

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../lib/supabaseClient";
+import { Loader2, AlertCircle, Check, Info, LayoutGrid } from "lucide-react";
+import { motion } from "framer-motion";
 
 const AppBusinessProcessMatrixPage = () => {
   const [processes, setProcesses] = useState([]);
@@ -7,7 +9,6 @@ const AppBusinessProcessMatrixPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch data dari Supabase
   useEffect(() => {
     fetchData();
   }, []);
@@ -17,158 +18,116 @@ const AppBusinessProcessMatrixPage = () => {
       setLoading(true);
       setError(null);
 
-      // Fetch business processes (sorted)
-      const { data: processesData, error: processesError } = await supabase
-        .from('business_processes')
-        .select('*')
-        .order('sort_order');
+      const [processesRes, appsRes, mappingRes] = await Promise.all([
+        supabase.from('business_processes').select('*').order('sort_order'),
+        supabase.from('appbusinessprocessmatrix').select('*').order('name'),
+        supabase.from('app_process_mapping').select('application_id, process_id')
+      ]);
 
-      if (processesError) throw processesError;
+      if (processesRes.error) throw processesRes.error;
+      if (appsRes.error) throw appsRes.error;
+      if (mappingRes.error) throw mappingRes.error;
 
-      // Fetch applications
-      const { data: appsData, error: appsError } = await supabase
-        .from('appbusinessprocessmatrix')
-        .select('*')
-        .order('name');
-
-      if (appsError) throw appsError;
-
-      // Fetch app-process mapping
-      const { data: mappingData, error: mappingError } = await supabase
-        .from('app_process_mapping')
-        .select('application_id, process_id');
-
-      if (mappingError) throw mappingError;
-
-      // Transform data untuk aplikasi dengan proses mapping
-      const transformedApps = appsData.map(app => {
+      const transformedApps = appsRes.data.map(app => {
         const processMapping = {};
-        
-        processesData.forEach(process => {
-          const hasMapping = mappingData.some(
+        processesRes.data.forEach(process => {
+          processMapping[process.name] = mappingRes.data.some(
             m => m.application_id === app.id && m.process_id === process.id
           );
-          processMapping[process.name] = hasMapping;
         });
-
-        return {
-          id: app.id,
-          name: app.name,
-          processes: processMapping
-        };
+        return { id: app.id, name: app.name, processes: processMapping };
       });
 
-      setProcesses(processesData.map(p => p.name));
+      setProcesses(processesRes.data.map(p => p.name));
       setApplications(transformedApps);
-      setLoading(false);
     } catch (err) {
-      console.error('Error fetching data:', err);
+      console.error('Error fetching matrix data:', err);
       setError(err.message);
+    } finally {
       setLoading(false);
     }
   };
 
-  // Komponen Checkmark
-  const CheckmarkImage = () => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="w-5 h-5 mx-auto text-gray-800"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="3"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polyline points="20 6 9 17 4 12"></polyline>
-    </svg>
-  );
-
-  // Loading state
   if (loading) {
     return (
-      <div className="p-6 bg-gray-50 min-h-screen flex justify-center items-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading data...</p>
-        </div>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-white text-primary-600">
+        <Loader2 className="w-12 h-12 animate-spin mb-4" />
+        <p className="font-black uppercase tracking-widest text-center">Sinkronisasi Matriks Sistem...</p>
       </div>
     );
   }
 
-  // Error state
   if (error) {
     return (
-      <div className="p-6 bg-gray-50 min-h-screen flex justify-center items-center">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
-          <h3 className="text-red-800 font-bold mb-2">Error Loading Data</h3>
-          <p className="text-red-600 text-sm mb-4">{error}</p>
-          <button
-            onClick={fetchData}
-            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
-          >
-            Retry
+      <div className="flex flex-col items-center justify-center min-h-screen bg-white p-8">
+        <div className="bg-red-50 border border-red-100 rounded-[2rem] p-8 max-w-md text-center">
+          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h3 className="text-red-800 font-black uppercase mb-2">Gagal Memuat Matriks</h3>
+          <p className="text-red-600 text-sm mb-6">{error}</p>
+          <button onClick={fetchData} className="bg-primary-600 text-white px-8 py-3 rounded-2xl font-bold hover:bg-primary-700 transition-all shadow-lg mx-auto uppercase text-xs tracking-widest">
+            Coba Lagi
           </button>
         </div>
       </div>
     );
   }
 
-  // Main render
   return (
-    <div className="p-6 bg-gray-50 min-h-screen flex justify-center">
-      <div className="w-full max-w-7xl">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">
-            Matriks Aplikasi & Proses Bisnis
-          </h2>
-          <button
-            onClick={fetchData}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-sm"
-          >
-            Refresh Data
-          </button>
-        </div>
+    <div className="min-h-screen bg-white font-sans flex flex-col items-center p-4 md:p-12">
+      
+      {/* 1. Header Section - CENTERED & CLEAN */}
+      <div className="w-full max-w-6xl flex flex-col items-center mb-16 border-b-4 border-secondary-500 pb-12">
+        <h1 className="text-3xl md:text-5xl font-black text-primary-700 mb-4 uppercase tracking-tighter leading-tight text-center">
+          App - Business Process Matrix
+        </h1>
+        <p className="text-primary-800 text-lg md:text-xl font-bold flex items-center justify-center gap-2 italic text-center">
+          <Info size={20} className="text-secondary-600 flex-shrink-0" />
+          Pemetaan dukungan sistem aplikasi terhadap alur proses bisnis operasional.
+        </p>
+      </div>
 
-        <div className="overflow-x-auto shadow-md sm:rounded-lg border border-gray-200 bg-white">
-          <table className="w-full text-sm text-left text-gray-500">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-100 border-b border-gray-200">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-4 font-bold text-gray-900 sticky left-0 bg-gray-100 z-10 shadow-sm border-r border-gray-200 whitespace-nowrap"
-                >
+      {/* 2. Matrix Table Section */}
+      <div className="w-full max-w-[1400px] bg-white rounded-[2.5rem] shadow-2xl border border-primary-100 overflow-hidden mb-12">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-primary-700 text-white border-b-4 border-secondary-500">
+                <th className="sticky left-0 z-20 bg-primary-800 px-8 py-6 text-xs font-black uppercase tracking-widest text-center border-r border-primary-600 min-w-[280px] shadow-md">
                   Application \ Process
                 </th>
                 {processes.map((proc) => (
-                  <th
-                    key={proc}
-                    scope="col"
-                    className="px-4 py-3 text-center min-w-[200px] border-r border-gray-300 whitespace-nowrap"
-                  >
+                  <th key={proc} className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-center border-r border-primary-600 min-w-[200px] whitespace-normal leading-relaxed">
                     {proc}
                   </th>
                 ))}
               </tr>
             </thead>
-
-            <tbody className="divide-y divide-gray-200">
+            <tbody className="divide-y divide-primary-50">
               {applications.map((app) => (
-                <tr key={app.id} className="bg-white hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap sticky left-0 bg-white hover:bg-gray-50 z-10 border-r border-gray-100 shadow-sm">
+                <tr key={app.id} className="hover:bg-primary-50/30 transition-colors group">
+                  <td className="sticky left-0 z-10 bg-white group-hover:bg-primary-50 px-8 py-6 border-r border-primary-100 shadow-sm font-black text-primary-900 uppercase tracking-tight text-sm text-center leading-tight">
                     {app.name}
                   </td>
-
                   {processes.map((proc) => {
                     const isChecked = app.processes[proc] === true;
                     return (
                       <td
                         key={`${app.id}-${proc}`}
-                        className={`px-4 py-4 text-center border-r border-gray-200 last:border-r-0 ${
-                          isChecked ? "bg-green-100" : "bg-white"
+                        className={`px-4 py-4 text-center border-r border-primary-50 last:border-r-0 transition-all ${
+                          isChecked ? "bg-secondary-500/10" : ""
                         }`}
                       >
-                        {isChecked ? <CheckmarkImage /> : null}
+                        {isChecked ? (
+                          <motion.div 
+                            initial={{ scale: 0 }} 
+                            animate={{ scale: 1 }}
+                            className="bg-secondary-500 text-primary-950 w-8 h-8 rounded-xl flex items-center justify-center mx-auto shadow-md shadow-secondary-500/20"
+                          >
+                            <Check size={20} strokeWidth={4} />
+                          </motion.div>
+                        ) : (
+                          <span className="text-primary-100 opacity-20 text-xs">•</span>
+                        )}
                       </td>
                     );
                   })}
@@ -177,11 +136,39 @@ const AppBusinessProcessMatrixPage = () => {
             </tbody>
           </table>
         </div>
+      </div>
 
-        <div className="mt-4 text-sm text-gray-500 text-center">
-          Total: {applications.length} aplikasi × {processes.length} proses bisnis
+      {/* 3. Legend & Footer - CENTERED */}
+      
+      <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-primary-50 p-6 rounded-[2rem] border border-primary-100 flex items-center gap-6 shadow-sm">
+          <div className="p-4 bg-white rounded-2xl text-primary-600 shadow-sm">
+            <LayoutGrid size={24} />
+          </div>
+          <div>
+            <span className="block font-black text-primary-900 uppercase tracking-widest text-[10px] mb-1">Matrix Scale</span>
+            <span className="text-xl font-black text-primary-700 leading-none">{applications.length} Apps × {processes.length} Processes</span>
+          </div>
+        </div>
+
+        <div className="bg-secondary-50 p-6 rounded-[2rem] border border-secondary-200 flex items-center gap-6 shadow-sm text-left">
+          <div className="p-4 bg-secondary-500 rounded-2xl text-primary-950 shadow-sm">
+            <Check size={24} strokeWidth={3} />
+          </div>
+          <div>
+            <span className="block font-black text-primary-950 uppercase tracking-widest text-[10px] mb-1">Functional Support</span>
+            <p className="text-primary-800 text-xs font-bold italic leading-tight">Sistem aplikasi secara langsung mendukung eksekusi fungsi bisnis.</p>
+          </div>
         </div>
       </div>
+
+      {/* Helper Hint */}
+      <div className="mt-12 text-center">
+         <p className="text-primary-300 font-bold uppercase tracking-[0.3em] text-[9px] animate-pulse">
+           EA Repository BMKG Balikpapan v2026
+         </p>
+      </div>
+
     </div>
   );
 };

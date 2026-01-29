@@ -1,151 +1,124 @@
 import React from 'react';
+import { Info } from 'lucide-react';
 
 const ConceptualDiagramPage = () => {
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center py-12 px-4">
+    <div className="min-h-screen bg-white flex flex-col items-center py-12 px-4 font-sans">
       
-      <div className="text-center mb-12 max-w-4xl px-4">
-        <h1 className="text-3xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 leading-tight">
+      {/* 1. Header Section - CENTERED */}
+      <div className="text-center mb-16 max-w-5xl w-full border-b-4 border-secondary-500 pb-10">
+        <h1 className="text-3xl sm:text-5xl font-black text-primary-700 mb-4 uppercase tracking-tighter leading-tight">
           Conceptual Data Diagram
         </h1>
-        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
+        <p className="text-primary-800 text-lg md:text-xl font-bold flex items-center justify-center gap-2 italic">
+          <Info size={20} className="text-secondary-600 flex-shrink-0" />
           Gambaran hubungan konseptual antar entitas data utama di Stasiun Meteorologi.
         </p>
       </div>
 
-      {/* CANVAS DIAGRAM - Responsive Container */}
-      <div className="w-full max-w-6xl bg-white rounded-xl shadow-xl border border-slate-200 p-4 md:p-8">
+      {/* 2. CANVAS DIAGRAM - Responsive Container */}
+      <div className="w-full max-w-6xl bg-white rounded-[2.5rem] shadow-2xl border border-primary-100 p-6 md:p-12 relative overflow-hidden">
         
-        {/* SVG Container untuk diagram yang fully responsive */}
+        {/* Background Grid Decor (Tipis) */}
+        <div className="absolute inset-0 z-0 pointer-events-none opacity-5" 
+             style={{ backgroundImage: 'radial-gradient(#0064b5 1px, transparent 1px)', backgroundSize: '30px 30px' }}>
+        </div>
+
+        {/* SVG Diagram */}
         <svg 
           viewBox="0 0 1000 700" 
-          className="w-full h-auto"
+          className="relative z-10 w-full h-auto drop-shadow-xl"
           preserveAspectRatio="xMidYMid meet"
         >
-          {/* Define reusable components */}
-          <defs>
-            {/* Filter for shadows */}
-            <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
-              <feOffset dx="0" dy="2" result="offsetblur"/>
-              <feComponentTransfer>
-                <feFuncA type="linear" slope="0.2"/>
-              </feComponentTransfer>
-              <feMerge>
-                <feMergeNode/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-          </defs>
-
-          {/* --- GARIS PENGHUBUNG --- */}
-          <g stroke="#94a3b8" strokeWidth="2" fill="none">
-            {/* Personil ke Data Observasi (Atas ke Tengah) */}
-            <line x1="500" y1="100" x2="500" y2="300" />
-            
-            {/* Personil ke Peralatan (Kiri Bawah) */}
-            <line x1="450" y1="100" x2="200" y2="300" />
-
-            {/* Personil ke Data Administrasi (Kanan Bawah) */}
-            <line x1="550" y1="100" x2="800" y2="300" />
-            
-            {/* Peralatan ke Data Observasi */}
-            <line x1="250" y1="350" x2="400" y2="350" />
-            
-            {/* Data Observasi ke Produk Informasi */}
-            <line x1="500" y1="400" x2="500" y2="550" />
-            
-            {/* Produk Informasi ke Stakeholder */}
-            <line x1="600" y1="600" x2="750" y2="600" />
+          {/* Connector Lines dengan style modern */}
+          <g stroke="#cbd5e1" strokeWidth="3" fill="none" strokeDasharray="8 4">
+            <line x1="500" y1="130" x2="500" y2="310" />
+            <line x1="420" y1="100" x2="250" y2="310" />
+            <line x1="580" y1="100" x2="750" y2="310" />
+            <line x1="280" y1="350" x2="400" y2="350" strokeDasharray="0" stroke="#0064b5" strokeWidth="2"/>
+            <line x1="500" y1="390" x2="500" y2="560" strokeDasharray="0" stroke="#0064b5" strokeWidth="2"/>
+            <line x1="600" y1="600" x2="750" y2="600" strokeDasharray="0" stroke="#fbbf24" strokeWidth="3"/>
           </g>
 
-          {/* --- ENTITAS (BOXES) --- */}
-          
-          {/* 1. Sumber Daya Manusia (Atas Tengah) */}
-          <EntityBox x={500} y={50} title="Sumber Daya Manusia" />
-
-          {/* 2. Peralatan (Kiri Tengah) */}
-          <EntityBox x={150} y={350} title="Peralatan" />
-
-          {/* 3. Data Observasi (Tengah - Highlighted) */}
+          {/* Entitas (Boxes) */}
+          <EntityBox x={500} y={80} title="Sumber Daya Manusia" type="Actor" />
+          <EntityBox x={180} y={350} title="Peralatan" />
           <EntityBox x={500} y={350} title="Data Observasi" highlight={true} />
-
-          {/* 4. Data Administrasi (Kanan Tengah) */}
-          <EntityBox x={850} y={350} title="Data Administrasi" />
-
-          {/* 5. Produk Informasi (Bawah Tengah) */}
-          <EntityBox x={500} y={600} title="Produk Informasi" />
-
-          {/* 6. Stakeholder (Bawah Kanan) */}
-          <EntityBox x={850} y={600} title="Stakeholder" />
-
+          <EntityBox x={820} y={350} title="Data Administrasi" />
+          <EntityBox x={500} y={600} title="Produk Informasi" highlight={true} isGold={true} />
+          <EntityBox x={820} y={600} title="Stakeholder" type="External" />
         </svg>
-
       </div>
 
-      <div className="mt-8 text-center text-xs sm:text-sm text-slate-500 max-w-2xl px-4 leading-relaxed">
-        * Diagram ini menggunakan notasi konseptual sederhana untuk menunjukkan relasi bisnis antar entitas data utama.
+      {/* 3. Footer / Helper Hint */}
+      <div className="mt-12 text-center text-primary-400 font-bold uppercase tracking-[0.2em] text-[10px] max-w-2xl animate-pulse">
+        * Diagram ini menggunakan notasi konseptual arsitektur data enterprise BMKG Balikpapan
       </div>
 
     </div>
   );
 };
 
-// Komponen Kotak Entitas sebagai SVG Component
-const EntityBox = ({ x, y, title, highlight = false }) => {
-  const boxWidth = 180;
-  const boxHeight = 80;
-  const bgColor = highlight ? '#fefce8' : '#ffffff';
-  const borderColor = highlight ? '#facc15' : '#d1d5db';
+// Komponen Kotak Entitas SVG yang Diperbarui
+const EntityBox = ({ x, y, title, highlight = false, type = "DataEntity", isGold = false }) => {
+  const boxWidth = 200;
+  const boxHeight = 90;
+  
+  // Logic Warna berdasarkan status
+  const bgColor = isGold ? '#fefce8' : (highlight ? '#f0f7ff' : '#ffffff');
+  const borderColor = isGold ? '#fbbf24' : (highlight ? '#0064b5' : '#e2e8f0');
+  const textColor = isGold ? '#854d0e' : (highlight ? '#00467f' : '#1e293b');
   
   return (
-    <g transform={`translate(${x - boxWidth/2}, ${y - boxHeight/2})`}>
-      {/* Shadow */}
-      <rect
-        x="2"
-        y="2"
-        width={boxWidth}
-        height={boxHeight}
-        rx="6"
-        fill="#000"
-        opacity="0.1"
-      />
+    <g transform={`translate(${x - boxWidth/2}, ${y - boxHeight/2})`} className="transition-all duration-300">
+      {/* Outer Glow untuk Highlight */}
+      {highlight && (
+        <rect
+          x="-4" y="-4"
+          width={boxWidth + 8} height={boxHeight + 8}
+          rx="16" fill={borderColor} opacity="0.1"
+        />
+      )}
       
       {/* Main Box */}
       <rect
-        x="0"
-        y="0"
-        width={boxWidth}
-        height={boxHeight}
-        rx="6"
+        x="0" y="0"
+        width={boxWidth} height={boxHeight}
+        rx="12"
         fill={bgColor}
         stroke={borderColor}
-        strokeWidth="2"
+        strokeWidth={highlight ? "3" : "2"}
+        className="shadow-sm"
       />
       
-      {/* Stereotype text */}
+      {/* Label Tipe (Stereotype) */}
       <text
         x={boxWidth/2}
-        y="20"
+        y="25"
         textAnchor="middle"
-        fontSize="10"
-        fill="#6b7280"
-        fontStyle="italic"
+        fontSize="9"
+        fill={isGold ? '#b45309' : '#94a3b8'}
+        fontWeight="800"
+        className="uppercase tracking-[0.15em]"
       >
-        &lt;&lt;dDataEntity&gt;&gt;
+        «{type}»
       </text>
       
       {/* Title text */}
       <text
         x={boxWidth/2}
-        y="50"
+        y="55"
         textAnchor="middle"
-        fontSize="14"
-        fontWeight="bold"
-        fill="#1f2937"
+        fontSize="13"
+        fontWeight="900"
+        fill={textColor}
+        className="uppercase tracking-tight"
       >
         {title}
       </text>
+
+      {/* Decorative Line di bawah box */}
+      <line x1={boxWidth*0.3} y1={boxHeight-15} x2={boxWidth*0.7} y2={boxHeight-15} stroke={borderColor} strokeWidth="2" strokeLinecap="round" opacity="0.3" />
     </g>
   );
 };

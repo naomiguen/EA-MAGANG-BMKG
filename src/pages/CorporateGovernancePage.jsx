@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Scale, Globe, FileText, Users, GitBranch, X } from 'lucide-react';
+import { Scale, Globe, FileText, Users, GitBranch, X, ChevronRight, Loader2, Info } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 
 const CorporateGovernancePage = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [showBPMOptions, setShowBPMOptions] = useState(false);
-  const [showISOOptions, setShowISOOptions] = useState(false);
   const [documents, setDocuments] = useState([]);
   const [loadingDocs, setLoadingDocs] = useState(false);
 
-  // Data hardcode untuk tampilan awal - TIDAK PERLU SUPABASE
+  // Data disesuaikan dengan Branding BMKG
   const governanceData = [
     {
       id: 1,
       title: 'Regulasi & Kebijakan',
       subtitle: 'Legal Framework',
       icon: Scale,
-      color: 'bg-blue-100 text-blue-600',
-      description: 'Peraturan perundang-undangan dan kebijakan strategis yang mengatur operasional BMKG',
+      color: 'bg-primary-50 text-primary-600',
+      description: 'Peraturan perundang-undangan dan kebijakan strategis operasional BMKG.',
       type: 'documents'
     },
     {
@@ -25,18 +24,18 @@ const CorporateGovernancePage = () => {
       title: 'Kebijakan Mutu',
       subtitle: 'Quality Management',
       icon: Globe,
-      color: 'bg-green-100 text-green-600',
-      description: 'Dokumen kebijakan mutu, pedoman mutu, sasaran mutu, dan rencana mutu organisasi',
+      color: 'bg-primary-50 text-primary-600',
+      description: 'Dokumen kebijakan mutu, pedoman mutu, dan rencana mutu organisasi.',
       type: 'navigate',
       navigateTo: '/quality-policy'
     },
     {
       id: 3,
       title: 'SOP',
-      subtitle: 'Standard Operating Procedure',
+      subtitle: 'Operating Procedure',
       icon: FileText,
-      color: 'bg-purple-100 text-purple-600',
-      description: 'Standar Operasional Prosedur untuk berbagai aktivitas dan layanan',
+      color: 'bg-primary-50 text-primary-600',
+      description: 'Standar Operasional Prosedur untuk berbagai aktivitas teknis dan layanan.',
       type: 'navigate',
       navigateTo: '/sop-list'
     },
@@ -45,8 +44,8 @@ const CorporateGovernancePage = () => {
       title: 'Business Process Map',
       subtitle: 'Process Architecture',
       icon: GitBranch,
-      color: 'bg-purple-100 text-purple-600',
-      description: 'Peta proses bisnis level 0, 1, dan 2 organisasi BMKG',
+      color: 'bg-primary-50 text-primary-600',
+      description: 'Peta proses bisnis level 0, 1, dan 2 organisasi BMKG.',
       type: 'bpm'
     },
     {
@@ -54,8 +53,8 @@ const CorporateGovernancePage = () => {
       title: 'Struktur Organisasi',
       subtitle: 'Organization Structure',
       icon: Users,
-      color: 'bg-orange-100 text-orange-600',
-      description: 'Struktur dan tata kelola organisasi BMKG Balikpapan',
+      color: 'bg-primary-50 text-primary-600',
+      description: 'Struktur dan tata kelola organisasi resmi BMKG Balikpapan.',
       type: 'navigate',
       navigateTo: '/vision/organization'
     }
@@ -64,67 +63,41 @@ const CorporateGovernancePage = () => {
   const bpmOptions = [
     {
       id: 1,
-      title: 'Peta Konsep',
-      description: 'Peta proses bisnis tingkat enterprise',
+      title: 'Peta Konsep Enterprise',
+      description: 'Peta proses bisnis tingkat strategis organisasi.',
       route: '/business-process/peta-konsep',
-      icon: '🗺️'
+      icon: '🌐'
     },
     {
       id: 2,
       title: 'Peta Konsep Level 0',
-      description: 'Kelompok proses bisnis utama',
+      description: 'Kelompok proses bisnis utama (Core Business).',
       route: '/business-process/level-0',
       icon: '📊'
     },
     {
       id: 3,
-      title: 'Peta Konsep level0-1',
-      description: 'Proses bisnis detail dan sub-proses',
+      title: 'Peta Konsep Level 0-1',
+      description: 'Detail sub-proses dan aktivitas operasional.',
       route: '/business-process/level-01',
       icon: '🔍'
     }
   ];
 
-  const isoOptions = [
-    {
-      id: 1,
-      title: 'Kebijakan Mutu',
-      description: 'Dokumen kebijakan mutu dan quality management system',
-      route: '/quality-policy',
-      icon: '⭐'
-    }
-  ];
-
   const handleCardClick = async (item) => {
-    console.log('Card clicked:', item);
-    
-    // Cek BPM
     if (item.type === 'bpm') {
-      console.log('Opening BPM options');
       setShowBPMOptions(true);
       return;
     }
 
-    // Cek ISO (sudah tidak dipakai karena langsung navigate)
-    if (item.type === 'iso') {
-      console.log('Opening ISO options');
-      setShowISOOptions(true);
-      return;
-    }
-    
-    // Cek Navigate
     if (item.type === 'navigate') {
-      console.log('Navigating to:', item.navigateTo);
       window.location.href = item.navigateTo;
       return;
     }
     
-    // Fetch dokumen dari Supabase
     if (item.type === 'documents') {
-      console.log('Fetching documents for category:', item.id);
       setSelectedItem(item);
       setLoadingDocs(true);
-      
       try {
         const { data, error } = await supabase
           .from('governance_documents')
@@ -135,7 +108,7 @@ const CorporateGovernancePage = () => {
         if (error) throw error;
         setDocuments(data || []);
       } catch (error) {
-        console.error('Error fetching documents:', error);
+        console.error('Error:', error);
         setDocuments([]);
       } finally {
         setLoadingDocs(false);
@@ -144,32 +117,37 @@ const CorporateGovernancePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans p-6 md:p-12">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-blue-900 mb-3">Corporate Governance</h1>
-        <p className="text-gray-600 max-w-2xl mx-auto">
-          Repository Dokumen Standar, Regulasi, dan Struktur Organisasi BMKG Balikpapan.
+    <div className="min-h-screen bg-white font-sans p-4 md:p-12 flex flex-col items-center">
+      
+      {/* Header Section - CENTERED */}
+      <div className="w-full max-w-5xl text-center mb-16 border-b-4 border-secondary-500 pb-10">
+        <h1 className="text-3xl md:text-5xl font-black text-primary-700 mb-4 uppercase tracking-tighter leading-tight">
+          Corporate Governance
+        </h1>
+        <p className="text-primary-800 text-lg font-bold flex items-center justify-center gap-2 italic">
+          <Info size={20} className="text-secondary-600 flex-shrink-0" />
+          Repository Dokumen Standar, Regulasi, dan Struktur Tata Kelola BMKG Balikpapan.
         </p>
       </div>
 
-      {/* CARD GRID - TAMPILAN AWAL */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+      {/* CARD GRID - 5 Columns for Desktop */}
+      <div className="max-w-[1400px] w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
         {governanceData.map((item) => (
           <div 
             key={item.id}
             onClick={() => handleCardClick(item)}
-            className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
+            className="bg-white rounded-[2rem] border-2 border-primary-50 p-8 cursor-pointer hover:shadow-2xl hover:border-primary-100 hover:-translate-y-2 transition-all duration-300 group flex flex-col items-center text-center shadow-lg shadow-primary-50/50"
           >
-            <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${item.color}`}>
-              <item.icon size={24} />
+            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110 ${item.color}`}>
+              <item.icon size={32} />
             </div>
-            <h3 className="text-lg font-bold text-gray-800 mb-1 group-hover:text-blue-700">
+            <h3 className="text-xl font-black text-primary-900 mb-2 uppercase tracking-tight leading-tight">
               {item.title}
             </h3>
-            <p className="text-xs font-semibold text-blue-500 mb-3 uppercase tracking-wide">
+            <p className="text-xs font-black text-secondary-600 mb-4 uppercase tracking-[0.2em]">
               {item.subtitle}
             </p>
-            <p className="text-gray-500 text-xs leading-relaxed">
+            <p className="text-primary-800/70 text-sm font-medium leading-relaxed">
               {item.description}
             </p>
           </div>
@@ -179,89 +157,65 @@ const CorporateGovernancePage = () => {
       {/* Modal untuk Dokumen */}
       {selectedItem && selectedItem.type === 'documents' && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm p-4 animate-fade-in"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-primary-950/40 backdrop-blur-md p-4 animate-fade-in"
           onClick={() => setSelectedItem(null)}
         >
           <div 
-            className="bg-white rounded-2xl shadow-2xl w-full flex flex-col max-h-[90vh] animate-scale-up max-w-2xl"
+            className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-3xl flex flex-col max-h-[85vh] overflow-hidden border border-primary-100 animate-scale-up"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-gray-50 px-8 py-5 border-b border-gray-200 flex justify-between items-center">
-              <div className="flex items-center gap-4">
-                <div className={`p-2 rounded-lg ${selectedItem.color}`}>
-                  <selectedItem.icon size={20} />
+            <div className="bg-primary-700 px-10 py-8 border-b-4 border-secondary-500 flex justify-between items-center text-white">
+              <div className="flex items-center gap-5">
+                <div className="p-3 bg-white/10 rounded-2xl shadow-inner">
+                  <selectedItem.icon size={28} />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-gray-800">{selectedItem.title}</h2>
-                  <p className="text-gray-500 text-xs">{selectedItem.subtitle}</p>
+                  <h2 className="text-2xl font-black uppercase tracking-tight leading-none">{selectedItem.title}</h2>
+                  <p className="text-secondary-400 text-xs font-bold uppercase tracking-widest mt-1">{selectedItem.subtitle}</p>
                 </div>
               </div>
-              <button onClick={() => setSelectedItem(null)} className="text-gray-400 hover:text-red-500">
-                <X size={24} />
+              <button onClick={() => setSelectedItem(null)} className="p-2 hover:bg-white/10 rounded-xl transition-colors">
+                <X size={28} />
               </button>
             </div>
 
-            <div className="flex-1 overflow-auto bg-slate-50 p-6">
+            <div className="flex-1 overflow-auto bg-slate-50 p-8">
               {loadingDocs ? (
-                <div className="text-center py-8">
-                  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                  <p className="text-gray-500">Loading documents...</p>
+                <div className="flex flex-col items-center justify-center py-20 text-primary-600">
+                  <Loader2 className="w-12 h-12 animate-spin mb-4" />
+                  <p className="font-black uppercase tracking-widest">Memuat Dokumen...</p>
                 </div>
               ) : documents.length > 0 ? (
-                <table className="w-full text-left border-collapse bg-white shadow-sm rounded-lg overflow-hidden">
-                  <thead className="bg-gray-100 text-gray-500 font-semibold text-xs uppercase">
-                    <tr>
-                      <th className="px-6 py-3 border-b">Document Name</th>
-                      <th className="px-6 py-3 border-b">Type</th>
-                      <th className="px-6 py-3 border-b">Ref</th>
-                      <th className="px-6 py-3 border-b text-center">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100 text-sm">
-                    {documents.map((doc) => (
-                      <tr key={doc.id} className="hover:bg-blue-50 transition-colors">
-                        <td className="px-6 py-3 font-medium text-gray-700">
-                          {doc.doc_name}
-                          <div className="text-xs text-gray-400 font-normal">{doc.description}</div>
-                        </td>
-                        <td className="px-6 py-3">
-                          <span className="bg-gray-100 px-2 py-1 rounded text-xs border">{doc.doc_type}</span>
-                        </td>
-                        <td className="px-6 py-3 text-gray-400 font-mono text-xs">{doc.reference}</td>
-                        <td className="px-6 py-3 text-center">
-                          {doc.doc_link && (
-                            <a 
-                              href={doc.doc_link} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-xs font-semibold transition-colors"
-                            >
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                              </svg>
-                              Open
-                            </a>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <div className="grid gap-4">
+                  {documents.map((doc) => (
+                    <div key={doc.id} className="bg-white p-6 rounded-2xl border border-primary-50 hover:border-primary-200 hover:shadow-md transition-all group flex items-center justify-between">
+                      <div className="flex-1 pr-4">
+                        <h4 className="font-black text-primary-900 uppercase text-sm mb-1">{doc.doc_name}</h4>
+                        <p className="text-primary-800/60 text-xs font-medium">{doc.description}</p>
+                        <div className="flex gap-3 mt-3">
+                           <span className="bg-primary-50 text-primary-700 px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-tighter border border-primary-100">{doc.doc_type}</span>
+                           <span className="text-primary-300 text-[10px] font-mono self-center uppercase">{doc.reference}</span>
+                        </div>
+                      </div>
+                      {doc.doc_link && (
+                        <a 
+                          href={doc.doc_link} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="flex-shrink-0 bg-primary-500 hover:bg-primary-600 text-white p-4 rounded-2xl transition-all shadow-lg shadow-primary-200 group-hover:scale-105"
+                        >
+                          <ChevronRight size={24} />
+                        </a>
+                      )}
+                    </div>
+                  ))}
+                </div>
               ) : (
-                <div className="text-center py-8 text-gray-500">
-                  <FileText size={48} className="mx-auto mb-3 text-gray-300" />
-                  <p>Belum ada dokumen</p>
+                <div className="text-center py-20 text-primary-300">
+                  <FileText size={64} className="mx-auto mb-4 opacity-20" />
+                  <p className="font-black uppercase tracking-widest italic">Belum ada dokumen yang terdaftar</p>
                 </div>
               )}
-            </div>
-            
-            <div className="bg-white border-t p-4 text-right">
-              <button 
-                onClick={() => setSelectedItem(null)} 
-                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded text-sm font-bold text-gray-700"
-              >
-                Close
-              </button>
             </div>
           </div>
         </div>
@@ -270,86 +224,58 @@ const CorporateGovernancePage = () => {
       {/* Modal BPM Options */}
       {showBPMOptions && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm p-4 animate-fade-in"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-primary-950/40 backdrop-blur-md p-4 animate-fade-in"
           onClick={() => setShowBPMOptions(false)}
         >
           <div 
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl animate-scale-up"
+            className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-xl overflow-hidden border border-primary-100 animate-scale-up"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-gradient-to-r from-purple-500 to-purple-600 px-8 py-6 rounded-t-2xl">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-white bg-opacity-20 rounded-lg">
-                    <GitBranch size={24} className="text-white" />
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold text-white">Business Process Map</h2>
-                    <p className="text-purple-100 text-sm">Pilih level peta proses yang ingin dilihat</p>
-                  </div>
+            <div className="bg-primary-700 px-10 py-8 border-b-4 border-secondary-500 text-white">
+              <div className="flex items-center justify-between mb-2">
+                <div className="p-3 bg-white/10 rounded-2xl">
+                  <GitBranch size={28} />
                 </div>
-                <button 
-                  onClick={() => setShowBPMOptions(false)} 
-                  className="text-white hover:text-purple-200 transition-colors"
-                >
-                  <X size={24} />
+                <button onClick={() => setShowBPMOptions(false)} className="p-2 hover:bg-white/10 rounded-xl">
+                  <X size={28} />
                 </button>
               </div>
+              <h2 className="text-2xl font-black uppercase tracking-tight">Business Process Map</h2>
+              <p className="text-secondary-400 text-xs font-bold uppercase tracking-widest mt-1">Pilih Level Peta Proses</p>
             </div>
 
-            <div className="p-6 space-y-3">
+            <div className="p-8 space-y-4">
               {bpmOptions.map((option) => (
                 <div
                   key={option.id}
-                  onClick={() => {
-                    setShowBPMOptions(false);
-                    window.location.href = option.route;
-                  }}
-                  className="flex items-center gap-4 p-4 bg-gray-50 hover:bg-purple-50 border-2 border-gray-200 hover:border-purple-300 rounded-xl cursor-pointer transition-all duration-200 group"
+                  onClick={() => window.location.href = option.route}
+                  className="flex items-center gap-5 p-6 bg-white hover:bg-primary-50 border-2 border-primary-50 hover:border-primary-200 rounded-2xl cursor-pointer transition-all duration-300 group"
                 >
-                  <div className="text-3xl">{option.icon}</div>
+                  <div className="text-4xl filter grayscale group-hover:grayscale-0 transition-all">{option.icon}</div>
                   <div className="flex-1">
-                    <h3 className="font-bold text-gray-800 group-hover:text-purple-700 transition-colors">
+                    <h3 className="font-black text-primary-900 uppercase tracking-tight group-hover:text-primary-700">
                       {option.title}
                     </h3>
-                    <p className="text-sm text-gray-500">{option.description}</p>
+                    <p className="text-xs font-medium text-primary-800/60 mt-1">{option.description}</p>
                   </div>
-                  <div className="text-gray-400 group-hover:text-purple-500 transition-colors">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
+                  <ChevronRight size={24} className="text-primary-200 group-hover:text-primary-500 group-hover:translate-x-1 transition-all" />
                 </div>
               ))}
-            </div>
-
-            <div className="bg-gray-50 border-t px-6 py-4 rounded-b-2xl">
-              <button 
-                onClick={() => setShowBPMOptions(false)} 
-                className="w-full px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-sm font-bold text-gray-700 transition-colors"
-              >
-                Batal
-              </button>
             </div>
           </div>
         </div>
       )}
 
+      {/* Helper Hint */}
+      <div className="mt-12 text-center text-primary-400 font-bold uppercase tracking-[0.2em] text-[10px] animate-pulse">
+        Pilih modul tata kelola untuk melihat detail dokumen dan arsitektur
+      </div>
+
       <style>{`
-        @keyframes fade-in {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes scale-up {
-          from { transform: scale(0.95); opacity: 0; }
-          to { transform: scale(1); opacity: 1; }
-        }
-        .animate-fade-in {
-          animation: fade-in 0.2s ease-out;
-        }
-        .animate-scale-up {
-          animation: scale-up 0.2s ease-out;
-        }
+        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scale-up { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .animate-fade-in { animation: fade-in 0.2s ease-out forwards; }
+        .animate-scale-up { animation: scale-up 0.2s ease-out forwards; }
       `}</style>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, Info, ShieldCheck, Zap, Trash2, TrendingUp } from 'lucide-react';
 
 const PortfolioMatrix = () => {
   const [hoveredApp, setHoveredApp] = useState(null);
@@ -8,7 +8,6 @@ const PortfolioMatrix = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch data dari Supabase
   useEffect(() => {
     fetchAppsData();
   }, []);
@@ -17,7 +16,6 @@ const PortfolioMatrix = () => {
     try {
       setLoading(true);
       setError(null);
-
       const { data, error: fetchError } = await supabase
         .from('app_portfolio_assessment')
         .select('*')
@@ -25,7 +23,6 @@ const PortfolioMatrix = () => {
 
       if (fetchError) throw fetchError;
 
-      // Transform data ke format yang sesuai
       const transformedData = data.map(app => ({
         id: app.id,
         name: app.name,
@@ -44,126 +41,85 @@ const PortfolioMatrix = () => {
     }
   };
 
-  const getDotColor = () => {
-    return "bg-slate-800 border-2 border-white";
-  };
-
   const getRecommendation = (tech, func) => {
-    if (tech < 50 && func < 50) return { text: 'Eliminate', color: 'text-red-600' };
-    if (tech < 50 && func >= 50) return { text: 'Replace', color: 'text-sky-600' };
-    if (tech >= 50 && func < 50) return { text: 'Reassess', color: 'text-amber-600' };
-    return { text: 'Maintain', color: 'text-emerald-600' };
+    if (tech < 50 && func < 50) return { text: 'Eliminate', color: 'text-red-600', bg: 'bg-red-50' };
+    if (tech < 50 && func >= 50) return { text: 'Replace', color: 'text-blue-600', bg: 'bg-blue-50' };
+    if (tech >= 50 && func < 50) return { text: 'Reassess', color: 'text-amber-600', bg: 'bg-amber-50' };
+    return { text: 'Maintain', color: 'text-emerald-600', bg: 'bg-emerald-50' };
   };
 
-  // Loading state
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Memuat data assessment...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Error state
-  if (error) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-6">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
-          <h3 className="text-red-800 font-bold mb-2">Error Loading Data</h3>
-          <p className="text-red-600 text-sm mb-4">{error}</p>
-          <button
-            onClick={fetchAppsData}
-            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
-          >
-            Retry
-          </button>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-900 mb-4"></div>
+      <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">Memuat Data Assessment...</p>
+    </div>
+  );
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4 sm:p-8 font-sans">
+    <div className="flex flex-col items-center min-h-screen bg-white py-12 px-4 sm:px-8 font-sans">
       
-      <div className="w-full max-w-5xl mb-8">
-        <div className="flex items-center justify-between">
-          <div className="flex-1">
-            <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 text-center">
-              Application Portfolio Assessment
-            </h1>
-            <p className="text-gray-500 text-center text-sm sm:text-base px-4 mt-2">
-              Peta strategi modernisasi aplikasi berdasarkan kualitas teknis & fungsional
-            </p>
-          </div>
-          <button
-            onClick={fetchAppsData}
-            className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
-            title="Refresh Data"
-          >
-            <RefreshCw size={16} />
-            <span className="hidden sm:inline">Refresh</span>
-          </button>
-        </div>
+      {/* HEADER SECTION */}
+      <div className="w-full max-w-5xl mb-12 text-center border-b-4 border-amber-400 pb-10">
+        <h1 className="text-3xl md:text-5xl font-black text-blue-900 mb-4 uppercase tracking-tighter">
+          Application Portfolio Assessment
+        </h1>
+        <p className="text-blue-800 text-lg md:text-xl font-bold italic opacity-80 uppercase tracking-widest text-center">
+          Peta Strategis Modernisasi Sistem Informasi BMKG
+        </p>
       </div>
 
       <div className="relative w-full max-w-5xl">
-        
         {/* CONTAINER MATRIX */}
-        <div className="aspect-[4/3] bg-white shadow-xl rounded-xl p-6 sm:p-8 border border-gray-200 relative ml-6 sm:ml-8">
+        <div className="aspect-[4/3] bg-white shadow-2xl rounded-[2.5rem] p-6 sm:p-8 border-2 border-slate-100 relative ml-6 sm:ml-8">
           
-          {/* LABEL SUMBU Y (Vertical) - DI SAMPING KIRI */}
-          <div className="absolute -left-10 sm:-left-12 top-1/2 -translate-y-1/2 text-[10px] sm:text-xs font-bold tracking-wider text-gray-700 whitespace-nowrap z-50">
+          {/* LABELS SUMBU */}
+          <div className="absolute -left-12 top-1/2 -translate-y-1/2 text-[10px] font-black tracking-[0.3em] text-blue-900/40 whitespace-nowrap z-40">
             <div className="-rotate-90 origin-center">FUNCTIONAL QUALITY</div>
           </div>
-
-          {/* LABEL SUMBU X (Horizontal) - DI BAWAH */}
-          <div className="absolute bottom-1 sm:bottom-2 left-1/2 -translate-x-1/2 text-xs sm:text-sm font-bold tracking-widest text-gray-600 whitespace-nowrap">
-            TECHNICAL QUALITY (HEALTH)
+          <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-black tracking-[0.3em] text-blue-900/40 whitespace-nowrap">
+            TECHNICAL QUALITY (SYSTEM HEALTH)
           </div>
 
-          {/* GRID CONTAINER */}
-          <div className="w-full h-full grid grid-cols-2 grid-rows-2 gap-1 relative border-2 border-gray-300 bg-gray-300">
+          {/* GRID CONTAINER - POSISI TULISAN TETAP SESUAI ASLINYA */}
+          <div className="w-full h-full grid grid-cols-2 grid-rows-2 gap-1 relative border-2 border-slate-200 bg-slate-200 rounded-3xl overflow-hidden">
           
-            {/* KUADRAN 1: REPLACE (Kiri Atas) - Tech Rendah, Func Tinggi */}
-            <div className="bg-sky-100 p-3 sm:p-6 flex flex-col items-end justify-end relative group transition-colors hover:bg-sky-200">
+            {/* KUADRAN 1: REPLACE (Kiri Atas) */}
+            <div className="bg-blue-50 p-3 sm:p-6 flex flex-col items-end justify-end relative transition-colors">
               <div className="text-right pr-2 pb-2">
-                <h3 className="text-lg sm:text-2xl font-bold text-sky-800 leading-tight mb-1">Replace</h3>
-                <p className="text-[9px] sm:text-[11px] text-sky-700 leading-tight max-w-[140px] ml-auto">Fungsi penting, teknologi usang. Perlu modernisasi segera.</p>
+                <h3 className="text-lg sm:text-2xl font-black text-blue-800 leading-tight mb-1 uppercase">Replace</h3>
+                <p className="text-[9px] sm:text-[11px] text-blue-700 leading-tight max-w-[140px] ml-auto font-bold opacity-60">Fungsi penting, teknologi usang. Perlu modernisasi segera.</p>
               </div>
             </div>
 
-            {/* KUADRAN 2: MAINTAIN (Kanan Atas) - Tech Tinggi, Func Tinggi */}
-            <div className="bg-emerald-100 p-3 sm:p-6 flex flex-col items-start justify-end relative transition-colors hover:bg-emerald-200">
+            {/* KUADRAN 2: MAINTAIN (Kanan Atas) */}
+            <div className="bg-emerald-50 p-3 sm:p-6 flex flex-col items-start justify-end relative transition-colors">
               <div className="text-left pl-2 pb-2">
-                <h3 className="text-lg sm:text-2xl font-bold text-emerald-800 leading-tight mb-1">Maintain</h3>
-                <p className="text-[9px] sm:text-[11px] text-emerald-700 leading-tight max-w-[140px]">Sistem sehat & berguna. Lanjutkan investasi dan pemeliharaan.</p>
+                <h3 className="text-lg sm:text-2xl font-black text-emerald-800 leading-tight mb-1 uppercase">Maintain</h3>
+                <p className="text-[9px] sm:text-[11px] text-emerald-700 leading-tight max-w-[140px] font-bold opacity-60">Sistem sehat & berguna. Lanjutkan investasi dan pemeliharaan.</p>
               </div>
             </div>
 
-            {/* KUADRAN 3: ELIMINATE (Kiri Bawah) - Tech Rendah, Func Rendah */}
-            <div className="bg-red-100 p-3 sm:p-6 flex flex-col items-end justify-start relative transition-colors hover:bg-red-200">
+            {/* KUADRAN 3: ELIMINATE (Kiri Bawah) */}
+            <div className="bg-red-50 p-3 sm:p-6 flex flex-col items-end justify-start relative transition-colors">
               <div className="text-right pr-2 pt-2">
-                <h3 className="text-lg sm:text-2xl font-bold text-red-800 leading-tight mb-1">Eliminate</h3>
-                <p className="text-[9px] sm:text-[11px] text-red-700 leading-tight max-w-[140px] ml-auto">Tidak berguna & teknologi rusak. Hapus sistem ini.</p>
+                <h3 className="text-lg sm:text-2xl font-black text-red-800 leading-tight mb-1 uppercase">Eliminate</h3>
+                <p className="text-[9px] sm:text-[11px] text-red-700 leading-tight max-w-[140px] ml-auto font-bold opacity-60">Tidak berguna & teknologi rusak. Hapus sistem ini.</p>
               </div>
             </div>
 
-            {/* KUADRAN 4: REASSESS (Kanan Bawah) - Tech Tinggi, Func Rendah */}
-            <div className="bg-amber-100 p-3 sm:p-6 flex flex-col items-start justify-start relative transition-colors hover:bg-amber-200">
+            {/* KUADRAN 4: REASSESS (Kanan Bawah) */}
+            <div className="bg-amber-50 p-3 sm:p-6 flex flex-col items-start justify-start relative transition-colors">
               <div className="text-left pl-2 pt-2">
-                <h3 className="text-lg sm:text-2xl font-bold text-amber-800 leading-tight mb-1">Reassess</h3>
-                <p className="text-[9px] sm:text-[11px] text-amber-800 leading-tight max-w-[140px]">Teknologi bagus, sepi peminat. Tambah fitur atau pivot.</p>
+                <h3 className="text-lg sm:text-2xl font-black text-amber-800 leading-tight mb-1 uppercase">Reassess</h3>
+                <p className="text-[9px] sm:text-[11px] text-amber-800 leading-tight max-w-[140px] font-bold opacity-60">Teknologi bagus, sepi peminat. Tambah fitur atau pivot.</p>
               </div>
             </div>
 
-            {/* TITIK PLOTTING APLIKASI (SCATTER PLOT) */}
+            {/* SCATTER PLOT POINTS */}
             {apps.map((app) => (
               <div
                 key={app.id}
-                className={`absolute w-7 h-7 sm:w-9 sm:h-9 rounded-full shadow-lg flex items-center justify-center cursor-pointer hover:scale-125 transition-transform z-10 ${getDotColor()}`}
+                className="absolute w-8 h-8 rounded-xl bg-slate-900 border-2 border-white shadow-xl flex items-center justify-center cursor-pointer hover:scale-125 hover:rotate-12 transition-all z-10"
                 style={{
                   left: `${app.tech}%`,
                   top: `${100 - app.func}%`,
@@ -172,121 +128,98 @@ const PortfolioMatrix = () => {
                 onMouseEnter={() => setHoveredApp(app)}
                 onMouseLeave={() => setHoveredApp(null)}
               >
-                <span className="text-[9px] sm:text-[11px] font-bold text-white">{String.fromCharCode(64 + app.id)}</span>
+                <span className="text-[10px] font-black text-white">{String.fromCharCode(64 + app.id)}</span>
               </div>
             ))}
 
           </div>
 
-          {/* HOVER TOOLTIP */}
+          {/* TOOLTIP */}
           {hoveredApp && (
             <div 
-              className="absolute bg-white p-3 rounded-lg shadow-2xl border-2 border-gray-300 z-50 pointer-events-none w-48"
+              className="absolute bg-slate-900 text-white p-4 rounded-2xl shadow-2xl z-50 pointer-events-none w-52 border-t-4 border-amber-400 animate-in fade-in zoom-in duration-200"
               style={{
-                left: `calc(${hoveredApp.tech}% + 20px)`,
-                bottom: `calc(${hoveredApp.func}% + 20px)`,
+                left: hoveredApp.tech > 70 ? 'auto' : `calc(${hoveredApp.tech}% + 30px)`,
+                right: hoveredApp.tech > 70 ? '10%' : 'auto',
+                top: `calc(${100 - hoveredApp.func}% - 20px)`,
               }}
             >
-              <h4 className="font-bold text-gray-800 text-sm">{hoveredApp.name}</h4>
-              <div className="text-xs text-gray-600 mt-2 space-y-1">
-                <div className="flex justify-between">
-                  <span>Tech Score:</span>
-                  <span className="font-semibold text-blue-600">{hoveredApp.tech}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Func Score:</span>
-                  <span className="font-semibold text-green-600">{hoveredApp.func}</span>
-                </div>
+              <h4 className="font-black text-xs uppercase tracking-widest border-b border-white/10 pb-2 mb-2">{hoveredApp.name}</h4>
+              <div className="flex justify-between text-[10px] font-bold mb-1">
+                <span className="opacity-60 uppercase">Technical:</span>
+                <span className="text-amber-400">{hoveredApp.tech}%</span>
               </div>
-              <div className="mt-2 text-[10px] uppercase font-bold text-blue-600 bg-blue-50 inline-block px-2 py-1 rounded">
-                {hoveredApp.category}
+              <div className="flex justify-between text-[10px] font-bold">
+                <span className="opacity-60 uppercase">Functional:</span>
+                <span className="text-emerald-400">{hoveredApp.func}%</span>
               </div>
             </div>
           )}
         </div>
-
       </div>
 
-      {/* LEGENDA / KETERANGAN DATA */}
-      <div className="mt-8 w-full max-w-5xl bg-white p-4 sm:p-6 rounded-xl border border-gray-200 shadow-sm">
-        <h3 className="font-bold text-gray-700 mb-4 text-sm sm:text-base">Detail Penilaian Aplikasi</h3>
+      {/* TABLE SECTION */}
+      <div className="mt-20 w-full max-w-5xl bg-white rounded-[2rem] border-2 border-slate-100 shadow-xl overflow-hidden">
+        <div className="bg-blue-900 p-6 text-center">
+          <h3 className="text-white font-black uppercase tracking-widest text-sm inline-flex items-center gap-2">
+            <TrendingUp size={18} className="text-amber-400" /> Detail Penilaian Strategis
+          </h3>
+        </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-xs sm:text-sm text-left text-gray-600">
-            <thead className="text-[10px] sm:text-xs text-gray-700 uppercase bg-gray-50">
-              <tr>
-                <th className="px-2 sm:px-4 py-2">Kode</th>
-                <th className="px-2 sm:px-4 py-2">Nama Aplikasi</th>
-                <th className="px-2 sm:px-4 py-2">Kualitas Teknis</th>
-                <th className="px-2 sm:px-4 py-2">Kualitas Fungsional</th>
-                <th className="px-2 sm:px-4 py-2">Rekomendasi</th>
+          <table className="w-full text-xs sm:text-sm text-left border-collapse">
+            <thead>
+              <tr className="bg-slate-50 border-b-2 border-slate-100">
+                <th className="px-6 py-4 font-black uppercase tracking-wider text-slate-400 text-[10px]">ID</th>
+                <th className="px-6 py-4 font-black uppercase tracking-wider text-slate-900">Aplikasi</th>
+                <th className="px-6 py-4 font-black uppercase tracking-wider text-center">Tech Score</th>
+                <th className="px-6 py-4 font-black uppercase tracking-wider text-center">Func Score</th>
+                <th className="px-6 py-4 font-black uppercase tracking-wider text-right">Rekomendasi</th>
               </tr>
             </thead>
-            <tbody>
-              {apps.length === 0 ? (
-                <tr>
-                  <td colSpan="5" className="px-4 py-8 text-center text-gray-400">
-                    Tidak ada data aplikasi
-                  </td>
-                </tr>
-              ) : (
-                apps.map((app) => {
-                  const recommendation = getRecommendation(app.tech, app.func);
-                  return (
-                    <tr key={app.id} className="border-b hover:bg-gray-50">
-                      <td className="px-2 sm:px-4 py-2 font-bold">{String.fromCharCode(64 + app.id)}</td>
-                      <td className="px-2 sm:px-4 py-2 font-medium text-gray-900">{app.name}</td>
-                      <td className="px-2 sm:px-4 py-2">
-                        <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div className="bg-blue-600 h-2 rounded-full transition-all" style={{width: `${app.tech}%`}}></div>
-                        </div>
-                        <div className="text-[10px] text-gray-500 mt-0.5">{app.tech}%</div>
-                      </td>
-                      <td className="px-2 sm:px-4 py-2">
-                        <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div className="bg-green-600 h-2 rounded-full transition-all" style={{width: `${app.func}%`}}></div>
-                        </div>
-                        <div className="text-[10px] text-gray-500 mt-0.5">{app.func}%</div>
-                      </td>
-                      <td className="px-2 sm:px-4 py-2 font-bold text-xs sm:text-sm">
-                        <span className={recommendation.color}>{recommendation.text}</span>
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
+            <tbody className="divide-y divide-slate-50">
+              {apps.map((app) => {
+                const rec = getRecommendation(app.tech, app.func);
+                return (
+                  <tr key={app.id} className="hover:bg-blue-50/30 transition-colors">
+                    <td className="px-6 py-4 font-black text-slate-300">{String.fromCharCode(64 + app.id)}</td>
+                    <td className="px-6 py-4 font-bold text-blue-900 uppercase tracking-tight">{app.name}</td>
+                    <td className="px-6 py-4 text-center">
+                      <div className="inline-block px-3 py-1 bg-slate-100 rounded-lg font-black text-blue-700">{app.tech}%</div>
+                    </td>
+                    <td className="px-6 py-4 text-center">
+                      <div className="inline-block px-3 py-1 bg-slate-100 rounded-lg font-black text-emerald-700">{app.func}%</div>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <span className={`px-4 py-1.5 rounded-full font-black text-[10px] uppercase tracking-widest border-2 ${rec.color} ${rec.color.replace('text', 'border')}`}>
+                        {rec.text}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
+      </div>
 
-        {/* Summary Statistics */}
-        {apps.length > 0 && (
-          <div className="mt-4 pt-4 border-t border-gray-200 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center text-xs">
-            <div>
-              <div className="text-emerald-600 font-bold text-lg">
-                {apps.filter(a => a.tech >= 50 && a.func >= 50).length}
-              </div>
-              <div className="text-gray-500">Maintain</div>
-            </div>
-            <div>
-              <div className="text-sky-600 font-bold text-lg">
-                {apps.filter(a => a.tech < 50 && a.func >= 50).length}
-              </div>
-              <div className="text-gray-500">Replace</div>
-            </div>
-            <div>
-              <div className="text-amber-600 font-bold text-lg">
-                {apps.filter(a => a.tech >= 50 && a.func < 50).length}
-              </div>
-              <div className="text-gray-500">Reassess</div>
-            </div>
-            <div>
-              <div className="text-red-600 font-bold text-lg">
-                {apps.filter(a => a.tech < 50 && a.func < 50).length}
-              </div>
-              <div className="text-gray-500">Eliminate</div>
-            </div>
+      {/* SUMMARY STATS - CENTERED */}
+      
+      <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-5xl">
+        {[
+          { label: 'Maintain', count: apps.filter(a => a.tech >= 50 && a.func >= 50).length, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+          { label: 'Replace', count: apps.filter(a => a.tech < 50 && a.func >= 50).length, color: 'text-blue-600', bg: 'bg-blue-50' },
+          { label: 'Reassess', count: apps.filter(a => a.tech >= 50 && a.func < 50).length, color: 'text-amber-600', bg: 'bg-amber-50' },
+          { label: 'Eliminate', count: apps.filter(a => a.tech < 50 && a.func < 50).length, color: 'text-red-600', bg: 'bg-red-50' }
+        ].map((stat, i) => (
+          <div key={i} className={`${stat.bg} p-6 rounded-[2rem] border-2 border-transparent hover:border-white shadow-sm transition-all text-center`}>
+            <div className={`text-4xl font-black ${stat.color} mb-1 leading-none`}>{stat.count}</div>
+            <div className="text-[10px] font-black text-blue-900/40 uppercase tracking-widest">{stat.label}</div>
           </div>
-        )}
+        ))}
+      </div>
+
+      <div className="mt-16 text-center text-slate-300 font-bold uppercase tracking-[0.4em] text-[10px] animate-pulse">
+        Application Architecture Governance v2.0
       </div>
 
     </div>

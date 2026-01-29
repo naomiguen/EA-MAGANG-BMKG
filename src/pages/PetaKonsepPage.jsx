@@ -4,23 +4,13 @@ import { supabase } from '../lib/supabaseClient';
 import { 
   ArrowLeft, X, Info, CheckCircle, Activity, 
   FileText, Database, Settings, Users, CloudRain,
-  Package, Shield, UserCheck, Plane
+  Package, Shield, UserCheck, Plane, Loader2
 } from 'lucide-react';
 import petaKonsepSvg from '../assets/peta_konsep.drawio.svg?raw';
 
-// Icon mapping untuk dynamic icon rendering
 const iconMap = {
-  Plane,
-  Shield,
-  UserCheck,
-  Users,
-  CloudRain,
-  Settings,
-  Activity,
-  Database,
-  CheckCircle,
-  FileText,
-  Package
+  Plane, Shield, UserCheck, Users, CloudRain, 
+  Settings, Activity, Database, CheckCircle, FileText, Package
 };
 
 const PetaKonsepPage = () => {
@@ -32,72 +22,54 @@ const PetaKonsepPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch data dari Supabase
-    const fetchProcessData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        // Fetch nodes
-        const { data: nodesData, error: nodesError } = await supabase
-          .from('peta_konsep_nodes')
-          .select('*')
-          .order('sort_order');
-
-        if (nodesError) throw nodesError;
-
-        // Fetch activities
-        const { data: activitiesData, error: activitiesError } = await supabase
-          .from('peta_konsep_activities')
-          .select('*')
-          .order('sort_order');
-
-        if (activitiesError) throw activitiesError;
-
-        // Transform data ke format yang sama dengan processDetails
-        const transformedData = {};
-        
-        nodesData.forEach(node => {
-          const nodeActivities = activitiesData
-            .filter(act => act.node_id === node.id)
-            .map(act => act.activity_text);
-
-          transformedData[node.id] = {
-            title: node.title,
-            icon: iconMap[node.icon_name] || FileText,
-            color: node.color_class,
-            desc: node.description,
-            items: nodeActivities,
-            pic: node.pic
-          };
-        });
-
-        setProcessDetails(transformedData);
-      } catch (err) {
-        console.error('Error fetching process data:', err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchProcessData();
   }, []);
 
-  // LOGIKA KLIK DIAGRAM 
+  const fetchProcessData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const [nodesRes, activitiesRes] = await Promise.all([
+        supabase.from('peta_konsep_nodes').select('*').order('sort_order'),
+        supabase.from('peta_konsep_activities').select('*').order('sort_order')
+      ]);
+
+      if (nodesRes.error) throw nodesRes.error;
+      if (activitiesRes.error) throw activitiesRes.error;
+
+      const transformedData = {};
+      nodesRes.data.forEach(node => {
+        transformedData[node.id] = {
+          title: node.title,
+          icon: iconMap[node.icon_name] || FileText,
+          color: node.color_class,
+          desc: node.description,
+          items: activitiesRes.data.filter(act => act.node_id === node.id).map(act => act.activity_text),
+          pic: node.pic
+        };
+      });
+
+      setProcessDetails(transformedData);
+    } catch (err) {
+      console.error('Error fetching process data:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleDiagramClick = (e) => {
     let current = e.target;
     let foundId = null;
     let attempts = 0;
     
     while (current && attempts < 10) {
-      const id = current.getAttribute ? (current.getAttribute('data-cell-id') || current.id) : null;
-      
+      const id = current.getAttribute?.('data-cell-id') || current.id;
       if (id && processDetails[id]) {
         foundId = id;
         break; 
       }
-      
       if (current.id === 'svg-wrapper') break;
       current = current.parentNode;
       attempts++;
@@ -109,171 +81,156 @@ const PetaKonsepPage = () => {
     }
   };
 
-  const activeInfo = activeId ? processDetails[activeId] : null;
-
-  // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex justify-center items-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Memuat data peta konsep...</p>
-        </div>
+      <div className="min-h-screen bg-white flex flex-col justify-center items-center">
+        <Loader2 className="w-12 h-12 animate-spin text-primary-600 mb-4" />
+        <p className="font-black uppercase tracking-widest text-primary-700 text-xs">Menyinkronkan Arsitektur Bisnis...</p>
       </div>
     );
   }
 
-  // Error state
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex justify-center items-center p-6">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
-          <h3 className="text-red-800 font-bold mb-2">Error Loading Data</h3>
-          <p className="text-red-600 text-sm mb-4">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
-          >
-            Retry
-          </button>
-        </div>
-      </div>
-    );
-  }
+  const activeInfo = activeId ? processDetails[activeId] : null;
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans p-6 md:p-8">
+    <div className="min-h-screen bg-slate-50 font-sans p-4 md:p-12">
       
-      {/* HEADER & TOMBOL KEMBALI */}
-      <div className="max-w-7xl mx-auto mb-6">
-        <div className="flex items-center gap-4">
+      {/* 1. Header Section - CENTERED & CLEAN */}
+      <div className="max-w-7xl mx-auto mb-12 flex flex-col items-center">
+        <div className="w-full flex justify-start mb-8">
           <button 
             onClick={() => navigate(-1)}
-            className="p-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-600 transition-colors shadow-sm flex-shrink-0"
+            className="p-3 bg-white border border-slate-200 rounded-2xl hover:bg-slate-50 transition-all shadow-sm text-primary-700 flex items-center gap-2 font-black uppercase text-[10px] tracking-widest"
           >
-            <ArrowLeft size={24} />
+            <ArrowLeft size={16} /> Kembali
           </button>
-          <div className="text-center flex-1"> 
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800">Peta Konsep Proses Bisnis</h1>
-            <p className="text-gray-500 text-xs sm:text-sm md:text-base mt-1">Visualisasi Alur Kerja BMKG Stasiun Balikpapan</p>
-          </div>
-          <button
-            onClick={() => window.location.reload()}
-            className="p-2 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 text-blue-600 transition-colors shadow-sm flex-shrink-0"
-            title="Refresh Data"
-          >
-            <Activity size={20} />
-          </button>
+        </div>
+
+        <div className="text-center border-b-4 border-secondary-500 pb-10 w-full relative">
+          <h1 className="text-3xl md:text-5xl font-black text-primary-700 mb-4 uppercase tracking-tighter leading-tight">
+            Business Process Map
+          </h1>
+          <p className="text-primary-800 text-lg md:text-xl font-bold flex items-center justify-center gap-2 italic">
+            <Activity size={24} className="text-secondary-600" />
+            Visualisasi Rantai Nilai dan Alur Kerja Operasional Stasiun
+          </p>
         </div>
       </div>
 
-      {/* CONTAINER DIAGRAM */}
-      <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden min-h-[600px] relative flex flex-col">
-        
-        {/* Banner Info */}
-        <div className="bg-blue-50 border-b border-blue-100 px-6 py-3 flex items-center gap-2 text-blue-700 text-sm">
-          <Info size={18} />
-          <span className="font-medium">Klik pada blok diagram untuk melihat detail aktivitas. Gunakan scroll untuk melihat diagram secara lengkap.</span>
+      {/* 2. Diagram Canvas */}
+      
+      <div className="max-w-7xl mx-auto bg-white rounded-[2.5rem] shadow-2xl border border-primary-100 overflow-hidden relative flex flex-col min-h-[700px]">
+        <div className="bg-primary-700 px-8 py-5 flex items-center justify-between text-white">
+          <div className="flex items-center gap-3">
+            <Info size={18} className="text-secondary-400" />
+            <span className="text-[10px] font-black uppercase tracking-widest">Peta Interaktif: Klik pada blok proses untuk detail teknis</span>
+          </div>
+          <div className="hidden md:block bg-primary-800 px-4 py-1.5 rounded-full border border-primary-600">
+             <span className="text-[9px] font-black uppercase tracking-widest text-primary-300">Last Update: Januari 2026</span>
+          </div>
         </div>
 
-        {/* AREA RENDER SVG */}
-        <div className="flex-1 p-8 overflow-auto bg-slate-50/30 flex justify-center items-center">
+        <div className="flex-1 p-8 md:p-16 overflow-auto bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:30px_30px] flex justify-center items-center">
           <div 
             id="svg-wrapper"
             className="w-full max-w-6xl mx-auto flex justify-center cursor-pointer 
-                       [&>svg]:w-full [&>svg]:h-auto [&>svg]:drop-shadow-sm"
+                       [&>svg]:w-full [&>svg]:h-auto [&>svg]:drop-shadow-xl transition-all"
             onClick={handleDiagramClick}
             dangerouslySetInnerHTML={{ __html: petaKonsepSvg }} 
           />
         </div>
+        
+        <div className="bg-slate-50 p-4 text-center border-t border-slate-100">
+        </div>
       </div>
 
-      {/* POP-UP MODAL - IMPROVED COLORS */}
+      {/* 3. Detail Modal */}
       {isModalOpen && activeInfo && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-primary-950/40 backdrop-blur-md p-4 animate-in fade-in duration-200"
           onClick={() => setIsModalOpen(false)}
         >
           <div 
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-scale-up"
+            className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-xl overflow-hidden border border-primary-100 animate-in zoom-in-95 duration-300"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Modal Header - Unified Gradient Design */}
-            <div className={`${activeInfo.color} p-6 text-white relative overflow-hidden`}>
-              {/* Decorative Elements */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+            {/* Modal Header */}
+            <div className={`${activeInfo.color} p-8 text-white relative overflow-hidden border-b-4 border-black/10`}>
+              <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
               
               <div className="relative z-10 flex justify-between items-start">
-                <div className="flex gap-4 items-start">
-                  <div className="p-3 bg-white/20 rounded-xl backdrop-blur-md shadow-lg">
-                    <activeInfo.icon size={28} strokeWidth={2} />
+                <div className="flex gap-5 items-center">
+                  <div className="p-4 bg-white/20 rounded-2xl backdrop-blur-md border border-white/30 shadow-xl">
+                    <activeInfo.icon size={32} strokeWidth={2.5} />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold mb-1">{activeInfo.title}</h3>
-                    <div className="flex items-center gap-2 text-white/90">
-                      <UserCheck size={14} />
-                      <span className="text-sm font-medium">{activeInfo.pic}</span>
+                    <h3 className="text-2xl font-black uppercase tracking-tight leading-none mb-2">{activeInfo.title}</h3>
+                    <div className="flex items-center gap-2 bg-black/10 w-fit px-3 py-1 rounded-full border border-white/10">
+                      <UserCheck size={14} className="text-secondary-400" />
+                      <span className="text-[10px] font-black uppercase tracking-widest">{activeInfo.pic}</span>
                     </div>
                   </div>
                 </div>
                 <button 
                   onClick={() => setIsModalOpen(false)} 
-                  className="text-white/80 hover:text-white hover:bg-white/20 p-2 rounded-lg transition-all"
+                  className="bg-black/10 hover:bg-black/20 p-2 rounded-xl transition-all"
                 >
-                  <X size={22} />
+                  <X size={20} />
                 </button>
               </div>
             </div>
 
-            {/* Modal Body - Unified Design */}
-            <div className="p-6 bg-gradient-to-br from-gray-50 to-white">
-              {/* Description Section */}
-              <div className="mb-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full"></div>
-                  <h4 className="text-sm font-bold text-gray-700 uppercase tracking-wide">Deskripsi Aktivitas</h4>
-                </div>
-                <p className="text-gray-700 leading-relaxed text-sm bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
-                  {activeInfo.desc}
+            {/* Modal Content */}
+            <div className="p-8 space-y-8 bg-slate-50/30">
+              <div>
+                <h4 className="text-[10px] font-black text-primary-400 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-primary-400 rounded-full" /> Definisi Proses
+                </h4>
+                <p className="text-primary-900 leading-relaxed font-bold italic bg-white p-5 rounded-3xl border border-primary-100 shadow-sm">
+                  "{activeInfo.desc}"
                 </p>
               </div>
 
-              {/* Activities List - Unified Design */}
-              <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-1 h-6 bg-gradient-to-b from-green-500 to-emerald-500 rounded-full"></div>
-                  <h4 className="text-sm font-bold text-gray-700 uppercase tracking-wide">Key Activities</h4>
-                </div>
-                <ul className="space-y-2.5">
+              <div>
+                <h4 className="text-[10px] font-black text-primary-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" /> Aktivitas Utama
+                </h4>
+                <div className="grid grid-cols-1 gap-3">
                   {activeInfo.items.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-sm text-gray-700 bg-gradient-to-r from-gray-50 to-white p-3 rounded-lg border border-gray-100 hover:border-blue-200 hover:shadow-md transition-all duration-200">
-                      <div className="mt-1.5 w-5 h-5 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex-shrink-0 flex items-center justify-center shadow-sm">
-                        <CheckCircle size={12} className="text-white" />
+                    <div key={idx} className="flex items-center gap-4 bg-white p-4 rounded-2xl border border-primary-50 hover:border-primary-200 hover:shadow-md transition-all">
+                      <div className="w-6 h-6 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center shrink-0">
+                        <CheckCircle size={14} strokeWidth={3} />
                       </div>
-                      <span className="flex-1">{item}</span>
-                    </li>
+                      <span className="text-sm font-bold text-primary-800 uppercase tracking-tight">{item}</span>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             </div>
 
-            {/* Modal Footer - Unified Design */}
-            <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-t border-gray-200 flex justify-end">
-              
+            <div className="bg-primary-50 p-4 text-center border-t border-primary-100">
+               <button 
+                onClick={() => setIsModalOpen(false)}
+                className="text-[10px] font-black text-primary-600 uppercase tracking-widest hover:text-primary-800 transition-colors"
+               >
+                 Tutup Detail
+               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Animations */}
+      {/* Global Interactions Styling */}
       <style>{`
-        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes scale-up { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .animate-fade-in { animation: fade-in 0.2s ease-out; }
-        .animate-scale-up { animation: scale-up 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        #svg-wrapper [id], #svg-wrapper [data-cell-id] {
+          cursor: pointer !important;
+          transition: all 0.3s ease;
+        }
+        #svg-wrapper [id]:hover, #svg-wrapper [data-cell-id]:hover {
+          filter: brightness(1.05) drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+          transform: translateY(-2px);
+        }
       `}</style>
-
     </div>
   );
 };

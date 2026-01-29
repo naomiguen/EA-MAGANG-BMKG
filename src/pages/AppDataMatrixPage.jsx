@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Database, FileText, Grid3x3 } from "lucide-react";
+import { Database, FileText, Loader2, AlertCircle, Info } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
 
 const AppDataMatrixPage = () => {
@@ -25,7 +25,6 @@ const AppDataMatrixPage = () => {
       
       setAppDataMatrix(data || []);
     } catch (err) {
-      console.error("Error fetching data:", err.message);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -33,31 +32,30 @@ const AppDataMatrixPage = () => {
   };
 
   const getDataTypeStyle = (type) => {
-    if (!type) return { bg: "#f1f5f9", text: "#64748b", border: "#cbd5e1" };
-    if (type.includes("Master")) return { bg: "#d1fae5", text: "#065f46", border: "#a7f3d0" };
-    if (type.includes("Analytical")) return { bg: "#f3e8ff", text: "#6b21a8", border: "#e9d5ff" };
-    return { bg: "#dbeafe", text: "#1e40af", border: "#bfdbfe" };
+    if (!type) return "bg-slate-100 text-slate-600 border-slate-200";
+    if (type.includes("Master")) return "bg-emerald-50 text-emerald-700 border-emerald-200";
+    if (type.includes("Analytical")) return "bg-purple-50 text-purple-700 border-purple-200";
+    return "bg-primary-50 text-primary-700 border-primary-200";
   };
 
   if (loading) {
     return (
-      <div style={styles.container}>
-        <div style={styles.loadingContainer}>
-          <div style={styles.spinner}></div>
-          <p style={styles.loadingText}>Loading data...</p>
-        </div>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-white text-primary-600">
+        <Loader2 className="w-12 h-12 animate-spin mb-4" />
+        <p className="font-black uppercase tracking-widest">Sinkronisasi Data...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div style={styles.container}>
-        <div style={styles.errorContainer}>
-          <h3 style={styles.errorTitle}>Error Loading Data</h3>
-          <p style={styles.errorMessage}>{error}</p>
-          <button onClick={fetchAppData} style={styles.retryButton}>
-            Retry
+      <div className="flex flex-col items-center justify-center min-h-screen bg-white p-8 text-center">
+        <div className="bg-red-50 border border-red-100 rounded-[2rem] p-8 max-w-md w-full">
+          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h3 className="text-red-800 font-black uppercase mb-2">Gagal Memuat Matriks</h3>
+          <p className="text-red-600 text-sm mb-6">{error}</p>
+          <button onClick={fetchAppData} className="bg-primary-600 text-white px-8 py-3 rounded-2xl font-bold hover:bg-primary-700 transition-all shadow-lg">
+            Coba Lagi
           </button>
         </div>
       </div>
@@ -65,256 +63,101 @@ const AppDataMatrixPage = () => {
   }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.headerContainer}>
-        <h1 style={styles.title}>
-          <Grid3x3 size={36} color="#2563eb" />
+    <div className="min-h-screen bg-white font-sans flex flex-col items-center p-4 md:p-12">
+      
+      {/* 1. Header Section - CENTERED */}
+      <div className="w-full max-w-5xl text-center mb-16 border-b-4 border-secondary-500 pb-10">
+        <h1 className="text-3xl md:text-5xl font-black text-primary-700 mb-4 uppercase tracking-tighter leading-tight">
           Application - Data Matrix
         </h1>
-        <p style={styles.subtitle}>Pemetaan hubungan antara aplikasi sistem dengan entitas data.</p>
-        <button onClick={fetchAppData} style={styles.refreshButton}>
-          Refresh Data
-        </button>
+        <p className="text-primary-800 text-lg md:text-xl font-bold flex items-center justify-center gap-2 italic lowercase first-letter:uppercase">
+          <Info size={20} className="text-secondary-600 flex-shrink-0" />
+          Pemetaan hubungan antara aplikasi sistem dengan entitas data operasional.
+        </p>
       </div>
 
-      <div style={styles.tableWrapper}>
-        <div style={{ overflowX: 'auto' }}>
-          <table style={styles.table}>
+      {/* 2. Table Section */}
+      <div className="w-full max-w-[1400px] bg-white rounded-[2.5rem] shadow-2xl border border-primary-100 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse"> {/* Layout otomatis agar tidak ada yang terpotong */}
             <thead>
-              <tr style={styles.headerRow}>
-                <th style={styles.th}>Application (System)</th>
-                <th style={styles.th}>Description / Function</th>
-                <th style={styles.th}>Data Entity</th>
-                <th style={styles.thCentered}>Data Entity Type</th>
+              <tr className="bg-primary-700 text-white border-b-4 border-secondary-500">
+                <th className="px-8 py-6 text-xs font-black uppercase tracking-widest text-center border-r border-primary-600 whitespace-nowrap">Application System</th>
+                <th className="px-8 py-6 text-xs font-black uppercase tracking-widest text-center border-r border-primary-600">Description / Function</th>
+                <th className="px-8 py-6 text-xs font-black uppercase tracking-widest text-center border-r border-primary-600 whitespace-nowrap">Data Entity</th>
+                <th className="px-8 py-6 text-xs font-black uppercase tracking-widest text-center whitespace-nowrap">Entity Type</th>
               </tr>
             </thead>
-            <tbody style={{ color: '#334155', fontSize: '15px' }}>
+            <tbody className="divide-y divide-primary-50">
               {appDataMatrix.length === 0 ? (
                 <tr>
-                  <td colSpan="4" style={styles.emptyTd}>No data available</td>
+                  <td colSpan="4" className="px-8 py-20 text-center text-primary-300 font-black uppercase italic">
+                    Belum ada data aplikasi terdaftar
+                  </td>
                 </tr>
               ) : (
-                appDataMatrix.map((item, index) => {
-                  const style = getDataTypeStyle(item.data_type);
-                  return (
-                    <tr
-                      key={item.id}
-                      style={{
-                        borderBottom: '1px solid #e2e8f0',
-                        backgroundColor: index % 2 === 0 ? '#ffffff' : '#f8fafc',
-                      }}
-                    >
-                      <td style={styles.tdBold}>
-                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                          <Database size={18} color="#94a3b8" />
+                appDataMatrix.map((item, index) => (
+                  <tr key={item.id} className="hover:bg-primary-50/30 transition-colors group">
+                    
+                    {/* KOLOM APLIKASI: Logo sejajar kiri di dalam kontainer yang lebar */}
+                    <td className="px-8 py-6 border-r border-primary-50 min-w-[280px]">
+                      <div className="flex items-center gap-4">
+                        <div className="flex-shrink-0 bg-primary-50 p-2.5 rounded-xl group-hover:bg-white transition-colors shadow-sm">
+                          <Database size={20} className="text-primary-600" />
+                        </div>
+                        <span className="font-black text-primary-900 uppercase tracking-tight text-sm leading-tight">
                           {item.app_name}
-                        </div>
-                      </td>
-                      <td style={styles.tdDesc}>{item.description}</td>
-                      <td style={styles.tdEntity}>
-                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                          <FileText size={18} color="#94a3b8" />
-                          {item.data_entity}
-                        </div>
-                      </td>
-                      <td style={styles.tdCentered}>
-                        <span
-                          style={{
-                            ...styles.badge,
-                            backgroundColor: style.bg,
-                            color: style.text,
-                            borderColor: style.border,
-                          }}
-                        >
-                          {item.data_type}
                         </span>
-                      </td>
-                    </tr>
-                  );
-                })
+                      </div>
+                    </td>
+
+                    {/* KOLOM DESKRIPSI: Teks rata tengah dan membungkus ke bawah (tidak terpotong) */}
+                    <td className="px-8 py-6 border-r border-primary-50 min-w-[350px]">
+                      <p className="text-primary-800/80 text-sm leading-relaxed font-medium text-center italic">
+                        "{item.description}"
+                      </p>
+                    </td>
+
+                    {/* KOLOM ENTITAS DATA: Logo sejajar kiri */}
+                    <td className="px-8 py-6 border-r border-primary-50 min-w-[280px]">
+                      <div className="flex items-center gap-4">
+                        <div className="flex-shrink-0 bg-slate-50 p-2.5 rounded-xl group-hover:bg-white transition-colors shadow-sm border border-slate-100">
+                          <FileText size={20} className="text-primary-400" />
+                        </div>
+                        <span className="font-bold text-primary-900 uppercase text-sm leading-tight">
+                          {item.data_entity}
+                        </span>
+                      </div>
+                    </td>
+
+                    {/* KOLOM ENTITY TYPE: Badge tetap di tengah */}
+                    <td className="px-8 py-6 text-center min-w-[180px]">
+                      <span className={`inline-block px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border-2 shadow-sm whitespace-nowrap ${getDataTypeStyle(item.data_type)}`}>
+                        {item.data_type}
+                      </span>
+                    </td>
+                  </tr>
+                ))
               )}
             </tbody>
           </table>
         </div>
       </div>
 
-      <div style={styles.footer}>
-        Total: {appDataMatrix.length} aplikasi terdaftar
+      {/* 3. Footer Info */}
+      <div className="mt-12 flex flex-col items-center gap-4">
+        <div className="bg-primary-50 px-6 py-3 rounded-2xl border border-primary-100 shadow-sm">
+          <p className="text-primary-800 font-black uppercase text-xs tracking-[0.2em]">
+            Total Kapabilitas: <span className="text-primary-600">{appDataMatrix.length} Aplikasi Terintegrasi</span>
+          </p>
+        </div>
+        <p className="text-primary-300 font-bold uppercase tracking-[0.3em] text-[10px] animate-pulse">
+          ← Geser ke samping untuk melihat detail entitas →
+        </p>
       </div>
+
     </div>
   );
 };
-
-const styles = {
-  container: {
-    minHeight: '100vh',
-    backgroundColor: '#f8fafc',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '48px 16px',
-  },
-  headerContainer: {
-    textAlign: 'center',
-    marginBottom: '40px',
-    maxWidth: '56rem',
-    width: '100%',
-  },
-  title: {
-    fontSize: '36px',
-    fontWeight: '900',
-    color: '#0f172a',
-    marginBottom: '12px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '12px',
-  },
-  subtitle: {
-    color: '#64748b',
-    fontSize: '18px',
-    marginBottom: '16px',
-  },
-  refreshButton: {
-    backgroundColor: '#2563eb',
-    color: 'white',
-    padding: '10px 20px',
-    borderRadius: '8px',
-    border: 'none',
-    cursor: 'pointer',
-    fontSize: '14px',
-    fontWeight: '600',
-    transition: 'all 0.2s',
-  },
-  tableWrapper: {
-    width: '100%',
-    maxWidth: '84rem',
-    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
-    borderRadius: '12px',
-    backgroundColor: 'white',
-    border: '1px solid #e2e8f0',
-    overflow: 'hidden',
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-  },
-  headerRow: {
-    backgroundColor: '#1e293b',
-    color: 'white',
-    fontSize: '14px',
-    textTransform: 'uppercase',
-    height: '60px',
-  },
-  th: {
-    padding: '16px 24px',
-    textAlign: 'left',
-    fontWeight: '600',
-  },
-  thCentered: {
-    padding: '16px 24px',
-    textAlign: 'center',
-    fontWeight: '600',
-  },
-  emptyTd: {
-    padding: '40px',
-    textAlign: 'center',
-    color: '#64748b',
-  },
-  tdBold: {
-    padding: '20px 24px',
-    fontWeight: '700',
-    color: '#0f172a',
-    borderRight: '1px solid #e2e8f0',
-  },
-  tdDesc: {
-    padding: '20px 24px',
-    color: '#475569',
-    lineHeight: '1.6',
-    borderRight: '1px solid #e2e8f0',
-  },
-  tdEntity: {
-    padding: '20px 24px',
-    fontWeight: '600',
-    color: '#334155',
-    borderRight: '1px solid #e2e8f0',
-  },
-  tdCentered: {
-    padding: '20px 24px',
-    textAlign: 'center',
-  },
-  badge: {
-    display: 'inline-block',
-    padding: '6px 12px',
-    borderRadius: '20px',
-    fontSize: '12px',
-    fontWeight: '700',
-    border: '1px solid',
-  },
-  footer: {
-    marginTop: '24px',
-    textAlign: 'center',
-    color: '#64748b',
-    fontSize: '14px',
-  },
-  loadingContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: '400px',
-  },
-  spinner: {
-    width: '48px',
-    height: '48px',
-    border: '4px solid #e2e8f0',
-    borderTop: '4px solid #2563eb',
-    borderRadius: '50%',
-    animation: 'spin 1s linear infinite',
-  },
-  loadingText: {
-    marginTop: '16px',
-    color: '#64748b',
-    fontSize: '16px',
-  },
-  errorContainer: {
-    backgroundColor: '#fef2f2',
-    border: '1px solid #fecaca',
-    borderRadius: '12px',
-    padding: '32px',
-    maxWidth: '500px',
-    textAlign: 'center',
-  },
-  errorTitle: {
-    color: '#991b1b',
-    fontSize: '20px',
-    fontWeight: '700',
-    marginBottom: '8px',
-  },
-  errorMessage: {
-    color: '#dc2626',
-    fontSize: '14px',
-    marginBottom: '16px',
-  },
-  retryButton: {
-    backgroundColor: '#dc2626',
-    color: 'white',
-    padding: '10px 20px',
-    borderRadius: '8px',
-    border: 'none',
-    cursor: 'pointer',
-    fontSize: '14px',
-    fontWeight: '600',
-  },
-};
-
-const styleSheet = document.createElement('style');
-styleSheet.textContent = `
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-`;
-document.head.appendChild(styleSheet);
 
 export default AppDataMatrixPage;

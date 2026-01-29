@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { Trash2, Upload, Grid3x3, Sparkles } from "lucide-react";
-import BusinessModel from "../assets/BMC.svg";
+import { motion, AnimatePresence } from "framer-motion";
+import { Trash2, Upload, Grid3x3, Info, ZoomIn, ZoomOut, RefreshCw, Maximize2 } from "lucide-react";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import BusinessModelDefault from "../assets/BMC.svg";
 
 const STORAGE_KEY = "bmc_image";
 
 const BusinessModelCanvas = () => {
   const [isDragging, setIsDragging] = useState(false);
-
   const [image, setImage] = useState(() => {
     const savedImage = localStorage.getItem(STORAGE_KEY);
-    return savedImage || BusinessModel;
+    return savedImage || BusinessModelDefault;
   });
 
   const handleImageUpload = (e) => {
@@ -42,7 +43,6 @@ const BusinessModelCanvas = () => {
   const handleDrop = (e) => {
     e.preventDefault();
     setIsDragging(false);
-    
     const file = e.dataTransfer.files[0];
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
@@ -55,184 +55,127 @@ const BusinessModelCanvas = () => {
   };
 
   return (
-    <div className="min-h-screen py-16 px-5" style={{ background: '#f0f7ff' }}>
-      <style>{`
-        @keyframes shimmer {
-          0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-          100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-        @keyframes sparkle {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.5; transform: scale(0.8); }
-        }
-        .shimmer-effect {
-          position: absolute;
-          top: -50%;
-          left: -50%;
-          width: 200%;
-          height: 200%;
-          background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
-          animation: shimmer 3s infinite;
-        }
-        .sparkle-icon {
-          animation: sparkle 2s ease-in-out infinite;
-        }
-      `}</style>
+    <div className="min-h-screen bg-white py-12 px-4 md:px-12 font-sans flex flex-col items-center">
+      
+      {/* 1. Header Section - CENTERED */}
+      <div className="max-w-5xl w-full text-center mb-12 border-b-4 border-secondary-500 pb-10">
+        <h1 className="text-3xl md:text-5xl font-black text-primary-700 mb-4 uppercase tracking-tighter leading-tight">
+          Business Model Canvas
+        </h1>
+        <p className="text-primary-800 text-lg md:text-xl font-bold uppercase tracking-wide italic">
+          Visualisasi Strategis 9 Building Blocks Model Bisnis Organisasi
+        </p>
+      </div>
 
-      <div className="max-w-6xl mx-auto">
-
-        {/* Header Section */}
-        <div className="text-center mb-12">
-          
-          {/* Title */}
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <h1 className="text-5xl font-extrabold tracking-tight" style={{ color: '#00467f' }}>
-              Business Model Canvas
-            </h1>
+      {/* 2. Main Card Area */}
+      <div className="max-w-6xl w-full bg-white rounded-[2.5rem] shadow-2xl border border-primary-100 overflow-hidden relative">
+        
+        {/* Action Bar / Header Box */}
+        <div className="bg-primary-700 px-8 py-5 flex justify-between items-center text-white border-b-4 border-secondary-500 relative z-10">
+          <div className="flex items-center gap-3 text-sm font-black uppercase tracking-widest text-secondary-100">
+            <div className="w-2.5 h-2.5 bg-secondary-500 rounded-full animate-pulse"></div>
+            Canvas Interactive View
           </div>
           
-          <p className="text-xl font-semibold max-w-2xl mx-auto mb-6" style={{ color: '#003660' }}>
-            Visualisasi strategis model bisnis Anda dalam 9 building blocks yang powerful
-          </p>
+          <div className="flex items-center gap-3">
+            <label className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-500 rounded-xl cursor-pointer transition-all border border-primary-500 text-xs font-black uppercase tracking-widest shadow-lg">
+              <Upload size={14} />
+              <span>Upload</span>
+              <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+            </label>
 
-          {/* Divider */}
-          <div className="w-24 h-1 mx-auto rounded-full" 
-               style={{ background: 'linear-gradient(to right, #0064b5, #fbbf24)' }}></div>
-        </div>
-
-        {/* Main Card */}
-        <div className="bg-white rounded-xl overflow-hidden mb-8 border-2"
-             style={{ boxShadow: '0 2px 12px rgba(0, 100, 181, 0.08)', borderColor: '#bfe2ff' }}>
-          
-          {/* Action Bar */}
-          <div className="px-6 py-5 flex flex-wrap justify-between items-center gap-4 border-b-4"
-               style={{ 
-                 background: 'linear-gradient(135deg, #00467f 0%, #0064b5 100%)',
-                 borderBottomColor: '#fbbf24'
-               }}>
-            <span className="text-lg font-extrabold text-white tracking-wide">
-              Diagram Canvas
-            </span>
-            
-            <div className="flex gap-3 flex-wrap">
-              <label className="inline-flex items-center gap-2 px-5 py-2.5 bg-white rounded-lg font-bold text-sm cursor-pointer transition-all hover:-translate-y-0.5 border-2"
-                     style={{ color: '#00467f', borderColor: '#bfe2ff' }}>
-                <Upload className="w-5 h-5" />
-                <span>Upload Canvas</span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  className="hidden"
-                />
-              </label>
-
-              {image && (
-                <button 
-                  onClick={handleRemoveImage}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-red-100 text-red-900 rounded-lg font-bold text-sm cursor-pointer transition-all hover:-translate-y-0.5 border-2 border-red-300">
-                  <Trash2 className="w-5 h-5" />
-                  <span>Hapus</span>
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* Content Area */}
-          <div 
-            className={`p-8 min-h-[500px] transition-all ${
-              isDragging ? 'border-2 border-dashed' : ''
-            }`}
-            style={{
-              background: isDragging ? 'linear-gradient(135deg, #f0f7ff 0%, #bfe2ff 100%)' : 'white',
-              borderColor: isDragging ? '#0064b5' : 'transparent'
-            }}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-          >
-            {image ? (
-              <div className="relative rounded-lg overflow-hidden">
-                <div className="absolute inset-0 pointer-events-none"
-                     style={{ background: 'linear-gradient(to bottom, rgba(0,70,127,0.02) 0%, transparent 20%, transparent 80%, rgba(0,70,127,0.02) 100%)' }}></div>
-                <img
-                  src={image}
-                  alt="Business Model Canvas"
-                  className="w-full h-auto block rounded-lg"
-                />
-              </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center min-h-[500px] text-center p-8">
-                <div className="w-20 h-20 flex items-center justify-center rounded-2xl mb-6 border-2"
-                     style={{ background: '#f0f7ff', borderColor: '#bfe2ff' }}>
-                  <Grid3x3 size={48} style={{ color: '#0064b5' }} />
-                </div>
-                <h3 className="text-2xl font-extrabold mb-3 tracking-wide" style={{ color: '#00467f' }}>
-                  Belum Ada Canvas
-                </h3>
-                <p className="text-base max-w-lg mb-8 leading-relaxed" style={{ color: '#003660' }}>
-                  Upload atau drag & drop diagram Business Model Canvas untuk menampilkan 9 building blocks bisnis Anda
-                </p>
-                <label className="inline-flex items-center gap-2 px-8 py-3.5 bg-white rounded-lg font-bold text-base cursor-pointer transition-all hover:-translate-y-0.5 border-2"
-                       style={{ color: '#00467f', borderColor: '#bfe2ff' }}>
-                  <Upload size={20} />
-                  <span>Upload Canvas</span>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                  />
-                </label>
-              </div>
+            {image && (
+              <button
+                onClick={handleRemoveImage}
+                className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-500 rounded-xl transition-all text-xs font-black uppercase tracking-widest shadow-lg"
+              >
+                <Trash2 size={14} />
+                <span>Hapus</span>
+              </button>
             )}
           </div>
         </div>
 
-        {/* Info Cards Grid */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Blue Info Card */}
-          <div className="rounded-xl p-6 flex gap-4 items-start transition-all hover:-translate-y-1 border-2"
-               style={{ 
-                 background: 'linear-gradient(135deg, #f0f7ff 0%, #bfe2ff 100%)',
-                 borderColor: '#0064b5'
-               }}>
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 border-2"
-                 style={{ background: '#0064b5', borderColor: '#00467f' }}>
-              <span className="text-white font-extrabold text-2xl">i</span>
-            </div>
-            <div className="flex-1">
-              <p className="font-extrabold mb-2 text-lg tracking-wide" style={{ color: '#00467f' }}>
-                9 Building Blocks BMC:
-              </p>
-              <p className="text-sm leading-relaxed" style={{ color: '#003660' }}>
-                Customer Segments, Value Propositions, Channels, Customer Relationships, 
-                Revenue Streams, Key Resources, Key Activities, Key Partnerships, Cost Structure
-              </p>
-            </div>
-          </div>
+        {/* Content Area with Zoom & Pan */}
+        <div 
+          className={`h-[70vh] relative flex items-center justify-center transition-colors duration-300 ${isDragging ? 'bg-primary-50' : 'bg-slate-50/50'}`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+          {image ? (
+            <TransformWrapper initialScale={1} centerOnInit={true} minScale={0.5} maxScale={3}>
+              {({ zoomIn, zoomOut, resetTransform }) => (
+                <>
+                  {/* Floating Controls */}
+                  <div className="absolute top-6 right-6 z-20 flex flex-col gap-3 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-xl border border-primary-100">
+                    <button onClick={() => zoomIn()} className="p-2 hover:bg-primary-100 text-primary-700 rounded-xl transition-colors"><ZoomIn size={24}/></button>
+                    <button onClick={() => zoomOut()} className="p-2 hover:bg-primary-100 text-primary-700 rounded-xl transition-colors"><ZoomOut size={24}/></button>
+                    <button onClick={() => resetTransform()} className="p-2 hover:bg-primary-100 text-primary-700 rounded-xl transition-colors"><RefreshCw size={24}/></button>
+                  </div>
 
-          {/* Yellow Info Card */}
-          <div className="rounded-xl p-6 flex gap-4 items-start transition-all hover:-translate-y-1 border-2"
-               style={{ 
-                 background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
-                 borderColor: '#fbbf24'
-               }}>
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 border-2"
-                 style={{ background: '#fbbf24', borderColor: '#f59e0b' }}>
-              <span className="text-white font-extrabold text-2xl">✓</span>
+                  {/* Canvas Display */}
+                  <TransformComponent wrapperStyle={{ width: "100%", height: "100%" }}>
+                    <div className="flex justify-center items-center w-[1200px] p-12 cursor-grab active:cursor-grabbing">
+                      <img
+                        src={image}
+                        alt="Business Model Canvas"
+                        className="max-w-full h-auto drop-shadow-2xl bg-white p-8 rounded-2xl border border-primary-50"
+                      />
+                    </div>
+                  </TransformComponent>
+                </>
+              )}
+            </TransformWrapper>
+          ) : (
+            /* Empty State */
+            <div className="flex flex-col items-center text-center p-12 animate-in fade-in zoom-in duration-300">
+              <div className="w-24 h-24 bg-primary-50 rounded-3xl flex items-center justify-center mb-6 text-primary-200 border-2 border-primary-100 border-dashed">
+                <Grid3x3 size={48} />
+              </div>
+              <h3 className="text-2xl font-black text-primary-900 uppercase mb-2">Belum Ada Canvas</h3>
+              <p className="text-primary-800/60 font-medium mb-8 max-w-xs leading-relaxed">Drag & drop atau upload diagram Business Model Canvas organisasi Anda.</p>
+              <label className="px-8 py-4 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl font-black uppercase tracking-widest transition-all cursor-pointer shadow-lg shadow-primary-200 active:scale-95">
+                Upload Sekarang
+                <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+              </label>
             </div>
-            <div className="flex-1">
-              <p className="font-extrabold text-yellow-900 mb-2 text-lg tracking-wide">
-                Tips Upload:
-              </p>
-              <p className="text-yellow-900 text-sm leading-relaxed">
-                Gunakan gambar beresolusi tinggi untuk memastikan semua detail canvas terlihat jelas. 
-                Format yang didukung: SVG.
-              </p>
-            </div>
+          )}
+        </div>
+      </div>
+
+      {/* 3. Info Guide - CENTERED */}
+      
+      <div className="mt-12 max-w-5xl w-full grid md:grid-cols-2 gap-6">
+        <div className="bg-primary-50 rounded-3xl p-6 border border-primary-100 flex items-start gap-4 shadow-sm">
+          <div className="bg-white p-3 rounded-2xl text-primary-600 shadow-sm flex-shrink-0">
+            <Info size={24} />
+          </div>
+          <div>
+            <p className="text-primary-900 font-black uppercase text-xs tracking-widest mb-1">9 Building Blocks:</p>
+            <p className="text-primary-800/80 text-sm font-medium leading-relaxed">
+              Customer Segments, Value Propositions, Channels, Customer Relationships, 
+              Revenue Streams, Key Resources, Key Activities, Key Partnerships, Cost Structure.
+            </p>
           </div>
         </div>
+
+        <div className="bg-secondary-50 rounded-3xl p-6 border border-secondary-200 flex items-start gap-4 shadow-sm">
+          <div className="bg-white p-3 rounded-2xl text-secondary-600 shadow-sm flex-shrink-0">
+            <Maximize2 size={24} />
+          </div>
+          <div>
+            <p className="text-primary-900 font-black uppercase text-xs tracking-widest mb-1">Tips Resolusi:</p>
+            <p className="text-primary-800/80 text-sm font-medium leading-relaxed italic">
+              Gunakan format SVG untuk ketajaman maksimal saat dilakukan zoom pada blok rincian biaya atau aliran pendapatan.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Helper Hint */}
+      <div className="mt-8 text-center text-primary-300 font-bold uppercase tracking-[0.3em] text-[10px] animate-pulse">
+        Use Mouse Scroll to Zoom & Drag to Pan the Canvas
       </div>
     </div>
   );
