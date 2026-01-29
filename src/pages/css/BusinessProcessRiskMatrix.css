@@ -1,231 +1,850 @@
-/* BusinessProcessRiskMatrix.css */
-
+/* --- Variables & Reset (EXISTING - JANGAN DIHAPUS) --- */
 :root {
-  --bprm-bg-1: #f8fafc;
-  --bprm-bg-2: #eef2ff;
+  --primary-color: #2d3748;
+  --header-bg: #f7f9fc;
+  --text-main: #2d3748;
+  --text-sub: #718096;
+  
+  /* Department Colors - Matching the image */
+  --color-teknisi: #c4b5fd;
+  --color-datin: #c4b5fd;
+  --color-obs: #c4b5fd;
+  --color-tu: #c4b5fd;
+  --color-wmm: #c4b5fd;
+  
+  /* Icon background */
+  --icon-bg: #ffffff;
+  --icon-color: #5b21b6;
 
-  --bprm-text: #0f172a;
-  --bprm-muted: #475569;
-
-  --bprm-border: rgba(15, 23, 42, 0.12);
-  --bprm-ring: rgba(59, 130, 246, 0.35);
-
-  --bprm-shadow-sm: 0 1px 2px rgba(2, 6, 23, 0.08);
-  --bprm-shadow-md: 0 10px 30px rgba(2, 6, 23, 0.10);
-
-  --pink-1: #fff1f2;
-  --pink-2: #ffe4e6;
-  --pink-accent: #fb7185;
-
-  --green-1: #ecfdf5;
-  --green-2: #d1fae5;
-  --green-accent: #34d399;
-
-  --card-radius: 18px;
+  /* Risk Colors */
+  --risk-high-bg: #ffebee;
+  --risk-high-text: #c62828;
+  --risk-med-bg: #fff8e1;
+  --risk-med-text: #ef6c00;
+  --risk-low-bg: #e8f5e9;
+  --risk-low-text: #2e7d32;
 }
 
-.bprm-page {
-  min-height: 100%;
-  color: var(--bprm-text);
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
-    Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  background:
-    radial-gradient(900px 320px at 50% 0%, rgba(99, 102, 241, 0.10), transparent 55%),
-    radial-gradient(700px 260px at 20% 25%, rgba(251, 113, 133, 0.10), transparent 60%),
-    radial-gradient(700px 260px at 80% 25%, rgba(52, 211, 153, 0.10), transparent 60%),
-    linear-gradient(180deg, var(--bprm-bg-2), var(--bprm-bg-1));
-}
-
-.bprm-container {
-  width: 100%;
-  max-width: 72rem;
-  margin: 0 auto;
-  padding: 22px 24px 48px;
-}
-
-.bprm-back {
-  appearance: none;
-  border: 1px solid var(--bprm-border);
-  background: rgba(255, 255, 255, 0.85);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  color: var(--bprm-text);
-  border-radius: 12px;
-  padding: 10px 12px;
-  font-size: 13px;
-  font-weight: 650;
-  box-shadow: var(--bprm-shadow-sm);
-  cursor: pointer;
-  transition: transform 160ms ease, box-shadow 160ms ease;
-}
-
-.bprm-back:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--bprm-shadow-md);
-}
-
-.bprm-back:focus-visible {
-  outline: 3px solid var(--bprm-ring);
-  outline-offset: 2px;
-}
-
-.bprm-hero {
-  text-align: center;
-  margin: 18px 0 26px;
-}
-
-.bprm-title {
+* {
   margin: 0;
-  font-size: 34px;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-  font-weight: 800;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.bprm-subtitle {
-  margin: 10px auto 0;
-  max-width: 62ch;
-  font-size: 14px;
-  color: var(--bprm-muted);
-  line-height: 1.55;
+.risk-matrix-wrapper {
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.bprm-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-  margin-top: 18px;
-}
-
-@media (min-width: 768px) {
-  .bprm-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 22px;
-  }
-}
-
-.bprm-card {
-  position: relative;
+/* --- Header --- */
+.matrix-header {
+  text-align: center;
+  margin-bottom: 50px;
   width: 100%;
-  text-align: left;
-  border-radius: var(--card-radius);
-  border: 1px solid rgba(15, 23, 42, 0.10);
-  box-shadow: var(--bprm-shadow-sm);
+  max-width: 1400px;
+}
+
+.matrix-header h1 {
+  margin: 0;
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--primary-color);
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.matrix-header p {
+  margin: 0;
+  font-size: 18px;
+  color: var(--text-sub);
+  font-weight: 400;
+}
+
+/* --- Dashboard Grid (5 Cards) --- */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 20px;
+}
+
+/* --- Department Cards --- */
+.dept-card {
+  background: var(--color-teknisi);
+  border-radius: 24px;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
   cursor: pointer;
-  padding: 18px 18px 16px;
-  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  min-height: 240px;
+  position: relative;
   overflow: hidden;
 }
 
-.bprm-card:focus-visible {
-  outline: 3px solid var(--bprm-ring);
-  outline-offset: 2px;
-}
-
-.bprm-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--bprm-shadow-md);
-  border-color: rgba(15, 23, 42, 0.18);
-}
-
-.bprm-card__sheen {
+.dept-card::before {
+  content: '';
   position: absolute;
-  inset: 0;
-  background: radial-gradient(500px 220px at 20% 10%, rgba(255, 255, 255, 0.55), transparent 60%);
-  pointer-events: none;
-  opacity: 0.7;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0);
+  transition: all 0.3s ease;
+  z-index: 1;
 }
 
-.bprm-card--pink {
-  background: linear-gradient(145deg, var(--pink-1), var(--pink-2));
+.dept-card:hover::before {
+  background: rgba(255, 255, 255, 0.15);
 }
 
-.bprm-card--green {
-  background: linear-gradient(145deg, var(--green-1), var(--green-2));
+.dept-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
-.bprm-card__header {
-  position: relative;
-  display: grid;
-  grid-template-columns: 44px 1fr;
-  gap: 14px;
-  align-items: start;
-}
-
-.bprm-icon {
-  height: 44px;
-  width: 44px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  color: rgba(15, 23, 42, 0.75);
-  border: 1px solid rgba(15, 23, 42, 0.12);
-  background: rgba(255, 255, 255, 0.55);
-  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.06);
-}
-
-.bprm-icon__svg {
-  width: 22px;
-  height: 22px;
-}
-
-.bprm-icon--pink {
-  box-shadow: 0 10px 22px rgba(251, 113, 133, 0.18);
-}
-
-.bprm-icon--green {
-  box-shadow: 0 10px 22px rgba(52, 211, 153, 0.18);
-}
-
-.bprm-card__heading {
-  min-width: 0;
-}
-
-.bprm-card__title {
-  margin: 2px 0 6px;
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-}
-
-.bprm-card__subtitle {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.55;
-  color: rgba(15, 23, 42, 0.72);
-}
-
-.bprm-card__footer {
-  position: relative;
-  margin-top: 14px;
-  padding-top: 12px;
+/* Icon Container */
+.card-icon {
+  width: 80px;
+  height: 80px;
+  background-color: var(--icon-bg);
+  border-radius: 20px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  color: var(--icon-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  z-index: 2;
+  position: relative;
+}
+
+.dept-card:hover .card-icon {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Card Title */
+.card-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--icon-color);
+  text-align: center;
+  margin: 0;
+  z-index: 2;
+  position: relative;
+}
+
+/* Individual Card Colors */
+.card-teknisi { background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%); }
+.card-datin { background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%); }
+.card-obs { background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%); }
+.card-tu { background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%); }
+.card-wmm { background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%); }
+
+
+/* ========================================= */
+/* --- BARU: MATRIX TABLE STYLES --- */
+/* ========================================= */
+
+.matrix-view-container {
+  width: 100%;
+  max-width: 1400px;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.matrix-top-bar {
+  display: flex;
   justify-content: space-between;
-  border-top: 1px solid rgba(15, 23, 42, 0.10);
+  align-items: center;
+  margin-bottom: 30px;
 }
 
-.bprm-card__cta {
+.btn-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--icon-color);
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.btn-back:hover {
+  background: #f8fafc;
+  transform: translateX(-3px);
+}
+
+.dept-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--icon-color);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.matrix-header-small {
+  margin-bottom: 20px;
+}
+
+.matrix-header-small h2 {
+  font-size: 28px;
+  color: var(--primary-color);
+  margin-bottom: 5px;
+}
+
+/* Table Container with Scroll - DIPERBAIKI UNTUK AUTO FIT */
+.table-scroll-container {
+  width: 100%;
+  height: 65vh;
+  overflow-x: auto;
+  overflow-y: auto;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  background: white;
+  position: relative;
+  border: 1px solid #e2e8f0;
+}
+
+.risk-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: auto;
+}
+
+.risk-table th, 
+.risk-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #edf2f7;
+  border-right: 1px solid #edf2f7;
+  font-size: 15px;
+  vertical-align: middle;
+}
+
+/* Sticky Logic - DIPERBAIKI */
+.sticky-header {
+  position: sticky;
+  top: 0;
+  background: #f8fafc;
+  color: var(--text-main);
+  z-index: 10;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  text-align: center;
+  padding: 12px 8px;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.2;
+  min-width: 110px;
+}
+
+.sticky-col {
+  position: sticky;
+  left: 0;
+  background: white;
+  z-index: 5;
+  box-shadow: 4px 0 6px -2px rgba(0,0,0,0.05);
+  min-width: 200px;
+  max-width: 280px;
+  padding: 16px 12px;
+}
+
+.sticky-corner {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  background: var(--icon-color);
+  color: white;
+  text-align: left;
+  min-width: 200px;
+  border-bottom: none;
+  padding: 16px 8px;
+  white-space: nowrap;
+  font-size: 0.7rem;
+}
+
+/* Content Styles */
+.proc-title {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.proc-desc {
   font-size: 13px;
-  font-weight: 750;
-  color: rgba(15, 23, 42, 0.78);
+  color: var(--text-sub);
+  line-height: 1.4;
 }
 
-.bprm-card__arrow {
-  font-size: 18px;
-  font-weight: 900;
-  color: rgba(15, 23, 42, 0.70);
-  transition: transform 180ms ease;
+.risk-cell {
+  text-align: center;
+  font-weight: 600;
+  transition: all 0.2s;
+  font-size: 0.875rem;
+  padding: 16px 8px;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.3;
+  min-width: 110px;
 }
 
-.bprm-card:hover .bprm-card__arrow {
-  transform: translateX(3px);
+.risk-cell.high { background: var(--risk-high-bg); color: var(--risk-high-text); }
+.risk-cell.medium { background: var(--risk-med-bg); color: var(--risk-med-text); }
+.risk-cell.low { background: var(--risk-low-bg); color: var(--risk-low-text); }
+
+/* Hover Effects */
+.risk-table tr:hover td {
+  background-color: #fcfaff;
+}
+.risk-table tr:hover td.sticky-col {
+  background-color: #fcfaff;
+}
+.risk-table tr:hover td.high { background: var(--risk-high-bg); filter: brightness(0.95); }
+.risk-table tr:hover td.medium { background: var(--risk-med-bg); filter: brightness(0.95); }
+.risk-table tr:hover td.low { background: var(--risk-low-bg); filter: brightness(0.95); }
+
+
+/* ========================================= */
+/* --- RESPONSIVE STYLES --- */
+/* ========================================= */
+
+/* Large Desktop (1400px and up) */
+@media (min-width: 1400px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(5, 1fr);
+    max-width: 1600px;
+  }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .bprm-card,
-  .bprm-back,
-  .bprm-card__arrow {
-    transition: none;
+/* Desktop (1024px to 1399px) */
+@media (max-width: 1399px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+  }
+  
+  .dept-card {
+    padding: 32px 16px;
+    min-height: 220px;
+  }
+  
+  .card-icon {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .card-title {
+    font-size: 22px;
+  }
+}
+
+/* Tablet Landscape (768px to 1023px) */
+@media (max-width: 1023px) {
+  .matrix-header h1 {
+    font-size: 36px;
+  }
+  
+  .matrix-header p {
+    font-size: 16px;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .dept-card {
+    padding: 32px 20px;
+    min-height: 180px;
+  }
+  
+  .card-icon {
+    width: 64px;
+    height: 64px;
+  }
+  
+  .card-title {
+    font-size: 20px;
+  }
+
+  /* Table Responsive */
+  .table-scroll-container {
+    height: 60vh;
+  }
+  
+  .sticky-col {
+    min-width: 180px;
+    max-width: 240px;
+    padding: 12px 10px;
+  }
+  
+  .sticky-corner {
+    min-width: 180px;
+    font-size: 0.65rem;
+  }
+  
+  .risk-table th, 
+  .risk-table td {
+    padding: 12px 10px;
+    font-size: 0.875rem;
+  }
+  
+  .sticky-header {
+    font-size: 0.65rem;
+    padding: 10px 6px;
+    min-width: 100px;
+  }
+  
+  .risk-cell {
+    padding: 12px 8px;
+    font-size: 0.8rem;
+    min-width: 100px;
+  }
+  
+  .proc-title {
+    font-size: 14px;
+  }
+  
+  .proc-desc {
+    font-size: 12px;
+  }
+}
+
+/* Tablet Portrait (576px to 767px) */
+@media (max-width: 767px) {
+  .risk-matrix-wrapper {
+    padding: 30px 20px;
+  }
+  
+  .matrix-header h1 {
+    font-size: 32px;
+  }
+  
+  .matrix-header p {
+    font-size: 15px;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .dept-card {
+    padding: 28px 16px;
+    min-height: 160px;
+    border-radius: 20px;
+  }
+  
+  .card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+  }
+  
+  .card-title {
+    font-size: 19px;
+  }
+
+  /* Matrix Table Responsive */
+  .matrix-view-container {
+    padding: 0 10px;
+  }
+  
+  .matrix-top-bar {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .table-scroll-container {
+    height: 55vh;
+    border-radius: 12px;
+  }
+  
+  .sticky-col {
+    min-width: 160px;
+    max-width: 200px;
+    padding: 10px 8px;
+  }
+  
+  .sticky-corner {
+    min-width: 160px;
+    font-size: 0.6rem;
+    padding: 10px 6px;
+  }
+  
+  .risk-table th, 
+  .risk-table td {
+    padding: 10px 6px;
+    font-size: 0.75rem;
+  }
+  
+  .sticky-header {
+    font-size: 0.6rem;
+    padding: 10px 6px;
+    min-width: 90px;
+  }
+  
+  .risk-cell {
+    padding: 10px 6px;
+    font-size: 0.7rem;
+    min-width: 90px;
+  }
+  
+  .proc-title {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+  
+  .proc-desc {
+    font-size: 10px;
+    line-height: 1.3;
+  }
+}
+
+/* Mobile (up to 575px) */
+@media (max-width: 575px) {
+  .risk-matrix-wrapper {
+    padding: 24px 16px;
+  }
+  
+  .matrix-header {
+    margin-bottom: 28px;
+  }
+  
+  .matrix-header h1 {
+    font-size: 28px;
+  }
+  
+  .matrix-header p {
+    font-size: 14px;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 0;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+  
+  .dept-card {
+    padding: 24px 20px;
+    min-height: 140px;
+    border-radius: 18px;
+  }
+  
+  .card-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+  }
+  
+  .card-title {
+    font-size: 18px;
+  }
+
+  /* Matrix Table Mobile - AUTO FIT */
+  .matrix-view-container {
+    padding: 0 5px;
+  }
+  
+  .table-scroll-container {
+    height: 50vh;
+    border-radius: 10px;
+  }
+  
+  .sticky-col {
+    min-width: 140px;
+    max-width: 170px;
+    padding: 8px 4px;
+  }
+  
+  .sticky-corner {
+    min-width: 140px;
+    font-size: 0.55rem;
+    padding: 8px 4px;
+  }
+
+  .sticky-header {
+    font-size: 0.55rem;
+    padding: 8px 4px;
+    min-width: 80px;
+  }
+  
+  .risk-cell {
+    padding: 8px 4px;
+    font-size: 0.6rem;
+    min-width: 80px;
+  }
+  
+  .proc-title {
+    font-size: 10px;
+    line-height: 1.2;
+  }
+  
+  .proc-desc {
+    font-size: 8px;
+    line-height: 1.2;
+  }
+  
+  .btn-back {
+    padding: 6px 10px;
+    font-size: 11px;
+    gap: 4px;
+  }
+  
+  .dept-badge {
+    padding: 5px 10px;
+    font-size: 10px;
+  }
+  
+  .matrix-header-small h2 {
+    font-size: 18px;
+  }
+  
+  .matrix-header-small p {
+    font-size: 11px;
+  }
+}
+
+/* Extra Small Mobile (up to 390px) */
+@media (max-width: 390px) {
+  .risk-matrix-wrapper {
+    padding: 20px 12px;
+  }
+  
+  .matrix-header {
+    margin-bottom: 24px;
+  }
+  
+  .matrix-header h1 {
+    font-size: 26px;
+  }
+  
+  .matrix-header p {
+    font-size: 13px;
+  }
+  
+  .dashboard-grid {
+    gap: 12px;
+    max-width: 320px;
+  }
+  
+  .dept-card {
+    padding: 22px 18px;
+    min-height: 130px;
+    border-radius: 16px;
+  }
+  
+  .card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 13px;
+  }
+  
+  .card-title {
+    font-size: 17px;
+  }
+
+  /* Matrix Table Extra Small - AUTO FIT */
+  .sticky-col {
+    min-width: 120px;
+    max-width: 150px;
+    padding: 6px 3px;
+  }
+  
+  .sticky-corner {
+    min-width: 120px;
+    font-size: 0.5rem;
+    padding: 6px 3px;
+  }
+  
+  .sticky-header {
+    font-size: 0.5rem;
+    padding: 6px 3px;
+    min-width: 70px;
+  }
+  
+  .proc-title {
+    font-size: 9px;
+    line-height: 1.1;
+  }
+  
+  .proc-desc {
+    font-size: 7px;
+    line-height: 1.1;
+  }
+  
+  .risk-cell {
+    font-size: 0.55rem;
+    padding: 6px 2px;
+    min-width: 70px;
+  }
+}
+
+/* Ultra Small Mobile (up to 400px) - NEW BREAKPOINT */
+@media (max-width: 400px) {
+  .risk-matrix-wrapper {
+    padding: 20px 10px;
+  }
+  
+  .matrix-header h1 {
+    font-size: 25px;
+  }
+  
+  .matrix-header p {
+    font-size: 12.5px;
+  }
+  
+  .dashboard-grid {
+    gap: 12px;
+    padding: 0;
+    max-width: 310px;
+  }
+  
+  .dept-card {
+    padding: 20px 16px;
+    min-height: 125px;
+    border-radius: 16px;
+  }
+  
+  .card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+  }
+  
+  .card-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .card-title {
+    font-size: 16px;
+  }
+
+  /* Matrix Table Ultra Small */
+  .matrix-view-container {
+    padding: 0 3px;
+  }
+  
+  .table-scroll-container {
+    height: 48vh;
+    border-radius: 8px;
+  }
+  
+  .sticky-col {
+    min-width: 110px !important;
+    max-width: 135px !important;
+    padding: 5px 2px !important;
+  }
+  
+  .sticky-corner {
+    min-width: 110px !important;
+    font-size: 0.45rem !important;
+    padding: 5px 2px !important;
+  }
+  
+  .sticky-header {
+    font-size: 0.45rem !important;
+    padding: 5px 2px !important;
+    min-width: 65px !important;
+  }
+  
+  .risk-table th, 
+  .risk-table td {
+    padding: 5px 2px;
+    font-size: 0.5rem;
+  }
+  
+  .proc-title {
+    font-size: 8px !important;
+    line-height: 1.05;
+    margin-bottom: 2px;
+  }
+  
+  .proc-desc {
+    font-size: 6.5px !important;
+    line-height: 1.05;
+  }
+  
+  .risk-cell {
+    font-size: 0.5rem !important;
+    padding: 5px 1px !important;
+    min-width: 65px !important;
+  }
+  
+  .btn-back {
+    padding: 5px 8px;
+    font-size: 0.625rem;
+    gap: 3px;
+  }
+  
+  .btn-back svg {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .dept-badge {
+    padding: 4px 8px;
+    font-size: 0.55rem;
+  }
+  
+  .dept-badge svg {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .matrix-header-small h2 {
+    font-size: 1rem;
+  }
+  
+  .matrix-header-small p {
+    font-size: 0.625rem;
+  }
+  
+  .matrix-top-bar {
+    margin-bottom: 20px;
+    gap: 10px;
   }
 }

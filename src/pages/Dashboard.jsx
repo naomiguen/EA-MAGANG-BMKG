@@ -219,6 +219,7 @@ const Dashboard = () => {
       return;
     }
 
+    // Implementation Section
     if(item.title === "Architecture Governance"){
       navigate("/imp/governance");
       return;

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'; // Tambah useEffect untuk scroll reset
 import { motion, AnimatePresence } from 'framer-motion';
 import { Settings, Database, Eye, FileText, ShieldCheck, ChevronLeft, ZoomIn, ZoomOut, RefreshCw } from 'lucide-react';
