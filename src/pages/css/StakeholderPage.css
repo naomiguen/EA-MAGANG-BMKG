@@ -1,0 +1,333 @@
+/* src/pages/css/OrganizationDiagramPage.css */
+.orgPageWrapper {
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f5f5f5;
+  overflow-x: hidden; 
+}
+
+.orgTopBar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.orgTopActions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.orgPageTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  line-height: 1.2;
+}
+
+.orgDiagramCardFull {
+  display: flex;
+  flex-direction: column;
+  margin: 1.25rem;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  height: fit-content; 
+  min-height: 0;
+}
+
+.orgDiagramHeader {
+  background: linear-gradient(135deg, #0f5f8a 0%, #1a7ba8 100%);
+  color: white;
+  padding: 1rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.orgDiagramCanvasFull {
+  background: #fafafa;
+  overflow: auto; 
+  padding: 1rem; 
+  position: relative;
+  height: fit-content;
+}
+
+.orgMuted {
+  color: rgba(0, 0, 0, 0.5);
+  font-style: italic;
+}
+
+/* Buttons */
+.orgBtn {
+  border: none;
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  font-weight: 700;
+  background: #0f5f8a;
+  color: white;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.orgBtn:hover:not(:disabled) {
+  background: #1a7ba8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 95, 138, 0.3);
+}
+
+.orgBtn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.orgBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.orgBtnGhost {
+  background: rgba(0, 0, 0, 0.06);
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.orgBtnGhost:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.orgBtnDanger {
+  background: #d32f2f;
+  color: white;
+}
+
+.orgBtnDanger:hover:not(:disabled) {
+  background: #c62828;
+}
+
+/* ====================================
+   STAKEHOLDER PAGE SPECIFIC STYLES
+   ==================================== */
+
+/* Loading State */
+.loading-message {
+  padding: 18px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Error State */
+.error-container {
+  padding: 18px;
+  background: #fff5f5;
+  border: 1px solid #fed7d7;
+  border-radius: 10px;
+  color: #742a2a;
+  font-size: 0.9rem;
+}
+
+.error-title {
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.error-message {
+  margin-bottom: 10px;
+}
+
+.error-button {
+  border: 1px solid #feb2b2;
+  background: white;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.error-button:hover {
+  background: #fef5f5;
+}
+
+/* Table Styles */
+.stakeholder-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px #edf2f7;
+}
+
+.table-header-row {
+  background: #f0f4f8;
+  border-bottom: 2px solid #2c5282;
+}
+
+.table-header {
+  padding: 16px;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #2c5282;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.stakeholder-col {
+  min-width: 150px;
+}
+
+.role-col {
+  min-width: 250px;
+}
+
+.interest-col {
+  min-width: 250px;
+}
+
+.table-row {
+  transition: background 0.2s ease;
+}
+
+.table-row:hover {
+  background: #f7fafc;
+}
+
+.table-cell {
+  padding: 16px;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #edf2f7;
+  vertical-align: top;
+}
+
+.number-cell {
+  text-align: center;
+  font-weight: bold;
+}
+
+.name-cell {
+  font-weight: 800;
+  color: #1a1a1a;
+}
+
+.role-cell {
+  color: #4a5568;
+  line-height: 1.5;
+}
+
+.interest-cell {
+  color: #4a5568;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* Category Badge */
+.category-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.category-badge.internal {
+  background-color: #e6fffa;
+  color: #2c7a7b;
+  border: 1px solid #b2f5ea;
+}
+
+.category-badge.external {
+  background-color: #faf5ff;
+  color: #6b46c1;
+  border: 1px solid #e9d8fd;
+}
+
+/* Mobile Hint */
+.mobile-only-hint {
+  padding: 8px 16px;
+  font-size: 0.7rem;
+  color: #999;
+  text-align: center;
+  background: #f9f9f9;
+  border-top: 1px solid #eee;
+}
+
+/* =================================================================
+   RESPONSIVE ADJUSTMENTS (Mobile / Tablet)
+   ================================================================= */
+@media (max-width: 900px) {
+  
+  .orgTopBar {
+    padding: 0.75rem 1rem; 
+    align-items: center;   
+  }
+
+  .orgPageTitle {
+    font-size: 1rem;
+    white-space: nowrap; 
+    text-overflow: ellipsis; 
+    width: 100%;            
+  }
+
+  .orgDiagramCardFull {
+    margin: 0.55rem; 
+    height: fit-content; 
+  }
+
+  .orgDiagramHeader {
+    padding: 0.6rem 1rem;
+    font-size: 0.75rem; 
+    min-height: auto;
+  }
+
+  .orgDiagramHeader .orgBtn {
+    padding: 0.35rem 0.75rem; 
+    font-size: 0.75rem;   
+    border-radius: 6px;
+  }
+
+  .orgDiagramCanvasFull {
+    padding: 0.5rem; 
+    height: fit-content;
+  }
+
+  /* Stakeholder table responsive */
+  .stakeholder-table {
+    font-size: 0.8rem;
+  }
+
+  .table-header {
+    padding: 12px;
+    font-size: 0.7rem;
+  }
+
+  .table-cell {
+    padding: 12px;
+    font-size: 0.8rem;
+  }
+
+  .category-badge {
+    font-size: 0.65rem;
+    padding: 3px 8px;
+  }
+
+  .mobile-only-hint {
+    display: block;
+  }
+  .orgMuted {
+    font-size: 0.75rem;
+  }
+}

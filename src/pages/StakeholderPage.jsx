@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./css/OrganizationDiagramPage.css";
+import "./css/StakeholderPage.css";
 import { supabase } from "../lib/supabaseClient";
 
 const StakeholderPage = () => {
@@ -29,7 +29,7 @@ const StakeholderPage = () => {
         const mapped = (data || []).map((x) => ({
           no: x.no,
           name: x.name,
-          cat: x.category, // biar kompatibel dengan style lama (Internal/Eksternal)
+          cat: x.category,
           role: x.role,
           interest: x.interest,
         }));
@@ -50,7 +50,7 @@ const StakeholderPage = () => {
       <div className="orgTopBar">
         <div>
           <div className="orgPageTitle">Stakeholder Catalog</div>
-          <div className="orgMuted" style={{ fontSize: "0.9rem", marginTop: "4px" }}>
+          <div className="orgMuted">
             Identifikasi peran dan kepentingan pemangku kepentingan BMKG Balikpapan
           </div>
         </div>
@@ -61,44 +61,21 @@ const StakeholderPage = () => {
           <div>Stakeholder Catalog</div>
         </div>
 
-        <div
-          className="orgDiagramCanvasFull"
-          style={{
-            overflowX: "auto",
-            WebkitOverflowScrolling: "touch",
-            padding: "1rem",
-          }}
-        >
+        <div className="orgDiagramCanvasFull">
           {loading && (
-            <div style={{ padding: "18px", color: "#666", fontSize: "0.9rem" }}>
+            <div className="loading-message">
               Memuat data stakeholder...
             </div>
           )}
 
           {!loading && errMsg && (
-            <div
-              style={{
-                padding: "18px",
-                background: "#fff5f5",
-                border: "1px solid #fed7d7",
-                borderRadius: "10px",
-                color: "#742a2a",
-                fontSize: "0.9rem",
-              }}
-            >
-              <div style={{ fontWeight: 800, marginBottom: "6px" }}>Gagal memuat data</div>
-              <div style={{ marginBottom: "10px" }}>{errMsg}</div>
+            <div className="error-container">
+              <div className="error-title">Gagal memuat data</div>
+              <div className="error-message">{errMsg}</div>
               <button
                 type="button"
                 onClick={() => window.location.reload()}
-                style={{
-                  border: "1px solid #feb2b2",
-                  background: "white",
-                  padding: "8px 10px",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  fontWeight: 800,
-                }}
+                className="error-button"
               >
                 Coba lagi
               </button>
@@ -106,71 +83,39 @@ const StakeholderPage = () => {
           )}
 
           {!loading && !errMsg && (
-            <table
-              style={{
-                width: "100%",
-                minWidth: "900px",
-                borderCollapse: "collapse",
-                background: "white",
-                borderRadius: "8px",
-                overflow: "hidden",
-                boxShadow: "0 0 0 1px #edf2f7",
-              }}
-            >
+            <table className="stakeholder-table">
               <thead>
-                <tr style={{ background: "#f0f4f8", borderBottom: "2px solid #2c5282" }}>
-                  <th style={styles.th}>No.</th>
-                  <th style={{ ...styles.th, minWidth: "150px" }}>Stakeholder</th>
-                  <th style={styles.th}>Kategori</th>
-                  <th style={{ ...styles.th, minWidth: "250px" }}>Peran Utama</th>
-                  <th style={{ ...styles.th, minWidth: "250px" }}>Kepentingan</th>
+                <tr className="table-header-row">
+                  <th className="table-header">No.</th>
+                  <th className="table-header stakeholder-col">Stakeholder</th>
+                  <th className="table-header">Kategori</th>
+                  <th className="table-header role-col">Peran Utama</th>
+                  <th className="table-header interest-col">Kepentingan</th>
                 </tr>
               </thead>
 
               <tbody>
                 {stakeholders.map((item) => (
-                  <tr key={item.no} style={styles.tr}>
-                    <td style={{ ...styles.td, textAlign: "center", fontWeight: "bold" }}>
+                  <tr key={item.no} className="table-row">
+                    <td className="table-cell number-cell">
                       {item.no}
                     </td>
 
-                    <td style={{ ...styles.td, fontWeight: "800", color: "#1a1a1a" }}>
+                    <td className="table-cell name-cell">
                       {item.name}
                     </td>
 
-                    <td style={styles.td}>
-                      <span
-                        style={{
-                          display: "inline-block",
-                          padding: "4px 10px",
-                          borderRadius: "20px",
-                          fontSize: "0.75rem",
-                          fontWeight: "800",
-                          textTransform: "uppercase",
-                          whiteSpace: "nowrap",
-                          backgroundColor: item.cat === "Internal" ? "#e6fffa" : "#faf5ff",
-                          color: item.cat === "Internal" ? "#2c7a7b" : "#6b46c1",
-                          border: `1px solid ${
-                            item.cat === "Internal" ? "#b2f5ea" : "#e9d8fd"
-                          }`,
-                        }}
-                      >
+                    <td className="table-cell">
+                      <span className={`category-badge ${item.cat === "Internal" ? "internal" : "external"}`}>
                         {item.cat}
                       </span>
                     </td>
 
-                    <td style={{ ...styles.td, color: "#4a5568", lineHeight: "1.5" }}>
+                    <td className="table-cell role-cell">
                       {item.role}
                     </td>
 
-                    <td
-                      style={{
-                        ...styles.td,
-                        color: "#4a5568",
-                        fontStyle: "italic",
-                        lineHeight: "1.5",
-                      }}
-                    >
+                    <td className="table-cell interest-cell">
                       "{item.interest}"
                     </td>
                   </tr>
@@ -180,44 +125,12 @@ const StakeholderPage = () => {
           )}
         </div>
 
-        <div
-          style={{
-            padding: "8px 16px",
-            fontSize: "0.7rem",
-            color: "#999",
-            textAlign: "center",
-            background: "#f9f9f9",
-            borderTop: "1px solid #eee",
-          }}
-          className="mobile-only-hint"
-        >
+        <div className="mobile-only-hint">
           ← Geser tabel ke samping untuk melihat detail →
         </div>
       </div>
     </div>
   );
-};
-
-const styles = {
-  th: {
-    padding: "16px",
-    textAlign: "left",
-    fontSize: "0.85rem",
-    fontWeight: "800",
-    color: "#2c5282",
-    textTransform: "uppercase",
-    letterSpacing: "0.05em",
-    whiteSpace: "nowrap",
-  },
-  td: {
-    padding: "16px",
-    fontSize: "0.9rem",
-    borderBottom: "1px solid #edf2f7",
-    verticalAlign: "top",
-  },
-  tr: {
-    transition: "background 0.2s ease",
-  },
 };
 
 export default StakeholderPage;

@@ -1,0 +1,250 @@
+/* --- RESET & BASE --- */
+* { box-sizing: border-box; }
+
+.erd-page-container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 16px; 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Header */
+.erd-header { text-align: center; margin-bottom: 50px; } 
+.erd-header h1 { font-size: 28px; color: #1e293b; margin: 0; font-weight: 800; }
+.erd-header p { font-size: 16px; color: #64748b; margin-top: 8px; }
+
+/* Wrapper Diagram */
+.erd-diagram-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* --- KARTU (ENTITY CARD) STYLE --- */
+.erd-card {
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 280px; 
+  position: relative;
+  z-index: 10;
+}
+
+.erd-card-header {
+  background-color: #1e3a8a;
+  color: white;
+  padding: 12px;
+  text-align: center;
+}
+.erd-card-header h3 { margin: 0; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.erd-card-body { padding: 16px; }
+.erd-attribute-list { list-style: none; padding: 0; margin: 0; }
+.erd-attribute-item {
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 6px; margin-bottom: 6px;
+}
+.erd-attribute-item:last-child { border: none; padding-bottom: 0; margin-bottom: 0; }
+
+.erd-attribute-content { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.attribute-name { 
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #334155; 
+}
+.attribute-name.is-key { font-weight: 700; color: #0f172a; }
+
+/* BADGES */
+.badge { font-size: 10px; font-weight: bold; padding: 2px 5px; border-radius: 4px; flex-shrink: 0; }
+.badge-pk { background: #fef3c7; color: #d97706; }
+.badge-fk { background: #e2e8f0; color: #64748b; }
+
+/* --- STRUKTUR LEVEL 1 (PARENT) --- */
+.erd-level-1-wrapper {
+  position: relative; 
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0; 
+  z-index: 20;
+}
+
+/* --- GARIS PENGHUBUNG --- */
+.erd-lines-container {
+  width: 100%;
+  height: 150px; 
+  position: relative;
+  z-index: 1;
+}
+.erd-lines-container svg { width: 100%; height: 100%; overflow: visible; }
+.line-stroke { stroke: #1e3a8a; stroke-width: 2; fill: none; }
+
+/* --- STRUKTUR LEVEL 2 (CHILDREN) --- */
+.erd-level-2-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+  width: 100%;
+  z-index: 20;
+}
+
+.erd-child-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* --- LABEL 1 & N --- */
+.connector-label {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #1e3a8a;
+  color: #1e3a8a;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 1;
+  padding: 4px 10px;
+  border-radius: 4px;
+  z-index: 50;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* LABEL 1 (di bawah Pegawai - vertikal) */
+.label-1 {
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* LABEL N di GARIS HORIZONTAL (3 label) - DESKTOP */
+.label-n-left,
+.label-n-center,
+.label-n-right {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.label-n-left {
+  left: 16.6%;
+  transform: translate(-50%, -50%);
+}
+
+.label-n-center {
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.label-n-right {
+  left: 83.4%;
+  transform: translate(-50%, -50%);
+}
+
+/* --- LEGEND --- */
+.erd-legend {
+  margin-top: 80px;
+  background: white;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 800px;
+  font-size: 14px;
+  color: #475569;
+}
+.erd-legend h4 { margin: 0 0 10px 0; color: #1e293b; }
+.erd-legend ul { padding-left: 20px; margin: 0; }
+.erd-legend li { margin-bottom: 6px; }
+
+/* Loading & Error */
+.erd-loading, .erd-error { font-size: 16px; color: #64748b; margin-top: 20px; }
+.erd-error { color: #dc2626; }
+
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 768px) {
+  
+  .erd-page-container {
+    padding: 60px 8px;
+  }
+  
+  .erd-header { margin-bottom: 40px; }
+  .erd-header h1 { font-size: 20px; }
+  .erd-header p { font-size: 12px; }
+
+  .erd-level-2-grid {
+    gap: 8px;
+  }
+
+  .erd-card {
+    max-width: none; 
+    border-radius: 6px;
+  }
+
+  .erd-card-header { 
+    padding: 8px 4px; 
+    min-height: 40px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+  }
+  .erd-card-header h3 { 
+    font-size: 9px; 
+    line-height: 1.2; 
+    word-wrap: break-word; 
+  }
+  
+  .erd-card-body { padding: 6px; }
+  .erd-attribute-item { padding-bottom: 4px; margin-bottom: 4px; }
+  .erd-attribute-content { gap: 4px; }
+  .attribute-name { font-size: 9px; }
+  .badge { font-size: 8px; padding: 1px 3px; }
+
+  .erd-lines-container {
+    height: 80px; 
+  }
+
+  .connector-label {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  .label-1 {
+    bottom: -25px; 
+  }
+
+  /* LABEL N DITURUNKAN - SEJAJAR DI GARIS VERTIKAL */
+  /* Label N harus turun ke bawah, di garis vertikal yang turun ke kartu anak */
+  .label-n-left,
+  .label-n-center,
+  .label-n-right {
+    top: 70%; /* DITURUNKAN dari 50% ke 70% - lebih ke bawah di garis vertikal */
+  }
+  
+  .label-n-left {
+    left: 16.6%; /* Di garis vertikal kiri */
+    transform: translate(-50%, -50%);
+  }
+
+  .label-n-center {
+    left: 50%; /* Di garis vertikal tengah */
+    transform: translate(-50%, -50%);
+  }
+
+  .label-n-right {
+    left: 83.4%; /* Di garis vertikal kanan */
+    transform: translate(-50%, -50%);
+  }
+
+  .erd-legend {
+    margin-top: 50px;
+    font-size: 12px;
+    padding: 12px;
+  }
+}

@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; 
 import { supabase } from "../lib/supabaseClient";
 import { Loader2, AlertCircle, ArrowLeft } from "lucide-react";
 
 const ArchitectureGoalsPage = () => {
-  const navigate = useNavigate();
   const [domainGoals, setDomainGoals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errMsg, setErrMsg] = useState("");
@@ -85,17 +83,6 @@ const ArchitectureGoalsPage = () => {
   // --- 3. TAMPILAN UTAMA ---
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 py-12 px-4 sm:px-6 lg:px-8">
-      {/* Tombol Kembali */}
-      <div className="max-w-6xl mx-auto mb-6">
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-slate-600 hover:text-blue-600 transition-colors font-medium"
-        >
-          <ArrowLeft size={20} />
-          Kembali ke Dashboard
-        </button>
-      </div>
-
       {/* HEADER */}
       <div className="max-w-6xl mx-auto mb-16">
         <div className="text-center space-y-4">

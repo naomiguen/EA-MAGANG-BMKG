@@ -1,0 +1,372 @@
+/* Business Principle Page Styles */
+
+.business-principle-page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+  padding: 2rem 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.business-principle-container {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+/* Back Button */
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #475569;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.back-button:hover {
+  color: #0f172a;
+  gap: 0.75rem;
+}
+
+.back-button-icon {
+  transition: transform 0.2s;
+}
+
+.back-button:hover .back-button-icon {
+  transform: translateX(-0.25rem);
+}
+
+/* Page Header */
+.page-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  background: linear-gradient(to bottom right, #475569, #334155);
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.header-icon .icon {
+  color: white;
+}
+
+.page-title {
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+
+.page-subtitle {
+  color: #475569;
+  font-size: 0.875rem;
+}
+
+/* Main Card */
+.main-card {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+/* Action Bar */
+.action-bar {
+  background: linear-gradient(to right, #334155, #475569);
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.action-bar-title {
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Upload Button */
+.upload-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+}
+
+.upload-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.upload-icon {
+  transition: transform 0.2s;
+}
+
+.upload-button:hover .upload-icon {
+  transform: scale(1.1);
+}
+
+.upload-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.file-input {
+  display: none;
+}
+
+/* Remove Button */
+.remove-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: rgba(239, 68, 68, 0.9);
+  color: white;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid rgba(248, 113, 113, 0.5);
+}
+
+.remove-button:hover {
+  background-color: #dc2626;
+}
+
+.remove-icon {
+  transition: transform 0.2s;
+}
+
+.remove-button:hover .remove-icon {
+  transform: scale(1.1);
+}
+
+.remove-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Content Area */
+.content-area {
+  padding: 2rem;
+}
+
+/* Image Wrapper */
+.image-wrapper {
+  position: relative;
+}
+
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.05), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+  border-radius: 0.75rem;
+  pointer-events: none;
+}
+
+.image-wrapper:hover .image-overlay {
+  opacity: 1;
+}
+
+.principle-image {
+  width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.image-wrapper:hover .principle-image {
+  transform: scale(1.01);
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+}
+
+.empty-icon {
+  width: 6rem;
+  height: 6rem;
+  background-color: #f1f5f9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.icon-placeholder {
+  color: #cbd5e1;
+}
+
+.empty-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.5rem;
+}
+
+.empty-description {
+  color: #64748b;
+  margin-bottom: 1.5rem;
+  max-width: 28rem;
+}
+
+/* Upload Button Large */
+.upload-button-large {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #334155;
+  color: white;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
+}
+
+.upload-button-large:hover {
+  background-color: #1e293b;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: translateY(-0.125rem);
+}
+
+.upload-text-large {
+  font-weight: 500;
+}
+
+/* Info Card */
+.info-card {
+  margin-top: 1.5rem;
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.info-icon {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #3b82f6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.125rem;
+}
+
+.info-icon-text {
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.info-content {
+  font-size: 0.875rem;
+  color: #334155;
+}
+
+.info-title {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.info-text {
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .business-principle-page {
+    padding: 2rem;
+  }
+
+  .content-area {
+    padding: 3rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .page-title {
+    font-size: 1.875rem;
+  }
+
+  .content-area {
+    padding: 1.5rem;
+  }
+
+  .action-bar {
+    flex-direction: row;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    gap: 0.5rem;
+  }
+
+  .action-bar-title {
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  .upload-button,
+  .remove-button {
+    padding: 0.4rem 0.6rem;
+    gap: 0.3rem;
+    white-space: nowrap;
+  }
+
+  .upload-text,
+  .remove-text {
+    font-size: 0.7rem;
+  }
+
+  .upload-icon,
+  .remove-icon {
+    width: 13px;
+    height: 13px;
+  }
+}

@@ -6,6 +6,8 @@
   display: flex;
   flex-direction: column;
   background: #f5f5f5;
+  /* Mencegah scroll horizontal pada body utama */
+  overflow-x: hidden; 
 }
 
 .orgTopBar {
@@ -28,10 +30,12 @@
   font-size: 1.5rem;
   font-weight: 800;
   color: #1a1a1a;
+  line-height: 1.2;
 }
 
+/* --- PERBAIKAN UTAMA: Card menyesuaikan tinggi isi (fit-content) --- */
 .orgDiagramCardFull {
-  flex: 1;
+  /* HAPUS flex: 1; agar tidak memaksa full height */
   display: flex;
   flex-direction: column;
   margin: 1.25rem;
@@ -39,6 +43,9 @@
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  /* Tambahkan ini: */
+  height: fit-content;
+  min-height: 0; 
 }
 
 .orgDiagramHeader {
@@ -53,21 +60,25 @@
   gap: 1rem;
 }
 
+/* --- PERBAIKAN KEDUA: Canvas juga menyesuaikan tinggi --- */
 .orgDiagramCanvasFull {
-  flex: 1;
+  /* HAPUS flex: 1; */
   background: #fafafa;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: auto; 
   padding: 3rem 2rem;
+  position: relative; 
+  /* Tambahkan ini: */
+  height: fit-content;
 }
 
-/* Wrapper untuk mengatur tinggi hasil scale supaya scroll vertikal tetap pas */
+/* Wrapper scale */
 .orgChartScaleWrap {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   position: relative;
+  transition: height 0.3s ease;
 }
 
 /* Chart utama */
@@ -79,8 +90,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: max-content;
+  width: max-content; 
   max-width: none;
+  padding-bottom: 40px; 
 }
 
 /* Kepala Stasiun */
@@ -120,7 +132,7 @@
   border-radius: 2px;
   pointer-events: none;
   z-index: 0;
-  display: none;
+  display: none; 
 }
 
 .orgCoordinatorColumn {
@@ -132,7 +144,7 @@
   z-index: 1;
 }
 
-/* Garis vertikal dari garis horizontal ke koordinator */
+/* Garis vertikal */
 .orgVerticalLineToCoord {
   width: 3px;
   height: 40px;
@@ -141,7 +153,6 @@
   margin: 0;
 }
 
-/* Garis vertikal dari koordinator ke units */
 .orgVerticalLineToUnits {
   width: 3px;
   height: 40px;
@@ -161,7 +172,6 @@
   max-width: 100%;
 }
 
-/* Garis horizontal level units, pas dari tengah unit pertama sampai tengah unit terakhir */
 .orgUnitsWrapper.orgHasHorizontalLine::before {
   content: "";
   position: absolute;
@@ -181,7 +191,6 @@
   position: relative;
 }
 
-/* Garis vertikal dari garis horizontal ke unit */
 .orgVerticalLineToUnit {
   width: 3px;
   height: 40px;
@@ -492,49 +501,83 @@
   color: #1a1a1a;
 }
 
-/* Responsive */
+/* =================================================================
+   RESPONSIVE ADJUSTMENTS (Mobile / Tablet)
+   ================================================================= */
 @media (max-width: 900px) {
+  
+  /* 1. HEADER ATAS (Judul Halaman) - Kecil & Rapi */
+  .orgTopBar {
+    padding: 0.75rem 1rem; 
+    align-items: center;   
+  }
+
+  .orgPageTitle {
+    font-size: 0.95rem;     /* Ukuran font kecil */
+    white-space: nowrap;    /* Paksa 1 baris */
+    overflow: hidden;       
+    text-overflow: ellipsis; 
+    width: 100%;            
+  }
+
+  /* 2. CARD DIAGRAM & HEADER BIRU - Tipis & Fit Content */
   .orgDiagramCardFull {
-    margin: 1rem;
+    margin: 0.75rem; 
+    height: fit-content;    /* PENTING: Agar tinggi mengikuti isi, tidak melar */
   }
 
+  .orgDiagramHeader {
+    padding: 0.6rem 1rem;   /* Header biru tipis */
+    font-size: 0.9rem; 
+    min-height: auto;
+  }
+
+  /* 3. TOMBOL EDIT - Kecil & Imut */
+  .orgDiagramHeader .orgBtn {
+    padding: 0.35rem 0.75rem; 
+    font-size: 0.8rem;   
+    border-radius: 6px;
+    margin: 0;             /* Pastikan tidak ada margin aneh */
+  }
+
+  /* 4. CANVAS DIAGRAM - Hemat Ruang & Fit Content */
   .orgDiagramCanvasFull {
-    padding: 1.5rem 1rem;
+    padding: 1rem;          /* Padding 1rem rata agar rapi */
+    height: fit-content;    /* PENTING: Ikuti tinggi chart */
   }
 
-  .orgCoordinatorsWrapper {
-    flex-direction: column;
-    gap: 60px;
+  /* 5. CHART PADDING - Hilangkan jarak bawah yang besar */
+  .orgChartFull {
+    padding-bottom: 0px !important; /* Hapus total padding bawah chart */
   }
-
-  .orgCoordHLine {
-    display: none !important;
-  }
-
-  .orgNode {
-    width: 100%;
-    max-width: 400px;
-  }
-
-  .orgUnitsWrapper {
-    flex-direction: column;
-    gap: 40px;
-  }
-
-  .orgUnitColumn {
-    width: 100%;
-    max-width: 320px;
-  }
-
-  .orgUnitsWrapper.orgHasHorizontalLine::before {
-    display: none;
-  }
-
+  
+  /* 6. MODAL - Penyesuaian Padding */
   .orgModalGrid {
     padding: 1rem;
   }
 
   .orgSection {
-    padding: 1.15rem;
+    padding: 1rem;
+  }
+  .orgModalTitle {
+    font-size: 0.75rem;
+  }
+  .orgBtn.orgBtnGhost {
+    font-size: 0.75rem;
+  }
+  .orgSelect {
+    font-size: 0.75rem;
+  }
+  .orgBtn {
+    font-size: 0.75rem;
+  }
+  .orgBtn .orgBtnDanger {
+    font-size: 0.75rem;
+  }
+  .orgInput {
+    font-size: 0.75rem;
+  }
+  .orgMemberCrudList {
+    font-size: 0.75rem;
   }
 }
