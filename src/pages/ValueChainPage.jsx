@@ -124,6 +124,7 @@ const ValueChainPage = () => {
       <style>{`
         svg text, svg tspan { pointer-events: none !important; }
         
+        /* CSS untuk SVG container */
         .svg-container svg {
           display: block;
           margin: 0 auto;
@@ -139,7 +140,18 @@ const ValueChainPage = () => {
           cursor: pointer !important;
           transition: opacity 0.2s ease, transform 0.2s ease;
         }
-        [id]:hover { opacity: 0.7; filter: brightness(1.1); }
+        
+        .svg-container [id]:hover { 
+          opacity: 0.85;
+          transform: translateY(-2px);
+        }
+        
+        /* Prevent color changes on hover */
+        .svg-container [id]:hover rect,
+        .svg-container [id]:hover path,
+        .svg-container [id]:hover ellipse {
+          filter: none !important;
+        }
 
         /* Mobile Responsive */
         @media (max-width: 479px) {
@@ -175,10 +187,22 @@ const ValueChainPage = () => {
 
       {/* Header Section */}
       <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-        <h1 className="value-chain-title" style={{ fontSize: '3rem', fontWeight: '900', color: '#000000', margin: '0 0 10px 0' }}>
+        <h1 className="value-chain-title" style={{ 
+          fontSize: '3rem', 
+          fontWeight: '800', 
+          color: '#00467f', 
+          margin: '0 0 10px 0',
+          letterSpacing: '-0.025em'
+        }}>
           Value Chain BMKG
         </h1>
-        <p className="value-chain-subtitle" style={{ color: '#4b5563', fontSize: '1.1rem' }}>
+        
+        <p className="value-chain-subtitle" style={{ 
+          color: '#003660', 
+          fontSize: '1.25rem',
+          fontWeight: '600',
+          marginBottom: '1.5rem'
+        }}>
           Klik kotak pada diagram untuk melihat detail aktivitas
         </p>
         
@@ -196,14 +220,15 @@ const ValueChainPage = () => {
       <div 
         className="bg-white shadow-2xl svg-container value-chain-container"
         style={{ 
-            width: '100%', 
-            maxWidth: '1200px', 
-            border: '2px solid #000000', 
-            padding: '40px', 
-            borderRadius: '12px',
-            backgroundColor: '#ffffff',
-            display: 'flex',
-            justifyContent: 'center' 
+          width: '100%', 
+          maxWidth: '1200px', 
+          border: '2px solid #bfe2ff', 
+          padding: '40px', 
+          borderRadius: '12px',
+          backgroundColor: '#ffffff',
+          boxShadow: '0 2px 12px rgba(0, 100, 181, 0.08)',
+          display: 'flex',
+          justifyContent: 'center'
         }}
         onClick={handleSvgClick}
         dangerouslySetInnerHTML={{ __html: valueChainRawSvg }}
