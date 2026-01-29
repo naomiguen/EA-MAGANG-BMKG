@@ -1,333 +1,217 @@
-/* src/pages/css/OrganizationDiagramPage.css */
-.orgPageWrapper {
-  padding: 0;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: #f5f5f5;
-  overflow-x: hidden; 
-}
-
-.orgTopBar {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1.25rem;
-  background: white;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.orgTopActions {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.orgPageTitle {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #1a1a1a;
-  line-height: 1.2;
-}
-
-.orgDiagramCardFull {
-  display: flex;
-  flex-direction: column;
-  margin: 1.25rem;
-  background: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  height: fit-content; 
-  min-height: 0;
-}
-
-.orgDiagramHeader {
-  background: linear-gradient(135deg, #0f5f8a 0%, #1a7ba8 100%);
-  color: white;
-  padding: 1rem 1.5rem;
-  font-weight: 800;
-  font-size: 1.1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.orgDiagramCanvasFull {
-  background: #fafafa;
-  overflow: auto; 
-  padding: 1rem; 
-  position: relative;
-  height: fit-content;
-}
-
-.orgMuted {
-  color: rgba(0, 0, 0, 0.5);
-  font-style: italic;
-}
-
-/* Buttons */
-.orgBtn {
-  border: none;
-  border-radius: 10px;
-  padding: 0.65rem 1rem;
-  font-weight: 700;
-  background: #0f5f8a;
-  color: white;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: all 0.2s ease;
-}
-
-.orgBtn:hover:not(:disabled) {
-  background: #1a7ba8;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(15, 95, 138, 0.3);
-}
-
-.orgBtn:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-.orgBtn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.orgBtnGhost {
-  background: rgba(0, 0, 0, 0.06);
-  color: rgba(0, 0, 0, 0.85);
-}
-
-.orgBtnGhost:hover:not(:disabled) {
-  background: rgba(0, 0, 0, 0.12);
-}
-
-.orgBtnDanger {
-  background: #d32f2f;
-  color: white;
-}
-
-.orgBtnDanger:hover:not(:disabled) {
-  background: #c62828;
-}
-
-/* ====================================
-   STAKEHOLDER PAGE SPECIFIC STYLES
-   ==================================== */
-
-/* Loading State */
 .loading-message {
-  padding: 18px;
-  color: #666;
-  font-size: 0.9rem;
+  text-align: center;
+  padding: 3rem;
+  color: #003660;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
-/* Error State */
 .error-container {
-  padding: 18px;
   background: #fff5f5;
-  border: 1px solid #fed7d7;
-  border-radius: 10px;
-  color: #742a2a;
-  font-size: 0.9rem;
+  border: 2px solid #fed7d7;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 500px;
+  text-align: center;
 }
 
 .error-title {
   font-weight: 800;
-  margin-bottom: 6px;
+  margin-bottom: 0.5rem;
+  color: #7f1d1d;
+  font-size: 1.25rem;
 }
 
 .error-message {
-  margin-bottom: 10px;
+  margin-bottom: 1.5rem;
+  color: #991b1b;
+  font-size: 0.95rem;
 }
 
 .error-button {
-  border: 1px solid #feb2b2;
+  border: 2px solid #feb2b2;
   background: white;
-  padding: 8px 10px;
-  border-radius: 8px;
+  padding: 0.65rem 1.25rem;
+  border-radius: 10px;
   cursor: pointer;
   font-weight: 800;
+  color: #7f1d1d;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
 }
 
 .error-button:hover {
-  background: #fef5f5;
+  background: #fef2f2;
 }
 
-/* Table Styles */
+/* Stakeholder Table */
 .stakeholder-table {
   width: 100%;
-  min-width: 900px;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   background: white;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 0 0 1px #edf2f7;
+  box-shadow: 0 2px 12px rgba(0, 100, 181, 0.08);
+  border: 2px solid #bfe2ff;
 }
 
 .table-header-row {
-  background: #f0f4f8;
-  border-bottom: 2px solid #2c5282;
+  background: linear-gradient(135deg, #00467f 0%, #0064b5 100%);
 }
 
 .table-header {
-  padding: 16px;
+  padding: 1rem 1.25rem;
   text-align: left;
-  font-size: 0.85rem;
   font-weight: 800;
-  color: #2c5282;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  white-space: nowrap;
+  font-size: 0.95rem;
+  color: white;
+  border-bottom: 3px solid #fbbf24;
+  letter-spacing: 0.02em;
 }
 
-.stakeholder-col {
-  min-width: 150px;
+.table-header:first-child {
+  border-top-left-radius: 12px;
 }
 
-.role-col {
-  min-width: 250px;
-}
-
-.interest-col {
-  min-width: 250px;
+.table-header:last-child {
+  border-top-right-radius: 12px;
 }
 
 .table-row {
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #bfe2ff;
 }
 
 .table-row:hover {
-  background: #f7fafc;
+  background: #f0f7ff;
+}
+
+.table-row:last-child {
+  border-bottom: none;
 }
 
 .table-cell {
-  padding: 16px;
-  font-size: 0.9rem;
-  border-bottom: 1px solid #edf2f7;
+  padding: 1rem 1.25rem;
+  color: #003660;
+  font-size: 0.95rem;
   vertical-align: top;
+  line-height: 1.6;
 }
 
 .number-cell {
+  font-weight: 700;
+  color: #0064b5;
   text-align: center;
-  font-weight: bold;
+  width: 60px;
 }
 
 .name-cell {
-  font-weight: 800;
-  color: #1a1a1a;
+  font-weight: 700;
+  color: #00467f;
+  min-width: 200px;
 }
 
 .role-cell {
-  color: #4a5568;
-  line-height: 1.5;
+  min-width: 250px;
 }
 
 .interest-cell {
-  color: #4a5568;
   font-style: italic;
-  line-height: 1.5;
+  color: #003660;
+  min-width: 300px;
 }
 
 /* Category Badge */
 .category-badge {
   display: inline-block;
-  padding: 4px 10px;
+  padding: 0.4rem 1rem;
   border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  white-space: nowrap;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: all 0.2s ease;
 }
 
 .category-badge.internal {
-  background-color: #e6fffa;
-  color: #2c7a7b;
-  border: 1px solid #b2f5ea;
+  background: #bfe2ff;
+  color: #002541;
+  border: 2px solid #0064b5;
 }
 
 .category-badge.external {
-  background-color: #faf5ff;
-  color: #6b46c1;
-  border: 1px solid #e9d8fd;
+  background: #fef3c7;
+  color: #78350f;
+  border: 2px solid #fbbf24;
 }
 
-/* Mobile Hint */
+/* Mobile hint */
 .mobile-only-hint {
-  padding: 8px 16px;
-  font-size: 0.7rem;
-  color: #999;
+  display: none;
   text-align: center;
-  background: #f9f9f9;
-  border-top: 1px solid #eee;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, #f0f7ff 0%, #bfe2ff 100%);
+  color: #00467f;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-top: 2px solid #0064b5;
 }
 
-/* =================================================================
-   RESPONSIVE ADJUSTMENTS (Mobile / Tablet)
-   ================================================================= */
+/* Responsive */
 @media (max-width: 900px) {
-  
-  .orgTopBar {
-    padding: 0.75rem 1rem; 
-    align-items: center;   
-  }
-
-  .orgPageTitle {
-    font-size: 1rem;
-    white-space: nowrap; 
-    text-overflow: ellipsis; 
-    width: 100%;            
-  }
-
-  .orgDiagramCardFull {
-    margin: 0.55rem; 
-    height: fit-content; 
-  }
-
-  .orgDiagramHeader {
-    padding: 0.6rem 1rem;
-    font-size: 0.75rem; 
-    min-height: auto;
-  }
-
-  .orgDiagramHeader .orgBtn {
-    padding: 0.35rem 0.75rem; 
-    font-size: 0.75rem;   
-    border-radius: 6px;
-  }
-
-  .orgDiagramCanvasFull {
-    padding: 0.5rem; 
-    height: fit-content;
-  }
-
-  /* Stakeholder table responsive */
   .stakeholder-table {
-    font-size: 0.8rem;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
-  .table-header {
-    padding: 12px;
-    font-size: 0.7rem;
-  }
-
+  .table-header,
   .table-cell {
-    padding: 12px;
-    font-size: 0.8rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
   }
 
-  .category-badge {
-    font-size: 0.65rem;
-    padding: 3px 8px;
+  .number-cell {
+    width: 50px;
+  }
+
+  .name-cell {
+    min-width: 150px;
+  }
+
+  .role-cell {
+    min-width: 200px;
+  }
+
+  .interest-cell {
+    min-width: 250px;
   }
 
   .mobile-only-hint {
     display: block;
   }
-  .orgMuted {
+
+  .loading-message {
+    padding: 2rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .error-container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .table-header,
+  .table-cell {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .category-badge {
+    padding: 0.3rem 0.75rem;
     font-size: 0.75rem;
   }
 }

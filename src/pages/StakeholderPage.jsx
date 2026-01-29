@@ -48,19 +48,22 @@ const StakeholderPage = () => {
   return (
     <div className="orgPageWrapper">
       <div className="orgTopBar">
-        <div>
+        <div style={{ width: "100%", textAlign: "center" }}>
           <div className="orgPageTitle">Stakeholder Catalog</div>
-          <div className="orgMuted">
+          <p
+            style={{
+              fontSize: "clamp(16px, 3vw, 18px)",
+              color: "#003660",
+              margin: "8px 0 0 0",
+              fontWeight: "500",
+            }}
+          >
             Identifikasi peran dan kepentingan pemangku kepentingan BMKG Balikpapan
-          </div>
+          </p>
         </div>
       </div>
 
       <div className="orgDiagramCardFull">
-        <div className="orgDiagramHeader">
-          <div>Stakeholder Catalog</div>
-        </div>
-
         <div className="orgDiagramCanvasFull">
           {loading && (
             <div className="loading-message">
