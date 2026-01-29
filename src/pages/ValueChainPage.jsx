@@ -119,7 +119,6 @@ const ValueChainPage = () => {
       flexDirection: 'column', 
       alignItems: 'center', 
       justifyContent: 'center',
-      justifyContent: 'center',
       padding: '60px 20px' 
     }}>
       <style>{`

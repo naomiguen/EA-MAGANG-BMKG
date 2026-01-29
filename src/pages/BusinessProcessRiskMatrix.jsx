@@ -16,7 +16,7 @@ const RiskMatrix = () => {
     { id: 'wmm', label: 'WMM', icon: <ShieldCheck size={48} />, colorClass: 'card-wmm' },
   ];
 
-  // --- DATA 1: TEKNISI (Berdasarkan PDF Program Kerja Unit Teknisi) ---
+  // --- DATA 1: TEKNISI ---
   const teknisiData = [
     { 
       process: ['Pengecekan Harian', 'Peralatan Operasional', '& Administrasi'],
@@ -55,7 +55,7 @@ const RiskMatrix = () => {
     }
   ];
 
-  // --- DATA 2: DATIN (Berdasarkan PDF Program Kerja - Forecaster & Analisa) ---
+  // --- DATA 2: DATIN ---
   const datinData = [
     { 
       process: ['Analisa & Prakiraan', 'Cuaca Jangka Pendek', '(Forecasting)'],
@@ -89,6 +89,93 @@ const RiskMatrix = () => {
     }
   ];
 
+  // --- DATA 3: OBSERVASI ---
+  const observasiData = [
+    {
+      process: ['Pengamatan Meteorologi', 'Permukaan (Surface)', '24 Jam'],
+      desc: ['Observasi unsur cuaca', '(suhu, tekanan,', 'angin, visibility)', 'tiap jam selama 24 jam.'],
+      risks: { operasional: 'Tinggi', aset: 'Sedang', k3: 'Sedang', finansial: 'Rendah', hukum: 'Sedang' }
+    },
+    {
+      process: ['Penyandian &', 'Pengiriman Data', 'Synop (GBON)'],
+      desc: ['Coding data synop', 'sesuai standar WMO', 'dan pengiriman', 'tepat waktu.'],
+      risks: { operasional: 'Tinggi', aset: 'Rendah', k3: 'Rendah', finansial: 'Rendah', hukum: 'Tinggi' }
+    },
+    {
+      process: ['Pengamatan Cuaca', 'Penerbangan &', 'Monitoring AWOS'],
+      desc: ['Laporan METAR/SPECI,', 'monitoring display', 'AWOS, dan', 'validasi data otomatis.'],
+      risks: { operasional: 'Tinggi', aset: 'Tinggi', k3: 'Rendah', finansial: 'Rendah', hukum: 'Tinggi' }
+    },
+    {
+      process: ['Pengiriman Data', 'via AFTN'],
+      desc: ['Memastikan data', 'metar/speci terkirim', 'ke server AFTN', 'selama 24 jam.'],
+      risks: { operasional: 'Tinggi', aset: 'Sedang', k3: 'Rendah', finansial: 'Rendah', hukum: 'Tinggi' }
+    },
+    {
+      process: ['Pengelolaan Database', 'Meteorologi'],
+      desc: ['Pengarsipan data', 'harian (Logbook)', 'dan backup digital', 'ke database server.'],
+      risks: { operasional: 'Sedang', aset: 'Rendah', k3: 'Rendah', finansial: 'Rendah', hukum: 'Rendah' }
+    }
+  ];
+
+  // --- DATA 4: TATA USAHA ---
+  const tuData = [
+    {
+      process: ['Pengelolaan SDM &', 'Kepegawaian'],
+      desc: ['Proses cuti,', 'kenaikan pangkat/gaji,', 'serta perhitungan', 'tunjangan kinerja.'],
+      risks: { operasional: 'Sedang', aset: 'Rendah', k3: 'Rendah', finansial: 'Sedang', hukum: 'Sedang' }
+    },
+    {
+      process: ['Pelaksanaan DIPA &', 'Pelaporan Keuangan'],
+      desc: ['Penyusunan anggaran,', 'revisi DIPA,', 'pembayaran tagihan,', 'dan laporan SPJ.'],
+      risks: { operasional: 'Sedang', aset: 'Rendah', k3: 'Rendah', finansial: 'Tinggi', hukum: 'Tinggi' }
+    },
+    {
+      process: ['Pengelolaan BMN', '(Barang Milik Negara)'],
+      desc: ['Inventarisasi aset,', 'laporan SIMAK BMN,', 'dan opname fisik', 'barang.'],
+      risks: { operasional: 'Sedang', aset: 'Tinggi', k3: 'Rendah', finansial: 'Sedang', hukum: 'Sedang' }
+    },
+    {
+      process: ['Pengelolaan Kearsipan', '& Persuratan'],
+      desc: ['Administrasi surat', 'masuk/keluar dan', 'penataan arsip', 'dinamis/statis.'],
+      risks: { operasional: 'Tinggi', aset: 'Rendah', k3: 'Rendah', finansial: 'Rendah', hukum: 'Sedang' }
+    },
+    {
+      process: ['Urusan Rumah Tangga', '& Kebersihan'],
+      desc: ['Pemeliharaan gedung,', 'pembayaran listrik/air,', 'dan kebersihan', 'lingkungan kantor.'],
+      risks: { operasional: 'Sedang', aset: 'Sedang', k3: 'Sedang', finansial: 'Rendah', hukum: 'Rendah' }
+    }
+  ];
+
+  // --- DATA 5: WMM (QUALITY CONTROL / ISO) ---
+  const wmmData = [
+    {
+      process: ['Audit Internal', 'ISO 9001:2015'],
+      desc: ['Perencanaan audit,', 'pelaksanaan audit', 'internal, dan', 'pelaporan temuan (NC).'],
+      risks: { operasional: 'Tinggi', aset: 'Rendah', k3: 'Rendah', finansial: 'Rendah', hukum: 'Tinggi' }
+    },
+    {
+      process: ['Rapat Tinjauan', 'Manajemen (RTM)'],
+      desc: ['Evaluasi kinerja', 'tahunan, tindak lanjut', 'audit, dan', 'sasaran mutu.'],
+      risks: { operasional: 'Sedang', aset: 'Rendah', k3: 'Rendah', finansial: 'Rendah', hukum: 'Sedang' }
+    },
+    {
+      process: ['Survei Kepuasan', 'Masyarakat (IKM)'],
+      desc: ['Menyebarkan kuesioner', 'kepada stakeholder', 'dan analisa', 'indeks kepuasan.'],
+      risks: { operasional: 'Tinggi', aset: 'Rendah', k3: 'Rendah', finansial: 'Rendah', hukum: 'Sedang' }
+    },
+    {
+      process: ['Pengendalian', 'Dokumen & SOP'],
+      desc: ['Validasi SOP baru,', 'distribusi dokumen,', 'dan penarikan', 'dokumen usang.'],
+      risks: { operasional: 'Tinggi', aset: 'Rendah', k3: 'Rendah', finansial: 'Rendah', hukum: 'Sedang' }
+    },
+    {
+      process: ['Penanganan Keluhan', '& Tindakan Korektif'],
+      desc: ['Merespon aduan', 'user/masyarakat dan', 'memastikan perbaikan', 'sistem dilakukan.'],
+      risks: { operasional: 'Sedang', aset: 'Rendah', k3: 'Rendah', finansial: 'Rendah', hukum: 'Sedang' }
+    }
+  ];
+
   // Definisi Kolom Risiko
   const riskColumns = [
     { key: 'operasional', label: 'Risiko Operasional' },
@@ -103,18 +190,22 @@ const RiskMatrix = () => {
     switch(selectedDept) {
       case 'teknisi': return { data: teknisiData, label: 'TEKNISI', icon: <Settings size={20} /> };
       case 'datin': return { data: datinData, label: 'DATIN', icon: <Database size={20} /> };
+      case 'observasi': return { data: observasiData, label: 'OBSERVASI', icon: <Eye size={20} /> };
+      case 'tu': return { data: tuData, label: 'TATA USAHA', icon: <FileText size={20} /> };
+      case 'wmm': return { data: wmmData, label: 'WMM (Quality)', icon: <ShieldCheck size={20} /> }; // CASE DITAMBAHKAN
       default: return { data: [], label: '', icon: null };
     }
   };
 
   // Handle Klik Kartu
   const handleCardClick = (id) => {
-    if (id === 'teknisi' || id === 'datin') {
+    // UPDATED: Semua ID sudah diizinkan
+    if (['teknisi', 'datin', 'observasi', 'tu', 'wmm'].includes(id)) {
       setSelectedDept(id);
       setView('matrix');
       window.scrollTo(0, 0);
     } else {
-      alert(`Data untuk ${id.toUpperCase()} belum tersedia di demo ini (Hanya Teknisi & Datin).`);
+      alert(`Data untuk ${id.toUpperCase()} belum tersedia.`);
     }
   };
 
@@ -158,7 +249,7 @@ const RiskMatrix = () => {
         </>
       )}
 
-      {/* TAMPILAN 2: MATRIKS TABLE (DINAMIS UNTUK TEKNISI & DATIN) */}
+      {/* TAMPILAN 2: MATRIKS TABLE */}
       {view === 'matrix' && activeContent.data.length > 0 && (
         <div className="matrix-view-container">
           <div className="matrix-top-bar">

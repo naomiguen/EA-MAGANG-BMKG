@@ -19,7 +19,7 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navigation = [
+  const navigation = useMemo(() => [
     { name: 'Beranda', href: '/' },
     { 
       name: 'Architecture Vision', 
@@ -100,13 +100,13 @@ const Navbar = () => {
         { name: 'Architecture Governance',              href: '/imp/governance' },
       ]
     },
-  ];
-
-  const hiddenSearchItems = [
-    { name: 'SOP Operasional Teknisi', href: '/', category: 'Dok', keywords: ''},
-  ];
+  ], []);
 
   const searchableItems = useMemo(() => {
+    const hiddenSearchItems = [
+      { name: 'SOP Operasional Teknisi', href: '/', category: 'Dok', keywords: ''},
+    ];
+
     let items = [];
     navigation.forEach(parent => {
       // 1. Masukkan Parent jika punya href (bukan null)
@@ -131,7 +131,7 @@ const Navbar = () => {
 
     items = [...items, ...hiddenSearchItems];
     return items;
-  }, []);
+  }, [navigation]);
 
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
